@@ -57,9 +57,9 @@ Ext.application({
             "man": "500"
           },
           {
-            'id': '54009',
-            "name": "损坏表",
-            "adder": "14/01/01",
+            'id': '合计',
+            "name": "3",
+            "adder": 798.8,
             "man": "500"
           }
         ]
@@ -117,12 +117,12 @@ Ext.application({
           columns: [
             {
               text: '序号',
-              dataIndex: 'isd',
+              dataIndex: 'id',
               flex: 1
             },
             {
               text: '汇票号码',
-              dataIndex: 'nsame',
+              dataIndex: 'name',
               flex: 1
             },
             {
@@ -152,7 +152,7 @@ Ext.application({
             },
             {
               text: '汇款额',
-              dataIndex: 'asdder2',
+              dataIndex: 'adder',
               flex: 1
             },
             {
@@ -524,9 +524,9 @@ Ext.application({
       ]
     });
 
-    search.hide();
-    list.hide();
-    add.show();
+    // search.hide();
+    // list.hide();
+    // add.show();
   }
 });
 
