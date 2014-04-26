@@ -78,14 +78,14 @@ Ext.application({
           "qq": "389210372",
           "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
         }, {
-          'id': '55008',
+          'id': '总数',
           "name": "人民邮电出版社",
           "adder": "浙江省杭州市西湖区",
           "man": "李先生",
-          "phone1": "13112128372",
+          "phone1": "13112",
           "phone2": "15912128372",
           "fax": "057184200712",
-          "qq": "389210372",
+          "qq": "3892",
           "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
         }]
       },
@@ -189,18 +189,18 @@ Ext.application({
           margin: "20 0 0 0",
           columns: [{
             text: '出货单号',
-            dataIndex: 'id1',
+            dataIndex: 'id',
             flex: 1
           }, {
             text: '抵价券',
-            dataIndex: 'adder1',
+            dataIndex: 'qq',
             flex: 1
           }, {
             text: '不打折抵价券',
-            dataIndex: 'man1'
+            dataIndex: 'qq'
           }, {
             text: '青春贴',
-            dataIndex: 'phone11',
+            dataIndex: 'qq',
             flex: 1
           }, {
             text: '寄送方式',
@@ -208,11 +208,11 @@ Ext.application({
             flex: 1
           }, {
             text: '邮资',
-            dataIndex: 'phone21',
+            dataIndex: 'qq',
             flex: 1
           }, {
             text: '应付款',
-            dataIndex: 'qq1',
+            dataIndex: 'qq',
             flex: 1
           }]
         }, {
@@ -296,7 +296,7 @@ Ext.application({
             margin: "10 0 0 0",
             columns: [{
               text: '序号',
-              dataIndex: 'id1'
+              dataIndex: 'id'
             }, {
               text: '货号',
               dataIndex: 'adder1',
@@ -307,7 +307,7 @@ Ext.application({
               flex: 1
             }, {
               text: '数量',
-              dataIndex: 'phone11',
+              dataIndex: 'phone1',
               flex: 1
             }, {
               text: '单价',
@@ -315,7 +315,7 @@ Ext.application({
               flex: 1
             }, {
               text: '金额',
-              dataIndex: 'qq1',
+              dataIndex: 'qq',
               flex: 1
             }, {
               text: '备注',
@@ -547,9 +547,9 @@ Ext.application({
       }]
     });
     
-    search.hide();
-    list.hide();
+    // search.hide();
+    // list.hide();
     // add1.show();
-    print.show();
+    // print.show();
   }
 });
