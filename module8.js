@@ -207,13 +207,209 @@ Ext.application({
       activeItem: 4,
       items: [{
         title: '进货清单',
-        padding: 15
+        padding: 15,
+          items: [{
+              xtype: "panel",
+              layout: 'hbox',
+              bodyPadding: 5,
+              border: 0,
+              defaultType: 'datefield',
+              items: [{
+                  fieldLabel: "起始日期",
+                  labelAlign: "right"
+              }, {
+                  fieldLabel: "终止日期",
+                  labelAlign: "right"
+              }, {
+                  xtype: "button",
+                  text: "搜索",
+                  margin: "0 0 0 50"
+              }, {
+                  xtype: "button",
+                  text: "重置",
+                  margin: "0 0 0 20"
+              }]
+          }, {
+              xtype: "grid",
+              margin: "20 0 0 0",
+              store: Ext.data.StoreManager.lookup('jzs'),
+              columns: [{
+                  text: '序号',
+                  dataIndex: 'id1',
+                  flex: 1
+              }, {
+                  text: '货号',
+                  dataIndex: 'iid1',
+                  flex: 1
+              }, {
+                  text: '品名',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '数量',
+                  dataIndex: 'bnum1',
+                  flex: 2
+              }, {
+                  text: '进货编号',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '厂商',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '进货日期',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '备注',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }]
+          }]
       }, {
         title: '出货清单',
-        padding: 15
+        padding: 15,
+          items: [{
+              xtype: "panel",
+              layout: 'hbox',
+              bodyPadding: 5,
+              border: 0,
+              defaultType: 'datefield',
+              items: [{
+                  fieldLabel: "起始日期",
+                  labelAlign: "right"
+              }, {
+                  fieldLabel: "终止日期",
+                  labelAlign: "right"
+              }, {
+                  xtype: "button",
+                  text: "搜索",
+                  margin: "0 0 0 50"
+              }, {
+                  xtype: "button",
+                  text: "重置",
+                  margin: "0 0 0 20"
+              }]
+          }, {
+              xtype: "grid",
+              margin: "20 0 0 0",
+              store: Ext.data.StoreManager.lookup('jzs'),
+              columns: [{
+                  text: '序号',
+                  dataIndex: 'id1',
+                  flex: 1
+              }, {
+                  text: '货号',
+                  dataIndex: 'iid1',
+                  flex: 1
+              }, {
+                  text: '品名',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '出货量',
+                  dataIndex: 'bnum1',
+                  flex: 2
+              }, {
+                  text: '售价',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '金额',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '备注',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }]
+          }]
       }, {
         title: '预估采购',
-        padding: 15
+        padding: 15,
+          items: [{
+              xtype: "panel",
+              layout: 'hbox',
+              bodyPadding: 5,
+              border: 0,
+              defaultType: 'textfield',
+              items: [{
+                  fieldLabel: "厂商编号",
+                  labelAlign: "right"
+              }, {
+                  fieldLabel: "~~~~",
+                  labelWidth: 57,
+                  labelAlign: "right"
+              },{
+                  fieldLabel: "预估单量",
+                  labelAlign: "right"
+              },{
+                  fieldLabel: "全齐单数",
+                  labelAlign: "right"
+              },{
+                  xtype: "label",
+                  text: "本期现单量：4561",
+                  margin: "3 0 0 50"
+              }]
+          }, {
+              xtype: "grid",
+              margin: "20 0 0 0",
+              store: Ext.data.StoreManager.lookup('jzs'),
+              columns: [{
+                  text: '序号',
+                  dataIndex: 'id1',
+                  flex: 1
+              }, {
+                  text: '货号',
+                  dataIndex: 'iid1',
+                  flex: 1
+              }, {
+                  text: '累进量',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '出货数',
+                  dataIndex: 'bnum1',
+                  flex: 2
+              }, {
+                  text: '库存量',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '损坏数',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '供应单数',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '进价',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '预计出货数',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '补货数',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '补货金额',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '全期预估',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }, {
+                  text: '全期补货数',
+                  dataIndex: 'bnum1',
+                  flex: 1
+              }]
+          }]
       }, {
         title: '厂商打印',
         padding: 15,
