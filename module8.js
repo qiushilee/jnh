@@ -597,8 +597,56 @@ Ext.application({
           }]
         }]
       }, {
-        title: '缺货明细表',
-        padding: 15
+        title: '缺货统计表',
+        padding: 15,
+        items: [{
+          xtype: "panel",
+          layout: 'hbox',
+          bodyPadding: 5,
+          border: 0,
+          defaultType: 'textfield',
+          items: [{
+            xtype: "button",
+            text: "缺货处理"
+          }, {
+            xtype: "progressbar",
+            width: 300,
+            margin: "0 0 0 50"
+          }]
+        }, {
+          xtype: "grid",
+          margin: "20 0 0 0",
+          store: Ext.data.StoreManager.lookup('jzs'),
+          columns: [{
+            text: '序号',
+            dataIndex: 'id1',
+            flex: 1
+          }, {
+            text: '货号',
+            dataIndex: 'iid1',
+            flex: 1
+          }, {
+            text: '品名',
+            dataIndex: 'bnum1',
+            flex: 2
+          }, {
+            text: '规格',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '厂商编号',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '厂商名称',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '库存数量',
+            dataIndex: 'bnum1',
+            flex: 1
+          }]
+        }]
       }, {
         title: '出货单打印',
         padding: 15,
