@@ -728,7 +728,19 @@ Ext.application({
               }]
             }, {
               title: "姓名定位",
-              padding: 15
+              padding: 15,
+                items: [{
+                    xtype: "panel",
+                    layout: 'hbox',
+                    bodyPadding: 5,
+                    border: 0,
+                    defaultType: 'textfield',
+                    items: [{
+                        fieldLabel: "姓名",
+                        labelWidth: 50,
+                        labelAlign: "right"
+                    }]
+                }]
             }, {
               title: "时间定位",
               padding: 15,
