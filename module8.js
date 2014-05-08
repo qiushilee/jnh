@@ -204,7 +204,7 @@ Ext.application({
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: document.body,
       layout: "fit",
-      activeItem: 4,
+      activeItem: 7,
       items: [{
         title: '进货清单',
         padding: 15,
@@ -703,7 +703,165 @@ Ext.application({
         }]
       }, {
         title: '会员查询',
-        padding: 15
+        padding: 15,
+        items: [{
+          xtype: "panel",
+          layout: "hbox",
+          border: 0,
+          items: [{
+            xtype: "tabpanel",
+            width: 500,
+            items: [{
+              title: "编号定位",
+              padding: 15,
+              items: [{
+                xtype: "panel",
+                layout: 'hbox',
+                bodyPadding: 5,
+                border: 0,
+                defaultType: 'textfield',
+                items: [{
+                  fieldLabel: "编号",
+                  labelWidth: 50,
+                  labelAlign: "right"
+                }]
+              }]
+            }, {
+              title: "姓名定位",
+              padding: 15
+            }, {
+              title: "时间定位",
+              padding: 15,
+              items: [{
+                xtype: "panel",
+                layout: 'hbox',
+                bodyPadding: 5,
+                border: 0,
+                defaultType: 'datefield',
+                items: [{
+                  fieldLabel: "加入时间",
+                  labelWidth: 60,
+                  labelAlign: "right"
+                }, {
+                  fieldLabel: "到",
+                  labelWidth: 20,
+                  labelAlign: "right"
+                }, {
+                  xtype: "button",
+                  text: "查询",
+                  margin: "0 0 0 30"
+                }]
+              }]
+            }, {
+              title: "邮编1查询",
+              padding: 15,
+              items: [{
+                xtype: "panel",
+                layout: 'hbox',
+                bodyPadding: 5,
+                border: 0,
+                defaultType: 'textfield',
+                items: [{
+                  fieldLabel: "邮编1",
+                  labelWidth: 50,
+                  labelAlign: "right"
+                }, {
+                  fieldLabel: "地址1",
+                  labelWidth: 50,
+                  labelAlign: "right"
+                }]
+              }]
+            }, {
+              title: "邮编2查询",
+              padding: 15,
+              items: [{
+                xtype: "panel",
+                layout: 'hbox',
+                bodyPadding: 5,
+                border: 0,
+                defaultType: 'textfield',
+                items: [{
+                  fieldLabel: "邮编2",
+                  labelWidth: 50,
+                  labelAlign: "right"
+                }, {
+                  fieldLabel: "地址2",
+                  labelWidth: 50,
+                  labelAlign: "right"
+                }]
+              }]
+            }]
+          }, {
+            xtype: "button",
+            text: "组合查询",
+            margin: "0 0 0 50"
+          }, {
+            xtype: "button",
+            text: "块状打印",
+            margin: "0 0 0 20"
+          }, {
+            xtype: "button",
+            text: "条状过滤",
+            margin: "0 0 0 20"
+          }, {
+            xtype: "button",
+            text: "条状打印",
+            margin: "0 0 0 20"
+          }]
+        }, {
+          xtype: "grid",
+          margin: "20 0 0 0",
+          store: Ext.data.StoreManager.lookup('jzs'),
+          columns: [{
+            text: '序号',
+            dataIndex: 'id1',
+            flex: 1
+          }, {
+            text: '会员编号',
+            dataIndex: 'iid1',
+            flex: 2
+          }, {
+            text: '姓名',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '性别',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '生日',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '来源',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '电话',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '地址1',
+            dataIndex: 'bnum1',
+            flex: 2
+          }, {
+            text: '邮编1',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '地址2',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '邮编2',
+            dataIndex: 'bnum1',
+            flex: 1
+          }, {
+            text: '备注',
+            dataIndex: 'bnum1',
+            flex: 1
+          }]
+        }]
       }, {
         title: '预估缺货',
         padding: 15,
