@@ -405,7 +405,7 @@ Ext.application({
                                     labelAlign: "right"
                                 },
                                 {
-                                    fieldLabel: "全齐单数",
+                                    fieldLabel: "全期单数",
                                     labelAlign: "right"
                                 },
                                 {
@@ -427,6 +427,10 @@ Ext.application({
                                 },
                                 {
                                     text: '货号',
+                                    dataIndex: 'iid1',
+                                    flex: 1
+                                },{
+                                    text: '品名',
                                     dataIndex: 'iid1',
                                     flex: 1
                                 },
@@ -548,16 +552,6 @@ Ext.application({
                                 },
                                 {
                                     text: 'TEL2',
-                                    dataIndex: 'bnum1',
-                                    flex: 1
-                                },
-                                {
-                                    text: '联络人',
-                                    dataIndex: 'bnum1',
-                                    flex: 1
-                                },
-                                {
-                                    text: '产品类别',
                                     dataIndex: 'bnum1',
                                     flex: 1
                                 },
