@@ -19,7 +19,7 @@ Ext.application({
             "num3": 90,
             "num4": 100,
             "style": "箱包",
-            "desc": "这是商品的简要说明",
+            "desc": "这是商品的简要1说明",
             "num5": 5,
             "text": "这是商品的备注信息"
           },
@@ -1212,7 +1212,6 @@ Ext.application({
       ]
     });
 
-
     var button = Ext.create("Ext.panel.Panel", {
       renderTo: Ext.getBody(),
       margin: "20 0 0 17",
@@ -1232,6 +1231,8 @@ Ext.application({
         }
       ]
     });
+
+
     // panel.hide();
     // button.hide();
   }
