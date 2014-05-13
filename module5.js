@@ -140,6 +140,7 @@ Ext.application({
           defaultType: 'textfield',
           items: [{
             fieldLabel: "寄送方式",
+            xtype: "combobox",
             labelAlign: "right"
           }, {
             fieldLabel: "青春贴",
@@ -232,6 +233,10 @@ Ext.application({
             xtype: "button",
             text: "<span class=\"key\">W</span> 保存",
             margin: "0 0 0 20"
+          }, {
+            xtype: "button",
+            text: "<span class=\"key\">W</span>删除记录",
+            margin: "0 0 0 20"
           }]
         }]
       }, {
@@ -254,7 +259,11 @@ Ext.application({
             labelWidth : 30,
             width: 100,
             labelAlign: "right",
-            margin: "0 0 0 20"
+            margin: "0 10 0 20"
+          },{
+            xtype: "button",
+            text: "搜索",
+            float:"right"
           }]
         }, {
           xtype:'panel',
@@ -281,14 +290,6 @@ Ext.application({
               labelWidth : 50,
               width: 120,
               labelAlign: "right"
-            }, {
-              xtype: "button",
-              text: "搜索",
-              margin: "0 0 0 20"
-            }, {
-              xtype: "button",
-              text: "重置",
-              margin: "0 0 0 10"
             }]
           }, {
             xtype: "grid",
@@ -349,7 +350,7 @@ Ext.application({
               margin: "0 0 0 10"
             }, {
               xtype: "button",
-              text: "<span class=\"key\">R</span> 打印",
+              text: "<span class=\"key\">R</span>批量打印",
               margin: "0 0 0 10"
             }]
           }]
@@ -524,7 +525,7 @@ Ext.application({
         bodyPadding: 10,
         border: 0,
         defaultType: 'textfield',
-        width: 230,
+        width: 260,
         style: {
           float: "right"
         },
@@ -543,6 +544,10 @@ Ext.application({
           xtype: "button",
           text: "明细打印",
           margin: "0 0 0 10"
+        }, {
+          xtype: "button",
+          text: "重打",
+          margin: "0 0 0 10"
         }]
       }]
     });
@@ -550,6 +555,6 @@ Ext.application({
     // search.hide();
     // list.hide();
     // add1.show();
-    // print.show();
+     print.show();
   }
 });
