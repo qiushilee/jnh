@@ -525,7 +525,7 @@ Ext.application({
         bodyPadding: 10,
         border: 0,
         defaultType: 'textfield',
-        width: 260,
+        width: 270,
         style: {
           float: "right"
         },
