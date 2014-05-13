@@ -115,20 +115,25 @@ Ext.application({
       renderTo: document.body,
       items: [
         {
-          xtype: "combobox",
-          fieldLabel: "期数",
-          labelAlign: "right"
-        },
-        {
           fieldLabel: "会员姓名",
+          labelWidth: 60,
           labelAlign: "right"
         },
         {
           fieldLabel: "会员编号",
+          labelWidth: 60,
           labelAlign: "right"
         },
         {
           fieldLabel: "出货单编号",
+          labelWidth: 70,
+          labelAlign: "right"
+        },
+        {
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelWidth: 40,
+          width: 120,
           labelAlign: "right"
         },
         {
@@ -169,10 +174,12 @@ Ext.application({
                 },
                 {
                   xtype: "label",
-                  text: "(10期)"
-                } ,
+                  text: "(10期)",
+                  margin: "3 0 0 5"
+                },
                 {
                   fieldLabel: "会员编号",
+                  labelWidth: 75,
                   labelAlign: "right"
                 }
               ]
@@ -186,14 +193,12 @@ Ext.application({
               items: [
                 {
                   xtype: "textfield",
-                  margin: "10 0 0 0",
                   fieldLabel: "会员姓名",
                   labelAlign: "right"
                 },
                 {
                   xtype: 'textfield',
                   fieldLabel: "应收金额",
-                  margin: "10 0 0 0",
                   labelAlign: "right"
                 }
               ]
@@ -293,19 +298,7 @@ Ext.application({
               layout: "hbox",
               border: 0,
               defaultType: 'textfield',
-              margin: "10 0 0 0",
-              /* items: [{
-               xtype: "button",
-               text: "<span class=\"key\">N</span> 修改"
-               }, {
-               xtype: "button",
-               text: "<span class=\"key\">T</span> 保存",
-               margin: "0 0 0 20"
-               }, {
-               xtype: "button",
-               text: "<span class=\"key\">C</span> 重打",
-               margin: "0 0 0 20"
-               }]*/
+              margin: "10 0 0 0"
             }
           ]
         },
@@ -320,8 +313,8 @@ Ext.application({
             {
               xtype: 'panel',
               layout: "hbox",
-              border: 0, items: [
-
+              border: 0,
+              items: [
               {
                 xtype: "textfield",
                 fieldLabel: "货号",
@@ -362,7 +355,6 @@ Ext.application({
                       labelAlign: "right"
                     },
                     {
-                      xtype: "combobox",
                       fieldLabel: "备注",
                       labelWidth: 50,
                       width: 300,
