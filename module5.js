@@ -253,14 +253,18 @@ Ext.application({
           items: [{
             xtype: "button",
             text: "出货单号"
-          }, {
+          },{
+            xtype: "textfield",
+            width: 70,
+            margin: "0 10 0 20"
+          },  {
             xtype: "textfield",
             fieldLabel: "货号",
             labelWidth : 30,
             width: 100,
             labelAlign: "right",
             margin: "0 10 0 20"
-          },{
+          }, {
             xtype: "button",
             text: "搜索",
             float:"right"
