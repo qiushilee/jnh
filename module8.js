@@ -801,6 +801,11 @@ Ext.application({
               defaultType: 'textfield',
               items: [
                 {
+                  xtype: "combobox",
+                  fieldLabel: "期数",
+                  labelAlign: "right"
+                },
+                {
                   fieldLabel: "出货单编号从",
                   labelAlign: "right"
                 },
@@ -1227,6 +1232,12 @@ Ext.application({
         {
           xtype: "button",
           text: "<span class=\"key\">P</span> 打印",
+          margin: "0 0 0 20",
+          scale: "medium"
+        },
+        {
+          xtype: "button",
+          text: "<span class=\"key\">R</span> 重打",
           margin: "0 0 0 20",
           scale: "medium"
         }
