@@ -339,18 +339,20 @@ Ext.application({
                   labelAlign: "right"
               }, {
                   fieldLabel: "~~~~",
-                  labelWidth: 57,
+                  labelWidth: 45,
                   labelAlign: "right"
               },{
                   fieldLabel: "预估单量",
+                  labelWidth: 65,
                   labelAlign: "right"
               },{
                   fieldLabel: "全齐单数",
+                  labelWidth: 65,
                   labelAlign: "right"
               },{
                   xtype: "label",
                   text: "本期现单量：4561",
-                  margin: "3 0 0 50"
+                  margin: "3 0 0 20"
               }]
           }, {
               xtype: "grid",
