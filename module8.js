@@ -803,6 +803,8 @@ Ext.application({
                 {
                   xtype: "combobox",
                   fieldLabel: "期数",
+                  labelWidth: 40,
+                  width: 120,
                   labelAlign: "right"
                 },
                 {
