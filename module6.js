@@ -164,8 +164,13 @@ Ext.application({
                 {
                   disabled: true,
                   fieldLabel: "出货单编号",
+                  width: 220,
                   labelAlign: "right"
                 },
+                {
+                  xtype: "label",
+                  text: "(10期)"
+                } ,
                 {
                   fieldLabel: "会员编号",
                   labelAlign: "right"
@@ -625,7 +630,7 @@ Ext.application({
 
     // search.hide();
     //list.hide();
-    add.show();
+    //add.show();
     // print.show();
   }
 });
