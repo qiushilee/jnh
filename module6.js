@@ -115,6 +115,13 @@ Ext.application({
       renderTo: document.body,
       items: [
         {
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelWidth: 40,
+          width: 120,
+          labelAlign: "right"
+        },
+        {
           fieldLabel: "会员姓名",
           labelWidth: 60,
           labelAlign: "right"
@@ -127,13 +134,6 @@ Ext.application({
         {
           fieldLabel: "出货单编号",
           labelWidth: 70,
-          labelAlign: "right"
-        },
-        {
-          xtype: "combobox",
-          fieldLabel: "期数",
-          labelWidth: 40,
-          width: 120,
           labelAlign: "right"
         },
         {
@@ -176,11 +176,6 @@ Ext.application({
                   xtype: "label",
                   text: "(10期)",
                   margin: "3 0 0 5"
-                },
-                {
-                  fieldLabel: "会员编号",
-                  labelWidth: 75,
-                  labelAlign: "right"
                 }
               ]
             },
@@ -264,6 +259,10 @@ Ext.application({
                 {
                   fieldLabel: "邮资",
                   labelAlign: "right"
+                },
+                {
+                  fieldLabel: "会员编号",
+                  labelAlign: "right"
                 }
               ]
             },
@@ -326,6 +325,19 @@ Ext.application({
               {
                 xtype: "button",
                 text: "搜索",
+                margin: "0 0 0 10",
+                float: "right"
+              },
+              {
+                xtype: "button",
+                text: "导入电话订单",
+                margin: "0 0 0 10",
+                float: "right"
+              },
+              {
+                xtype: "button",
+                text: "导入网上订单",
+                margin: "0 0 0 10",
                 float: "right"
               }
             ]
@@ -447,6 +459,11 @@ Ext.application({
                     {
                       xtype: "button",
                       text: "<span class=\"key\">R</span> 重打",
+                      margin: "0 0 0 10"
+                    },
+                    {
+                      xtype: "button",
+                      text: "加入缺货单",
                       margin: "0 0 0 10"
                     }
                   ]
@@ -620,9 +637,122 @@ Ext.application({
       ]
     });
 
+    var addQhd = new Ext.create("Ext.window.Window", {
+      title: "缺货单",
+      width: 600,
+      bodyPadding: 10,
+      items: [
+        {
+          xtype: "grid",
+          store: Ext.data.StoreManager.lookup('simpsonsStore'),
+          margin: "10 0 0 0",
+          selModel: Ext.create('Ext.selection.CheckboxModel', {mode: "SIMPLE"}),
+          columns: [
+            {
+              text: '序号',
+              dataIndex: 'id1'
+            },
+            {
+              text: '货号',
+              dataIndex: 'adder1',
+              flex: 1
+            },
+            {
+              text: '数量',
+              dataIndex: 'man1'
+            },
+            {
+              text: '单价',
+              dataIndex: 'man1'
+            },
+            {
+              text: '金额',
+              dataIndex: 'man1'
+            },
+            {
+              text: '删除',
+              dataIndex: 'man1'
+            }
+          ]
+        },
+        {
+          layout: "hbox",
+          bodyPadding: 10,
+          border: 0,
+          defaultType: 'textfield',
+          bodyStyle: {
+            "background-color": "transparent"
+          },
+          items: [
+            {
+              fieldLabel: "包装员",
+              labelAlign: "right",
+              labelWidth: 50
+            },
+            {
+              fieldLabel: "抵价券总金额",
+              labelAlign: "right",
+              labelWidth: 80
+            },
+            {
+              fieldLabel: "多付款",
+              labelAlign: "right",
+              labelWidth: 50
+            },
+            {
+              xtype: "button",
+              text: "搜索",
+              margin: "0 0 0 20"
+            },
+            {
+              xtype: "button",
+              text: "重置",
+              margin: "0 0 0 10"
+            },
+            {
+              xtype: "button",
+              text: "打印",
+              margin: "0 0 0 10"
+            }
+          ]
+        },
+        {
+          layout: "hbox",
+          bodyPadding: 10,
+          border: 0,
+          defaultType: 'textfield',
+          width: 230,
+          style: {
+            float: "right"
+          },
+          bodyStyle: {
+            "background-color": "transparent"
+          },
+          items: [
+            {
+              xtype: "button",
+              text: "查询",
+              margin: "0 0 0 20"
+            },
+            {
+              xtype: "button",
+              text: "名单打印",
+              margin: "0 0 0 10"
+            },
+            {
+              xtype: "button",
+              text: "明细打印",
+              margin: "0 0 0 10"
+            }
+          ]
+        }
+      ]
+    });
+
     // search.hide();
     //list.hide();
     //add.show();
-    // print.show();
+    print.show();
+    addQhd.show();
   }
 });
