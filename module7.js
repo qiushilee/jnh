@@ -81,16 +81,31 @@ Ext.application({
       renderTo: document.body,
       items: [
         {
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelWidth: 40,
+          width: 120,
+          labelAlign: "right"
+        },
+        {
           fieldLabel: "出货单号",
+          labelWidth: 60,
+          labelAlign: "right"
+        },
+        {
+          fieldLabel: "会员编号",
+          labelWidth: 60,
           labelAlign: "right"
         },
         {
           fieldLabel: "姓名",
+          labelWidth: 40,
           labelAlign: "right"
         },
         {
           xtype: "datefield",
           fieldLabel: "邮寄日期",
+          labelWidth: 60,
           labelAlign: "right"
         },
         {
@@ -113,6 +128,7 @@ Ext.application({
           xtype: "grid",
           title: "包裹列表",
           store: Ext.data.StoreManager.lookup('jhStore'),
+          selModel: Ext.create('Ext.selection.CheckboxModel', {mode: "SIMPLE"}),
           border: 0,
           columnWidth: 0.5,
           columns: [{
@@ -128,6 +144,10 @@ Ext.application({
             dataIndex: 'name1',
             flex: 1
           }, {
+            text: '流水号',
+            dataIndex: 'name1',
+            flex: 1
+          }, {
             text: '邮寄日期',
             dataIndex: 'asdder2',
             flex: 1
@@ -136,11 +156,19 @@ Ext.application({
             dataIndex: 'asdder2',
             flex: 1
           }, {
-            text: '邮编',
+            text: '邮资',
+            dataIndex: 'asdder2',
+            flex: 1
+          }, {
+            text: '包装员',
             dataIndex: 'asdder2',
             flex: 1
           }, {
             text: '姓名',
+            dataIndex: 'asdder2',
+            flex: 1
+          }, {
+            text: '补寄',
             dataIndex: 'asdder2',
             flex: 1
           }, {
@@ -152,7 +180,6 @@ Ext.application({
       ]
     });
 
-
     var button = Ext.create("Ext.panel.Panel", {
       renderTo: Ext.getBody(),
       margin: "10 0 0 0",
@@ -160,7 +187,7 @@ Ext.application({
       layout: "column",
       items: [{
         xtype: "button",
-        text: "<span class=\"key\">A</span> 增加"
+        text: "<span class=\"key\">A</span> 添加"
       }, {
         xtype: "button",
         text: "<span class=\"key\">M</span> 修改",
@@ -168,6 +195,11 @@ Ext.application({
       }, {
         xtype: "button",
         text: "<span class=\"key\">S</span> 保存",
+        margin: "0 0 0 10"
+      }, {
+        // 添加到打印购物车
+        xtype: "button",
+        text: "<span class=\"key\">W</span> 添加",
         margin: "0 0 0 10"
       }, {
         xtype: "button",
@@ -180,6 +212,14 @@ Ext.application({
       }, {
         xtype: "button",
         text: "<span class=\"key\">B</span> 连续打印",
+        margin: "0 0 0 10"
+      }, {
+        xtype: "button",
+        text: "批量修改",
+        margin: "0 0 0 10"
+      }, {
+        xtype: "button",
+        text: "扫描包裹单",
         margin: "0 0 0 10"
       }]
     });
@@ -315,7 +355,7 @@ Ext.application({
 
     var print = new Ext.create("Ext.window.Window", {
       title: "包裹打印",
-      width: 600,
+      width: 700,
       bodyPadding: 10,
       items: [{
         layout: "hbox",
@@ -328,9 +368,17 @@ Ext.application({
         items: [{
           fieldLabel: "出货单号",
           labelAlign: "right",
-          labelWidth: 52
+          labelWidth: 60,
+          width: 150,
         }, {
-          fieldLabel: ""
+          fieldLabel: "",
+          width: 90
+        }, {
+          xtype: "combobox",
+          fieldLabel: "寄送方式",
+          labelAlign: "right",
+          labelWidth: 60,
+          width: 140
         }, {
           xtype: "button",
           text: "搜索",
@@ -351,12 +399,18 @@ Ext.application({
           text: '出货单号',
           dataIndex: 'id1'
         }, {
+          text: '流水号',
+          dataIndex: 'id1'
+        }, {
           text: '地址',
           dataIndex: 'man1',
           flex: 1
         }, {
           text: '姓名',
           dataIndex: 'adder1'
+        }, {
+          text: '寄送方式',
+          dataIndex: 'id1'
         }, {
           text: '备注',
           dataIndex: 'man1',
@@ -385,11 +439,117 @@ Ext.application({
       }]
     });
 
-    search.hide();
-    list.hide();
-    button.hide();
+    var printCart = new Ext.create("Ext.window.Window", {
+      title: "打印购物车",
+      width: 1000,
+      bodyPadding: 10,
+      items: [{
+        layout: "hbox",
+        bodyPadding: 10,
+        border: 0,
+        defaultType: 'textfield',
+        bodyStyle: {
+          "background-color": "transparent"
+        },
+        items: [{
+          fieldLabel: "寄送方式",
+          labelWidth: 60,
+          labelAlign: "right"
+        }, {
+          fieldLabel: "编号",
+          labelWidth: 40,
+          labelAlign: "right"
+        }, {
+          xtype: "button",
+          text: "搜索",
+          margin: "0 0 0 20"
+        }, {
+          xtype: "button",
+          text: "重置",
+          margin: "0 0 0 10"
+        }]
+      }, {
+        xtype: "grid",
+        store: Ext.data.StoreManager.lookup('jhStore'),
+        margin: "10 0 0 0",
+        selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
+        columns: [{
+          text: '序号',
+          dataIndex: 'id1',
+          flex: 1
+        }, {
+          text: '出货单号',
+          dataIndex: 'id1',
+          flex: 1
+        }, {
+          text: '会员姓名',
+          dataIndex: 'id1',
+          flex: 1
+        }, {
+          text: '寄送方式',
+          dataIndex: 'id1',
+          flex: 2
+        }, {
+          text: '流水号',
+          dataIndex: 'id1',
+          flex: 1
+        }, {
+          text: '寄送日期',
+          dataIndex: 'id1',
+          flex: 1
+        }, {
+          text: '单号重量',
+          dataIndex: 'id1',
+          flex: 1
+        }, {
+          text: '邮资',
+          dataIndex: 'id1',
+          flex: 1
+        }, {
+          text: '包装员',
+          dataIndex: 'id1',
+          flex: 1
+        }],
+        bbar: Ext.create('Ext.PagingToolbar', {
+          displayMsg: 'Displaying topics {0} - {1} of {2}',
+          items:['-', {
+            pressed: false
+          }]
+        })
+      }, {
+        layout: "hbox",
+        bodyPadding: 10,
+        border: 0,
+        defaultType: 'textfield',
+        width: "22%",
+        style: {
+          float: "right"
+        },
+        bodyStyle: {
+          "background-color": "transparent"
+        },
+        items: [{
+          xtype: "button",
+          text: "<span class=\"key\">M</span> 修改",
+          margin: "0 0 0 10"
+        }, {
+          xtype: "button",
+          text: "<span class=\"key\">S</span> 保存",
+          margin: "0 0 0 10"
+        }, {
+          xtype: "button",
+          text: "<span class=\"key\">D</span> 打印",
+          margin: "0 0 0 10"
+        }]
+      }]
+    });
+
+    // search.hide();
+    // list.hide();
+    // button.hide();
     // add.show();
-    print.show()
+    print.show();
+    printCart.show();
   }
 });
 

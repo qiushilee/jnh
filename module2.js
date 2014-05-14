@@ -233,21 +233,21 @@ Ext.application({
             dataIndex: 'price2',
             flex: 1
           }, {
-            text: '累进量调整前',
+            text: '调整前累进量',
             dataIndex: 'num',
-            flex: 1
+            flex: 2
           }, {
-            text: '累进量调整后',
+            text: '调整后累进量',
             dataIndex: 'num',
-            flex: 1
+            flex: 2
           }, {
-            text: '出货数调整前',
+            text: '调整前出货数',
             dataIndex: 'num2',
-            flex: 1
+            flex: 2
           }, {
-            text: '出货数调整后',
+            text: '调整后出货数',
             dataIndex: 'num3',
-            flex: 1
+            flex: 2
           }, {
             text: '库存数',
             dataIndex: 'num3',
@@ -275,6 +275,9 @@ Ext.application({
             dataIndex: 'text',
           }, {
             text: '厂商地址',
+            dataIndex: 'text',
+          }, {
+            text: '缺货提示',
             dataIndex: 'text',
           }]
         }]
@@ -314,13 +317,17 @@ Ext.application({
             dataIndex: 'id'
           }, {
             text: '出货单号',
-            dataIndex: 'iid'
+            dataIndex: 'iid',
+            flex: 1
           }, {
             text: '调整前数量',
             dataIndex: 'bnum'
           }, {
             text: '调整后数量',
-            dataIndex: 'bnum',
+            dataIndex: 'bnum'
+          }, {
+            text: '状态',
+            dataIndex: 'bnum1',
             flex: 1
           }]
         }]
@@ -348,7 +355,7 @@ Ext.application({
     var add = new Ext.create("Ext.window.Window", {
       title: "库存详情",
       width: 400,
-      layout: 'form',
+      layout: 'vbox',
       bodyPadding: 5,
       defaultType: 'textfield',
       fieldDefaults: {
@@ -358,52 +365,83 @@ Ext.application({
         background: "#fff"
       },
       items: [{
-          fieldLabel: "编号",
-          labelAlign: "right",
-          name: 'first',
-          width: 30,
-          allowBlank:false
+          fieldLabel: "厂商编号",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: "厂商地址",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: "货号",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
           fieldLabel: '品名',
-          labelAlign: "right",
-          name: 'company'
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
           fieldLabel: '进价',
-          labelAlign: "right",
-          name: 'company'
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
           fieldLabel: '包装形式',
+          labelWidth: 60,
+          width: 300,
           labelAlign: "right",
           name: 'email',
         }, {
           fieldLabel: '重量',
-          labelAlign: "right",
-          name: 'dob',
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
           fieldLabel: '进货说明',
-          labelAlign: "right",
-          name: 'age',
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: '售价',
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: '商品说明',
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: '调整基数',
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: '缺货提示',
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
           xtype:'panel',
-          layout: "column",
+          layout: "hbox",
           border: 0,
-          bodyStyle: {
-            background:'transparent'
-          },
+          margin: "0 0 0 53",
           items: [{
             xtype:'button',
-            layout: "absolute",
-            x: "30%",
-            columnWidth: 0.2,
-            scale: "medium",
-            text: "保存"
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">S</span> 增加"
           }, {
             xtype:'button',
-            layout: "absolute",
-            x: "35%",
-            columnWidth: 0.2,
-            scale: "medium",
-            text: "返回"
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">E</span> 返回"
+          }, {
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">A</span> 增加"
           }]
         }]
     });
@@ -465,9 +503,104 @@ Ext.application({
         }]
     });
 
-    // panel.hide();
-    // button.hide();
-    // add.show();
+    var addJHD = new Ext.create("Ext.window.Window", {
+      title: "进货单详情",
+      width: 800,
+      bodyPadding: 10,
+      items: [{
+        layout: "hbox",
+        bodyPadding: 10,
+        border: 0,
+        defaultType: 'textfield',
+        bodyStyle: {
+          "background-color": "transparent"
+        },
+        items: [{
+          fieldLabel: "货号",
+          labelWidth: 40,
+          width: 200,
+          labelAlign: "right"
+        }, {
+          xtype: "combobox",
+          fieldLabel: "类型",
+          labelAlign: "right",
+          labelWidth: 40,
+          width: 120
+        }, {
+          fieldLabel: "编号",
+          labelWidth: 40,
+          width: 170,
+          labelAlign: "right"
+        }]
+      }, {
+        layout: "hbox",
+        bodyPadding: 10,
+        border: 0,
+        defaultType: 'textfield',
+        bodyStyle: {
+          "background-color": "transparent"
+        },
+        items: [{
+          xtype: "numberfield",
+          fieldLabel: "数量",
+          labelWidth: 40,
+          width: 100,
+          labelAlign: "right"
+        }, {
+          xtype: "numberfield",
+          fieldLabel: "进价",
+          labelWidth: 40,
+          width: 100,
+          labelAlign: "right"
+        }, {
+          fieldLabel: "备注",
+          labelWidth: 40,
+          labelAlign: "right"
+        }, {
+          xtype: "button",
+          text: "搜索",
+          margin: "0 0 0 20"
+        }, {
+          xtype: "button",
+          text: "重置",
+          margin: "0 0 0 10"
+        }]
+      }, {
+        xtype: "grid",
+        store: Ext.data.StoreManager.lookup('kucun'),
+        margin: "10 0 0 0",
+        columns: [{
+          text: '序号',
+          dataIndex: 'id1'
+        }, {
+          text: '货号',
+          dataIndex: 'id1'
+        }, {
+          text: '品名',
+          dataIndex: 'man1',
+          flex: 1
+        }, {
+          text: '数量',
+          dataIndex: 'adder1'
+        }, {
+          text: '单价',
+          dataIndex: 'adder1'
+        }, {
+          text: '金额',
+          dataIndex: 'adder1'
+        }, {
+          text: '包装形式',
+          dataIndex: 'adder1'
+        }, {
+          text: '备注',
+          dataIndex: 'man1',
+          flex: 1
+        }]
+      }]
+    });
+
+    add.show();
     addJzs.show();
+    addJHD.show();
   }
 });
