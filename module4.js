@@ -81,6 +81,11 @@ Ext.application({
       renderTo: document.body,
       items: [
         {
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelAlign: "right"
+        },
+        {
           fieldLabel: "汇票号码",
           labelAlign: "right"
         },
@@ -90,6 +95,15 @@ Ext.application({
         },
         {
           fieldLabel: "会员姓名",
+          labelAlign: "right"
+        },
+        {
+          fieldLabel: "地址",
+          labelAlign: "right"
+        },
+        {
+          xtype: "combobox",
+          fieldLabel: "付款方式",
           labelAlign: "right"
         },
         {

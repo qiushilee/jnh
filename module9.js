@@ -97,7 +97,7 @@ Ext.application({
         }
       }
     });
-    
+
     var search = Ext.create("Ext.Panel", {
       layout: "hbox",
       bodyPadding: 10,
@@ -105,7 +105,7 @@ Ext.application({
       margin: "10 0 0 0",
       renderTo: document.body,
       items: [{
-        xtype: "numberfield",
+        xtype: "combobox",
         fieldLabel: "期数",
         labelWidth: 40,
         width: 90,
@@ -360,6 +360,7 @@ Ext.application({
           "background-color": "transparent"
         },
         items: [{
+          xtype: "combobox",
           fieldLabel: "寄送方式",
           labelWidth: 60,
           labelAlign: "right"
@@ -368,13 +369,13 @@ Ext.application({
           labelWidth: 40,
           labelAlign: "right"
         }, {
-          xtype: "numberfield",
+          xtype: "combobox",
           fieldLabel: "参考",
           labelWidth: 40,
           width: 90,
           labelAlign: "right"
         }, {
-          xtype: "numberfield",
+          xtype: "combobox",
           fieldLabel: "~",
           labelWidth: 20,
           width: 70,
@@ -449,6 +450,10 @@ Ext.application({
           text: '备注',
           dataIndex: 'id1',
           flex: 1
+        }, {
+          text: '购买金额',
+          dataIndex: 'id1',
+          flex: 1
         }],
         bbar: Ext.create('Ext.PagingToolbar', {
           displayMsg: 'Displaying topics {0} - {1} of {2}',
@@ -474,11 +479,11 @@ Ext.application({
           margin: "0 0 0 20"
         }, {
           xtype: "button",
-          text: "<span class=\"key\">N</span> 修改",
+          text: "包裹单号扫描",
           margin: "0 0 0 10"
         }, {
           xtype: "button",
-          text: "包裹单号扫描",
+          text: "<span class=\"key\">N</span> 修改",
           margin: "0 0 0 10"
         }, {
           xtype: "button",
@@ -514,7 +519,7 @@ Ext.application({
         },
         items: [{
           xtype: "combobox",
-          fieldLabel: "种类",
+          fieldLabel: "来源",
           labelWidth: 40,
           width: 100,
           labelAlign: "right"
@@ -531,13 +536,13 @@ Ext.application({
           width: 100,
           labelAlign: "right"
         }, {
-          xtype: "numberfield",
-          fieldLabel: "基数",
+          xtype: "combobox",
+          fieldLabel: "期数",
           labelWidth: 40,
           width: 110,
           labelAlign: "right"
         }, {
-          xtype: "numberfield",
+          xtype: "combobox",
           fieldLabel: "到",
           labelWidth: 20,
           width: 90,
@@ -642,7 +647,7 @@ Ext.application({
         }]
       }]
     });
-    
+
     // search.hide();
     // list.hide();
     // list2.hide();
