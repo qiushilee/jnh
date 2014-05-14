@@ -98,37 +98,6 @@ Ext.application({
         }
       }
     });
-    
-    // 厂商管理列表
-    var cs = Ext.create('Ext.grid.Panel', {
-      title: '厂商管理列表',
-      store: Ext.data.StoreManager.lookup('simpsonsStore'),
-      columns: [{
-        text: '厂商编号',
-        dataIndex: 'id'
-      }, {
-        text: '地址',
-        dataIndex: 'adder',
-        flex: 1
-      }, {
-        text: '联系人',
-        dataIndex: 'man',
-        flex: 1
-      }, {
-        text: '电话1',
-        dataIndex: 'phone1',
-        flex: 1
-      }, {
-        text: '电话2',
-        dataIndex: 'phone2',
-        flex: 1
-      }, {
-        text: 'qq',
-        dataIndex: 'qq',
-        flex: 1
-      }],
-      renderTo: Ext.getBody()
-    });
 
     Ext.create('Ext.data.Store', {
       storeId: 'jhStore',
@@ -191,6 +160,96 @@ Ext.application({
       }
     });
     
+    var search = Ext.create("Ext.Panel", {
+      layout: "hbox",
+      bodyPadding: 10,
+      defaultType: 'textfield',
+      margin: "10 0",
+      renderTo: document.body,
+      border: 0,
+      items: [{
+        fieldLabel: "期数",
+        labelWidth: 40,
+        width: 120,
+        labelAlign: "right"
+      }, {
+        fieldLabel: "编号",
+        labelWidth: 60,
+        labelAlign: "right"
+      }, {
+        fieldLabel: "~",
+        labelWidth: 20,
+        labelAlign: "right"
+      }, {
+        fieldLabel: "地址",
+        labelWidth: 40,
+        labelAlign: "right"
+      }, {
+        fieldLabel: "货号",
+        labelWidth: 40,
+        labelAlign: "right"
+      }, {
+        xtype: "button",
+        text: "搜索",
+        margin: "0 0 0 20"
+      }, {
+        xtype: "button",
+        text: "重置",
+        margin: "0 0 0 20"
+      }]
+    });
+    
+    // 厂商管理列表
+    var cs = Ext.create('Ext.grid.Panel', {
+      title: '厂商管理列表',
+      store: Ext.data.StoreManager.lookup('simpsonsStore'),
+      columns: [{
+        text: '厂商编号',
+        dataIndex: 'id'
+      }, {
+        text: '地址',
+        dataIndex: 'adder',
+        flex: 1
+      }, {
+        text: '联系人',
+        dataIndex: 'man',
+        flex: 1
+      }, {
+        text: '电话1',
+        dataIndex: 'phone1',
+        flex: 1
+      }, {
+        text: '电话2',
+        dataIndex: 'phone2',
+        flex: 1
+      }, {
+        text: 'qq',
+        dataIndex: 'qq',
+        flex: 1
+      }],
+      renderTo: Ext.getBody()
+    });
+
+    Ext.create("Ext.Panel", {
+      layout: "hbox",
+      border: 0,
+      defaultType: 'textfield',
+      margin: "10 0 0 0",
+      renderTo: Ext.getBody(),
+      items: [{
+        xtype: "button",
+        text: "<span class=\"key\">A</span> 增加"
+      }, {
+        xtype: "button",
+        text: "导入",
+        margin: "0 0 0 10"
+      }, {
+        xtype: "button",
+        text: "打印",
+        margin: "0 0 0 10"
+      }]
+    });
+    
     // // 进货单
     // Ext.create('Ext.grid.Panel', {
     //   title: '进货单',
@@ -219,92 +278,99 @@ Ext.application({
       height: 500,
       items: [{
         xtype: "panel",
-        columnWidth: 0.49,
+        columnWidth: 0.41,
         title: "厂商输入页面",
-        layout: 'form',
+        layout: 'vbox',
         width: 500,
         bodyPadding: 5,
         defaultType: 'textfield',
-        fieldDefaults: {
-          labelAlign: 'top'
-        },
         items: [{
+          fieldLabel: "期数",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
            fieldLabel: "厂商编号",
-           labelAlign: "right",
-           name: 'first',
-           width: 30,
-           allowBlank:false
+           labelWidth: 60,
+           width: 300,
+           labelAlign: "right"
          },{
           fieldLabel: '地址',
+          labelWidth: 60,
+          width: 300,
           labelAlign: "right",
-          name: 'company'
         }, {
           fieldLabel: '联系人',
-          labelAlign: "right",
-          name: 'company'
-        }, {
-          xtype: "textfield",
-          fieldLabel: '产品类别',
-          labelAlign: "right",
-          columnWidth: 0.6,
-          name: 'email',
-          vtype:'email'
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
           fieldLabel: '电话1',
-          labelAlign: "right",
-          name: 'dob',
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
           fieldLabel: '电话2',
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          xtype: "combobox",
+          fieldLabel: '产品类别',
+          labelWidth: 60,
+          width: 300,
           labelAlign: "right",
-          name: 'age',
+          vtype:'email'
         }, {
           fieldLabel: "qq",
-          labelAlign: "right",
-          width: 40,
-        }, {
-          fieldLabel: "开户行",
-          labelAlign: "right",
-          width: 40,
-          name: 'last'
-        }, {
-          fieldLabel: "账号",
-          labelAlign: "right",
-          width: 40,
-          name: 'last'
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
           fieldLabel: "网址",
-          labelAlign: "right",
-          width: 40,
-          name: 'last'
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
         }, {
+          fieldLabel: "开户行",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: "账号",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          xtype: "textarea",
           fieldLabel: "备注",
-          labelAlign: "right",
-          name: 'last',
-          xtype: "textarea"
+          labelWidth: 60,
+          width: 300,
+          height: 100,
+          labelAlign: "right"
         }, {
           xtype:'panel',
-          layout: "column",
+          layout: "hbox",
           border: 0,
+          margin: "0 0 0 53",
           items: [{
             xtype:'button',
-            layout: "absolute",
-            x: "30%",
-            columnWidth: 0.2,
-            scale: "medium",
-            text: "保存"
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">S</span> 增加"
           }, {
             xtype:'button',
-            layout: "absolute",
-            x: "35%",
-            columnWidth: 0.2,
-            scale: "medium",
-            text: "返回"
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">E</span> 返回"
+          }, {
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">A</span> 增加"
           }]
         }]
         },
         {
           xtype: "grid",
-          columnWidth: 0.5,
+          columnWidth: 0.59,
           layout: "absolute",
           x: 10,
           title: '进转损',
