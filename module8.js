@@ -393,6 +393,7 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "厂商编号",
+                  labelWidth: 60,
                   labelAlign: "right"
                 },
                 {
@@ -402,16 +403,32 @@ Ext.application({
                 },
                 {
                   fieldLabel: "预估单量",
-                  labelWidth: 65,
+                  labelWidth: 60,
+                  width: 120,
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "全期单数",
+                  labelWidth: 60,
+                  width: 120,
+                  labelAlign: "right"
+                },
+                {
+                  xtype:"datefield",
+                  fieldLabel: "参考日期",
+                  labelWidth: 60,
+                  labelAlign: "right"
+                },
+                {
+                  xtype:"datefield",
+                  fieldLabel: "到",
+                  labelWidth: 60,
                   labelAlign: "right"
                 },
                 {
                   xtype: "label",
                   text: "本期现单量：4561",
+                  labelWidth: 60,
                   margin: "3 0 0 50"
                 }
               ]
@@ -437,12 +454,13 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '累进量',
+                  text: '调整前/后累进量',
                   dataIndex: 'bnum1',
                   flex: 1
                 },
+
                 {
-                  text: '出货数',
+                  text: '调整前/后出货数',
                   dataIndex: 'bnum1',
                   flex: 2
                 },
@@ -467,12 +485,12 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '预计出货数',
+                  text: '调整前/后预计出货数',
                   dataIndex: 'bnum1',
                   flex: 1
                 },
                 {
-                  text: '补货数',
+                  text: '调整前/后补货数',
                   dataIndex: 'bnum1',
                   flex: 1
                 },
@@ -495,102 +513,7 @@ Ext.application({
             }
           ]
         },
-        {
-          title: '厂商打印',
-          padding: 15,
-          items: [
-            {
-              xtype: "panel",
-              layout: 'hbox',
-              bodyPadding: 5,
-              border: 0,
-              defaultType: 'textfield',
-              items: [
-                {
-                  fieldLabel: "厂商编号从",
-                  labelAlign: "right"
-                },
-                {
-                  fieldLabel: "~~~~~~~",
-                  labelWidth: 57,
-                  labelAlign: "right"
-                },
-                {
-                  xtype: "button",
-                  text: "搜索",
-                  margin: "0 0 0 50"
-                },
-                {
-                  xtype: "button",
-                  text: "重置",
-                  margin: "0 0 0 20"
-                }
-              ]
-            },
-            {
-              xtype: "grid",
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jzs'),
-              columns: [
-                {
-                  text: '序号',
-                  dataIndex: 'id1',
-                  flex: 1
-                },
-                {
-                  text: '厂商编号',
-                  dataIndex: 'iid1',
-                  flex: 1
-                },
-                {
-                  text: '厂商名称',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: 'TEL1',
-                  dataIndex: 'bnum1',
-                  flex: 2
-                },
-                {
-                  text: 'TEL2',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '联络人',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '产品类别',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '订货时间',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '开户行',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '帐号',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '备注',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                }
-              ]
-            }
-          ]
-        },
+
         {
           title: '库存明细',
           padding: 15,
