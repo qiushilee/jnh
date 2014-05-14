@@ -409,6 +409,7 @@ Ext.application({
               allowBlank: false
             },
             {
+              xtype:"combobox",
               fieldLabel: "代理期数",
               labelAlign: "right",
               name: 'first',

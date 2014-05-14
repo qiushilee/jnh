@@ -78,7 +78,7 @@ Ext.application({
           "qq": "389210372",
           "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
         }, {
-          'id': '总数',
+          'id': '合计',
           "name": "人民邮电出版社",
           "adder": "浙江省杭州市西湖区",
           "man": "李先生",
@@ -144,7 +144,11 @@ Ext.application({
             labelAlign: "right"
           }, {
             fieldLabel: "青春贴",
+            width:220,
             labelAlign: "right"
+          }, {
+            xtype: "label",
+            text: "(10枚)"
           }]
         }, {
           xtype:'panel',
@@ -236,6 +240,10 @@ Ext.application({
           }, {
             xtype: "button",
             text: "<span class=\"key\">W</span>删除记录",
+            margin: "0 0 0 20"
+          }, {
+            xtype: "button",
+            text: "删除",
             margin: "0 0 0 20"
           }]
         }]
