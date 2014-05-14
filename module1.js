@@ -203,6 +203,7 @@ Ext.application({
     var cs = Ext.create('Ext.grid.Panel', {
       title: '厂商管理列表',
       store: Ext.data.StoreManager.lookup('simpsonsStore'),
+      selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
       columns: [{
         text: '厂商编号',
         dataIndex: 'id'
@@ -246,6 +247,10 @@ Ext.application({
       }, {
         xtype: "button",
         text: "打印",
+        margin: "0 0 0 10"
+      }, {
+        xtype: "button",
+        text: "复制",
         margin: "0 0 0 10"
       }]
     });
