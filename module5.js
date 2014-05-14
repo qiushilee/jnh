@@ -191,6 +191,7 @@ Ext.application({
         }, {
           xtype: "grid",
           store: Ext.data.StoreManager.lookup('simpsonsStore'),
+          selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
           margin: "20 0 0 0",
           columns: [{
             text: '出货单号',
