@@ -804,27 +804,7 @@ Ext.application({
                   width: 500,
                   items: [
                     {
-                      title: "编号定位",
-                      padding: 15,
-                      items: [
-                        {
-                          xtype: "panel",
-                          layout: 'hbox',
-                          bodyPadding: 5,
-                          border: 0,
-                          defaultType: 'textfield',
-                          items: [
-                            {
-                              fieldLabel: "编号",
-                              labelWidth: 50,
-                              labelAlign: "right"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      title: "姓名定位",
+                      title: "会员定位",
                       padding: 15,
                       items: [
                         {
@@ -836,16 +816,45 @@ Ext.application({
                           items: [
                             {
                               fieldLabel: "姓名",
-                              labelWidth: 50,
+                              labelWidth: 40,
+                              labelAlign: "right"
+                            }, {
+                              fieldLabel: "会员编号",
+                              labelWidth: 60,
+                              labelAlign: "right"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      title: "地址定位",
+                      padding: 15,
+                      items: [
+                        {
+                          xtype: "panel",
+                          layout: 'hbox',
+                          bodyPadding: 5,
+                          border: 0,
+                          defaultType: 'textfield',
+                          items: [
+                            {
+                              fieldLabel: "地址",
+                              labelWidth: 40,
+                              width: 150,
                               labelAlign: "right"
                             },
                             {
-                              xtype: 'radiogroup',
+                              fieldLabel: "邮编",
+                              labelWidth: 40,
                               width: 150,
-                              items: [
-                                { boxLabel: '等于', name: 'rb', inputValue: '1', checked: true},
-                                { boxLabel: '不等于', name: 'rb', inputValue: '2'}
-                              ]
+                              labelAlign: "right"
+                            },
+                            {
+                              fieldLabel: "电话",
+                              labelWidth: 40,
+                              width: 150,
+                              labelAlign: "right"
                             }
                           ]
                         }
@@ -865,11 +874,53 @@ Ext.application({
                             {
                               fieldLabel: "加入时间",
                               labelWidth: 60,
+                              width: 160,
                               labelAlign: "right"
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
+                              width: 120,
+                              labelAlign: "right"
+                            }
+                          ]
+                        }, {
+                          xtype: "panel",
+                          layout: 'hbox',
+                          bodyPadding: 5,
+                          border: 0,
+                          defaultType: 'datefield',
+                          items: [
+                            {
+                              fieldLabel: "购买时间",
+                              labelWidth: 60,
+                              width: 160,
+                              labelAlign: "right"
+                            },
+                            {
+                              fieldLabel: "到",
+                              labelWidth: 20,
+                              width: 120,
+                              labelAlign: "right"
+                            }
+                          ]
+                        }, {
+                          xtype: "panel",
+                          layout: 'hbox',
+                          bodyPadding: 5,
+                          border: 0,
+                          defaultType: 'datefield',
+                          items: [
+                            {
+                              fieldLabel: "毕业时间",
+                              labelWidth: 60,
+                              width: 160,
+                              labelAlign: "right"
+                            },
+                            {
+                              xtype: "checkboxfield",
+                              fieldLabel: "年份选择",
+                              labelWidth: 60,
                               labelAlign: "right"
                             },
                             {
@@ -882,7 +933,7 @@ Ext.application({
                       ]
                     },
                     {
-                      title: "邮编1查询",
+                      title: "其它定位",
                       padding: 15,
                       items: [
                         {
@@ -893,39 +944,69 @@ Ext.application({
                           defaultType: 'textfield',
                           items: [
                             {
-                              fieldLabel: "邮编1",
-                              labelWidth: 50,
+                              fieldLabel: "期数",
+                              labelWidth: 60,
+                              width: 120,
                               labelAlign: "right"
                             },
                             {
-                              fieldLabel: "地址1",
-                              labelWidth: 50,
+                              fieldLabel: "~",
+                              labelWidth: 20,
+                              width: 80,
+                              labelAlign: "right"
+                            },
+                            {
+                              xtype: "combobox",
+                              fieldLabel: "来源",
+                              labelWidth: 40,
+                              width: 120,
                               labelAlign: "right"
                             }
                           ]
-                        }
-                      ]
-                    },
-                    {
-                      title: "邮编2查询",
-                      padding: 15,
-                      items: [
+                        },
                         {
                           xtype: "panel",
                           layout: 'hbox',
                           bodyPadding: 5,
                           border: 0,
-                          defaultType: 'textfield',
+                          defaultType: 'combobox',
                           items: [
                             {
-                              fieldLabel: "邮编2",
-                              labelWidth: 50,
+                              xtype: "radiofield",
+                              fieldLabel: "代理",
+                              labelWidth: 40,
                               labelAlign: "right"
                             },
                             {
-                              fieldLabel: "地址2",
-                              labelWidth: 50,
+                              fieldLabel: "寄送方式",
+                              labelWidth: 60,
+                              width: 120,
                               labelAlign: "right"
+                            },
+                            {
+                              xtype: "checkboxfield",
+                              fieldLabel: "寄送方式选择",
+                              labelWidth: 80,
+                              labelAlign: "right"
+                            },
+                            {
+                              fieldLabel: "类型",
+                              labelWidth: 40,
+                              width: 120,
+                              labelAlign: "right"
+                            }
+                          ]
+                        },
+                        {
+                          xtype: "panel",
+                          layout: 'hbox',
+                          bodyPadding: 5,
+                          border: 0,
+                          items: [
+                            {
+                              xtype: "button",
+                              text: "查询",
+                              margin: "0 0 0 150"
                             }
                           ]
                         }
@@ -935,22 +1016,22 @@ Ext.application({
                 },
                 {
                   xtype: "button",
-                  text: "组合查询",
+                  text: "块状打印",
                   margin: "0 0 0 50"
                 },
                 {
                   xtype: "button",
-                  text: "块状打印",
-                  margin: "0 0 0 20"
-                },
-                {
-                  xtype: "button",
-                  text: "条状过滤",
-                  margin: "0 0 0 20"
-                },
-                {
-                  xtype: "button",
                   text: "条状打印",
+                  margin: "0 0 0 20"
+                },
+                {
+                  xtype: "button",
+                  text: "面单打印",
+                  margin: "0 0 0 20"
+                },
+                {
+                  xtype: "button",
+                  text: "批量修改",
                   margin: "0 0 0 20"
                 }
               ]
@@ -976,32 +1057,17 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '性别',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '生日',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '来源',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
                   text: '电话',
                   dataIndex: 'bnum1',
                   flex: 1
                 },
                 {
-                  text: '地址1',
+                  text: '默认地址',
                   dataIndex: 'bnum1',
                   flex: 2
                 },
                 {
-                  text: '邮编1',
+                  text: '邮编',
                   dataIndex: 'bnum1',
                   flex: 1
                 },
@@ -1012,6 +1078,31 @@ Ext.application({
                 },
                 {
                   text: '邮编2',
+                  dataIndex: 'bnum1',
+                  flex: 1
+                },
+                {
+                  text: '购买金额',
+                  dataIndex: 'bnum1',
+                  flex: 1
+                },
+                {
+                  text: '抵价券',
+                  dataIndex: 'bnum1',
+                  flex: 1
+                },
+                {
+                  text: '青春贴',
+                  dataIndex: 'bnum1',
+                  flex: 1
+                },
+                {
+                  text: '不打折抵价券',
+                  dataIndex: 'bnum1',
+                  flex: 2
+                },
+                {
+                  text: '毕业时间',
                   dataIndex: 'bnum1',
                   flex: 1
                 },
