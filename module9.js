@@ -105,7 +105,7 @@ Ext.application({
       margin: "10 0 0 0",
       renderTo: document.body,
       items: [{
-        xtype: "numberfield",
+        xtype: "combobox",
         fieldLabel: "期数",
         labelWidth: 40,
         width: 90,
@@ -234,6 +234,10 @@ Ext.application({
               text: '备注',
               dataIndex: 'qq1',
               flex: 1
+            }, {
+              text: '状态',
+              dataIndex: 'qq1',
+              flex: 1
             }]
           }]
         }]
@@ -251,14 +255,19 @@ Ext.application({
         border: 0,
         defaultType: 'textfield',
         items: [{
-          fieldLabel: "姓名",
-          labelWidth: 60,
-          width: 120,
-          labelAlign: "right"
-        }, {
           xtype: "radiofield",
           fieldLabel: "代理",
           labelWidth: 40,
+          labelAlign: "right"
+        }, {
+          xtype: "radiofield",
+          fieldLabel: "会员",
+          labelWidth: 40,
+          labelAlign: "right"
+        }, {
+          fieldLabel: "姓名",
+          labelWidth: 60,
+          width: 120,
           labelAlign: "right"
         }, {
           xtype: "combobox",
@@ -278,10 +287,16 @@ Ext.application({
         defaultType: 'textfield',
         margin: "10 0 0 0",
         items: [{
+          xtype: 'textfield',
+          fieldLabel: "默认",
+          labelWidth: 40,
+          width: 100,
+          labelAlign: "right"
+        }, {
           xtype: "combobox",
-          fieldLabel: "默认类型",
-          labelWidth: 60,
-          width: 125,
+          fieldLabel: "类型",
+          labelWidth: 40,
+          width: 105,
           labelAlign: "right"
         }, {
           xtype: 'textfield',
