@@ -1,30 +1,6 @@
 Ext.application({
   name: "JNH",
   launch: function() {
-    // 按钮
-    // Ext.create('Ext.Button', {
-    //   text: "<span class=\"key\">M</span> 修改",
-    //   scale: "medium",
-    //   renderTo: Ext.getBody(),
-    //   handler: function() {
-    //     alert('You clicked the button!');
-    //   }
-    // });
-    // Ext.create('Ext.tab.Panel', {
-    //   // width: 400,
-    //   // height: 400,
-    //   renderTo: document.body,
-    //   layout: "fit",
-    //   items: [{
-    //     title: '厂商管理'
-    //   }, {
-    //     title: '进货',
-    //     tabConfig: {
-    //       title: '进货',
-    //       tooltip: 'A button tooltip'
-    //     }
-    //   }]
-    // });
 
     // 厂商管理列表
     Ext.create('Ext.data.Store', {
@@ -153,113 +129,6 @@ Ext.application({
       }],
       renderTo: Ext.getBody()
     });
-
-    // Ext.create('Ext.Panel', {
-    //   width: 300,
-    //   // height: 300,
-    //   // layout: "fit",
-    //   title: "厂商输入页面",
-    //   layout: 'form',
-    //   renderTo: Ext.getBody(),
-    //   bodyPadding: 5,
-    //   defaultType: 'textfield',
-    //   fieldDefaults: {
-    //     labelAlign: 'top'
-    //   },
-    //   items: [{
-    //    fieldLabel: "厂商编号",
-    //    name: 'first',
-    //    width: 30,
-    //    allowBlank:false
-    //  },{
-    //   fieldLabel: "名称",
-    //   width: 40,
-    //   name: 'last'
-    // }, {
-    //   fieldLabel: '地址',
-    //   name: 'company'
-    // }, {
-    //   fieldLabel: '联系人',
-    //   name: 'company'
-    // }, {
-    //   fieldLabel: '产品类别',
-    //   name: 'email',
-    //   vtype:'email'
-    // }, {
-    //   fieldLabel: '邮编',
-    //   name: 'email',
-    //   vtype:'email'
-    // }, {
-    //   fieldLabel: '电话1',
-    //   name: 'dob',
-    // }, {
-    //   fieldLabel: '电话2',
-    //   name: 'age',
-    // }, {
-    //   xtype: 'timefield',
-    //   fieldLabel: '传真',
-    // }, {
-    //   fieldLabel: "email",
-    //   width: 40,
-    //   name: 'email',
-    //   vtype:'email'
-    // }, {
-    //   fieldLabel: "qq",
-    //   width: 40,
-    // }, {
-    //   fieldLabel: "订货所需时间",
-    //   width: 40,
-    //   name: 'last',
-    //   xtype: 'datefield'
-    // }, {
-    //   fieldLabel: "付费方式",
-    //   name: 'last',
-    //   xtype: "combobox"
-    // }, {
-    //   fieldLabel: "开户行",
-    //   width: 40,
-    //   name: 'last'
-    // }, {
-    //   fieldLabel: "账号",
-    //   width: 40,
-    //   name: 'last'
-    // }, {
-    //   fieldLabel: "备注",
-    //   name: 'last',
-    //   xtype: "textarea"
-    // }, {
-    //   fieldLabel: "名称",
-    //   width: 40,
-    //   name: 'last'
-    // }, {
-    //   xtype:'button',
-    //   scale: "medium",
-    //   text: "保存"
-    // }, {
-    //   xtype:'button',
-    //   scale: "medium",
-    //   text: "取消"
-    // }]
-    // });
-
-    // 进货单
-    // var states = Ext.create('Ext.data.Store', {
-    //   fields: ['abbr', 'name'],
-    //   data : [
-    //   {"abbr":"AL", "name":"类型"},
-    //   {"abbr":"AK", "name":"Alaska"},
-    //   {"abbr":"AZ", "name":"Arizona"}
-    //     //...
-    //     ]
-    //   });
-    // Ext.create('Ext.form.ComboBox', {
-    //   fieldLabel: "类型",
-    //   store: states,
-    //   queryMode: "local",
-    //   displayField: "name",
-    //   valueFiled: "abbr",
-    //   renderTo: Ext.getBody()
-    // });
 
     Ext.create('Ext.data.Store', {
       storeId: 'jhStore',
@@ -458,7 +327,7 @@ Ext.application({
       ]
     });
     
-    cs.hide();
+    // cs.hide();
     win.show();
   }
 });
