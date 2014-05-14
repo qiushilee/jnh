@@ -66,6 +66,7 @@ Ext.application({
 
     Ext.create("Ext.panel.Panel", {
       renderTo: Ext.getBody(),
+      border: 0,
       items: [
         {
           xtype: "panel",
@@ -99,20 +100,30 @@ Ext.application({
               labelAlign: "right",
               name: 'first',
               allowBlank: false
-            },
+            }
+          ]
+        }, {
+          xtype: "panel",
+          border: 0,
+          layout: "column",
+          defaultType: 'textfield',
+          fieldDefaults: {
+            labelAlign: 'top'
+          },
+          margin: "10 0 0 0",
+          items: [
             {
               xtype:"datefield",
               fieldLabel: "加入时间",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
+              width: 200,
+              labelAlign: "right"
             },
             {
               xtype:"datefield",
               fieldLabel: "到",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
+              labelWidth: 20,
+              width: 120,
+              labelAlign: "right"
             },
             {
               xtype:"combobox",
@@ -246,6 +257,7 @@ Ext.application({
             {
               xtype: "checkboxfield",
               boxLabel: "代理",
+              margin: "0 0 0 10",
               inputValue: 1,
               labelAlign: "right",
               name: 'last'
