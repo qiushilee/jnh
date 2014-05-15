@@ -90,16 +90,19 @@ Ext.application({
         {
           fieldLabel: "汇票号码",
           labelWidth: 60,
+          width: 150,
           labelAlign: "right"
         },
         {
           fieldLabel: "会员编号",
           labelWidth: 60,
+          width: 150,
           labelAlign: "right"
         },
         {
           fieldLabel: "会员姓名",
           labelWidth: 60,
+          width: 150,
           labelAlign: "right"
         },
         {
@@ -111,6 +114,7 @@ Ext.application({
           xtype: "combobox",
           fieldLabel: "付款方式",
           labelWidth: 60,
+          width: 130,
           labelAlign: "right"
         },
         {
