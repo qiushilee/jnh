@@ -223,7 +223,7 @@ Ext.application({
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: document.body,
       layout: "fit",
-      activeItem: 7,
+      activeItem: 1,
       items: [
         {
           title: '进货清单',
@@ -513,7 +513,6 @@ Ext.application({
             }
           ]
         },
-
         {
           title: '库存明细',
           padding: 15,
@@ -705,84 +704,6 @@ Ext.application({
                 },
                 {
                   text: '库存数量',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          title: '出货单打印',
-          padding: 15,
-          items: [
-            {
-              xtype: "panel",
-              layout: 'hbox',
-              bodyPadding: 5,
-              border: 0,
-              defaultType: 'textfield',
-              items: [
-                {
-                  xtype: "combobox",
-                  fieldLabel: "期数",
-                  labelWidth: 40,
-                  width: 120,
-                  labelAlign: "right"
-                },
-                {
-                  fieldLabel: "出货单编号从",
-                  labelAlign: "right"
-                },
-                {
-                  fieldLabel: "~~~~~~~",
-                  labelWidth: 57,
-                  labelAlign: "right"
-                },
-                {
-                  xtype: "button",
-                  text: "会员卡查询",
-                  margin: "0 0 0 50"
-                },
-                {
-                  xtype: "button",
-                  text: "会员卡预览",
-                  margin: "0 0 0 20"
-                },
-                {
-                  xtype: "button",
-                  text: "会员卡打印",
-                  margin: "0 0 0 20"
-                }
-              ]
-            },
-            {
-              xtype: "grid",
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jzs'),
-              columns: [
-                {
-                  text: '序号',
-                  dataIndex: 'id1'
-                },
-                {
-                  text: '出货单编号',
-                  dataIndex: 'iid1'
-                },
-                {
-                  text: '汇票号码',
-                  dataIndex: 'bnum1'
-                },
-                {
-                  text: '会员编号',
-                  dataIndex: 'bnum1'
-                },
-                {
-                  text: '姓名',
-                  dataIndex: 'bnum1'
-                },
-                {
-                  text: '地址',
                   dataIndex: 'bnum1',
                   flex: 1
                 }
@@ -1260,8 +1181,94 @@ Ext.application({
       ]
     });
 
+    var add = Ext.create("Ext.window.Window", {
+      title: "出货单打印",
+      width: 600,
+      layout: 'form',
+      bodyPadding: 5,
+      defaultType: 'textfield',
+      fieldDefaults: {
+        labelAlign: 'top'
+      },
+      bodyStyle: {
+        background: "#fff"
+      },
+      items: [
+      {
+        xtype: "panel",
+        layout: 'hbox',
+        bodyPadding: 5,
+        border: 0,
+        defaultType: 'textfield',
+        items: [
+        {
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelWidth: 40,
+          width: 120,
+          labelAlign: "right"
+        },
+        {
+          fieldLabel: "出货单编号从",
+          labelAlign: "right"
+        },
+        {
+          fieldLabel: "~~~~~~~",
+          labelWidth: 57,
+          labelAlign: "right"
+        },
+        {
+          xtype: "button",
+          text: "会员卡查询",
+          margin: "0 0 0 50"
+        },
+        {
+          xtype: "button",
+          text: "会员卡预览",
+          margin: "0 0 0 20"
+        },
+        {
+          xtype: "button",
+          text: "会员卡打印",
+          margin: "0 0 0 20"
+        }
+        ]
+      },
+      {
+        xtype: "grid",
+        margin: "20 0 0 0",
+        store: Ext.data.StoreManager.lookup('jzs'),
+        columns: [
+        {
+          text: '序号',
+          dataIndex: 'id1'
+        },
+        {
+          text: '出货单编号',
+          dataIndex: 'iid1'
+        },
+        {
+          text: '汇票号码',
+          dataIndex: 'bnum1'
+        },
+        {
+          text: '会员编号',
+          dataIndex: 'bnum1'
+        },
+        {
+          text: '姓名',
+          dataIndex: 'bnum1'
+        },
+        {
+          text: '地址',
+          dataIndex: 'bnum1',
+          flex: 1
+        }
+        ]
+      }
+      ]
+    });
 
-    // panel.hide();
-    // button.hide();
+    add.show();
   }
 });
