@@ -748,7 +748,7 @@ Ext.application({
     });
     
     /**
-     * TODO 增加按钮：
+     * +TODO: 增加按钮：
      * C查询，P打印，R重打
      */
     var addCHD = Ext.create("Ext.window.Window", {
@@ -764,78 +764,94 @@ Ext.application({
         background: "#fff"
       },
       items: [
-      {
-        xtype: "panel",
-        layout: 'hbox',
-        bodyPadding: 5,
-        border: 0,
-        defaultType: 'textfield',
-        items: [
         {
-          xtype: "combobox",
-          fieldLabel: "期数",
-          labelWidth: 40,
-          width: 120,
-          labelAlign: "right"
+          xtype: "panel",
+          layout: 'hbox',
+          bodyPadding: 5,
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+          {
+            xtype: "combobox",
+            fieldLabel: "期数",
+            labelWidth: 40,
+            width: 120,
+            labelAlign: "right"
+          },
+          {
+            fieldLabel: "出货单编号从",
+            labelAlign: "right"
+          },
+          {
+            fieldLabel: "~~~~~~~",
+            labelWidth: 57,
+            labelAlign: "right"
+          },
+          {
+            xtype: "button",
+            text: "会员卡查询",
+            margin: "0 0 0 50"
+          },
+          {
+            xtype: "button",
+            text: "会员卡预览",
+            margin: "0 0 0 20"
+          },
+          {
+            xtype: "button",
+            text: "会员卡打印",
+            margin: "0 0 0 20"
+          }
+          ]
         },
         {
-          fieldLabel: "出货单编号从",
-          labelAlign: "right"
+          xtype: "grid",
+          margin: "20 0 0 0",
+          store: Ext.data.StoreManager.lookup('simpsonsStore'),
+          columns: [
+          {
+            text: '序号',
+            dataIndex: 'id1'
+          },
+          {
+            text: '出货单编号',
+            dataIndex: 'iid1'
+          },
+          {
+            text: '汇票号码',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '会员编号',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '姓名',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '地址',
+            dataIndex: 'bnum1',
+            flex: 1
+          }
+          ]
         },
         {
-          fieldLabel: "~~~~~~~",
-          labelWidth: 57,
-          labelAlign: "right"
-        },
-        {
-          xtype: "button",
-          text: "会员卡查询",
-          margin: "0 0 0 50"
-        },
-        {
-          xtype: "button",
-          text: "会员卡预览",
-          margin: "0 0 0 20"
-        },
-        {
-          xtype: "button",
-          text: "会员卡打印",
-          margin: "0 0 0 20"
+          xtype: "panel",
+          layout: 'hbox',
+          bodyPadding: 5,
+          border: 0,
+          defaultType: 'button',
+          items: [{
+            text: "<span class=\"key\">C</span> 查询"
+          }, {
+            text: "<span class=\"key\">P</span> 打印",
+            margin: "0 0 0 10"
+          }, {
+            text: "<span class=\"key\">R</span> 重打",
+            margin: "0 0 0 10"
+          }]
         }
-        ]
-      },
-      {
-        xtype: "grid",
-        margin: "20 0 0 0",
-        store: Ext.data.StoreManager.lookup('simpsonsStore'),
-        columns: [
-        {
-          text: '序号',
-          dataIndex: 'id1'
-        },
-        {
-          text: '出货单编号',
-          dataIndex: 'iid1'
-        },
-        {
-          text: '汇票号码',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '会员编号',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '姓名',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '地址',
-          dataIndex: 'bnum1',
-          flex: 1
-        }
-        ]
-      }
       ]
     });
 
