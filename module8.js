@@ -737,10 +737,16 @@ Ext.application({
                               labelWidth: 40,
                               width: 120,
                               labelAlign: "right"
-                            }
+                            },
+                            {
+                              xtype: "radiofield",
+                              fieldLabel: "代理会员",
+                              labelWidth: 60,
+                              labelAlign: "right"
+                            },
                           ]
                         },
-                        // TODO 位置排序调整
+                        // +TODO: 位置排序调整
                         {
                           xtype: "panel",
                           layout: 'hbox',
@@ -748,12 +754,6 @@ Ext.application({
                           border: 0,
                           defaultType: 'combobox',
                           items: [
-                            {
-                              xtype: "radiofield",
-                              fieldLabel: "代理会员",
-                              labelWidth: 40,
-                              labelAlign: "right"
-                            },
                             {
                               fieldLabel: "寄送方式",
                               labelWidth: 60,
@@ -772,33 +772,51 @@ Ext.application({
                     }
                   ]
                 },
-                // TODO 增加搜索、重置按钮
+                // +TODO: 增加搜索、重置按钮
                 {
                   xtype: "panel",
-                  layout: 'hbox',
+                  layout: 'vbox',
                   bodyPadding: 5,
                   border: 0,
                   defaultType: 'combobox',
                   items: [
                     {
-                      xtype: "button",
-                      text: "块状打印",
-                      margin: "0 0 0 50"
+                      xtype: "panel",
+                      layout: "hbox",
+                      bodyPadding: 5,
+                      border: 0,
+                      defaultType: "button",
+                      items: [{
+                        text: "块状打印",
+                        margin: "0 0 0 50"
+                      },
+                      {
+                        text: "条状打印",
+                        margin: "0 0 0 20"
+                      },
+                      {
+                        text: "面单打印",
+                        margin: "0 0 0 20"
+                      },
+                      {
+                        text: "批量修改",
+                        margin: "0 0 0 20"
+                      }]
                     },
                     {
-                      xtype: "button",
-                      text: "条状打印",
-                      margin: "0 0 0 20"
-                    },
-                    {
-                      xtype: "button",
-                      text: "面单打印",
-                      margin: "0 0 0 20"
-                    },
-                    {
-                      xtype: "button",
-                      text: "批量修改",
-                      margin: "0 0 0 20"
+                      xtype: "panel",
+                      layout: "hbox",
+                      bodyPadding: 5,
+                      border: 0,
+                      defaultType: "button",
+                      items: [{
+                        text: "搜索",
+                        margin: "0 0 0 50"
+                      },
+                      {
+                        text: "重置",
+                        margin: "0 0 0 20"
+                      }]
                     }
                   ]
                 }
