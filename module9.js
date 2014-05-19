@@ -341,8 +341,12 @@ Ext.application({
           xtype: 'button',
           text: "删除",
           margin: "0 0 0 10"
+        }, {
+          xtype: 'button',
+          text: "增加地址",
+          margin: "0 0 0 10"
         }]
-        //增加一个按钮：增加地址
+        // +TODO: 增加一个按钮：增加地址
       }, {
         xtype:'panel',
         layout: "hbox",
