@@ -373,28 +373,35 @@ Ext.application({
         }]
         },
         {
-          xtype: "grid",
+          xtype: "panel",
           columnWidth: 0.59,
-          layout: "absolute",
-          x: 10,
-          title: '进转损',
-          store: Ext.data.StoreManager.lookup('jhStore'),
-          // TODO 类型可下拉选择
-          columns: [{
-            text: '类型',
-            dataIndex: 'name'
+          bodyPadding: 10,
+          border: 0,
+          items: [{
+            xtype: "combobox",
+            fieldLabel: "类型",
+            labelWidth: 40,
+            margin: "10"
           }, {
-            text: '流水号',
-            dataIndex: 'id'
-          }, {
-            text: '日期',
-            dataIndex: 'adder'
-          }, {
-            text: '金额',
-            dataIndex: 'man',
-            flex: 1
+            xtype: "grid",
+            title: '进转损',
+            store: Ext.data.StoreManager.lookup('jhStore'),
+            columns: [{
+              text: '类型',
+              dataIndex: 'name'
+            }, {
+              text: '流水号',
+              dataIndex: 'id'
+            }, {
+              text: '日期',
+              dataIndex: 'adder'
+            }, {
+              text: '金额',
+              dataIndex: 'man',
+              flex: 1
+            }]
           }]
-        }
+        },
       ]
     });
     
