@@ -417,19 +417,25 @@ Ext.application({
                   xtype:"datefield",
                   fieldLabel: "参考日期",
                   labelWidth: 60,
+                  width: 160,
                   labelAlign: "right"
                 },
                 {
                   xtype:"datefield",
                   fieldLabel: "到",
-                  labelWidth: 60,
+                  labelWidth: 20,
+                  width: 120,
                   labelAlign: "right"
                 },
                 {
                   xtype: "label",
-                  text: "本期现单量：4561",
-                  labelWidth: 60,
-                  margin: "3 0 0 50"
+                  text: "本期单量：4561",
+                  margin: "3 0 0 10"
+                },
+                {
+                  xtype: "label",
+                  text: "拆分单量：4561",
+                  margin: "3 0 0 10"
                 }
               ]
             },
@@ -454,13 +460,22 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '调整前/后累进量',
+                  text: '调整前累进量',
                   dataIndex: 'bnum1',
-                  flex: 1
+                  flex: 2
                 },
-
                 {
-                  text: '调整前/后出货数',
+                  text: '调整后累进量',
+                  dataIndex: 'bnum1',
+                  flex: 2
+                },
+                {
+                  text: '调整前出货数',
+                  dataIndex: 'bnum1',
+                  flex: 2
+                },
+                {
+                  text: '调整后出货数',
                   dataIndex: 'bnum1',
                   flex: 2
                 },
@@ -485,14 +500,24 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '调整前/后预计出货数',
+                  text: '调整前预计出货数',
                   dataIndex: 'bnum1',
-                  flex: 1
+                  flex: 2
                 },
                 {
-                  text: '调整前/后补货数',
+                  text: '调整后预计出货数',
                   dataIndex: 'bnum1',
-                  flex: 1
+                  flex: 2
+                },
+                {
+                  text: '调整前补货数',
+                  dataIndex: 'bnum1',
+                  flex: 2
+                },
+                {
+                  text: '调整后补货数',
+                  dataIndex: 'bnum1',
+                  flex: 2
                 },
                 {
                   text: '补货金额',
@@ -510,203 +535,38 @@ Ext.application({
                   flex: 1
                 }
               ]
-            }
-          ]
-        },
-        {
-          title: '库存明细',
-          padding: 15,
-          items: [
+            },
             {
               xtype: "panel",
               layout: 'hbox',
               bodyPadding: 5,
               border: 0,
-              defaultType: 'textfield',
+              margin: "10 0 0 0",
               items: [
-                {
-                  fieldLabel: "厂商编号",
-                  labelAlign: "right"
-                },
-                {
-                  xtype: "button",
-                  text: "搜索",
-                  margin: "0 0 0 50"
-                },
-                {
-                  xtype: "button",
-                  text: "重置",
-                  margin: "0 0 0 20"
-                },
-                {
-                  xtype: "fieldset",
-                  tiele: "库存类别",
-                  defaultType: 'radiofield',
-                  margin: "0 0 0 50",
-                  layout: "hbox",
-                  items: [
-                    {
-                      boxLabel: "你玩安全库存量一览表",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      boxLabel: "下架库存明细表",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      boxLabel: "库存结存明细表",
-                      margin: "0 0 0 10"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              xtype: "grid",
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jzs'),
-              columns: [
-                {
-                  text: '序号',
-                  dataIndex: 'id1',
-                  flex: 1
-                },
-                {
-                  text: '货号',
-                  dataIndex: 'iid1',
-                  flex: 1
-                },
-                {
-                  text: '品名',
-                  dataIndex: 'bnum1',
-                  flex: 2
-                },
-                {
-                  text: '规格',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '包装',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '售价',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '进价',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '成本',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '库存量',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '损坏数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '本期总进数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '本期总出数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '总额',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '厂家名称',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '备注',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          title: '缺货统计表',
-          padding: 15,
-          items: [
-            {
-              xtype: "panel",
-              layout: 'hbox',
-              bodyPadding: 5,
-              border: 0,
-              defaultType: 'textfield',
-              items: [
-                {
-                  xtype: "button",
-                  text: "缺货处理"
-                },
-                {
-                  xtype: "progressbar",
-                  width: 300,
-                  margin: "0 0 0 50"
-                }
-              ]
-            },
-            {
-              xtype: "grid",
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jzs'),
-              columns: [
-                {
-                  text: '序号',
-                  dataIndex: 'id1',
-                  flex: 1
-                },
-                {
-                  text: '货号',
-                  dataIndex: 'iid1',
-                  flex: 1
-                },
-                {
-                  text: '品名',
-                  dataIndex: 'bnum1',
-                  flex: 2
-                },
-                {
-                  text: '规格',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '厂商编号',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '厂商名称',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '库存数量',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                }
+              {
+                xtype: "button",
+                text: "查询"
+              },
+              {
+                xtype: "button",
+                text: "日报表",
+                margin: "0 0 0 10"
+              },
+              {
+                xtype: "button",
+                text: "订货单",
+                margin: "0 0 0 10"
+              },
+              {
+                xtype: "button",
+                text: "预估缺货",
+                margin: "0 0 0 10"
+              },
+              {
+                xtype: "button",
+                text: "下架表",
+                margin: "0 0 0 10"
+              }
               ]
             }
           ]
@@ -840,14 +700,9 @@ Ext.application({
                             },
                             {
                               xtype: "checkboxfield",
-                              fieldLabel: "年份选择",
-                              labelWidth: 60,
+                              fieldLabel: "反选毕业时间",
+                              labelWidth: 100,
                               labelAlign: "right"
-                            },
-                            {
-                              xtype: "button",
-                              text: "查询",
-                              margin: "0 0 0 30"
                             }
                           ]
                         }
@@ -885,6 +740,7 @@ Ext.application({
                             }
                           ]
                         },
+                        // TODO 位置排序调整
                         {
                           xtype: "panel",
                           layout: 'hbox',
@@ -894,7 +750,7 @@ Ext.application({
                           items: [
                             {
                               xtype: "radiofield",
-                              fieldLabel: "代理",
+                              fieldLabel: "代理会员",
                               labelWidth: 40,
                               labelAlign: "right"
                             },
@@ -905,29 +761,10 @@ Ext.application({
                               labelAlign: "right"
                             },
                             {
-                              xtype: "checkboxfield",
-                              fieldLabel: "寄送方式选择",
-                              labelWidth: 80,
-                              labelAlign: "right"
-                            },
-                            {
                               fieldLabel: "类型",
                               labelWidth: 40,
                               width: 120,
                               labelAlign: "right"
-                            }
-                          ]
-                        },
-                        {
-                          xtype: "panel",
-                          layout: 'hbox',
-                          bodyPadding: 5,
-                          border: 0,
-                          items: [
-                            {
-                              xtype: "button",
-                              text: "查询",
-                              margin: "0 0 0 150"
                             }
                           ]
                         }
@@ -935,25 +772,35 @@ Ext.application({
                     }
                   ]
                 },
+                // TODO 增加搜索、重置按钮
                 {
-                  xtype: "button",
-                  text: "块状打印",
-                  margin: "0 0 0 50"
-                },
-                {
-                  xtype: "button",
-                  text: "条状打印",
-                  margin: "0 0 0 20"
-                },
-                {
-                  xtype: "button",
-                  text: "面单打印",
-                  margin: "0 0 0 20"
-                },
-                {
-                  xtype: "button",
-                  text: "批量修改",
-                  margin: "0 0 0 20"
+                  xtype: "panel",
+                  layout: 'hbox',
+                  bodyPadding: 5,
+                  border: 0,
+                  defaultType: 'combobox',
+                  items: [
+                    {
+                      xtype: "button",
+                      text: "块状打印",
+                      margin: "0 0 0 50"
+                    },
+                    {
+                      xtype: "button",
+                      text: "条状打印",
+                      margin: "0 0 0 20"
+                    },
+                    {
+                      xtype: "button",
+                      text: "面单打印",
+                      margin: "0 0 0 20"
+                    },
+                    {
+                      xtype: "button",
+                      text: "批量修改",
+                      margin: "0 0 0 20"
+                    }
+                  ]
                 }
               ]
             },
@@ -1035,122 +882,6 @@ Ext.application({
               ]
             }
           ]
-        },
-        {
-          title: '预估缺货',
-          padding: 15,
-          items: [
-            {
-              xtype: "panel",
-              layout: 'hbox',
-              bodyPadding: 5,
-              border: 0,
-              defaultType: 'textfield',
-              items: [
-                {
-                  fieldLabel: "预估单量",
-                  labelAlign: "right"
-                },
-                {
-                  fieldLabel: "全期单数",
-                  labelWidth: 65,
-                  labelAlign: "right"
-                },
-                {
-                  xtype: "button",
-                  text: "搜索",
-                  margin: "0 0 0 30"
-                },
-                {
-                  xtype: "button",
-                  text: "重置",
-                  margin: "0 0 0 20"
-                },
-                {
-                  xtype: "label",
-                  text: "本期单量：4561",
-                  margin: "3 0 0 50"
-                }
-              ]
-            },
-            {
-              xtype: "grid",
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jzs'),
-              columns: [
-                {
-                  text: '序号',
-                  dataIndex: 'id1',
-                  flex: 1
-                },
-                {
-                  text: '货号',
-                  dataIndex: 'iid1',
-                  flex: 1
-                },
-                {
-                  text: '品名',
-                  dataIndex: 'bnum1',
-                  flex: 2
-                },
-                {
-                  text: '累进量',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '出货数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '库存量',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '损坏数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '供应单数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '进价',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '预计出货数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '补货数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '补货金额',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '全期预估',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                },
-                {
-                  text: '全期补货数',
-                  dataIndex: 'bnum1',
-                  flex: 1
-                }
-              ]
-            }
-          ]
         }
       ]
     });
@@ -1181,93 +912,6 @@ Ext.application({
       ]
     });
 
-    var add = Ext.create("Ext.window.Window", {
-      title: "出货单打印",
-      width: 600,
-      layout: 'form',
-      bodyPadding: 5,
-      defaultType: 'textfield',
-      fieldDefaults: {
-        labelAlign: 'top'
-      },
-      bodyStyle: {
-        background: "#fff"
-      },
-      items: [
-      {
-        xtype: "panel",
-        layout: 'hbox',
-        bodyPadding: 5,
-        border: 0,
-        defaultType: 'textfield',
-        items: [
-        {
-          xtype: "combobox",
-          fieldLabel: "期数",
-          labelWidth: 40,
-          width: 120,
-          labelAlign: "right"
-        },
-        {
-          fieldLabel: "出货单编号从",
-          labelAlign: "right"
-        },
-        {
-          fieldLabel: "~~~~~~~",
-          labelWidth: 57,
-          labelAlign: "right"
-        },
-        {
-          xtype: "button",
-          text: "会员卡查询",
-          margin: "0 0 0 50"
-        },
-        {
-          xtype: "button",
-          text: "会员卡预览",
-          margin: "0 0 0 20"
-        },
-        {
-          xtype: "button",
-          text: "会员卡打印",
-          margin: "0 0 0 20"
-        }
-        ]
-      },
-      {
-        xtype: "grid",
-        margin: "20 0 0 0",
-        store: Ext.data.StoreManager.lookup('jzs'),
-        columns: [
-        {
-          text: '序号',
-          dataIndex: 'id1'
-        },
-        {
-          text: '出货单编号',
-          dataIndex: 'iid1'
-        },
-        {
-          text: '汇票号码',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '会员编号',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '姓名',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '地址',
-          dataIndex: 'bnum1',
-          flex: 1
-        }
-        ]
-      }
-      ]
-    });
 
     add.show();
   }

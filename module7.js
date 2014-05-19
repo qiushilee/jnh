@@ -90,22 +90,33 @@ Ext.application({
         {
           fieldLabel: "出货单号",
           labelWidth: 60,
+          width: 150,
           labelAlign: "right"
         },
         {
           fieldLabel: "会员编号",
           labelWidth: 60,
+          width: 150,
           labelAlign: "right"
         },
         {
           fieldLabel: "姓名",
           labelWidth: 40,
+          width: 150,
           labelAlign: "right"
         },
         {
           xtype: "datefield",
           fieldLabel: "邮寄日期",
           labelWidth: 60,
+          width: 160,
+          labelAlign: "right"
+        },
+        {
+          xtype: "combobox",
+          fieldLabel: "寄送方式",
+          labelWidth: 60,
+          width: 150,
           labelAlign: "right"
         },
         {
@@ -168,6 +179,10 @@ Ext.application({
             dataIndex: 'asdder2',
             flex: 1
           }, {
+            text: '地址',
+            dataIndex: 'asdder2',
+            flex: 1
+          }, {
             text: '补寄',
             dataIndex: 'asdder2',
             flex: 1
@@ -187,14 +202,7 @@ Ext.application({
       layout: "column",
       items: [{
         xtype: "button",
-        text: "<span class=\"key\">A</span> 添加"
-      }, {
-        xtype: "button",
         text: "<span class=\"key\">M</span> 修改",
-        margin: "0 0 0 10"
-      }, {
-        xtype: "button",
-        text: "<span class=\"key\">S</span> 保存",
         margin: "0 0 0 10"
       }, {
         // 添加到打印购物车
@@ -262,11 +270,13 @@ Ext.application({
             "background-color": "transparent"
           },
           items: [{
+            disabled: true,
             fieldLabel: "会员姓名",
             labelWidth: 55,
             margin: "5 0",
             labelAlign: "right"
           }, {
+            disabled: true,
             fieldLabel: "重量",
             labelWidth: 55,
             margin: "5 0",
@@ -282,22 +292,20 @@ Ext.application({
             "background-color": "transparent"
           },
           items: [{
+            disabled: true,
             fieldLabel: "邮编",
             labelWidth: 55,
             margin: "5 0",
             labelAlign: "right"
-          }, {
-            fieldLabel: "参考邮资",
+          },
+          {
+            disabled: true,
+            fieldLabel: "地址",
             labelWidth: 55,
+            width: 250,
             margin: "5 0",
             labelAlign: "right"
           }]
-        },
-        {
-          fieldLabel: "地址",
-          labelWidth: 55,
-          margin: "5 0",
-          labelAlign: "right"
         },
         {
           xtype: "panel",
@@ -341,6 +349,21 @@ Ext.application({
           }]
         },
         {
+          xtype: "panel",
+          border: 0,
+          layout: "hbox",
+          defaultType: 'textfield',
+          bodyStyle: {
+            "background-color": "transparent"
+          },
+          items: [{
+            fieldLabel: "包装员",
+            labelWidth: 55,
+            margin: "5 0",
+            labelAlign: "right"
+          }]
+        },
+        {
           xtype: "textareafield",
           width: 300,
           height: 100,
@@ -349,7 +372,21 @@ Ext.application({
           margin: "5 0",
           labelAlign: "right",
           name: 'first'
-        }
+        },
+        {
+          xtype: "panel",
+          border: 0,
+          layout: "hbox",
+          defaultType: 'button',
+          bodyStyle: {
+            "background-color": "transparent"
+          },
+          items: [{
+            text: "保存",
+            margin: "5 0",
+            labelAlign: "right"
+          }]
+        },
       ]
     });
 
@@ -420,7 +457,7 @@ Ext.application({
         bodyPadding: 10,
         border: 0,
         defaultType: 'textfield',
-        width: 130,
+        width: 190,
         style: {
           float: "right"
         },
@@ -434,6 +471,10 @@ Ext.application({
         }, {
           xtype: "button",
           text: "打印",
+          margin: "0 0 0 10"
+        }, {
+          xtype: "button",
+          text: "重打",
           margin: "0 0 0 10"
         }]
       }]
@@ -452,6 +493,7 @@ Ext.application({
           "background-color": "transparent"
         },
         items: [{
+          xtype: "combobox",
           fieldLabel: "寄送方式",
           labelWidth: 60,
           labelAlign: "right"
@@ -547,7 +589,7 @@ Ext.application({
     // search.hide();
     // list.hide();
     // button.hide();
-    // add.show();
+    add.show();
     print.show();
     printCart.show();
   }

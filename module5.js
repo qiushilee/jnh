@@ -138,13 +138,41 @@ Ext.application({
           layout: "hbox",
           border: 0,
           defaultType: 'textfield',
+          margin: "0 0 0 70",
+          items: [{
+            xtype: "button",
+            text: "<span class=\"key\">Q</span> 增加"
+          }, {
+            xtype: "button",
+            text: "<span class=\"key\">N</span> 修改",
+            margin: "0 0 0 20"
+          }, {
+            xtype: "button",
+            text: "<span class=\"key\">W</span> 保存",
+            margin: "0 0 0 20"
+          }, {
+            xtype: "button",
+            text: "删除",
+            margin: "0 0 0 20"
+          }]
+        }, {
+          xtype:'panel',
+          layout: "hbox",
+          border: 0,
+          defaultType: 'textfield',
+          margin: "20 0 0 0",
           items: [{
             fieldLabel: "寄送方式",
             xtype: "combobox",
             labelAlign: "right"
           }, {
             fieldLabel: "青春贴",
+            width: 200,
             labelAlign: "right"
+          }, {
+            xtype: "label",
+            text: "10",
+            margin: "3 0 0 10"
           }]
         }, {
           xtype:'panel',
@@ -223,17 +251,6 @@ Ext.application({
           defaultType: 'textfield',
           margin: "20 0 0 0",
           items: [{
-            xtype: "button",
-            text: "<span class=\"key\">Q</span> 增加"
-          }, {
-            xtype: "button",
-            text: "<span class=\"key\">N</span> 修改",
-            margin: "0 0 0 20"
-          }, {
-            xtype: "button",
-            text: "<span class=\"key\">W</span> 保存",
-            margin: "0 0 0 20"
-          }, {
             xtype: "button",
             text: "<span class=\"key\">W</span>删除记录",
             margin: "0 0 0 20"

@@ -90,6 +90,12 @@ Ext.application({
               allowBlank: false
             },
             {
+              fieldLabel: "地址",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            },
+            {
               fieldLabel: "电话",
               labelAlign: "right",
               name: 'first',
@@ -138,6 +144,7 @@ Ext.application({
               text: "搜索"
             },
             {
+              // TODO 有电话订购颜色不一样并显示数量
               xtype: 'button',
               margin: "0 5",
               text: "E电话订购"
@@ -173,6 +180,7 @@ Ext.application({
           layout: "column",
           items: [
             {
+              // TODO 参照 module9.js 地址，索取数量不要
               xtype: "grid",
               columnWidth: 0.5,
               height: 155,
@@ -463,7 +471,7 @@ Ext.application({
               dataIndex: 'nsame'
             },
             {
-              text: '付费方式',
+              text: '付款方式',
               dataIndex: 'adsder'
             },
             {
@@ -471,11 +479,11 @@ Ext.application({
               dataIndex: 'asdder2'
             },
             {
-              text: '付费日期',
+              text: '付款日期',
               dataIndex: 'asdder2'
             },
             {
-              text: '付费金额',
+              text: '付款金额',
               dataIndex: 'asdder2'
             },
             {
@@ -502,12 +510,13 @@ Ext.application({
               text: '包裹单号',
               dataIndex: 'asdder2'
             },
+            // 点击后跳转到补寄界面
             {
-              text: '状态',
+              text: '补寄',
               dataIndex: 'asdder2'
             },
             {
-              text: '补寄',
+              text: '状态',
               dataIndex: 'asdder2'
             }
           ]
@@ -759,6 +768,12 @@ Ext.application({
       ]
     });
 
+    /** 
+     * TODO 增加按钮：
+     *    A增加
+     *    M修改
+     *    D删除
+     */
     add.show();
   }
 });

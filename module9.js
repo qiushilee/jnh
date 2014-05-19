@@ -116,6 +116,11 @@ Ext.application({
         width: 120,
         labelAlign: "right"
       }, {
+        fieldLabel: "地址",
+        labelWidth: 40,
+        width: 120,
+        labelAlign: "right"
+      }, {
         fieldLabel: "电话",
         labelWidth: 40,
         width: 145,
@@ -146,6 +151,7 @@ Ext.application({
       }]
     });
 
+    // TODO Tab: [ "名单管理: list, list2", "管理打印", "打印购物车"]
     var list = Ext.create('Ext.Panel', {
       layout: "column",
       border: 0,
@@ -279,6 +285,11 @@ Ext.application({
           fieldLabel: "毕业时间",
           labelWidth: 60,
           labelAlign: "right"
+        }, {
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelWidth: 60,
+          labelAlign: "right"
         }]
       }, {
         xtype:'panel',
@@ -287,12 +298,6 @@ Ext.application({
         defaultType: 'textfield',
         margin: "10 0 0 0",
         items: [{
-          xtype: 'textfield',
-          fieldLabel: "默认",
-          labelWidth: 40,
-          width: 100,
-          labelAlign: "right"
-        }, {
           xtype: "combobox",
           fieldLabel: "类型",
           labelWidth: 40,
@@ -312,15 +317,15 @@ Ext.application({
           labelAlign: "right"
         }, {
           xtype: 'textfield',
-          fieldLabel: "收件人",
-          labelWidth: 60,
-          width: 120,
-          labelAlign: "right"
-        }, {
-          xtype: 'textfield',
           fieldLabel: "电话",
           labelWidth: 40,
           width: 145,
+          labelAlign: "right"
+        }, {
+          xtype: 'textfield',
+          fieldLabel: "收件人",
+          labelWidth: 60,
+          width: 120,
           labelAlign: "right"
         }, {
           xtype: 'textfield',
@@ -328,7 +333,16 @@ Ext.application({
           labelWidth: 60,
           width: 120,
           labelAlign: "right"
+        }, {
+          xtype: 'button',
+          text: "设为默认",
+          margin: "0 0 0 10"
+        }, {
+          xtype: 'button',
+          text: "删除",
+          margin: "0 0 0 10"
         }]
+        //增加一个按钮：增加地址
       }, {
         xtype:'panel',
         layout: "hbox",
@@ -363,7 +377,7 @@ Ext.application({
     });
 
     var printCart = new Ext.create("Ext.window.Window", {
-      title: "业务管理打印购物车",
+      title: "打印购物车",
       width: 1000,
       bodyPadding: 10,
       items: [{
@@ -384,21 +398,15 @@ Ext.application({
           labelWidth: 40,
           labelAlign: "right"
         }, {
-          xtype: "combobox",
-          fieldLabel: "参考",
-          labelWidth: 40,
-          width: 90,
+          fieldLabel: "参考期数",
+          labelWidth: 60,
+          width: 110,
           labelAlign: "right"
         }, {
-          xtype: "combobox",
           fieldLabel: "~",
           labelWidth: 20,
           width: 70,
           labelAlign: "right"
-        }, {
-          xtype: "label",
-          text: "期",
-          margin: "3 0 0 5"
         }, {
           xtype: "button",
           text: "搜索",
@@ -521,7 +529,7 @@ Ext.application({
     });
 
     var print = new Ext.create("Ext.window.Window", {
-      title: "业务管理打印",
+      title: "管理打印",
       width: 1000,
       bodyPadding: 10,
       items: [{
@@ -551,21 +559,15 @@ Ext.application({
           width: 100,
           labelAlign: "right"
         }, {
-          xtype: "combobox",
           fieldLabel: "期数",
           labelWidth: 40,
           width: 110,
           labelAlign: "right"
         }, {
-          xtype: "combobox",
           fieldLabel: "到",
           labelWidth: 20,
           width: 90,
           labelAlign: "right"
-        }, {
-          xtype: "label",
-          text: "期",
-          margin: "3 0 0 5"
         }]
       }, {
         layout: "hbox",

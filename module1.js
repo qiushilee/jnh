@@ -173,7 +173,7 @@ Ext.application({
         width: 120,
         labelAlign: "right"
       }, {
-        fieldLabel: "编号",
+        fieldLabel: "厂商编号",
         labelWidth: 60,
         labelAlign: "right"
       }, {
@@ -290,6 +290,7 @@ Ext.application({
         bodyPadding: 5,
         defaultType: 'textfield',
         items: [{
+          xtype: "combobox",
           fieldLabel: "期数",
           labelWidth: 60,
           width: 300,
@@ -320,12 +321,10 @@ Ext.application({
           width: 300,
           labelAlign: "right"
         }, {
-          xtype: "combobox",
           fieldLabel: '产品类别',
           labelWidth: 60,
           width: 300,
           labelAlign: "right",
-          vtype:'email'
         }, {
           fieldLabel: "qq",
           labelWidth: 60,
@@ -361,7 +360,7 @@ Ext.application({
           items: [{
             xtype:'button',
             margin: "0 0 0 10",
-            text: "<span class=\"key\">S</span> 增加"
+            text: "<span class=\"key\">S</span> 保存"
           }, {
             xtype:'button',
             margin: "0 0 0 10",
@@ -380,6 +379,7 @@ Ext.application({
           x: 10,
           title: '进转损',
           store: Ext.data.StoreManager.lookup('jhStore'),
+          // TODO 类型可下拉选择
           columns: [{
             text: '类型',
             dataIndex: 'name'

@@ -365,6 +365,12 @@ Ext.application({
         background: "#fff"
       },
       items: [{
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
           fieldLabel: "厂商编号",
           labelWidth: 60,
           width: 300,
@@ -433,7 +439,7 @@ Ext.application({
           items: [{
             xtype:'button',
             margin: "0 0 0 10",
-            text: "<span class=\"key\">S</span> 增加"
+            text: "<span class=\"key\">S</span> 保存"
           }, {
             xtype:'button',
             margin: "0 0 0 10",
@@ -504,10 +510,39 @@ Ext.application({
     });
 
     var addJHD = new Ext.create("Ext.window.Window", {
-      title: "进货单详情",
+      title: "详情",
       width: 800,
       bodyPadding: 10,
       items: [{
+        layout: "hbox",
+        bodyPadding: 10,
+        border: 0,
+        defaultType: 'textfield',
+        bodyStyle: {
+          "background-color": "transparent"
+        },
+        items: [{
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelAlign: "right",
+          labelWidth: 40,
+          width: 120
+        }, {
+          xtype: "combobox",
+          fieldLabel: "类型",
+          labelAlign: "right",
+          labelWidth: 40,
+          width: 120
+        }, {
+          xtype:'button',
+          margin: "0 10",
+          text: "编号"
+        }, {
+          fieldLabel: "",
+          width: 170,
+          labelAlign: "right"
+        }]
+      }, {
         layout: "hbox",
         bodyPadding: 10,
         border: 0,
@@ -521,33 +556,11 @@ Ext.application({
           width: 200,
           labelAlign: "right"
         }, {
-          xtype: "combobox",
-          fieldLabel: "类型",
-          labelAlign: "right",
-          labelWidth: 40,
-          width: 120
-        }, {
-          fieldLabel: "编号",
-          labelWidth: 40,
-          width: 170,
-          labelAlign: "right"
-        }]
-      }, {
-        layout: "hbox",
-        bodyPadding: 10,
-        border: 0,
-        defaultType: 'textfield',
-        bodyStyle: {
-          "background-color": "transparent"
-        },
-        items: [{
-          xtype: "numberfield",
           fieldLabel: "数量",
           labelWidth: 40,
           width: 100,
           labelAlign: "right"
         }, {
-          xtype: "numberfield",
           fieldLabel: "进价",
           labelWidth: 40,
           width: 100,
@@ -556,14 +569,6 @@ Ext.application({
           fieldLabel: "备注",
           labelWidth: 40,
           labelAlign: "right"
-        }, {
-          xtype: "button",
-          text: "搜索",
-          margin: "0 0 0 20"
-        }, {
-          xtype: "button",
-          text: "重置",
-          margin: "0 0 0 10"
         }]
       }, {
         xtype: "grid",
@@ -596,7 +601,35 @@ Ext.application({
           dataIndex: 'man1',
           flex: 1
         }]
-      }]
+      }, {
+        layout: "hbox",
+        bodyPadding: 10,
+        border: 0,
+        defaultType: 'textfield',
+        width: 230,
+        style: {
+          float: "right"
+        },
+        bodyStyle: {
+          "background-color": "transparent"
+        },
+        items: [
+          {
+            xtype: "button",
+            text: "<span class=\"key\">M</span> 修改",
+            margin: "0 0 0 20"
+          },
+          {
+            xtype: "button",
+            text: "<span class=\"key\">S</span> 保存",
+            margin: "0 0 0 10"
+          },
+          {
+            xtype: "button",
+            text: "<span class=\"key\">D</span> 删除",
+            margin: "0 0 0 10"
+          }]
+        }]
     });
 
     add.show();

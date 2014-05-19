@@ -111,6 +111,11 @@ Ext.application({
           labelAlign: "right"
         },
         {
+          fieldLabel: "邮编",
+          labelWidth: 60,
+          labelAlign: "right"
+        },
+        {
           xtype: "combobox",
           fieldLabel: "付款方式",
           labelWidth: 60,
@@ -146,12 +151,17 @@ Ext.application({
               flex: 1
             },
             {
+              text: '付款方式',
+              dataIndex: 'id',
+              flex: 1
+            },
+            {
               text: '汇票号码',
               dataIndex: 'name',
               flex: 1
             },
             {
-              text: '收汇局',
+              text: '编号',
               dataIndex: 'name1',
               flex: 1
             },
@@ -166,7 +176,7 @@ Ext.application({
               flex: 1
             },
             {
-              text: '收到汇款日期',
+              text: '收款日期',
               dataIndex: 'asdder2',
               flex: 1
             },
@@ -186,12 +196,12 @@ Ext.application({
               flex: 1
             },
             {
-              text: '收到订单日期',
+              text: '收订单日',
               dataIndex: 'asdder2',
               flex: 1
             },
             {
-              text: '代用券',
+              text: '青春贴',
               dataIndex: 'asdder2',
               flex: 1
             },
@@ -201,24 +211,9 @@ Ext.application({
               flex: 1
             },
             {
-              text: '折价券',
+              text: '不打折抵价券',
               dataIndex: 'asdder2',
-              flex: 1
-            },
-            {
-              text: '折扣',
-              dataIndex: 'asdder2',
-              flex: 1
-            },
-            {
-              text: '总额',
-              dataIndex: 'asdder2',
-              flex: 1
-            },
-            {
-              text: '备注',
-              dataIndex: 'asdder2',
-              flex: 1
+              flex: 2
             }
           ]
         }
@@ -231,306 +226,244 @@ Ext.application({
       margin: "20 0 0 17",
       border: 0,
       layout: "column",
-      items: [
-        {
-          xtype: "button",
-          text: "<span class=\"key\">A</span> 增加",
-          scale: "medium"
-        }
-      ]
+      items: [{
+        xtype: "button",
+        text: "<span class=\"key\">A</span> 增加",
+        scale: "medium"
+      }, {
+        xtype: "button",
+        text: "删除",
+        scale: "medium"
+      }]
     });
 
+
     var add = Ext.create("Ext.window.Window", {
-      title: "汇款定购详情",
-      width: 600,
+      title: "购买记录详情",
+      width: 1000,
       layout: 'form',
       bodyPadding: 5,
       defaultType: 'textfield',
+      fieldDefaults: {
+        labelAlign: 'top'
+      },
+      bodyStyle: {
+        background: "#fff"
+      },
       items: [
         {
-          xtype: "panel",
+          xtype: 'panel',
+          margin: "20 0 0 0",
+          layout: "hbox",
           border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
           defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
           items: [
             {
-              fieldLabel: "汇票号码",
+              xtype:"combobox",
+              fieldLabel: "期数",
               labelAlign: "right",
               name: 'first',
               allowBlank: false
             },
             {
-              fieldLabel: "收汇局",
+              xtype: "combobox",
+              store: Ext.data.StoreManager.lookup('adderList'),
+              queryMode: 'local',
+              displayField: 'name',
+              valueField: 'abbr',
+              fieldLabel: "付款方式",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '汇票号码',
+              labelAlign: "right",
+              name: 'company'
+            },
+            {
+              fieldLabel: '编号',
+              labelAlign: "right",
+              name: 'email',
+            }
+          ]
+        },
+        {
+          xtype: 'panel',
+          layout: "hbox",
+          margin: "10 0 0 0",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              fieldLabel: "付款金额",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            },
+            {
+              xtype: "datefield",
+              fieldLabel: '付款日期',
+              labelAlign: "right",
+              name: 'company'
+            },
+            {
+              xtype: "checkboxfield",
+              boxLabel: "收到货款",
+              margin: "0 0 0 37",
+              inputValue: 1,
+              labelAlign: "right",
+              name: 'last'
+            },
+            {
+              xtype: "datefield",
+              fieldLabel: '收款日期',
+              labelAlign: "right",
+              name: 'email',
+            }
+          ]
+        },
+        {
+          xtype: 'panel',
+          layout: "hbox",
+          margin: "10 0 0 0",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              fieldLabel: "使用青春贴",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            },
+            {
+              xtype: "combobox",
+              store: Ext.data.StoreManager.lookup('adderList'),
+              queryMode: 'local',
+              displayField: 'name',
+              valueField: 'abbr',
+              fieldLabel: "寄送方式",
+              labelAlign: "right"
+            },{
+              xtype: "datefield",
+              fieldLabel: '收订单日期',
+              labelAlign: "right",
+              name: 'company'
+            },
+            {
+              fieldLabel: "邮资",
               labelAlign: "right",
               name: 'first',
               allowBlank: false
             }
           ]
         },
-        //第二行
         {
-          xtype: "panel",
+          xtype: 'panel',
+          layout: "hbox",
+          margin: "10 0 0 0",
           border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
           defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
           items: [
             {
+              xtype: "checkboxfield",
+              boxLabel: "收到订单",
+              margin: "0 0 0 37",
+              inputValue: 1,
+              labelAlign: "right",
+              name: 'last'
+            }, {
+              fieldLabel: "不打折金额",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            },
+            {
+              fieldLabel: "抵价券",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            }
+          ]
+        },
+        {
+          xtype: 'panel',
+          layout: "hbox",
+          margin: "10 0 0 0",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              fieldLabel: "姓名",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            },{
               fieldLabel: "会员编号",
               labelAlign: "right",
               name: 'first',
               allowBlank: false
             },
             {
-              fieldLabel: "汇款人",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            }
-          ]
-        },
-        //第三行
-        {
-          xtype: "panel",
-          border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
-          defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-            {
-              fieldLabel: "汇款金额",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              fieldLabel: "汇款日期",
-              xtype: "datefield",
-              labelAlign: "right",
-              name: 'first'
-            }
-          ]
-        },
-        //第四行
-        {
-          xtype: "panel",
-          border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
-          defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-            {
-              fieldLabel: "收到汇款",
-              xtype: "checkboxfield",
-              labelAlign: "right",
-              name: 'first',
-              width: 240,
-              items: [
-                {  name: 'rb', inputValue: '1' }
-              ]
-            },
-            {
-              fieldLabel: "收到汇款日期",
-              xtype: "datefield",
-              labelAlign: "right",
-              name: 'first'
-            }
-          ]
-        },
-
-        // 第五行
-        {
-          xtype: "panel",
-          border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
-          defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-            {
-              xtype: "combobox",
-              store: Ext.data.StoreManager.lookup('sourceList'),
-              queryMode: 'local',
-              displayField: 'name',
-              valueField: 'source',
-              fieldLabel: "订单来源",
-              labelAlign: "right"
-            },
-            {
               fieldLabel: "邮编",
               labelAlign: "right",
               name: 'first',
               allowBlank: false
-            }
-          ]
-        },
-        //第六行
-        {
-          xtype: "panel",
-          border: 0,
-          layout: "hbox",
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-            {
-              fieldLabel: "抵价券",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
             },
-            {
-              fieldLabel: "不打折金额",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            }
-          ]
-        },
-        //第七行
-        {
-          xtype: "panel",
-          border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
-          defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-            {
-              fieldLabel: "邮资",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              fieldLabel: "收到订单",
-              xtype: "checkboxfield",
-              labelAlign: "right",
-              name: 'first',
-              width: 240,
-              items: [
-                {  name: 'rb', inputValue: '1' }
-              ]
-            }
-          ]
-        },
-
-        // 第八行
-        {
-          xtype: "panel",
-          border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
-          defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-            {
-              fieldLabel: "收到订单日期",
-              xtype: "datefield",
-              labelAlign: "right",
-              name: 'first'
-            }
-          ]
-        },
-        //第九行
-        {
-          xtype: "panel",
-          border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
-          defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
             {
               fieldLabel: "地址",
               labelAlign: "right",
               name: 'first',
-              width: 480
+              allowBlank: false
+            },
+            {
+              fieldLabel: "收件人",
+              labelAlign: "right",
+              width: 170,
+              name: 'first',
+              allowBlank: false
             }
           ]
         },
-
-        // 第十行
         {
-          xtype: "textareafield",
-          width: 300,
-          height: 100,
-          fieldLabel: "备注",
-          labelAlign: "right",
-          name: 'first'
+          xtype: 'panel',
+          layout: "hbox",
+          margin: "10 0 0 0",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              fieldLabel: "折扣",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            },
+            {
+              fieldLabel: "邮寄",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            },
+            {
+              fieldLabel: "青春贴",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            },
+            {
+              fieldLabel: "多付款",
+              labelAlign: "right",
+              name: 'first',
+              allowBlank: false
+            }
+          ]
         },
         {
           xtype: 'panel',
-          layout: "column",
-          border: 0,
+          layout: "hbox",
           width: 110,
-          style: {
-            margin: "10px auto"
-          },
+          margin: "30 auto",
+          border: 0,
           bodyStyle: {
-            "background-color": "transparent"
+            background: 'transparent'
           },
           items: [
             {
@@ -541,7 +474,7 @@ Ext.application({
             {
               xtype: 'button',
               scale: "medium",
-              margin: "0 0 0 20",
+              margin: "0 0 0 30",
               text: "返回"
             }
           ]
@@ -551,7 +484,7 @@ Ext.application({
 
     // search.hide();
     // list.hide();
-    // add.show();
+    add.show();
   }
 });
 
