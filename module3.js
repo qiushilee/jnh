@@ -180,7 +180,6 @@ Ext.application({
           layout: "column",
           items: [
             {
-              // TODO 参照 module9.js 地址，索取数量不要
               xtype: "grid",
               columnWidth: 0.5,
               height: 155,
@@ -244,156 +243,94 @@ Ext.application({
 
         // 第三行
         {
-          xtype: "panel",
-          margin: "20 0 0 0",
+          xtype:'panel',
+          layout: "hbox",
           border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
           defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          items: [
-            {
-              fieldLabel: "会员编号",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              xtype: "checkboxfield",
-              boxLabel: "代理",
-              margin: "0 0 0 10",
-              inputValue: 1,
-              labelAlign: "right",
-              name: 'last'
-            },
-            {
-              fieldLabel: "会员姓名",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              fieldLabel: "生日",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              xtype:"combobox",
-              fieldLabel: "寄送方式",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              xtype:"datefield",
-              fieldLabel: "毕业时间",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            }
-          ]
+          margin: "10 0 0 0",
+          items: [{
+            xtype: "radiofield",
+            fieldLabel: "代理",
+            labelWidth: 40,
+            labelAlign: "right"
+          }, {
+            xtype: "radiofield",
+            fieldLabel: "会员",
+            labelWidth: 40,
+            labelAlign: "right"
+          }, {
+            fieldLabel: "姓名",
+            labelWidth: 60,
+            width: 120,
+            labelAlign: "right"
+          }, {
+            xtype: "combobox",
+            fieldLabel: "寄送方式",
+            labelWidth: 102,
+            width: 185,
+            labelAlign: "right"
+          }, {
+            fieldLabel: "毕业时间",
+            labelWidth: 60,
+            labelAlign: "right"
+          }, {
+            xtype: "combobox",
+            fieldLabel: "期数",
+            labelWidth: 60,
+            labelAlign: "right"
+          }]
         },
 
         // 第四行
         {
-          xtype: "panel",
-          margin: "20 0 0 0",
+          xtype:'panel',
+          layout: "hbox",
           border: 0,
-          layout: "column",
           defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          items: [
-            {
-              xtype: "label",
-              columnWidth: 0.15,
-              text: "默认地址：浙江省杭州市西湖区",
-              name: 'last'
-            },
-            {
-              xtype: "label",
-              columnWidth: 0.15,
-              text: "邮编：312402",
-              name: 'first',
-            },
-            {
-              xtype: "label",
-              columnWidth: 0.15,
-              text: "电话：809312402",
-              name: 'first',
-            },
-            {
-              xtype: "label",
-              columnWidth: 0.15,
-              text: "收件人：张XX",
-              name: 'first',
-            }
-          ]
-        },
-
-        // 第五行
-        {
-          xtype: "panel",
-          margin: "20 0 0 0",
-          border: 0,
-          layout: {
-            type: "hbox",
-            align: "stretch"
-          },
-          defaultType: 'textfield',
-          fieldDefaults: {
-            labelAlign: 'right'
-          },
-          items: [
-            {
-              xtype: "combobox",
-              store: Ext.data.StoreManager.lookup('adderList'),
-              queryMode: 'local',
-              width:150,
-              displayField: 'name',
-              valueField: 'abbr',
-              fieldLabel: "家庭地址",
-              labelAlign: "right"
-            },
-            {
-              xtype:"combobox",
-              fieldLabel: "类型",
-              width:150,
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              fieldLabel: "邮编",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              fieldLabel: "地址",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              fieldLabel: "电话",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            },
-            {
-              fieldLabel: "收件人",
-              labelAlign: "right",
-              name: 'first',
-              allowBlank: false
-            }
-          ]
+          margin: "10 0 0 0",
+          items: [{
+            xtype: "combobox",
+            fieldLabel: "类型",
+            labelWidth: 40,
+            width: 105,
+            labelAlign: "right"
+          }, {
+            xtype: 'textfield',
+            fieldLabel: "邮编",
+            labelWidth: 40,
+            width: 100,
+            labelAlign: "right"
+          }, {
+            xtype: 'textfield',
+            fieldLabel: "地址",
+            labelWidth: 60,
+            width: 300,
+            labelAlign: "right"
+          }, {
+            xtype: 'textfield',
+            fieldLabel: "电话",
+            labelWidth: 40,
+            width: 145,
+            labelAlign: "right"
+          }, {
+            xtype: 'textfield',
+            fieldLabel: "收件人",
+            labelWidth: 60,
+            width: 120,
+            labelAlign: "right"
+          }, {
+            xtype: 'button',
+            text: "设为默认",
+            margin: "0 0 0 10"
+          }, {
+            xtype: 'button',
+            text: "删除",
+            margin: "0 0 0 10"
+          }, {
+            xtype: 'button',
+            text: "增加地址",
+            margin: "0 0 0 10"
+          }]
         },
 
         // 第六行
@@ -413,32 +350,27 @@ Ext.application({
             {
               fieldLabel: "抵价券",
               labelAlign: "right",
-              name: 'first',
-              allowBlank: false
+              labelWidth: 50
             },
             {
               fieldLabel: "不打折金额",
               labelAlign: "right",
-              name: 'first',
-              allowBlank: false
+              labelWidth: 70
             },
             {
               fieldLabel: "青春贴",
               labelAlign: "right",
-              name: 'first',
-              allowBlank: false
+              labelWidth: 50
             },
             {
               fieldLabel: "代理期数",
               labelAlign: "right",
-              name: 'first',
-              allowBlank: false
+              labelWidth: 60
             },
             {
               fieldLabel: "加入时间",
               labelAlign: "right",
-              name: 'first',
-              allowBlank: false
+              labelWidth: 60
             }
           ]
         },
@@ -450,7 +382,7 @@ Ext.application({
           width: 1000,
           fieldLabel: "备注",
           labelAlign: "right",
-          name: 'first'
+          labelWidth: 40
         },
 
         // 第八行
