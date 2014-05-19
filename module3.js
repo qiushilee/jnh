@@ -180,6 +180,7 @@ Ext.application({
           layout: "column",
           items: [
             {
+              // +TODO: 参照 module9.js 地址，索取数量不要
               xtype: "grid",
               columnWidth: 0.5,
               height: 155,

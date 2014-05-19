@@ -377,6 +377,7 @@ Ext.application({
           columnWidth: 0.59,
           bodyPadding: 10,
           border: 0,
+          // +TODO: 类型可下拉选择
           items: [{
             xtype: "combobox",
             fieldLabel: "类型",
