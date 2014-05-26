@@ -589,7 +589,7 @@ Ext.application({
 
     var bujiDetail = Ext.create("Ext.window.Window", {
       title: "补寄详情",
-      width: 600,
+      width: 700,
       layout: 'form',
       bodyPadding: 5,
       defaultType: 'textfield',
