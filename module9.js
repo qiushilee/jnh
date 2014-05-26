@@ -549,6 +549,18 @@ Ext.application({
               width: 70,
               labelAlign: "right"
             }, {
+              xtype: "datefield",
+              fieldLabel: "参考时间",
+              labelWidth: 60,
+              width: 160,
+              labelAlign: "right"
+            }, {
+              xtype: "datefield",
+              fieldLabel: "~",
+              labelWidth: 20,
+              width: 120,
+              labelAlign: "right"
+            }, {
               xtype: "button",
               text: "搜索",
               margin: "0 0 0 20"
