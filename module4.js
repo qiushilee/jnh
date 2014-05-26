@@ -223,17 +223,16 @@ Ext.application({
 
     var button = Ext.create("Ext.panel.Panel", {
       renderTo: Ext.getBody(),
-      margin: "20 0 0 17",
+      margin: "20 0 0 0",
       border: 0,
       layout: "column",
       items: [{
         xtype: "button",
-        text: "<span class=\"key\">A</span> 增加",
-        scale: "medium"
+        text: "<span class=\"key\">A</span> 增加"
       }, {
         xtype: "button",
         text: "删除",
-        scale: "medium"
+        margin: "0 0 0 10"
       }]
     });
 
