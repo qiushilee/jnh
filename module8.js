@@ -709,6 +709,53 @@ Ext.application({
                       ]
                     },
                     {
+                      title: "金额定位",
+                      padding: 15,
+                      items: [
+                        {
+                          xtype: "panel",
+                          layout: 'hbox',
+                          bodyPadding: 5,
+                          border: 0,
+                          defaultType: 'datefield',
+                          items: [
+                            {
+                              fieldLabel: "参考时间",
+                              labelWidth: 60,
+                              width: 160,
+                              labelAlign: "right"
+                            },
+                            {
+                              fieldLabel: "到",
+                              labelWidth: 20,
+                              width: 120,
+                              labelAlign: "right"
+                            }
+                          ]
+                        }, {
+                          xtype: "panel",
+                          layout: 'hbox',
+                          bodyPadding: 5,
+                          border: 0,
+                          defaultType: 'textfield',
+                          items: [
+                            {
+                              fieldLabel: "参考期数",
+                              labelWidth: 60,
+                              width: 160,
+                              labelAlign: "right"
+                            },
+                            {
+                              fieldLabel: "到",
+                              labelWidth: 20,
+                              width: 120,
+                              labelAlign: "right"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
                       title: "其它定位",
                       padding: 15,
                       items: [
