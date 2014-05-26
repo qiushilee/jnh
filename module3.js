@@ -364,6 +364,7 @@ Ext.application({
               labelWidth: 50
             },
             {
+              xtype:"combobox",
               fieldLabel: "代理期数",
               labelAlign: "right",
               labelWidth: 60
