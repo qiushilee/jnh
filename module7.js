@@ -132,6 +132,7 @@ Ext.application({
       ]
     });
 
+    // +TODO: 增加补寄详情
     var list = Ext.create("Ext.panel.Panel", {
       renderTo: Ext.getBody(),
       items: [
@@ -586,12 +587,77 @@ Ext.application({
       }]
     });
 
+    var bujiDetail = Ext.create("Ext.window.Window", {
+      title: "补寄详情",
+      width: 600,
+      layout: 'form',
+      bodyPadding: 5,
+      defaultType: 'textfield',
+      fieldDefaults: {
+        labelAlign: 'top'
+      },
+      bodyStyle: {
+        background: "#fff"
+      },
+      items: [
+        {
+          xtype: "grid",
+          margin: "20 0 0 0",
+          store: Ext.data.StoreManager.lookup('jhStore'),
+          columns: [
+          {
+            text: '序号',
+            dataIndex: 'id1'
+          },
+          {
+            text: '补寄日期',
+            dataIndex: 'iid1'
+          },
+          {
+            text: '寄送方式',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '包裹单号',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '邮资',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '重量',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '备注',
+            dataIndex: 'bnum1'
+          }
+          ]
+        },
+        {
+          xtype: "panel",
+          layout: 'hbox',
+          bodyPadding: 5,
+          border: 0,
+          defaultType: 'button',
+          items: [{
+            text: "修改"
+          }, {
+            text: "保存",
+            margin: "0 0 0 10"
+          }]
+        }
+      ]
+    });
+
     // search.hide();
     // list.hide();
     // button.hide();
     add.show();
     print.show();
     printCart.show();
+    bujiDetail.show();
   }
 });
 

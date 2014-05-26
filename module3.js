@@ -387,6 +387,7 @@ Ext.application({
         },
 
         // 第八行
+        // +TODO: 增加补寄详情
         {
           xtype: "grid",
           title: "流程表",
@@ -453,6 +454,23 @@ Ext.application({
               dataIndex: 'asdder2'
             }
           ]
+        },
+
+        {
+          xtype: "panel",
+          layout: "hbox",
+          defaultType: "button",
+          border: 0,
+          margin: "20 0 0 0",
+          items: [{
+            text: "<span class=\"key\">A</span> 增加"
+          }, {
+            text: "<span class=\"key\">M</span> 修改",
+            margin: "0 0 0 10"
+          }, {
+            text: "<span class=\"key\">D</span> 删除",
+            margin: "0 0 0 10"
+          }]
         }
       ]
     });
@@ -701,12 +719,77 @@ Ext.application({
       ]
     });
 
+    var bujiDetail = Ext.create("Ext.window.Window", {
+      title: "补寄详情",
+      width: 600,
+      layout: 'form',
+      bodyPadding: 5,
+      defaultType: 'textfield',
+      fieldDefaults: {
+        labelAlign: 'top'
+      },
+      bodyStyle: {
+        background: "#fff"
+      },
+      items: [
+        {
+          xtype: "grid",
+          margin: "20 0 0 0",
+          store: Ext.data.StoreManager.lookup('memberList'),
+          columns: [
+          {
+            text: '序号',
+            dataIndex: 'id1'
+          },
+          {
+            text: '补寄日期',
+            dataIndex: 'iid1'
+          },
+          {
+            text: '寄送方式',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '包裹单号',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '邮资',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '重量',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '备注',
+            dataIndex: 'bnum1'
+          }
+          ]
+        },
+        {
+          xtype: "panel",
+          layout: 'hbox',
+          bodyPadding: 5,
+          border: 0,
+          defaultType: 'button',
+          items: [{
+            text: "修改"
+          }, {
+            text: "保存",
+            margin: "0 0 0 10"
+          }]
+        }
+      ]
+    });
+
     /** 
-     * TODO 增加按钮：
+     * +TODO 增加按钮：
      *    A增加
      *    M修改
      *    D删除
      */
     add.show();
+    bujiDetail.show();
   }
 });
