@@ -25,8 +25,12 @@
     info: "/member/view/memberId/",
     directory: "",
     del: "/member/delete/",
-    folwCharts: "/member/orderremittance/memberId/"
+    folwCharts: "/member/orderremittance/memberId/",
+    add: "/member/create"
   };
+
+  env.api.paymentmethord = "/ajax/paymentmethord";
+  env.api.sendmethord = "/ajax/sendmethord";
 
   window.env = env;
 
