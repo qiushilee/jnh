@@ -6,22 +6,26 @@
   if (["localhost", "127.0.0.1", "localhost.com", "0.0.0.0"].indexOf(window.location.hostname) !== -1 || window.location.hostname.match(ValidIpAddressRegex)) { //enable debug mode
     env.debug = true;
     env.services = {
-      web: "http://" + window.location.hostname
+      web: "http://" + window.location.hostname + "/index.php"
     };
   } else {
     env.debug = false;
     env.services = {
-      web: "http://jnh.www.webwei.cn"
+      web: "http://jnh.www.webwei.cn/index.php"
     };
   }
 
   env.api.uc = {
-    login: "/index.php/site/login",
-    session: "/index.php/site/islogin"
+    login: "/site/login",
+    session: "/site/islogin"
   };
 
   env.api.member = {
-    list: "/index.php/member/index"
+    list: "/member/index",
+    info: "/member/view/memberId/",
+    directory: "",
+    del: "/member/delete/",
+    folwCharts: "/member/orderremittance/memberId/"
   };
 
   window.env = env;
