@@ -317,22 +317,42 @@ Ext.onReady(function() {
                 labelWidth: 60,
                 name: "realName",
                 width: 120,
-                labelAlign: "right"
+                labelAlign: "right",
+                blankText: "姓名为必填项",
+                allowBlank: false
               }, {
                 xtype: "combobox",
                 fieldLabel: "寄送方式",
                 labelWidth: 102,
+                // TODO 先禁用自动加载，因为不能显示默认值
+                store: Ext.create('Ext.data.Store', {
+                  fields: ['name', 'value'],
+                  layout: "fit",
+                  // autoLoad: true,
+                  proxy: {
+                    type: 'ajax',
+                    url: env.services.web + env.api.sendmethord,
+                    reader: {
+                      type: 'json',
+                      root: 'list'
+                    }
+                  }
+                }),
                 name: "deliveryMethod",
+                displayField: "name",
+                valueField: "value",
                 width: 185,
                 labelAlign: "right"
               }, {
+                // TODO 缺少name，所以暂时禁用 xtype
+                // xtype: "datefield",
                 fieldLabel: "毕业时间",
                 labelWidth: 60,
                 labelAlign: "right"
               }, {
                 xtype: "combobox",
                 fieldLabel: "期数",
-                name: "id",
+                name: "periodicalId",
                 labelWidth: 60,
                 labelAlign: "right"
               }]
@@ -447,6 +467,7 @@ Ext.onReady(function() {
                   labelWidth: 60
                 },
                 {
+                  xtype: "datefield",
                   fieldLabel: "加入时间",
                   labelAlign: "right",
                   name: "addDate",
@@ -547,11 +568,41 @@ Ext.onReady(function() {
           items: [{
             text: "<span class=\"key\">A</span> 增加",
             handler: function() {
-              add.show();
+              var form = panel.getComponent("memberInfo").getForm();
+              form.url = env.services.web + env.api.member.add;
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    console.log(action)
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("添加会员", action.result.msg);
+                  }
+                });
+              }
             }
           }, {
             text: "<span class=\"key\">M</span> 修改",
-            margin: "0 0 0 10"
+            margin: "0 0 0 10",
+            handler: function() {
+              var form = panel.getComponent("memberInfo").getForm(),
+                  member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
+              form.url = env.services.web + env.api.member.change;
+              if (form.isValid()) {
+                console.log(member.id)
+                form.submit({
+                  params: {
+                    id: member.id
+                  },
+                  success: function(form, action) {
+                    console.log(action)
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改会员", action.result.msg);
+                  }
+                });
+              }
+            }
           }, {
             text: "<span class=\"key\">D</span> 删除",
             margin: "0 0 0 10",
@@ -599,7 +650,7 @@ Ext.onReady(function() {
               xtype:"combobox",
               fieldLabel: "期数",
               labelAlign: "right",
-              name: 'first',
+              name: 'periodicalId',
               allowBlank: false
             },
             {
@@ -614,12 +665,12 @@ Ext.onReady(function() {
             {
               fieldLabel: '汇票号码',
               labelAlign: "right",
-              name: 'company'
+              name: 'billNumber'
             },
             {
               fieldLabel: '编号',
               labelAlign: "right",
-              name: 'email',
+              name: 'userCode',
             }
           ]
         },
