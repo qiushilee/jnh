@@ -39,6 +39,10 @@
     del: "/company/del/companyId/",
     add: "/company/create"
   };
+
+  env.api.product = {
+    list: "/product/index",
+  }
   window.env = env;
 
   Ext.application({

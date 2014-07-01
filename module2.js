@@ -4,128 +4,15 @@ Ext.application({
     // 库存表
     Ext.create('Ext.data.Store', {
       storeId: 'kucun',
-      fields: ['id', "iid", 'name', 'price', 'price2', 'num', 'num2', 'num3', 'num4', 'style', "desc", "num5", "text"],
+      fields: ['addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "remark", "safetyStock", "specification", "status", "weight", "companyCode", "address"],
       layout: "fit",
-      data: {
-        'items': [{
-          'id': '1',
-          "iid": '55088',
-          "name": "人民邮电出版社",
-          "price": 30,
-          "price2": 50,
-          "num": 100,
-          "num2": 80,
-          "num3": 90,
-          "num4": 100,
-          "style": "箱包",
-          "desc": "这是商品的简要说明",
-          "num5": 5,
-          "text": "这是商品的备注信息"
-        }, {
-          'id': '2',
-          "iid": '55088',
-          "name": "人民邮电出版社",
-          "price": 30,
-          "price2": 50,
-          "num": 100,
-          "num2": 80,
-          "num3": 90,
-          "num4": 100,
-          "style": "箱包",
-          "desc": "这是商品的简要说明",
-          "num5": 5,
-          "text": "这是商品的备注信息"
-        }, {
-          'id': '3',
-          "iid": '55088',
-          "name": "人民邮电出版社",
-          "price": 30,
-          "price2": 50,
-          "num": 100,
-          "num2": 80,
-          "num3": 90,
-          "num4": 100,
-          "style": "箱包",
-          "desc": "这是商品的简要说明",
-          "num5": 5,
-          "text": "这是商品的备注信息"
-        }, {
-          'id': '4',
-          "iid": '55088',
-          "name": "人民邮电出版社",
-          "price": 30,
-          "price2": 50,
-          "num": 100,
-          "num2": 80,
-          "num3": 90,
-          "num4": 100,
-          "style": "箱包",
-          "desc": "这是商品的简要说明",
-          "num5": 5,
-          "text": "这是商品的备注信息"
-        }, {
-          'id': '5',
-          "iid": '55088',
-          "name": "人民邮电出版社",
-          "price": 30,
-          "price2": 50,
-          "num": 100,
-          "num2": 80,
-          "num3": 90,
-          "num4": 100,
-          "style": "箱包",
-          "desc": "这是商品的简要说明",
-          "num5": 5,
-          "text": "这是商品的备注信息"
-        }, {
-          'id': '6',
-          "iid": '55088',
-          "name": "人民邮电出版社",
-          "price": 30,
-          "price2": 50,
-          "num": 100,
-          "num2": 80,
-          "num3": 90,
-          "num4": 100,
-          "style": "箱包",
-          "desc": "这是商品的简要说明",
-          "num5": 5,
-          "text": "这是商品的备注信息"
-        }, {
-          'id': '7',
-          "iid": '55088',
-          "name": "人民邮电出版社",
-          "price": 30,
-          "price2": 50,
-          "num": 100,
-          "num2": 80,
-          "num3": 90,
-          "num4": 100,
-          "style": "箱包",
-          "desc": "这是商品的简要说明",
-          "num5": 5,
-          "text": "这是商品的备注信息"
-        }, {
-          'id': '8',
-          "iid": '55088',
-          "name": "人民邮电出版社",
-          "price": 30,
-          "price2": 50,
-          "num": 100,
-          "num2": 80,
-          "num3": 90,
-          "num4": 100,
-          "style": "箱包",
-          "desc": "这是商品的简要说明",
-          "num5": 5,
-          "text": "这是商品的备注信息"
-        }]
-      },
+      autoLoad: true,
       proxy: {
-        type: 'memory',
+        type: 'ajax',
+        url: env.services.web + env.api.product.list,
         reader: {
           type: 'json',
-          root: 'items'
+          root: 'list'
         }
       }
     });
@@ -204,90 +91,146 @@ Ext.application({
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: document.body,
       layout: "fit",
-      activeItem: 2,
+      activeItem: 0,
       items: [{
         title: '库存表',
         padding: 15,
         items: [{
+          xtype: "form",
+          border: 0,
+          layout: "column",
+          url: env.services.web + env.api.product.list,
+          items: [{
+            xtype: "textfield",
+            labelWidth: 30,
+            name: "productCode",
+            fieldLabel: "货号"
+          }, {
+            xtype: "button",
+            margin: "0 0 15 10",
+            text: "搜索",
+            handler: function() {
+              var form = this.ownerCt.getForm();
+              if (form.isValid()) {
+                form.submit({
+                  failure: function(form, action) {
+                    console.log(action.result)
+                    Ext.data.StoreManager.lookup('kucun').loadData(action.result.list);
+                  }
+                });
+              }
+            }
+          }]
+        }, {
           xtype: "grid",
           title: '库存表',
           store: Ext.data.StoreManager.lookup('kucun'),
-          margin: "40 0 0 0",
           columns: [{
             text: '序号',
             dataIndex: 'id',
             flex: 1
           }, {
             text: '货号',
-            dataIndex: 'iid',
+            dataIndex: 'productCode',
             flex: 1
           }, {
             text: '品名',
             dataIndex: 'name',
           }, {
             text: '进价',
-            dataIndex: 'price',
+            dataIndex: 'purchasePrice',
             flex: 1
           }, {
             text: '售价',
-            dataIndex: 'price2',
+            dataIndex: 'price',
             flex: 1
           }, {
             text: '调整前累进量',
-            dataIndex: 'num',
+            dataIndex: '',
             flex: 2
           }, {
             text: '调整后累进量',
-            dataIndex: 'num',
+            dataIndex: '',
             flex: 2
           }, {
             text: '调整前出货数',
-            dataIndex: 'num2',
+            dataIndex: '',
             flex: 2
           }, {
             text: '调整后出货数',
-            dataIndex: 'num3',
+            dataIndex: '',
             flex: 2
           }, {
             text: '库存数',
-            dataIndex: 'num3',
+            dataIndex: 'number',
             flex: 1
           }, {
             text: '包装形式',
-            dataIndex: 'style',
+            dataIndex: 'bagShape',
             flex: 1
           }, {
             text: '重量',
-            dataIndex: 'num3',
+            dataIndex: 'weight',
             flex: 1
           }, {
             text: '调整基数',
-            dataIndex: 'num5',
+            dataIndex: '',
             flex: 1
           }, {
             text: '进货说明',
-            dataIndex: 'desc',
+            dataIndex: 'remark',
           }, {
             text: '商品说明',
-            dataIndex: 'text',
+            dataIndex: '',
           }, {
             text: '厂商编号',
-            dataIndex: 'text',
+            dataIndex: 'companyCode',
           }, {
             text: '厂商地址',
-            dataIndex: 'text',
+            dataIndex: 'address',
           }, {
             text: '缺货提示',
-            dataIndex: 'text',
+            dataIndex: '',
           }]
+        }, {
+          xtype: "button",
+          text: "<span class=\"key\">A</span> 增加",
+          margin: "20 0 0 0",
+          scale: "medium"
+        }, {
+          xtype: "button",
+          text: "<span class=\"key\">I</span> 导入",
+          margin: "20 0 0 20",
+          scale: "medium"
         }]
       }, {
         title: '进转损',
         padding: 15,
         items: [{
+          xtype: "form",
+          border: 0,
+          layout: "column",
+          items: [{
+            xtype: "textfield",
+            labelWidth: 30,
+            fieldLabel: "货号"
+          }, {
+            xtype: "textfield",
+            labelWidth: 30,
+            fieldLabel: "编号",
+            margin: "0 0 0 10",
+          }, {
+            xtype: "button",
+            margin: "0 0 0 10",
+            text: "搜索"
+          }, {
+            xtype: "button",
+            margin: "0 0 15 5",
+            text: "重置"
+          }]
+        }, {
           xtype: "grid",
           title: '进转损',
-          margin: "40 0 0 0",
           store: Ext.data.StoreManager.lookup('jzs'),
           columns: [{
             text: '类型',
@@ -303,14 +246,35 @@ Ext.application({
             dataIndex: 'bnum',
             flex: 1
           }]
+        }, {
+          xtype: "button",
+          text: "<span class=\"key\">A</span> 增加",
+          margin: "20 0 0 0",
+          scale: "medium"
         }]
       }, {
         title: '出货明细',
         padding: 15,
         items: [{
+          xtype: "form",
+          border: 0,
+          layout: "column",
+          items: [{
+            xtype: "textfield",
+            labelWidth: 60,
+            fieldLabel: "货号定位"
+          }, {
+            xtype: "button",
+            margin: "0 0 0 10",
+            text: "搜索"
+          }, {
+            xtype: "button",
+            margin: "0 0 15 5",
+            text: "重置"
+          }]
+        }, {
           xtype: "grid",
           title: '出货明细',
-          margin: "40 0 0 0",
           store: Ext.data.StoreManager.lookup('jzs'),
           columns: [{
             text: '序号',
@@ -331,24 +295,6 @@ Ext.application({
             flex: 1
           }]
         }]
-      }]
-    });
-
-
-    var button = Ext.create("Ext.panel.Panel", {
-      renderTo: Ext.getBody(),
-      margin: "20 0 0 17",
-      border: 0,
-      layout: "column",
-      items: [{
-        xtype: "button",
-        text: "<span class=\"key\">A</span> 增加",
-        scale: "medium"
-      }, {
-        xtype: "button",
-        text: "<span class=\"key\">I</span> 导入",
-        margin: "0 0 0 20",
-        scale: "medium"
       }]
     });
 
@@ -632,8 +578,8 @@ Ext.application({
         }]
     });
 
-    add.show();
-    addJzs.show();
-    addJHD.show();
+    // add.show();
+    // addJzs.show();
+    // addJHD.show();
   }
 });
