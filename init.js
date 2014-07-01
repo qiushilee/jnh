@@ -33,6 +33,12 @@
   env.api.paymentmethord = "/ajax/paymentmethord";
   env.api.sendmethord = "/ajax/sendmethord";
 
+  env.api.company = {
+    list: "/company/index",
+    info: "/company/view/companyId/",
+    del: "/company/del/companyId/",
+    add: "/company/create"
+  };
   window.env = env;
 
   Ext.application({
