@@ -26,7 +26,8 @@
     directory: "",
     del: "/member/delete/",
     folwCharts: "/member/orderremittance/memberId/",
-    add: "/member/create"
+    add: "/member/create",
+    change: "/member/update"
   };
 
   env.api.paymentmethord = "/ajax/paymentmethord";
