@@ -37,7 +37,8 @@
     list: "/company/index",
     info: "/company/view/companyId/",
     del: "/company/del/companyId/",
-    add: "/company/create"
+    add: "/company/create",
+    change: "/company/update"
   };
 
   env.api.product = {

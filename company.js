@@ -135,100 +135,111 @@ Ext.application({
         margin: "0 0 0 10"
       }]
     });
-    
-    // // 进货单
-    // Ext.create('Ext.grid.Panel', {
-    //   title: '进货单',
-    //   store: Ext.data.StoreManager.lookup('simpsonsStore'),
-    //   columns: [{
-    //     text: '类型',
-    //     dataIndex: 'name'
-    //   }, {
-    //     text: '编号',
-    //     dataIndex: 'id'
-    //   }, {
-    //     text: '日期',
-    //     dataIndex: 'adder'
-    //   }, {
-    //     text: '金额',
-    //     dataIndex: 'man',
-    //     flex: 1
-    //   }],
-    //   renderTo: Ext.getBody()
-    // });
 
     var win = new Ext.create("Ext.window.Window", {
       title: "厂商详情",
       layout: "column",
       width: 800,
-      height: 500,
+      height: 570,
       items: [{
-        xtype: "panel",
+        itemId: "form",
+        xtype: "form",
         columnWidth: 0.41,
         title: "厂商输入页面",
         layout: 'vbox',
         width: 500,
         bodyPadding: 5,
         defaultType: 'textfield',
+        url: env.services.web + env.api.company.add,
         items: [{
           xtype: "combobox",
           fieldLabel: "期数",
+          name: "periodicalId",
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
         }, {
            fieldLabel: "厂商编号",
+           name: "companyCode",
            labelWidth: 60,
            width: 300,
            labelAlign: "right"
          },{
           fieldLabel: '地址',
+          name: "address",
           labelWidth: 60,
           width: 300,
           labelAlign: "right",
         }, {
           fieldLabel: '联系人',
+          name: "linkMan",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: '厂商名称',
+          name: "title",
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
         }, {
           fieldLabel: '电话1',
+          name: "mobile1",
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
         }, {
           fieldLabel: '电话2',
+          name: "mobile2",
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
         }, {
           fieldLabel: '产品类别',
+          name: "productClass",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right",
+        }, {
+          fieldLabel: '邮编',
+          name: "zipCode",
           labelWidth: 60,
           width: 300,
           labelAlign: "right",
         }, {
           fieldLabel: "qq",
+          name: "qq",
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
         }, {
           fieldLabel: "网址",
+          name: "website",
+          labelWidth: 60,
+          width: 300,
+          labelAlign: "right"
+        }, {
+          fieldLabel: "邮箱",
+          name: "email",
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
         }, {
           fieldLabel: "开户行",
+          name: "openingBank",
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
         }, {
           fieldLabel: "账号",
+          name: "openingAccount",
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
         }, {
           xtype: "textarea",
           fieldLabel: "备注",
+          name: "remark",
           labelWidth: 60,
           width: 300,
           height: 100,
@@ -241,15 +252,49 @@ Ext.application({
           items: [{
             xtype:'button',
             margin: "0 0 0 10",
-            text: "<span class=\"key\">S</span> 保存"
+            text: "<span class=\"key\">S</span> 保存",
+            handler: function() {
+              var form = win.getComponent("form").getForm();
+              form.url = env.services.web + env.api.company.change;
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    form.reset();
+                    win.hide();
+                    companyList.load();
+                  },
+                  failure: function(form, action) {
+                    console.log(action.result)
+                  }
+                });
+              }
+            }
           }, {
             xtype:'button',
             margin: "0 0 0 10",
-            text: "<span class=\"key\">E</span> 返回"
+            text: "<span class=\"key\">E</span> 返回",
+            handler: function() {
+              win.hide();
+            }
           }, {
             xtype:'button',
             margin: "0 0 0 10",
-            text: "<span class=\"key\">A</span> 增加"
+            text: "<span class=\"key\">A</span> 增加",
+            handler: function() {
+              var form = win.getComponent("form").getForm();
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    form.reset();
+                    win.hide();
+                    companyList.load();
+                  },
+                  failure: function(form, action) {
+                    console.log(action.result)
+                  }
+                });
+              }
+            }
           }]
         }]
         },
@@ -284,10 +329,8 @@ Ext.application({
             }]
           }]
         },
-      ]
+      ],
+      closeAction: 'hide',
     });
-    
-    // cs.hide();
-
   }
 });
