@@ -236,19 +236,25 @@ Ext.application({
           margin: "20 0 0 20",
           scale: "medium",
           handler: function() {
-            //厂商ID
-            var productId = panel.getComponent("product").getComponent("productList").getSelectionModel().getSelection()[0].data.id;
-            Ext.Ajax.request({
-              url: env.services.web + env.api.receipt.list,
-              params: {
-                companyId: productId
-              },
-              success: function(resp) {
-                var data = Ext.JSON.decode(resp.responseText);
-                Ext.data.StoreManager.lookup('receipt').loadData(data.list);
-                receipt.show();
-              }
-            });
+            try {
+              //厂商ID
+              var productId = panel.getComponent("product").getComponent("productList").getSelectionModel().getSelection()[0].data.id;
+              receipt.getComponent("inputPanel").getComponent("desc").getForm().findField("companyId").setValue(productId);
+              Ext.Ajax.request({
+                url: env.services.web + env.api.receipt.list,
+                params: {
+                  companyId: productId
+                },
+                success: function(resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  Ext.data.StoreManager.lookup('receipt').loadData(data.list);
+                  receipt.show();
+                }
+              });
+            } catch(e) {
+              console.error(e.stack);
+              Ext.Msg.alert("查看进货单", "请单击库存表中的一项后再查看进货单");
+            }
           }
         }]
       }, {
@@ -364,6 +370,7 @@ Ext.application({
         border: 0,
         defaultType: 'textfield',
         items: [{
+          // TODO 期数从periodical/index取
           xtype: "combobox",
           fieldLabel: "期数",
           labelWidth: 60,
@@ -551,6 +558,7 @@ Ext.application({
             fieldLabel: "进货编号",
             labelAlign: "right",
             labelWidth: 80,
+            disabled: true,
             name: 'receiptCode'
           }, {
             fieldLabel: "进货金额",
@@ -570,6 +578,12 @@ Ext.application({
             labelWidth: 80,
             name: 'remark'
           }, {
+            xtype: "hiddenfield",
+            name: "id"
+          }, {
+            xtype: "hiddenfield",
+            name: "companyId"
+          }, {
             xtype:'panel',
             layout: "hbox",
             border: 0,
@@ -577,15 +591,51 @@ Ext.application({
             items: [{
               xtype:'button',
               text: "<span class=\"key\">B</span> 增加",
-              margin: "0 0 0 15"
+              margin: "0 0 0 15",
+              handler: function() {
+                var form = this.up("form").getForm();
+                form.url = env.services.web + env.api.receipt.add;
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("增加进货单", action.result.msg);
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("增加进货单", action.result.msg);
+                  }
+                });
+              }
             }, {
               xtype:'button',
               text: "<span class=\"key\">N</span> 修改",
-              margin: "0 0 0 5"
+              margin: "0 0 0 5",
+              handler: function() {
+                var form = this.up("form").getForm();
+                form.url = env.services.web + env.api.receipt.change;
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("修改进货单", action.result.msg);
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改进货单", action.result.msg);
+                  }
+                });
+              }
             }, {
               xtype:'button',
               text: "<span class=\"key\">E</span> 删除",
-              margin: "0 0 0 5"
+              margin: "0 0 0 5",
+              handler: function() {
+                var form = this.up("form").getForm();
+                form.url = env.services.web + env.api.receipt.del;
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("删除进货单", action.result.msg);
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("删除进货单", action.result.msg);
+                  }
+                });
+              }
             }]
           }, {
             xtype:'panel',
@@ -594,12 +644,8 @@ Ext.application({
             margin: "10 0",
             items: [{
               xtype:'button',
-              text: "<span class=\"key\">I</span> 保存",
-              margin: "0 0 0 15"
-            }, {
-              xtype:'button',
               text: "进货单",
-              margin: "0 0 0 5"
+              margin: "0 0 0 15"
             }]
           }]
         }]

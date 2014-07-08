@@ -50,7 +50,8 @@
   env.api.receipt = {
     list: "/receipt/index",
     change: "/receipt/update",
-    add: "/receipt/create"
+    add: "/receipt/create",
+    del: "/receipt/delete"
   };
 
   env.api.orderremittance = {
