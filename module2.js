@@ -17,6 +17,22 @@ Ext.application({
       }
     });
 
+    // 进货单
+    Ext.create('Ext.data.Store', {
+      storeId: 'receipt',
+      fields: ['id', "receiptCode", 'receiptDate', 'purchaseAmount', "remark"],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.receipt.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     // 进转损
     Ext.create('Ext.data.Store', {
       storeId: 'jzs',
@@ -93,6 +109,7 @@ Ext.application({
       layout: "fit",
       activeItem: 0,
       items: [{
+        itemId: "product",
         title: '库存表',
         padding: 15,
         items: [{
@@ -114,7 +131,6 @@ Ext.application({
               if (form.isValid()) {
                 form.submit({
                   failure: function(form, action) {
-                    console.log(action.result)
                     Ext.data.StoreManager.lookup('kucun').loadData(action.result.list);
                   }
                 });
@@ -122,6 +138,7 @@ Ext.application({
             }
           }]
         }, {
+          itemId: "productList",
           xtype: "grid",
           title: '库存表',
           store: Ext.data.StoreManager.lookup('kucun'),
@@ -191,17 +208,48 @@ Ext.application({
           }, {
             text: '缺货提示',
             dataIndex: '',
-          }]
+          }],
+          listeners: {
+            itemdblclick: function( that, record, item, index, e, eOpts) {
+              product.show();
+              window.updateForm(product.getComponent("form").getForm(), record.data);
+            }
+          }
         }, {
           xtype: "button",
           text: "<span class=\"key\">A</span> 增加",
           margin: "20 0 0 0",
-          scale: "medium"
+          scale: "medium",
+          handler: function() {
+            product.getComponent("form").getForm().reset();
+            product.show();
+          }
         }, {
           xtype: "button",
           text: "<span class=\"key\">I</span> 导入",
           margin: "20 0 0 20",
+          disabled: true,
           scale: "medium"
+        }, {
+          xtype: "button",
+          text: "进货单",
+          margin: "20 0 0 20",
+          scale: "medium",
+          handler: function() {
+            //厂商ID
+            var productId = panel.getComponent("product").getComponent("productList").getSelectionModel().getSelection()[0].data.id;
+            Ext.Ajax.request({
+              url: env.services.web + env.api.receipt.list,
+              params: {
+                companyId: productId
+              },
+              success: function(resp) {
+                var data = Ext.JSON.decode(resp.responseText);
+                Ext.data.StoreManager.lookup('receipt').loadData(data.list);
+                receipt.show();
+              }
+            });
+          }
         }]
       }, {
         title: '进转损',
@@ -298,12 +346,12 @@ Ext.application({
       }]
     });
 
-    var add = new Ext.create("Ext.window.Window", {
+    var product = new Ext.create("Ext.window.Window", {
       title: "库存详情",
       width: 400,
       layout: 'vbox',
       bodyPadding: 5,
-      defaultType: 'textfield',
+      closeAction: 'hide',
       fieldDefaults: {
         labelAlign: 'top'
       },
@@ -311,6 +359,11 @@ Ext.application({
         background: "#fff"
       },
       items: [{
+        itemId: "form",
+        xtype: "form",
+        border: 0,
+        defaultType: 'textfield',
+        items: [{
           xtype: "combobox",
           fieldLabel: "期数",
           labelWidth: 60,
@@ -320,47 +373,58 @@ Ext.application({
           fieldLabel: "厂商编号",
           labelWidth: 60,
           width: 300,
+          name: "companyCode",
+          disabled: true,
           labelAlign: "right"
         }, {
           fieldLabel: "厂商地址",
           labelWidth: 60,
           width: 300,
+          disabled: true,
+          name: "address",
           labelAlign: "right"
         }, {
           fieldLabel: "货号",
           labelWidth: 60,
           width: 300,
+          disabled: true,
+          name: "productCode",
           labelAlign: "right"
         }, {
           fieldLabel: '品名',
           labelWidth: 60,
           width: 300,
+          name: "name",
           labelAlign: "right"
         }, {
           fieldLabel: '进价',
           labelWidth: 60,
           width: 300,
+          name: "purchasePrice",
           labelAlign: "right"
         }, {
           fieldLabel: '包装形式',
           labelWidth: 60,
           width: 300,
           labelAlign: "right",
-          name: 'email',
+          name: 'bagShape',
         }, {
           fieldLabel: '重量',
           labelWidth: 60,
           width: 300,
+          name: "weight",
           labelAlign: "right"
         }, {
           fieldLabel: '进货说明',
           labelWidth: 60,
           width: 300,
+          name: "remark",
           labelAlign: "right"
         }, {
           fieldLabel: '售价',
           labelWidth: 60,
           width: 300,
+          name: "price",
           labelAlign: "right"
         }, {
           fieldLabel: '商品说明',
@@ -378,6 +442,9 @@ Ext.application({
           width: 300,
           labelAlign: "right"
         }, {
+          xtype: "hiddenfield",
+          name: "id",
+        }, {
           xtype:'panel',
           layout: "hbox",
           border: 0,
@@ -385,17 +452,182 @@ Ext.application({
           items: [{
             xtype:'button',
             margin: "0 0 0 10",
-            text: "<span class=\"key\">S</span> 保存"
+            text: "<span class=\"key\">S</span> 保存",
+            handler: function() {
+              var form = this.up("form").getForm();
+              form.url = env.services.web + env.api.product.change;
+              form.submit({
+                success: function(form, action) {
+                  Ext.Msg.alert("修改库存", action.result.msg, function() {
+                    product.hide();
+                  });
+                },
+                failure: function(form, action) {
+                  Ext.Msg.alert("修改库存", action.result.msg);
+                }
+              });
+            }
           }, {
             xtype:'button',
             margin: "0 0 0 10",
-            text: "<span class=\"key\">E</span> 返回"
+            text: "<span class=\"key\">E</span> 返回",
+            handler: function() {
+              product.hide();
+            }
           }, {
             xtype:'button',
             margin: "0 0 0 10",
-            text: "<span class=\"key\">A</span> 增加"
+            text: "<span class=\"key\">A</span> 增加",
+            handler: function() {
+              var form = this.up("form").getForm();
+              form.url = env.services.web + env.api.product.create;
+              form.submit({
+                success: function(form, action) {
+                  Ext.Msg.alert("新增库存", action.result.msg, function() {
+                    product.hide();
+                  });
+                },
+                failure: function(form, action) {
+                  Ext.Msg.alert("新增库存", action.result.msg);
+                }
+              });
+            }
           }]
         }]
+      }]
+    });
+
+    var receipt = new Ext.create("Ext.window.Window", {
+      title: "进货单详情",
+      width: 600,
+      layout: 'column',
+      bodyPadding: 5,
+      closeAction: 'hide',
+      fieldDefaults: {
+        labelAlign: 'top'
+      },
+      bodyStyle: {
+        background: "#fff"
+      },
+      items: [{
+        itemId: "inputPanel",
+        xtype: "panel",
+        border: 0,
+        columnWidth: 0.5,
+        items: [{
+          xtype: "form",
+          url: env.services.web + env.api.receipt.list,
+          border: 0,
+          defaultType: 'textfield',
+          columnWidth: 0.5,
+          items: [{
+            fieldLabel: "进货编号搜索",
+            labelAlign: "right",
+            labelWidth: 80,
+            name: 'receiptCode'
+          }],
+          defaults: {
+            listeners : {
+              specialkey : function(field, e) {
+                if (e.getKey() == Ext.EventObject.ENTER) {
+                  var form = this.up('form').getForm();
+                  form.submit({
+                    failure: function(form, action) {
+                      Ext.data.StoreManager.lookup('receipt').loadData(action.result.list);
+                    }
+                  });
+                }
+              }
+            }
+          }
+        }, {
+          itemId: "desc",
+          xtype: "form",
+          url: env.services.web + env.api.receipt.list,
+          border: 0,
+          defaultType: 'textfield',
+          columnWidth: 0.5,
+          items: [{
+            fieldLabel: "进货编号",
+            labelAlign: "right",
+            labelWidth: 80,
+            name: 'receiptCode'
+          }, {
+            fieldLabel: "进货金额",
+            labelAlign: "right",
+            labelWidth: 80,
+            name: 'purchaseAmount'
+          }, {
+            xtype: "datefield",
+            fieldLabel: "日期",
+            labelAlign: "right",
+            labelWidth: 80,
+            name: 'receiptDate'
+          }, {
+            xtype: "textareafield",
+            fieldLabel: "备注",
+            labelAlign: "right",
+            labelWidth: 80,
+            name: 'remark'
+          }, {
+            xtype:'panel',
+            layout: "hbox",
+            border: 0,
+            margin: "10 0",
+            items: [{
+              xtype:'button',
+              text: "<span class=\"key\">B</span> 增加",
+              margin: "0 0 0 15"
+            }, {
+              xtype:'button',
+              text: "<span class=\"key\">N</span> 修改",
+              margin: "0 0 0 5"
+            }, {
+              xtype:'button',
+              text: "<span class=\"key\">E</span> 删除",
+              margin: "0 0 0 5"
+            }]
+          }, {
+            xtype:'panel',
+            layout: "hbox",
+            border: 0,
+            margin: "10 0",
+            items: [{
+              xtype:'button',
+              text: "<span class=\"key\">I</span> 保存",
+              margin: "0 0 0 15"
+            }, {
+              xtype:'button',
+              text: "进货单",
+              margin: "0 0 0 5"
+            }]
+          }]
+        }]
+      }, {
+        xtype: "grid",
+        title: '进货单简表',
+        store: Ext.data.StoreManager.lookup('receipt'),
+        columnWidth: 0.5,
+        columns: [{
+          text: '序号',
+          dataIndex: 'id'
+        }, {
+          text: '进货编号',
+          dataIndex: 'receiptCode'
+        }, {
+          text: '进货日期',
+          dataIndex: 'receiptDate'
+        }, {
+          text: '进货金额',
+          dataIndex: 'purchaseAmount',
+          flex: 1
+        }],
+        listeners: {
+          itemdblclick: function( that, record, item, index, e, eOpts) {
+            window.updateForm(this.ownerCt.getComponent("inputPanel").getComponent("desc").getForm(), record.data);
+          }
+        }
+      }]
     });
     
     var addJzs = new Ext.create("Ext.window.Window", {
@@ -404,6 +636,7 @@ Ext.application({
       layout: 'form',
       bodyPadding: "5 50 5 0",
       defaultType: 'textfield',
+      closeAction: 'hide',
       fieldDefaults: {
         labelAlign: 'top'
       },

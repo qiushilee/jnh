@@ -53,24 +53,16 @@ Ext.onReady(function() {
         success: function(response) {
           var data = Ext.JSON.decode(response.responseText),
               con = panel.getComponent("memberInfo").getForm();
-          
-          function update(formValue) {
-            Ext.Object.each(formValue, function(item, index) {
-              if (con.findField(item)) {
-                con.findField(item).setValue(index);
-              }
-            });
-          }
 
-          update(data.info);
+          window.updateForm(con, data.info);
 
           // Update address
           if (data.addressList.length > 0) {
             Ext.each(data.addressList, function(item) {
-              update(item);
+              window.updateForm(con, item);
             });
           } else {
-            update({"status":"","id":"","memberId":"","type":"","address":"","zipCode":"","mobile":"","consignee":"","isDefault":""});
+            window.updateForm(con, {"status":"","id":"","memberId":"","type":"","address":"","zipCode":"","mobile":"","consignee":"","isDefault":""});
           }
         },
         failure: function(form, action) {

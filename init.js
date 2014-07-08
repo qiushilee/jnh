@@ -43,8 +43,30 @@
 
   env.api.product = {
     list: "/product/index",
-  }
+    change: "/product/update",
+    add: "/product/create"
+  };
+
+  env.api.receipt = {
+    list: "/receipt/index",
+    change: "/receipt/update",
+    add: "/receipt/create"
+  };
+
+  env.api.orderremittance = {
+    list: "/orderremittance/index",
+    add: "/orderremittance/create"
+  };
   window.env = env;
+
+  window.updateForm = function(form, data) {
+    Ext.Object.each(data, function(item, index) {
+      if (form.findField(item)) {
+        // TODO datefield 不能写入
+        form.findField(item).setValue(index);
+      }
+    });
+  }
 
   Ext.application({
     name: "JNH",
