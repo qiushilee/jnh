@@ -58,6 +58,13 @@
     list: "/orderremittance/index",
     add: "/orderremittance/create"
   };
+
+  env.api.catalog = {
+    list: "/catalog/index",
+    change: "/catalog/update",
+    add: "/catalog/create",
+    del: "/catalog/delete"
+  };
   window.env = env;
 
   window.updateForm = function(form, data) {
