@@ -1,9 +1,9 @@
 Ext.application({
   name: "JNH",
   launch: function() {
-    // 库存表
+    // 库存表&进货单——商品详情
     Ext.create('Ext.data.Store', {
-      storeId: 'kucun',
+      storeId: 'product',
       fields: ['addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "remark", "safetyStock", "specification", "status", "weight", "companyCode", "address"],
       layout: "fit",
       autoLoad: true,
@@ -26,6 +26,22 @@ Ext.application({
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.receipt.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 进货单——商品详情
+    Ext.create('Ext.data.Store', {
+      storeId: 'jhdProduct',
+      fields: ['bagShape', 'id', 'name', 'number', 'productCode', "remark"],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.product.list,
         reader: {
           type: 'json',
           root: 'list'
@@ -131,7 +147,7 @@ Ext.application({
               if (form.isValid()) {
                 form.submit({
                   failure: function(form, action) {
-                    Ext.data.StoreManager.lookup('kucun').loadData(action.result.list);
+                    Ext.data.StoreManager.lookup('product').loadData(action.result.list);
                   }
                 });
               }
@@ -141,7 +157,7 @@ Ext.application({
           itemId: "productList",
           xtype: "grid",
           title: '库存表',
-          store: Ext.data.StoreManager.lookup('kucun'),
+          store: Ext.data.StoreManager.lookup('product'),
           columns: [{
             text: '序号',
             dataIndex: 'id',
@@ -645,7 +661,24 @@ Ext.application({
             items: [{
               xtype:'button',
               text: "进货单",
-              margin: "0 0 0 15"
+              margin: "0 0 0 15",
+              handler: function() {
+                var form = this.up("form").getForm(),
+                    receiptId = form.findField("id").value;
+
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.receipt.list,
+                  params: {
+                    receiptId: receiptId
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.data.StoreManager.lookup('jhdProduct').loadData(data.list);
+                    addJHD.getComponent("search").getForm().findField("receiptId").setValue(receiptId);
+                    addJHD.show();
+                  }
+                });
+              }
             }]
           }]
         }]
@@ -735,10 +768,12 @@ Ext.application({
     });
 
     var addJHD = new Ext.create("Ext.window.Window", {
-      title: "详情",
+      title: "进货单商品详情",
       width: 800,
       bodyPadding: 10,
       items: [{
+        itemId: "search",
+        xtype: "form",
         layout: "hbox",
         bodyPadding: 10,
         border: 0,
@@ -747,8 +782,12 @@ Ext.application({
           "background-color": "transparent"
         },
         items: [{
+          xtype: "hiddenfield",
+          name: "receiptId"
+        }, {
           xtype: "combobox",
           fieldLabel: "期数",
+          name: "periodicalId",
           labelAlign: "right",
           labelWidth: 40,
           width: 120
@@ -777,53 +816,57 @@ Ext.application({
         },
         items: [{
           fieldLabel: "货号",
+          name: "productCode",
           labelWidth: 40,
           width: 200,
           labelAlign: "right"
         }, {
           fieldLabel: "数量",
+          name: "number",
           labelWidth: 40,
           width: 100,
           labelAlign: "right"
         }, {
           fieldLabel: "进价",
+          name: "purchasePrice",
           labelWidth: 40,
           width: 100,
           labelAlign: "right"
         }, {
           fieldLabel: "备注",
+          name: "remark",
           labelWidth: 40,
           labelAlign: "right"
         }]
       }, {
         xtype: "grid",
-        store: Ext.data.StoreManager.lookup('kucun'),
+        store: Ext.data.StoreManager.lookup('jhdProduct'),
         margin: "10 0 0 0",
         columns: [{
           text: '序号',
-          dataIndex: 'id1'
+          dataIndex: 'id'
         }, {
           text: '货号',
-          dataIndex: 'id1'
+          dataIndex: 'productCode'
         }, {
           text: '品名',
-          dataIndex: 'man1',
+          dataIndex: 'name',
           flex: 1
         }, {
           text: '数量',
-          dataIndex: 'adder1'
+          dataIndex: 'number'
         }, {
           text: '单价',
-          dataIndex: 'adder1'
+          dataIndex: ''
         }, {
           text: '金额',
-          dataIndex: 'adder1'
+          dataIndex: ''
         }, {
           text: '包装形式',
-          dataIndex: 'adder1'
+          dataIndex: 'bagShape'
         }, {
           text: '备注',
-          dataIndex: 'man1',
+          dataIndex: 'remark',
           flex: 1
         }]
       }, {
@@ -862,3 +905,5 @@ Ext.application({
     // addJHD.show();
   }
 });
+        
+    // 库存表
