@@ -33,6 +33,15 @@
   env.api.paymentmethord = "/ajax/paymentmethord";
   env.api.sendmethord = "/ajax/sendmethord";
 
+  env.api.order = {
+    list: "/orderremittance/index",
+    info: "/orderremittance/view/id/",
+    del: "/orderremittance/del/id/",
+    add: "/orderremittance/create",
+    change: "/orderremittance/update"
+  };
+
+
   env.api.company = {
     list: "/company/index",
     info: "/company/view/companyId/",
