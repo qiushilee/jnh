@@ -386,13 +386,6 @@ Ext.application({
         border: 0,
         defaultType: 'textfield',
         items: [Ext.create("periodical"), {
-          fieldLabel: "厂商编号",
-          labelWidth: 60,
-          width: 300,
-          name: "companyCode",
-          disabled: true,
-          labelAlign: "right"
-        }, {
           fieldLabel: "厂商地址",
           labelWidth: 60,
           width: 300,
