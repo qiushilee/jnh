@@ -26,13 +26,28 @@ Ext.application({
       defaultType: 'textfield',
       margin: "10 0",
       renderTo: document.body,
-      border: 0,
+      border: 0
       items: [{
+        //TODO 更换成统一的periodical组件
+        xtype: "combobox",
         fieldLabel: "期数",
-        name: 'periodicalId',
-        labelWidth: 40,
-        width: 120,
-        labelAlign: "right"
+        store: Ext.create("Ext.data.Store", {
+          fields: ["title", "id"],
+          autoLoad: true,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.periodical.list,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "title",
+        valueField: "id",
+        labelAlign: "right",
+        name: "periodicalId"
       }, {
         fieldLabel: "厂商编号",
         name:'companyCode',
@@ -57,7 +72,7 @@ Ext.application({
         text: "搜索",
         margin: "0 0 0 20",
         handler: function() {
-          var form = this.ownerCt.ownerCt.getComponent("searchBar");
+          var form = this.up("form").getForm();
           if (form.isValid()) {
             // TODO 接口需要加上 success: true
             form.submit({
