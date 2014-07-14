@@ -385,14 +385,7 @@ Ext.application({
         xtype: "form",
         border: 0,
         defaultType: 'textfield',
-        items: [{
-          // TODO 期数从periodical/index取
-          xtype: "combobox",
-          fieldLabel: "期数",
-          labelWidth: 60,
-          width: 300,
-          labelAlign: "right"
-        }, {
+        items: [Ext.create("periodical"), {
           fieldLabel: "厂商编号",
           labelWidth: 60,
           width: 300,
@@ -771,6 +764,7 @@ Ext.application({
       title: "进货单商品详情",
       width: 800,
       bodyPadding: 10,
+      closeAction: 'hide',
       items: [{
         itemId: "search",
         xtype: "form",

@@ -74,6 +74,10 @@
     add: "/catalog/create",
     del: "/catalog/delete"
   };
+
+  env.api.periodical = {
+    list: "/periodical/index"
+  };
   window.env = env;
 
   window.updateForm = function(form, data) {
@@ -104,6 +108,30 @@
             location.href = "login.html";
           });
         }
+      });
+
+      //TODO 参数可配置
+      Ext.define("periodical", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "期数",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["title", "id"],
+          autoLoad: true,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.periodical.list,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "title",
+        valueField: "id",
+        width: 300,
+        labelAlign: "right",
+        name: "periodicalId"
       });
     }
   });

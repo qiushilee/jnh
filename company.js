@@ -151,14 +151,7 @@ Ext.application({
         bodyPadding: 5,
         defaultType: 'textfield',
         url: env.services.web + env.api.company.add,
-        items: [{
-          xtype: "combobox",
-          fieldLabel: "期数",
-          name: "periodicalId",
-          labelWidth: 60,
-          width: 300,
-          labelAlign: "right"
-        }, {
+        items: [Ext.create("periodical"), {
            fieldLabel: "厂商编号",
            name: "companyCode",
            labelWidth: 60,

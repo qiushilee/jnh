@@ -341,13 +341,7 @@ Ext.onReady(function() {
                 fieldLabel: "毕业时间",
                 labelWidth: 60,
                 labelAlign: "right"
-              }, {
-                xtype: "combobox",
-                fieldLabel: "期数",
-                name: "periodicalId",
-                labelWidth: 60,
-                labelAlign: "right"
-              }]
+              }, Ext.create("periodical")]
             },
 
             // 第四行
@@ -638,13 +632,7 @@ Ext.onReady(function() {
           border: 0,
           defaultType: 'textfield',
           items: [
-            {
-              xtype:"combobox",
-              fieldLabel: "期数",
-              labelAlign: "right",
-              name: 'periodicalId',
-              allowBlank: false
-            },
+            Ext.create("periodical"),
             {
               xtype: "combobox",
               store: Ext.data.StoreManager.lookup('adderList'),
