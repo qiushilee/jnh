@@ -26,7 +26,7 @@ Ext.application({
       defaultType: 'textfield',
       margin: "10 0",
       renderTo: document.body,
-      border: 0
+      border: 0,
       items: [{
         //TODO 更换成统一的periodical组件
         xtype: "combobox",
