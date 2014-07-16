@@ -92,7 +92,8 @@ Ext.application({
                     },
                     success: function(resp) {
                       var data = Ext.JSON.decode(resp.responseText);
-                      id.setText("出货单编号：" + data.code + "(" + data. + "期)");
+                      //TODO 期数应该放在list中比较合理
+                      id.setText("出货单编号：" + data.code);
                     }
                   });
                 }
