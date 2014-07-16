@@ -78,6 +78,14 @@
   env.api.periodical = {
     list: "/periodical/index"
   };
+
+  env.api.deliverorder = {
+    list: "/deliverorder/index",
+    change: "/deliverorder/update",
+    add: "/deliverorder/create",
+    del: "/deliverorder/delete",
+    code: "/deliverorder/generationcode"
+  };
   window.env = env;
 
   window.updateForm = function(form, data) {
@@ -87,6 +95,30 @@
         form.findField(item).setValue(index);
       }
     });
+  }
+
+  /**
+   * 通用的搜索功能
+   * Usage: search.call(this, "store");
+   * TODO 替换所有的搜索事件
+   */
+  window.searchHandler = function(store) {
+    var form = this.up("form").getForm();
+    if (form.isValid()) {
+      form.submit({
+        failure: function(form, action) {
+          try {
+            if (action.result.list.length > 0) {
+              Ext.data.StoreManager.lookup(store).loadData(action.result.list);
+            } else {
+              Ext.Msg.alert("搜索", "对不起，没有找到符合条件的结果。");
+            }
+          } catch(e) {
+            console.error(e.stack);
+          }
+        }
+      });
+    }
   }
 
   Ext.application({
@@ -116,7 +148,7 @@
         fieldLabel: "期数",
         store: Ext.create("Ext.data.Store", {
           fields: ["title", "id"],
-          autoLoad: true,
+          autoLoad: false,
           proxy: {
             type: 'ajax',
             url: env.services.web + env.api.periodical.list,

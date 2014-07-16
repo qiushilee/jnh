@@ -31,10 +31,11 @@
 </head>
 <body>
   <div class="menu">
-    <a href="#company.js">厂商管理</a>
-    <a href="#product.js">库存管理</a>
-    <a href="#member.js">会员管理模块</a>
-    <a href="#order.js">汇款定购模块</a>
+    <a href="#company">厂商管理</a>
+    <a href="#product">库存管理</a>
+    <a href="#member">会员管理</a>
+    <a href="#order">汇款定购</a>
+    <a href="#deliverorder">出货单</a>
   </div>
 
   <script>
@@ -42,7 +43,7 @@
     var script = document.createElement("script");
     script.src = src;
     document.body.appendChild(script);
-  })(location.hash.slice(1, 11));
+  })(location.hash.slice(1, location.hash.length) + ".js");
 
   window.onhashchange = function() {
     location.reload();

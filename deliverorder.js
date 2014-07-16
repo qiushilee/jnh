@@ -1,150 +1,60 @@
 Ext.application({
   name: "JNH",
   launch: function () {
-    // 厂商管理列表
+    // 出货单列表
     Ext.create('Ext.data.Store', {
-      storeId: 'simpsonsStore',
-      fields: ['id', 'name', 'adder', 'man', 'phone1', 'phone2', 'fax', 'qq', 'custom'],
+      storeId: 'list',
+      fields: ["orderCode", "deliveryOrderCode", "id", "remittanceAmount", "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage"],
       layout: "fit",
-      data: {
-        'items': [
-          {
-            'id': '55001',
-            "name": "人民邮电出版社",
-            "adder": "浙江省杭州市西湖区",
-            "man": "李先生",
-            "phone1": "13112128372",
-            "phone2": "15912128372",
-            "fax": "057184200712",
-            "qq": "389210372",
-            "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
-          },
-          {
-            'id': '55002',
-            "name": "人民邮电出版社",
-            "adder": "浙江省杭州市西湖区",
-            "man": "李先生",
-            "phone1": "13112128372",
-            "phone2": "15912128372",
-            "fax": "057184200712",
-            "qq": "389210372",
-            "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
-          },
-          {
-            'id': '55003',
-            "name": "人民邮电出版社",
-            "adder": "浙江省杭州市西湖区",
-            "man": "李先生",
-            "phone1": "13112128372",
-            "phone2": "15912128372",
-            "fax": "057184200712",
-            "qq": "389210372",
-            "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
-          },
-          {
-            'id': '55004',
-            "name": "人民邮电出版社",
-            "adder": "浙江省杭州市西湖区",
-            "man": "李先生",
-            "phone1": "13112128372",
-            "phone2": "15912128372",
-            "fax": "057184200712",
-            "qq": "389210372",
-            "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
-          },
-          {
-            'id': '55005',
-            "name": "人民邮电出版社",
-            "adder": "浙江省杭州市西湖区",
-            "man": "李先生",
-            "phone1": "13112128372",
-            "phone2": "15912128372",
-            "fax": "057184200712",
-            "qq": "389210372",
-            "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
-          },
-          {
-            'id': '55006',
-            "name": "人民邮电出版社",
-            "adder": "浙江省杭州市西湖区",
-            "man": "李先生",
-            "phone1": "13112128372",
-            "phone2": "15912128372",
-            "fax": "057184200712",
-            "qq": "389210372",
-            "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
-          },
-          {
-            'id': '55007',
-            "name": "人民邮电出版社",
-            "adder": "浙江省杭州市西湖区",
-            "man": "李先生",
-            "phone1": "13112128372",
-            "phone2": "15912128372",
-            "fax": "057184200712",
-            "qq": "389210372",
-            "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
-          },
-          {
-            'id': '合计',
-            "name": "人民邮电出版社",
-            "adder": "浙江省杭州市西湖区",
-            "man": "李先生",
-            "phone1": "13112",
-            "phone2": "15912128372",
-            "fax": "057184200712",
-            "qq": "3892",
-            "custom": '<img src="' + Ext.BLANK_IMAGE_URL + '" class="x-action-col-icon x-action-col-0 buy-col">'
-          }
-        ]
-      },
+      autoLoad: true,
       proxy: {
-        type: 'memory',
+        type: 'ajax',
+        url: env.services.web + env.api.deliverorder.list,
         reader: {
           type: 'json',
-          root: 'items'
+          root: 'list'
         }
       }
     });
 
-    var search = Ext.create("Ext.Panel", {
+    var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
       bodyPadding: 10,
       defaultType: 'textfield',
       margin: "10 0",
       renderTo: document.body,
-      items: [
-        {
-          xtype: "combobox",
-          fieldLabel: "期数",
-          labelWidth: 40,
-          width: 120,
-          labelAlign: "right"
-        },
+      url: env.services.web + env.api.deliverorder.list,
+      items: [Ext.create("periodical"),
         {
           fieldLabel: "会员姓名",
           labelWidth: 60,
+          name: "userName",
           labelAlign: "right"
-        },
-        {
+        }, {
           fieldLabel: "会员编号",
           labelWidth: 60,
+          name: "userCode",
           labelAlign: "right"
-        },
-        {
+        }, {
           fieldLabel: "出货单编号",
           labelWidth: 70,
+          name: "deliveryOrderCode",
           labelAlign: "right"
-        },
-        {
+        //TODO 增加键盘事件 enter
+        }, {
           xtype: "button",
           text: "搜索",
-          margin: "0 0 0 20"
-        },
-        {
+          margin: "0 0 0 20",
+          handler: function() {
+            searchHandler.call(this, "list");
+          }
+        }, {
           xtype: "button",
           text: "重置",
-          margin: "0 0 0 20"
+          margin: "0 0 0 20",
+          handler: function() {
+            this.up("form").getForm().reset();
+          }
         }
       ]
     });
@@ -156,28 +66,47 @@ Ext.application({
       margin: "30 0",
       items: [
         {
-          xtype: "panel",
+          itemId: "detail",
+          xtype: "form",
           border: 0,
           columnWidth: 0.5,
           items: [
             {
+              itemId: "col",
               xtype: 'panel',
               layout: "hbox",
               border: 0,
               defaultType: 'textfield',
-              items: [
-                {
-                  disabled: true,
-                  fieldLabel: "出货单编号",
-                  width: 220,
-                  labelAlign: "right"
-                },
-                {
-                  xtype: "label",
-                  text: "(10期)",
-                  margin: "3 0 0 5"
+              items: [{
+                itemId: "createCode",
+                xtype: "button",
+                margin: "0 0 0 50",
+                disabled: true,
+                text: "生成出货单编号",
+                handler: function() {
+                  var id = this.ownerCt.getComponent("deliveryOrderCode");
+                  Ext.Ajax.request({
+                    url: env.services.web + env.api.deliverorder.code,
+                    params: {
+                      orderRemittanceId: id
+                    },
+                    success: function(resp) {
+                      var data = Ext.JSON.decode(resp.responseText);
+                      id.setText("出货单编号：" + data.code + "(" + data. + "期)");
+                    }
+                  });
                 }
-              ]
+              }, {
+                itemId: "deliveryOrderCode",
+                xtype: "label",
+                text: "",
+                name: "deliveryOrderCode",
+                margin: "3 0 0 5"
+              }]
+            },
+            {
+              xtype: "hidden",
+              name: "orderRemittanceId"
             },
             {
               xtype: 'panel',
@@ -189,11 +118,13 @@ Ext.application({
                 {
                   xtype: "textfield",
                   fieldLabel: "会员姓名",
+                  name: "userName",
                   labelAlign: "right"
                 },
                 {
                   xtype: 'textfield',
                   fieldLabel: "应收金额",
+                  name: "receivableAmount",
                   labelAlign: "right"
                 }
               ]
@@ -207,10 +138,12 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "销货合计",
+                  name: "totalSales",
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "已收汇款",
+                  name: "receivedRemittance",
                   labelAlign: "right"
                 }
               ]
@@ -224,10 +157,12 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "不打折金额",
+                  name: "unDiscountAmount",
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "抵价券",
+                  name: "preferentialTicket",
                   labelAlign: "right"
                 }
               ]
@@ -241,10 +176,12 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "折扣",
+                  name: "discount",
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "多付金额",
+                  name: "overpaidAmount",
                   labelAlign: "right"
                 }
               ]
@@ -258,39 +195,48 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "邮资",
+                  name: "postage",
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "会员编号",
+                  name: "userCode",
                   labelAlign: "right"
                 }
               ]
             },
             {
               xtype: "grid",
-              store: Ext.data.StoreManager.lookup('simpsonsStore'),
+              store: Ext.data.StoreManager.lookup('list'),
               margin: "20 0 0 0",
               columns: [
                 {
                   text: '出货单号',
-                  dataIndex: 'id',
+                  dataIndex: 'deliveryOrderCode',
                   flex: 1
                 },
                 {
                   text: '汇款编号',
-                  dataIndex: 'qq',
+                  dataIndex: 'orderCode',
                   flex: 1
                 },
                 {
                   text: '汇款人',
-                  dataIndex: 'qq'
+                  dataIndex: 'remitter'
                 },
                 {
                   text: '汇款额',
-                  dataIndex: 'qq',
+                  dataIndex: 'remittanceAmount',
                   flex: 1
                 }
-              ]
+              ],
+              listeners: {
+                itemdblclick: function( that, record, item, index, e, eOpts) {
+                  var detail = this.ownerCt.ownerCt.getComponent("detail");
+                  detail.getComponent("col").getComponent("createCode").setDisabled(false);
+                  window.updateForm(detail.getForm(), record.data);
+                }
+              }
             },
             {
               xtype: 'panel',
@@ -858,8 +804,5 @@ Ext.application({
     // search.hide();
     //list.hide();
     //add.show();
-    print.show();
-    addQhd.show();
-    addCHD.show();
   }
 });
