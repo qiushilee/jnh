@@ -84,7 +84,8 @@
     change: "/deliverorder/update",
     add: "/deliverorder/create",
     del: "/deliverorder/delete",
-    code: "/deliverorder/generationcode"
+    code: "/deliverorder/generationcode",
+    view: "/deliverorder/vieworderdetail"
   };
   window.env = env;
 

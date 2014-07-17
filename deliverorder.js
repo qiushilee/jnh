@@ -4,12 +4,33 @@ Ext.application({
     // 出货单列表
     Ext.create('Ext.data.Store', {
       storeId: 'list',
-      fields: ["orderCode", "deliveryOrderCode", "id", "remittanceAmount", "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage"],
+      fields: ["orderCode", "deliveryOrderCode", "id", "remittanceAmount", "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
       layout: "fit",
       autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.deliverorder.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 右侧商品列表
+    Ext.create('Ext.data.Store', {
+      storeId: 'product',
+      fields: ["id", "productCode", "name", "number", "price", "amount", "ramark", "weight"],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.deliverorder.view,
+        actionMethods: {
+          create: 'POST', read: 'POST', update: 'POST', destroy: 'POST'
+        },
+        pageParam: "",
+        startParam: "",
+        limitParam: "",
         reader: {
           type: 'json',
           root: 'list'
@@ -84,11 +105,10 @@ Ext.application({
                 disabled: true,
                 text: "生成出货单编号",
                 handler: function() {
-                  var id = this.ownerCt.getComponent("deliveryOrderCode");
                   Ext.Ajax.request({
                     url: env.services.web + env.api.deliverorder.code,
                     params: {
-                      orderRemittanceId: id
+                      orderRemittanceId: window.orderRemittanceId
                     },
                     success: function(resp) {
                       var data = Ext.JSON.decode(resp.responseText);
@@ -97,12 +117,6 @@ Ext.application({
                     }
                   });
                 }
-              }, {
-                itemId: "deliveryOrderCode",
-                xtype: "label",
-                text: "",
-                name: "deliveryOrderCode",
-                margin: "3 0 0 5"
               }]
             },
             {
@@ -233,9 +247,18 @@ Ext.application({
               ],
               listeners: {
                 itemdblclick: function( that, record, item, index, e, eOpts) {
-                  var detail = this.ownerCt.ownerCt.getComponent("detail");
+                  var detail = this.ownerCt.ownerCt.getComponent("detail"),
+                      productStore = Ext.data.StoreManager.lookup("product");
+                  window.orderRemittanceId = record.data.orderRemittanceId;
+
                   detail.getComponent("col").getComponent("createCode").setDisabled(false);
                   window.updateForm(detail.getForm(), record.data);
+
+                  productStore.load({
+                    params: {
+                      orderRemittanceId: window.orderRemittanceId
+                    }
+                  });
                 }
               }
             },
@@ -255,173 +278,148 @@ Ext.application({
           style: {
             float: "right",
           },
-          items: [
-            {
-              xtype: 'panel',
+          items: [{
+            xtype: 'panel',
+            layout: "hbox",
+            border: 0,
+            items: [{
+              xtype: "textfield",
+              fieldLabel: "货号",
+              labelWidth: 30,
+              width: 100,
+              labelAlign: "right",
+              margin: "0 10 0 20"
+            }, {
+              xtype: "button",
+              text: "搜索",
+              margin: "0 0 0 40",
+              float: "right"
+            }, {
+              xtype: "button",
+              text: "导入电话订单",
+              margin: "0 0 0 10",
+              float: "right"
+            }, {
+              xtype: "button",
+              text: "导入网上订单",
+              margin: "0 0 0 10",
+              float: "right"
+            }, {
+              xtype: "button",
+              text: "查看抵价券",
+              margin: "0 0 0 10",
+              float: "right"
+            }]
+          }, {
+            xtype: 'panel',
+            bodyPadding: 5,
+            margin: "10 0 0 0",
+            items: [{
+              itemId: "productForm",
+              xtype: 'form',
               layout: "hbox",
               border: 0,
-              items: [
-              {
-                xtype: "textfield",
+              defaultType: 'textfield',
+              margin: "10 0 0 0",
+              items: [{
                 fieldLabel: "货号",
                 labelWidth: 30,
                 width: 100,
-                labelAlign: "right",
-                margin: "0 10 0 20"
-              },
-              {
-                xtype: "button",
-                text: "搜索",
-                margin: "0 0 0 40",
-                float: "right"
-              },
-              {
-                xtype: "button",
-                text: "导入电话订单",
-                margin: "0 0 0 10",
-                float: "right"
-              },
-              {
-                xtype: "button",
-                text: "导入网上订单",
-                margin: "0 0 0 10",
-                float: "right"
-              },
-              {
-                xtype: "button",
-                text: "查看抵价券",
-                margin: "0 0 0 10",
-                float: "right"
-              }
-            ]
-            },
-            {
-              xtype: 'panel',
-              bodyPadding: 5,
+                name: "productCode",
+                labelAlign: "right"
+              }, {
+                fieldLabel: "数量",
+                labelWidth: 50,
+                width: 120,
+                name: "number",
+                labelAlign: "right"
+              }, {
+                fieldLabel: "备注",
+                labelWidth: 50,
+                width: 300,
+                name: "ramark",
+                labelAlign: "right"
+              }]
+            }, {
+              xtype: "grid",
+              store: Ext.data.StoreManager.lookup("product"),
               margin: "10 0 0 0",
-              items: [
-                {
-                  xtype: 'panel',
-                  layout: "hbox",
-                  border: 0,
-                  defaultType: 'textfield',
-                  margin: "10 0 0 0",
-                  items: [
-                    {
-                      fieldLabel: "货号",
-                      labelWidth: 30,
-                      width: 100,
-                      labelAlign: "right"
-                    },
-                    {
-                      fieldLabel: "数量",
-                      labelWidth: 50,
-                      width: 120,
-                      labelAlign: "right"
-                    },
-                    {
-                      fieldLabel: "备注",
-                      labelWidth: 50,
-                      width: 300,
-                      labelAlign: "right"
-                    }
-                  ]
-                },
-                {
-                  xtype: "grid",
-                  store: Ext.data.StoreManager.lookup('simpsonsStore'),
-                  margin: "10 0 0 0",
-                  columns: [
-                    {
-                      text: '序号',
-                      dataIndex: 'id'
-                    },
-                    {
-                      text: '货号',
-                      dataIndex: 'adder1',
-                      flex: 1
-                    },
-                    {
-                      text: '品名',
-                      dataIndex: 'man1',
-                      flex: 1
-                    },
-                    {
-                      text: '数量',
-                      dataIndex: 'phone1',
-                      flex: 1
-                    },
-                    {
-                      text: '售价',
-                      dataIndex: 'phone21',
-                      flex: 1
-                    },
-                    {
-                      text: '金额',
-                      dataIndex: 'qq',
-                      flex: 1
-                    },
-                    {
-                      text: '备注',
-                      dataIndex: 'qq1',
-                      flex: 1
-                    },
-                    {
-                      text: '重量',
-                      dataIndex: 'qq1',
-                      flex: 1
-                    }
-                  ]
-                },
-                {
-                  xtype: 'panel',
-                  layout: "hbox",
-                  border: 0,
-                  defaultType: 'textfield',
-                  margin: "10 0 0 0",
-                  items: [
-                    {
-                      xtype: "button",
-                      text: "连续打印"
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">A</span> 增加",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">D</span> 删除",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">M</span> 修改",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">S</span> 保存",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">H</span> 预览",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">R</span> 重打",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      xtype: "button",
-                      text: "加入抵价券",
-                      margin: "0 0 0 10"
-                    }
-                  ]
+              columns: [{
+                text: '序号',
+                dataIndex: 'id'
+              }, {
+                text: '货号',
+                dataIndex: 'productCode',
+                flex: 1
+              }, {
+                text: '品名',
+                dataIndex: 'name',
+                flex: 1
+              }, {
+                text: '数量',
+                dataIndex: 'number',
+                flex: 1
+              }, {
+                text: '售价',
+                dataIndex: 'price',
+                flex: 1
+              }, {
+                text: '金额',
+                dataIndex: 'amount',
+                flex: 1
+              }, {
+                text: '备注',
+                dataIndex: 'ramark',
+                flex: 1
+              }, {
+                text: '重量',
+                dataIndex: 'weight',
+                flex: 1
+              }],
+              listeners: {
+                itemdblclick: function( that, record, item, index, e, eOpts) {
+                  window.updateForm(this.ownerCt.getComponent("productForm").getForm(), record.data);
                 }
-              ]
+              }
+            }, {
+              xtype: 'panel',
+              layout: "hbox",
+              border: 0,
+              defaultType: 'textfield',
+              margin: "10 0 0 0",
+              items: [{
+                xtype: "button",
+                text: "连续打印"
+              }, {
+                xtype: "button",
+                text: "<span class=\"key\">A</span> 增加",
+                margin: "0 0 0 10"
+              }, {
+                xtype: "button",
+                text: "<span class=\"key\">D</span> 删除",
+                margin: "0 0 0 10"
+              }, {
+                xtype: "button",
+                text: "<span class=\"key\">M</span> 修改",
+                margin: "0 0 0 10"
+              }, {
+                xtype: "button",
+                text: "<span class=\"key\">S</span> 保存",
+                margin: "0 0 0 10"
+              }, {
+                xtype: "button",
+                text: "<span class=\"key\">H</span> 预览",
+                margin: "0 0 0 10"
+              }, {
+                xtype: "button",
+                text: "<span class=\"key\">R</span> 重打",
+                margin: "0 0 0 10"
+              }, {
+                xtype: "button",
+                text: "加入抵价券",
+                margin: "0 0 0 10"
+              }]
+            }]
             }
           ]
         }
