@@ -1,15 +1,15 @@
 Ext.application({
   name: "JNH",
   launch: function () {
-    // 出货单列表
+    // 出货单管理列表数据
     Ext.create('Ext.data.Store', {
-      storeId: 'list',
-      fields: ["orderCode", "deliveryOrderCode", "id", "remittanceAmount", "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
+      storeId: 'simpsonsStore',
+      fields: ['id', 'deliveryOrderCode', 'orderCode', 'remitter', 'remittanceAmount'],
       layout: "fit",
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.deliverorder.list,
+        url: env.services.web + env.api.deliveryOrder.list,
         reader: {
           type: 'json',
           root: 'list'
@@ -17,65 +17,44 @@ Ext.application({
       }
     });
 
-    // 右侧商品列表
-    Ext.create('Ext.data.Store', {
-      storeId: 'productData',
-      fields: ["id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
-      layout: "fit",
-      proxy: {
-        type: 'ajax',
-        url: env.services.web + env.api.deliverorder.view,
-        actionMethods: {
-          create: 'POST', read: 'POST', update: 'POST', destroy: 'POST'
-        },
-        pageParam: "",
-        startParam: "",
-        limitParam: "",
-        reader: {
-          type: 'json',
-          root: 'list'
-        }
-      }
-    });
-
-    var search = Ext.create("Ext.form.Panel", {
+    var search = Ext.create("Ext.Panel", {
       layout: "hbox",
       bodyPadding: 10,
       defaultType: 'textfield',
       margin: "10 0",
       renderTo: document.body,
-      url: env.services.web + env.api.deliverorder.list,
-      items: [Ext.create("periodical"),
+      items: [
+        {
+          xtype: "combobox",
+          fieldLabel: "期数",
+          labelWidth: 40,
+          width: 120,
+          labelAlign: "right"
+        },
         {
           fieldLabel: "会员姓名",
           labelWidth: 60,
-          name: "userName",
           labelAlign: "right"
-        }, {
+        },
+        {
           fieldLabel: "会员编号",
           labelWidth: 60,
-          name: "userCode",
           labelAlign: "right"
-        }, {
+        },
+        {
           fieldLabel: "出货单编号",
           labelWidth: 70,
-          name: "deliveryOrderCode",
           labelAlign: "right"
-        //TODO 增加键盘事件 enter
-        }, {
+        },
+        {
           xtype: "button",
           text: "搜索",
-          margin: "0 0 0 20",
-          handler: function() {
-            searchHandler.call(this, "list");
-          }
-        }, {
+          margin: "0 0 0 20"
+        },
+        {
           xtype: "button",
           text: "重置",
-          margin: "0 0 0 20",
-          handler: function() {
-            this.up("form").getForm().reset();
-          }
+          margin: "0 0 0 20"
         }
       ]
     });
@@ -87,41 +66,28 @@ Ext.application({
       margin: "30 0",
       items: [
         {
-          itemId: "detail",
-          xtype: "form",
+          xtype: "panel",
           border: 0,
           columnWidth: 0.5,
           items: [
             {
-              itemId: "col",
               xtype: 'panel',
               layout: "hbox",
               border: 0,
               defaultType: 'textfield',
-              items: [{
-                itemId: "createCode",
-                xtype: "button",
-                margin: "0 0 0 50",
-                disabled: true,
-                text: "生成出货单编号",
-                handler: function() {
-                  Ext.Ajax.request({
-                    url: env.services.web + env.api.deliverorder.code,
-                    params: {
-                      orderRemittanceId: window.orderRemittanceId
-                    },
-                    success: function(resp) {
-                      var data = Ext.JSON.decode(resp.responseText);
-                      //TODO 期数应该放在list中比较合理
-                      id.setText("出货单编号：" + data.code);
-                    }
-                  });
+              items: [
+                {
+                  disabled: true,
+                  fieldLabel: "出货单编号",
+                  width: 220,
+                  labelAlign: "right"
+                },
+                {
+                  xtype: "label",
+                  text: "(10期)",
+                  margin: "3 0 0 5"
                 }
-              }]
-            },
-            {
-              xtype: "hidden",
-              name: "orderRemittanceId"
+              ]
             },
             {
               xtype: 'panel',
@@ -133,13 +99,11 @@ Ext.application({
                 {
                   xtype: "textfield",
                   fieldLabel: "会员姓名",
-                  name: "userName",
                   labelAlign: "right"
                 },
                 {
                   xtype: 'textfield',
                   fieldLabel: "应收金额",
-                  name: "receivableAmount",
                   labelAlign: "right"
                 }
               ]
@@ -153,12 +117,10 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "销货合计",
-                  name: "totalSales",
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "已收汇款",
-                  name: "receivedRemittance",
                   labelAlign: "right"
                 }
               ]
@@ -172,12 +134,10 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "不打折金额",
-                  name: "unDiscountAmount",
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "抵价券",
-                  name: "preferentialTicket",
                   labelAlign: "right"
                 }
               ]
@@ -191,12 +151,10 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "折扣",
-                  name: "discount",
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "多付金额",
-                  name: "overpaidAmount",
                   labelAlign: "right"
                 }
               ]
@@ -210,62 +168,39 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "邮资",
-                  name: "postage",
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "会员编号",
-                  name: "userCode",
                   labelAlign: "right"
                 }
               ]
             },
             {
               xtype: "grid",
-              store: Ext.data.StoreManager.lookup('list'),
+              store: Ext.data.StoreManager.lookup('simpsonsStore'),
               margin: "20 0 0 0",
               columns: [
                 {
                   text: '出货单号',
-                  dataIndex: 'deliveryOrderCode',
+                  dataIndex: 'id',
                   flex: 1
                 },
                 {
                   text: '汇款编号',
-                  dataIndex: 'orderCode',
+                  dataIndex: 'qq',
                   flex: 1
                 },
                 {
                   text: '汇款人',
-                  dataIndex: 'remitter'
+                  dataIndex: 'qq'
                 },
                 {
                   text: '汇款额',
-                  dataIndex: 'remittanceAmount',
+                  dataIndex: 'qq',
                   flex: 1
                 }
-              ],
-              listeners: {
-                itemdblclick: function( that, record, item, index, e, eOpts) {
-                  var detail = this.ownerCt.ownerCt.getComponent("detail"),
-                      productStore = Ext.data.StoreManager.lookup("productData");
-                  window.orderRemittanceId = record.data.orderRemittanceId;
-
-                  detail.getComponent("col").getComponent("createCode").setDisabled(false);
-                  window.updateForm(detail.getForm(), record.data);
-
-                  productStore.load({
-                    params: {
-                      orderRemittanceId: window.orderRemittanceId
-                    }
-                  });
-                 
-				  //订单产品
-				  list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("orderremittanceId").setValue(window.orderRemittanceId);
-				  
-				 
-                }
-              }
+              ]
             },
             {
               xtype: 'panel',
@@ -277,12 +212,11 @@ Ext.application({
           ]
         },
         {
-		  itemId:"orderproductform",
           xtype: "panel",
           border: 0,
           columnWidth: 0.49,
           style: {
-            float: "right",
+            float: "right"
           },
           items: [
             {
@@ -290,49 +224,47 @@ Ext.application({
               layout: "hbox",
               border: 0,
               items: [
-              {
-                xtype: "textfield",
-                fieldLabel: "货号",
-                labelWidth: 30,
-                width: 100,
-                labelAlign: "right",
-                margin: "0 10 0 20"
-              },
-              {
-                xtype: "button",
-                text: "搜索",
-                margin: "0 0 0 40",
-                float: "right"
-              },
-              {
-                xtype: "button",
-                text: "导入电话订单",
-                margin: "0 0 0 10",
-                float: "right"
-              },
-              {
-                xtype: "button",
-                text: "导入网上订单",
-                margin: "0 0 0 10",
-                float: "right"
-              },
-              {
-                xtype: "button",
-                text: "查看抵价券",
-                margin: "0 0 0 10",
-                float: "right"
-              }
-            ]
+                {
+                  xtype: "textfield",
+                  fieldLabel: "货号",
+                  labelWidth: 30,
+                  width: 100,
+                  labelAlign: "right",
+                  margin: "0 10 0 20"
+                },
+                {
+                  xtype: "button",
+                  text: "搜索",
+                  margin: "0 0 0 40",
+                  float: "right"
+                },
+                {
+                  xtype: "button",
+                  text: "导入电话订单",
+                  margin: "0 0 0 10",
+                  float: "right"
+                },
+                {
+                  xtype: "button",
+                  text: "导入网上订单",
+                  margin: "0 0 0 10",
+                  float: "right"
+                },
+                {
+                  xtype: "button",
+                  text: "查看抵价券",
+                  margin: "0 0 0 10",
+                  float: "right"
+                }
+              ]
             },
             {
-			 itemId: "orderproduct",	
-			   xtype: "panel",
+              xtype: 'panel',
               bodyPadding: 5,
               margin: "10 0 0 0",
               items: [
                 {
-				  itemId: "product",
-				   xtype: "form",
+                  xtype: 'panel',
                   layout: "hbox",
                   border: 0,
                   defaultType: 'textfield',
@@ -342,32 +274,25 @@ Ext.application({
                       fieldLabel: "货号",
                       labelWidth: 30,
                       width: 100,
-					  name:'productCode',
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: "数量",
                       labelWidth: 50,
                       width: 120,
-					   name:'number',
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: "备注",
                       labelWidth: 50,
                       width: 300,
-					   name:'remark',
                       labelAlign: "right"
-                    }, {
-						xtype: "hiddenfield",
-						name: "orderremittanceId"
-					 }
+                    }
                   ]
                 },
                 {
-				  itemId: "orderproductlist",	
                   xtype: "grid",
-                  store: Ext.data.StoreManager.lookup('productData'),
+                  store: Ext.data.StoreManager.lookup('simpsonsStore'),
                   margin: "10 0 0 0",
                   columns: [
                     {
@@ -376,37 +301,37 @@ Ext.application({
                     },
                     {
                       text: '货号',
-                      dataIndex: 'productCode',
+                      dataIndex: 'adder1',
                       flex: 1
                     },
                     {
                       text: '品名',
-                      dataIndex: 'name',
+                      dataIndex: 'man1',
                       flex: 1
                     },
                     {
                       text: '数量',
-                      dataIndex: 'number',
+                      dataIndex: 'phone1',
                       flex: 1
                     },
                     {
                       text: '售价',
-                      dataIndex: 'price',
+                      dataIndex: 'phone21',
                       flex: 1
                     },
                     {
                       text: '金额',
-                      dataIndex: 'amount',
+                      dataIndex: 'qq',
                       flex: 1
                     },
                     {
                       text: '备注',
-                      dataIndex: 'remark',
+                      dataIndex: 'qq1',
                       flex: 1
                     },
                     {
                       text: '重量',
-                      dataIndex: 'weight',
+                      dataIndex: 'qq1',
                       flex: 1
                     }
                   ]
@@ -425,20 +350,7 @@ Ext.application({
                     {
                       xtype: "button",
                       text: "<span class=\"key\">A</span> 增加",
-                      margin: "0 0 0 10",
-					  handler: function() {
-						  var form =  list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm();
-						  form.url = env.services.web + env.api.deliverorder.saveorderproduct;
-						  form.submit({
-							   success: function(form, action) {
-								Ext.Msg.alert("新增订单产品", action.result.msg);
-								form.reset();
-							  },
-							  failure: function(form, action) {
-								Ext.Msg.alert("修改订单产品", action.result.msg);
-							  }
-						  });
-						}
+                      margin: "0 0 0 10"
                     },
                     {
                       xtype: "button",
@@ -448,24 +360,13 @@ Ext.application({
                     {
                       xtype: "button",
                       text: "<span class=\"key\">M</span> 修改",
-                      margin: "0 0 0 10",
-					  handler: function() {
-						  //需要传递id参数
-						  var form = this.up("form").getForm();
-						  form.url = env.services.web + env.api.deliverorder.saveorderproduct;
-						  form.submit({
-							success: function(form, action) {
-							  Ext.Msg.alert("修改订单产品", action.result.msg, function() {
-								product.hide();
-							  });
-							},
-							failure: function(form, action) {
-							  Ext.Msg.alert("修改订单产品", action.result.msg);
-							}
-						  });
-						}
+                      margin: "0 0 0 10"
                     },
-                   
+                    {
+                      xtype: "button",
+                      text: "<span class=\"key\">S</span> 保存",
+                      margin: "0 0 0 10"
+                    },
                     {
                       xtype: "button",
                       text: "<span class=\"key\">H</span> 预览",
@@ -651,7 +552,7 @@ Ext.application({
         }
       ]
     });
-    
+
     // TODO 左侧增加一个列表
     var addQhd = new Ext.create("Ext.window.Window", {
       title: "抵价券",
@@ -755,7 +656,7 @@ Ext.application({
         }
       ]
     });
-    
+
     /**
      * +TODO: 增加按钮：
      * C查询，P打印，R重打
@@ -780,37 +681,37 @@ Ext.application({
           border: 0,
           defaultType: 'textfield',
           items: [
-          {
-            xtype: "combobox",
-            fieldLabel: "期数",
-            labelWidth: 40,
-            width: 120,
-            labelAlign: "right"
-          },
-          {
-            fieldLabel: "出货单编号从",
-            labelAlign: "right"
-          },
-          {
-            fieldLabel: "~~~~~~~",
-            labelWidth: 57,
-            labelAlign: "right"
-          },
-          {
-            xtype: "button",
-            text: "会员卡查询",
-            margin: "0 0 0 50"
-          },
-          {
-            xtype: "button",
-            text: "会员卡预览",
-            margin: "0 0 0 20"
-          },
-          {
-            xtype: "button",
-            text: "会员卡打印",
-            margin: "0 0 0 20"
-          }
+            {
+              xtype: "combobox",
+              fieldLabel: "期数",
+              labelWidth: 40,
+              width: 120,
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: "出货单编号从",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: "~~~~~~~",
+              labelWidth: 57,
+              labelAlign: "right"
+            },
+            {
+              xtype: "button",
+              text: "会员卡查询",
+              margin: "0 0 0 50"
+            },
+            {
+              xtype: "button",
+              text: "会员卡预览",
+              margin: "0 0 0 20"
+            },
+            {
+              xtype: "button",
+              text: "会员卡打印",
+              margin: "0 0 0 20"
+            }
           ]
         },
         {
@@ -818,31 +719,31 @@ Ext.application({
           margin: "20 0 0 0",
           store: Ext.data.StoreManager.lookup('simpsonsStore'),
           columns: [
-          {
-            text: '序号',
-            dataIndex: 'id1'
-          },
-          {
-            text: '出货单编号',
-            dataIndex: 'iid1'
-          },
-          {
-            text: '汇票号码',
-            dataIndex: 'bnum1'
-          },
-          {
-            text: '会员编号',
-            dataIndex: 'bnum1'
-          },
-          {
-            text: '姓名',
-            dataIndex: 'bnum1'
-          },
-          {
-            text: '地址',
-            dataIndex: 'bnum1',
-            flex: 1
-          }
+            {
+              text: '序号',
+              dataIndex: 'id1'
+            },
+            {
+              text: '出货单编号',
+              dataIndex: 'iid1'
+            },
+            {
+              text: '汇票号码',
+              dataIndex: 'bnum1'
+            },
+            {
+              text: '会员编号',
+              dataIndex: 'bnum1'
+            },
+            {
+              text: '姓名',
+              dataIndex: 'bnum1'
+            },
+            {
+              text: '地址',
+              dataIndex: 'bnum1',
+              flex: 1
+            }
           ]
         },
         {
@@ -867,5 +768,8 @@ Ext.application({
     // search.hide();
     //list.hide();
     //add.show();
+    print.show();
+    addQhd.show();
+    addCHD.show();
   }
 });

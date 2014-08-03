@@ -30,12 +30,20 @@
     change: "/member/update"
   };
 
-  env.api.paymentmethord = "/ajax/paymentmethord";
-  env.api.sendmethord = "/ajax/sendmethord";
+  env.api.paymentmethord = "/ajax/paymentmethor";//支付方式
+  env.api.sendmethord = "/ajax/sendmethord";//寄送方式
+  env.api.addresstype = "/ajax/addresstype";//地址类型
+  env.api.ordersource = "/ajax/ordersource";//订单来源
+  env.api.companytype = "/ajax/companytype";//供货商类型
+  env.api.jzstype = "/ajax/jzstype";//进转损分类
+  env.api.membertype = "/ajax/membertype";	  
+  env.api.membersource = "/ajax/membersource";
 
+//汇款订购
   env.api.order = {
     list: "/orderremittance/index",
     info: "/orderremittance/view/id/",
+    //TODO-url 删除失败，接口需要调试
     del: "/orderremittance/del/id/",
     add: "/orderremittance/create",
     change: "/orderremittance/update"
@@ -76,7 +84,10 @@
   };
 
   env.api.periodical = {
-    list: "/periodical/index"
+    list: "/periodical/index",
+	change: "/periodical/update",
+    add: "/periodical/create",
+    del: "/periodical/delete"
   };
 
   env.api.deliverorder = {
@@ -85,7 +96,43 @@
     add: "/deliverorder/create",
     del: "/deliverorder/delete",
     code: "/deliverorder/generationcode",
-    view: "/deliverorder/vieworderdetail"
+    view: "/deliverorder/vieworderdetail",
+	saveorderproduct: "/deliverorder/saveorderproduct",
+	deleteorderproduct: "/deliverorder/deleteorderproduct"
+  };
+  
+  env.api.package = {
+    list: "/package/index",
+    change: "/package/update",
+    add: "/package/create",
+    del: "/package/delete"
+  };
+  //
+  env.api.productrecord = {
+    list: "/productrecord/index",
+    change: "/productrecord/update",
+    add: "/productrecord/create",
+    del: "/productrecord/delete"
+  };
+
+  //TODO-url 业务管理
+  env.api.business = {
+    list: "",
+    change: "",
+    add: "",
+    del: "",
+    save: "",
+    create: ""
+  };
+
+  //TODO-url 电话订购
+  env.api.telorder = {
+    list: "",
+    change: "",
+    add: "",
+    del: "",
+    save: "",
+    create: ""
   };
   window.env = env;
 
@@ -143,7 +190,7 @@
         }
       });
 
-      //TODO 参数可配置
+      //期数
       Ext.define("periodical", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "期数",
@@ -162,10 +209,204 @@
         labelWidth: 60,
         displayField: "title",
         valueField: "id",
-        width: 300,
         labelAlign: "right",
         name: "periodicalId"
       });
+	  
+	  //学校类型
+	   Ext.define("addressType", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "类型",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: false,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.addresstype,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "type",
+		 width: 120,
+      });
+	  
+	   //会员分类
+	   Ext.define("memberType", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "会员类型",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: false,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.membertype,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "memberType",
+		width: 120,
+      });
+	  
+	  //寄送方式
+	   Ext.define("deliveryMethod", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "寄送方式",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: false,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.sendmethord,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "deliveryMethod",
+		width: 185,
+      });
+	  
+	   //支付方式
+	   Ext.define("paymentMethord", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "支付方式",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: false,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.paymentmethord,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "paymentMethord",
+		width: 185,
+      });
+	  
+	  
+	  //供货商分类
+	   Ext.define("companyType", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "支付方式",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: false,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.companytype,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "companyType",
+		width: 185,
+      });
+	  
+	 //订单来源分类
+	   Ext.define("orderSource", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "支付方式",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: false,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.ordersource,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "orderSource",
+		width: 185,
+      });
+	   //进转损分类
+	   Ext.define("jzsType", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "类型",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: false,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.jzstype,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "type",
+		width: 150,
+      });
+	  
+	   //会员来源
+	   Ext.define("memberSource", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "来源",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: false,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.membersource,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "source",
+		width: 150,
+      });
+	  
+	  
+	  
+	  
     }
   });
 })();

@@ -34,7 +34,7 @@ Ext.onReady(function() {
     // 流程表
     var folwChartsList = Ext.create('Ext.data.Store', {
       storeId: 'folwChartsList',
-      fields: ['id', 'periodicalId', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "preferentialTicket", "youthStuck", "unDiscountAmount", "source", "postage", "zipCode", "address", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "status", "status"],
+      fields: ['id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "payMethord", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod", "status"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -150,12 +150,7 @@ Ext.onReady(function() {
               width: 120,
               labelAlign: "right"
             },
-            {
-              xtype:"combobox",
-              fieldLabel: "来源",
-              name: "source",
-              labelAlign: "right"
-            },
+            Ext.create('memberSource'),
             {
               xtype: 'button',
               margin: "0 5 0 50",
@@ -294,53 +289,22 @@ Ext.onReady(function() {
               border: 0,
               defaultType: 'textfield',
               margin: "10 0 0 0",
-              items: [{
-                xtype: "radiofield",
-                fieldLabel: "代理",
-                labelWidth: 40,
-                labelAlign: "right"
-              }, {
-                xtype: "radiofield",
-                fieldLabel: "会员",
-                labelWidth: 40,
-                labelAlign: "right"
-              }, {
+              items: [Ext.create("memberType"),
+			   {
                 fieldLabel: "姓名",
                 labelWidth: 60,
                 name: "realName",
-                width: 120,
+                width: 200,
                 labelAlign: "right",
                 blankText: "姓名为必填项",
                 allowBlank: false
-              }, {
-                xtype: "combobox",
-                fieldLabel: "寄送方式",
-                labelWidth: 102,
-                // TODO 先禁用自动加载，因为不能显示默认值
-                store: Ext.create('Ext.data.Store', {
-                  fields: ['name', 'value'],
-                  layout: "fit",
-                  // autoLoad: true,
-                  proxy: {
-                    type: 'ajax',
-                    url: env.services.web + env.api.sendmethord,
-                    reader: {
-                      type: 'json',
-                      root: 'list'
-                    }
-                  }
-                }),
-                name: "deliveryMethod",
-                displayField: "name",
-                valueField: "value",
-                width: 185,
-                labelAlign: "right"
-              }, {
+              },Ext.create("deliveryMethod"), {
                 // TODO 缺少name，所以暂时禁用 xtype
-                // xtype: "datefield",
+                xtype: "datefield",
                 fieldLabel: "毕业时间",
                 labelWidth: 60,
-                labelAlign: "right"
+                labelAlign: "right",
+				name:"graduateDate"
               }, Ext.create("periodical")]
             },
 
@@ -351,26 +315,8 @@ Ext.onReady(function() {
               border: 0,
               defaultType: 'textfield',
               margin: "10 0 0 0",
-              items: [{
-                xtype: "combobox",
-                fieldLabel: "类型",
-                labelWidth: 40,
-                store: new Ext.data.Store({
-                  fields: ["index", "name"],
-                  data: [{
-                    index: "0",
-                    name: "学校"
-                  }, {
-                    index: "1",
-                    name: "家庭"
-                  }]
-                }),
-                name: "status",
-                displayField: "name",
-                valueField: "index",
-                width: 105,
-                labelAlign: "right"
-              }, {
+              items: [Ext.create("addressType"),
+			   {
                 xtype: 'textfield',
                 fieldLabel: "邮编",
                 name: "zipCode",
@@ -396,7 +342,7 @@ Ext.onReady(function() {
                 fieldLabel: "收件人",
                 labelWidth: 60,
                 name: "consignee",
-                width: 120,
+                width: 180,
                 labelAlign: "right"
               }, {
                 xtype: 'button',
@@ -432,19 +378,22 @@ Ext.onReady(function() {
                   fieldLabel: "抵价券",
                   labelAlign: "right",
                   name: "preferentialTicket",
-                  labelWidth: 50
+                  labelWidth: 50,
+				   width: 120,
                 },
                 {
                   fieldLabel: "不打折金额",
                   labelAlign: "right",
                   name: "unDiscountAmount",
-                  labelWidth: 70
+                  labelWidth: 70,
+				  width: 180,
                 },
                 {
                   fieldLabel: "青春贴",
                   labelAlign: "right",
                   name: "youthStuck",
-                  labelWidth: 50
+                  labelWidth: 50,
+				   width: 150,
                 },
                 {
                   xtype:"combobox",
@@ -491,14 +440,14 @@ Ext.onReady(function() {
             },
             {
               text: '期数',
-              dataIndex: 'periodicalId'
+              dataIndex: 'periodicalName'
             },
             {
               text: '付款方式',
-              dataIndex: ''
+              dataIndex: 'payMethord'
             },
             {
-              text: '编号',
+              text: '会员编号',
               dataIndex: 'userCode'
             },
             {
@@ -515,7 +464,7 @@ Ext.onReady(function() {
             },
             {
               text: '寄送方式',
-              dataIndex: 'asdder2'
+              dataIndex: 'deliveryMethod'
             },
             {
               text: '邮资',
@@ -527,11 +476,11 @@ Ext.onReady(function() {
             },
             {
               text: '寄出日期',
-              dataIndex: ''
+              dataIndex: 'mailingDate'
             },
             {
-              text: '包裹单号',
-              dataIndex: ''
+              text: '包裹编号',
+              dataIndex: 'packageCode'
             },
             // 点击后跳转到补寄界面
             {
