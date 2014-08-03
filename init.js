@@ -127,12 +127,32 @@
 
   //TODO-url 电话订购
   env.api.telorder = {
-    list: "",
-    change: "",
-    add: "",
-    del: "",
-    save: "",
-    create: ""
+    list: {
+      member: "",
+      order: "",
+    },
+    change: {
+      member: "",
+      order: "",
+    },
+    add: {
+      member: "",
+      order: "",
+    },
+    del: {
+      //左侧顶部删除订单
+      all: "",
+      //左侧底部删除记录
+      record: "",
+      //左侧底部删除
+      member: "",
+      //右侧删除出货单
+      order: ""
+    },
+    save: {
+      member: "",
+      order: ""
+    }
   };
   window.env = env;
 

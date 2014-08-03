@@ -95,7 +95,7 @@ Ext.application({
             text: "<span class=\"key\">Q</span> 增加",
             handler: function() {
               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-              form.url = env.services.web + env.api.telorder.add;
+              form.url = env.services.web + env.api.telorder.add.member;
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
@@ -112,7 +112,7 @@ Ext.application({
             text: "<span class=\"key\">N</span> 修改",
             handler: function() {
               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-              form.url = env.services.web + env.api.telorder.change;
+              form.url = env.services.web + env.api.telorder.change.member;
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
@@ -130,7 +130,7 @@ Ext.application({
             text: "<span class=\"key\">W</span> 保存",
             handler: function() {
               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-              form.url = env.services.web + env.api.telorder.save;
+              form.url = env.services.web + env.api.telorder.save.member;
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
@@ -149,7 +149,7 @@ Ext.application({
             handler: function() {
               var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
               Ext.Ajax.request({
-                url: env.services.web + env.api.telorder.del,
+                url: env.services.web + env.api.telorder.del.all,
                 params: {
                   id: id
                 },
@@ -268,10 +268,36 @@ Ext.application({
           items: [{
             xtype: "button",
             text: "<span class=\"key\">W</span>删除记录",
+            handler: function() {
+              var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+              Ext.Ajax.request({
+                url: env.services.web + env.api.telorder.del.record,
+                params: {
+                  id: id
+                },
+                success: function(resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  Ext.data.StoreManager.lookup('orderList').loadData(data.list);
+                }
+              });
+            },
             margin: "0 0 0 20"
           }, {
             xtype: "button",
             text: "删除",
+            handler: function() {
+              var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+              Ext.Ajax.request({
+                url: env.services.web + env.api.telorder.del.member,
+                params: {
+                  id: id
+                },
+                success: function(resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  Ext.data.StoreManager.lookup('orderList').loadData(data.list);
+                }
+              });
+            },
             margin: "0 0 0 20"
           }]
         }]
@@ -310,7 +336,8 @@ Ext.application({
           bodyPadding: 5,
           margin: "10 0 0 0",
           items: [{
-            xtype:'panel',
+            itemId: "order",
+            xtype:'form',
             layout: "hbox",
             border: 0,
             defaultType: 'textfield',
@@ -332,6 +359,7 @@ Ext.application({
               labelAlign: "right"
             }]
           }, {
+            itemId: "grid",
             xtype: "grid",
             store: Ext.data.StoreManager.lookup('simpsonsStore'),
             margin: "10 0 0 0",
@@ -371,18 +399,73 @@ Ext.application({
             margin: "10 0 0 0",
             items: [{
               xtype: "button",
-              text: "<span class=\"key\">A</span> 增加"
+              text: "<span class=\"key\">A</span> 增加",
+              handler: function() {
+                var form = this.ownerCt.ownerCt.getComponent("order").getForm();
+                form.url = env.services.web + env.api.telorder.add.order;
+                if (form.isValid()) {
+                  form.submit({
+                    success: function(form, action) {
+                      console.log(action)
+                    },
+                    failure: function(form, action) {
+                      Ext.Msg.alert("增加", action.result.msg);
+                    }
+                  });
+                }
+              }
             }, {
               xtype: "button",
               text: "<span class=\"key\">D</span> 删除",
+              handler: function() {
+                var id = this.ownerCt.ownerCt.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.telorder.del.order,
+                  params: {
+                    id: id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.data.StoreManager.lookup('simpsonsStore').loadData(data.list);
+                  }
+                });
+              },
               margin: "0 0 0 10"
             }, {
               xtype: "button",
               text: "<span class=\"key\">M</span> 修改",
+              handler: function() {
+                var form = this.ownerCt.ownerCt.getComponent("member").getForm();
+                form.url = env.services.web + env.api.telorder.change.order;
+                if (form.isValid()) {
+                  form.submit({
+                    success: function(form, action) {
+                      console.log(action)
+                    },
+                    failure: function(form, action) {
+                      Ext.Msg.alert("修改", action.result.msg);
+                    }
+                  });
+                }
+              },
               margin: "0 0 0 10"
             }, {
               xtype: "button",
               text: "<span class=\"key\">S</span> 保存",
+              handler: function() {
+                var form = this.ownerCt.ownerCt.getComponent("member").getForm();
+                form.url = env.services.web + env.api.telorder.save.order;
+                if (form.isValid()) {
+                  form.submit({
+                    success: function(form, action) {
+                      console.log(action)
+                    },
+                    failure: function(form, action) {
+                      Ext.Msg.alert("保存", action.result.msg);
+                    }
+                  });
+                }
+              },
               margin: "0 0 0 10"
             }, {
               xtype: "button",
