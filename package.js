@@ -425,6 +425,7 @@ Ext.application({
       title: "包裹打印",
       width: 700,
       bodyPadding: 10,
+      closeAction: 'hide',
       items: [{
         layout: "hbox",
         bodyPadding: 10,
