@@ -30,7 +30,7 @@
     change: "/member/update"
   };
 
-  env.api.paymentmethord = "/ajax/paymentmethor";//支付方式
+  env.api.paymentmethord = "/ajax/paymentmethord";//支付方式
   env.api.sendmethord = "/ajax/sendmethord";//寄送方式
   env.api.addresstype = "/ajax/addresstype";//地址类型
   env.api.ordersource = "/ajax/ordersource";//订单来源
@@ -43,8 +43,7 @@
   env.api.order = {
     list: "/orderremittance/index",
     info: "/orderremittance/view/id/",
-    //TODO-url 删除失败，接口需要调试
-    del: "/orderremittance/del/id/",
+    del: "/orderremittance/delete/id/",
     add: "/orderremittance/create",
     change: "/orderremittance/update"
   };
@@ -117,43 +116,43 @@
 
   //TODO-url 业务管理
   env.api.business = {
-    list: "",
-    change: "",
-    add: "",
-    del: "",
-    save: "",
-    create: ""
+    list: "/business/memberlist",
+    change: "/business/save",
+    add: "/business/save",
+    del: "/business/delete"
   };
 
   //TODO-url 电话订购
   env.api.telorder = {
     list: {
-      member: "",
-      order: "",
+      member: "/telorder/memberlist",
+      order: "/telorder/orderlist",
     },
     change: {
-      member: "",
-      order: "",
+      member: "/telorder/savemember",
+      order: "/telorder/saveorder",
     },
     add: {
-      member: "",
-      order: "",
+      member: "/telorder/savemember",
+      order: "/telorder/saveorder",
     },
     del: {
       //左侧顶部删除订单
-      all: "",
+      all: "/telorder/deleteall",
       //左侧底部删除记录
-      record: "",
+      record: "/telorder/deleteorder",
       //左侧底部删除
-      member: "",
-      //右侧删除出货单
-      order: ""
-    },
-    save: {
-      member: "",
-      order: ""
+      member: "/telorder/deletemember",
+      //右侧删除出货单产品
+      order: "/telorder/deleteorderproduct",
     }
   };
+  
+  env.api.actionlog = {
+    list: "/actionlog/index",
+    del: "/actionlog/delete"
+  };
+  
   window.env = env;
 
   window.updateForm = function(form, data) {
@@ -187,6 +186,35 @@
         }
       });
     }
+  }
+
+  /**
+   * 删除grid一行
+   * @param {Object} grid 需要删除的列表
+   * @param {Number} index 可选参数，删除指定的行数，默认删除选中的行数
+   * @param {String} api 删除接口
+   */
+  window.removeGridRow = function(opt) {
+    var current = opt.grid.getSelectionModel().getSelection()[0],
+        index = opt.index || current.index;
+
+    Ext.Ajax.request({
+      url: opt.api,
+      params: {
+        id: current.data.id
+      },
+      success: function(resp) {
+        resp = Ext.decode(resp.responseText);
+
+        if (resp.success) {
+          Ext.Msg.alert("删除操作", resp.msg, function() {
+            opt.grid.store.removeAt(index);
+          });
+        } else {
+          Ext.Msg.alert("删除操作", resp.msg);
+        }
+      }
+    });
   }
 
   Ext.application({
@@ -230,7 +258,8 @@
         displayField: "title",
         valueField: "id",
         labelAlign: "right",
-        name: "periodicalId"
+        name: "periodicalId",
+		width:150
       });
 	  
 	  //学校类型
@@ -325,7 +354,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "paymentMethord",
-		width: 185,
+		width: 155,
       });
 	  
 	  

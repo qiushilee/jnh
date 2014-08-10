@@ -17,6 +17,15 @@ Ext.application({
         }
     });
 
+    var printStore = Ext.create('Ext.data.Store', {
+      storeId: 'printStore',
+      fields: ['key', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','packaging','userName','address','packageRemark'],
+      layout: "fit",
+      data: {
+        "id":"8","key":5,"deliveryOrderCode":"DO20140722103818","packageCode":null,"serialNumber":null,"mailingDate":"","weight":"0","postage":"0.00","packaging":null,"userName":"","address":"","packageRemark":null
+      }
+    });
+
      var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
 	  url: env.services.web + env.api.package.list,
@@ -109,6 +118,7 @@ Ext.application({
       renderTo: Ext.getBody(),
       items: [
         {
+          itemId: "grid",
           xtype: "grid",
           title: "包裹列表",
           store: Ext.data.StoreManager.lookup('dataList'),
@@ -172,16 +182,39 @@ Ext.application({
       items: [{
         xtype: "button",
         text: "<span class=\"key\">M</span> 修改",
+        handler: function() {
+          try {
+            var form = add.getComponent("form").getForm(),
+                data = list.getComponent("grid").getSelectionModel().getSelection()[0].data;          
+
+            add.show();
+            window.create = false;
+
+            updateForm(form, data);
+          } catch(e) {
+            Ext.Msg.alert("修改操作", "请单击表中的一项后再修改");
+          }
+        },
         margin: "0 0 0 10"
       }, {
         // 添加到打印购物车
         xtype: "button",
         text: "<span class=\"key\">W</span> 添加",
+        handler: function() {
+          add.show();
+          window.create = true;
+        },
         margin: "0 0 0 10"
       }, {
         xtype: "button",
         text: "<span class=\"key\">D</span> 打印",
-        margin: "0 0 0 10"
+        margin: "0 0 0 10",
+        handler: function() {
+          var data = list.getComponent("grid").getSelectionModel().getSelection()[0].data
+
+          printStore.loadData(data);
+          print.show();
+        }
       }, {
         xtype: "button",
         text: "<span class=\"key\">C</span> 预览",
@@ -209,138 +242,144 @@ Ext.application({
       defaultType: 'textfield',
       items: [
         {
-          xtype: "panel",
-          border: 0,
-          layout: "hbox",
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [{
-            disabled: true,
-            fieldLabel: "出货单号",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }, {
-            disabled: true,
-            fieldLabel: "会员编号",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }]
-        },
-        {
-          xtype: "panel",
-          border: 0,
-          layout: "hbox",
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [{
-            disabled: true,
-            fieldLabel: "会员姓名",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }, {
-            disabled: true,
-            fieldLabel: "重量",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }]
-        },
-        {
-          xtype: "panel",
-          border: 0,
-          layout: "hbox",
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [{
-            disabled: true,
-            fieldLabel: "邮编",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          },
-          {
-            disabled: true,
-            fieldLabel: "地址",
-            labelWidth: 55,
-            width: 250,
-            margin: "5 0",
-            labelAlign: "right"
-          }]
-        },
-        {
-          xtype: "panel",
-          border: 0,
-          layout: "hbox",
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [{
-            xtype: "datefield",
-            fieldLabel: "邮寄日期",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }, {
-            fieldLabel: "包裹单号",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }]
-        },
-        {
-          xtype: "panel",
-          border: 0,
-          layout: "hbox",
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [{
-            fieldLabel: "邮寄重量",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }, {
-            fieldLabel: "邮资",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }]
-        },
-        {
-          xtype: "panel",
-          border: 0,
-          layout: "hbox",
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [{
-            fieldLabel: "包装员",
-            labelWidth: 55,
-            margin: "5 0",
-            labelAlign: "right"
-          }]
-        },
-        {
-          xtype: "textareafield",
-          width: 300,
-          height: 100,
-          fieldLabel: "备注",
-          labelWidth: 55,
-          margin: "5 0",
-          labelAlign: "right",
-          name: 'first'
+          itemId: "form",
+          xtype: "form",
+          items: [
+            {
+              xtype: "panel",
+              border: 0,
+              layout: "hbox",
+              defaultType: 'textfield',
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [{
+                disabled: true,
+                fieldLabel: "出货单号",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }, {
+                disabled: true,
+                fieldLabel: "会员编号",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }]
+            },
+            {
+              xtype: "panel",
+              border: 0,
+              layout: "hbox",
+              defaultType: 'textfield',
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [{
+                disabled: true,
+                fieldLabel: "会员姓名",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }, {
+                disabled: true,
+                fieldLabel: "重量",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }]
+            },
+            {
+              xtype: "panel",
+              border: 0,
+              layout: "hbox",
+              defaultType: 'textfield',
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [{
+                disabled: true,
+                fieldLabel: "邮编",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              },
+              {
+                disabled: true,
+                fieldLabel: "地址",
+                labelWidth: 55,
+                width: 250,
+                margin: "5 0",
+                labelAlign: "right"
+              }]
+            },
+            {
+              xtype: "panel",
+              border: 0,
+              layout: "hbox",
+              defaultType: 'textfield',
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [{
+                xtype: "datefield",
+                fieldLabel: "邮寄日期",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }, {
+                fieldLabel: "包裹单号",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }]
+            },
+            {
+              xtype: "panel",
+              border: 0,
+              layout: "hbox",
+              defaultType: 'textfield',
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [{
+                fieldLabel: "邮寄重量",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }, {
+                fieldLabel: "邮资",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }]
+            },
+            {
+              xtype: "panel",
+              border: 0,
+              layout: "hbox",
+              defaultType: 'textfield',
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [{
+                fieldLabel: "包装员",
+                labelWidth: 55,
+                margin: "5 0",
+                labelAlign: "right"
+              }]
+            },
+            {
+              xtype: "textareafield",
+              width: 300,
+              height: 100,
+              fieldLabel: "备注",
+              labelWidth: 55,
+              margin: "5 0",
+              labelAlign: "right",
+              name: 'first'
+            },
+          ]
         },
         {
           xtype: "panel",
@@ -353,7 +392,30 @@ Ext.application({
           items: [{
             text: "保存",
             margin: "5 0",
-            labelAlign: "right"
+            labelAlign: "right",
+            handler: function() {
+              var form = add.getComponent("form").getForm(),
+                  api = env.services.web;
+
+              if (window.create) {
+                api += env.api.package.add;
+              } else {
+                api += env.api.package.change;
+              }
+
+              form.url = api;
+
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    console.log(action)
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("包裹详情", action.result.msg);
+                  }
+                });
+              }
+            }
           }]
         },
       ]
@@ -395,31 +457,32 @@ Ext.application({
           margin: "0 0 0 10"
         }]
       }, {
+        itemId: "list",
         xtype: "grid",
-        store: Ext.data.StoreManager.lookup('jhStore'),
+        store: Ext.data.StoreManager.lookup('printStore'),
         margin: "10 0 0 0",
         columns: [{
           text: '序号',
-          dataIndex: 'id'
+          dataIndex: 'key'
         }, {
           text: '出货单号',
-          dataIndex: 'id1'
+          dataIndex: 'deliveryOrderCode'
         }, {
           text: '流水号',
-          dataIndex: 'id1'
+          dataIndex: 'packageCode'
         }, {
           text: '地址',
-          dataIndex: 'man1',
+          dataIndex: 'address',
           flex: 1
         }, {
           text: '姓名',
-          dataIndex: 'adder1'
+          dataIndex: 'userName'
         }, {
           text: '寄送方式',
-          dataIndex: 'id1'
+          dataIndex: 'deliveryMethod'
         }, {
           text: '备注',
-          dataIndex: 'man1',
+          dataIndex: 'packageRemark',
         }]
       }, {
         layout: "hbox",
@@ -440,7 +503,10 @@ Ext.application({
         }, {
           xtype: "button",
           text: "打印",
-          margin: "0 0 0 10"
+          margin: "0 0 0 10",
+          handler: function() {
+            ;
+          }
         }, {
           xtype: "button",
           text: "重打",

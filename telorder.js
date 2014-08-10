@@ -147,17 +147,21 @@ Ext.application({
             xtype: "button",
             text: "删除",
             handler: function() {
-              var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
-              Ext.Ajax.request({
-                url: env.services.web + env.api.telorder.del.all,
-                params: {
-                  id: id
-                },
-                success: function(resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  Ext.data.StoreManager.lookup('orderList').loadData(data.list);
-                }
-              });
+              try {
+                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.telorder.del.all,
+                  params: {
+                    id: id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.data.StoreManager.lookup('orderList').loadData(data.list);
+                  }
+                });
+              } catch(e) {
+                Ext.Msg.alert("删除操作", "请单击表中的一项后再删除");
+              }
             },
             margin: "0 0 0 20"
           }]
@@ -269,34 +273,42 @@ Ext.application({
             xtype: "button",
             text: "<span class=\"key\">W</span>删除记录",
             handler: function() {
-              var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
-              Ext.Ajax.request({
-                url: env.services.web + env.api.telorder.del.record,
-                params: {
-                  id: id
-                },
-                success: function(resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  Ext.data.StoreManager.lookup('orderList').loadData(data.list);
-                }
-              });
+              try {
+                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.telorder.del.record,
+                  params: {
+                    id: id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.data.StoreManager.lookup('orderList').loadData(data.list);
+                  }
+                });
+              } catch(e) {
+                Ext.Msg.alert("删除操作", "请单击表中的一项后再删除");
+              }
             },
             margin: "0 0 0 20"
           }, {
             xtype: "button",
             text: "删除",
             handler: function() {
-              var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
-              Ext.Ajax.request({
-                url: env.services.web + env.api.telorder.del.member,
-                params: {
-                  id: id
-                },
-                success: function(resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  Ext.data.StoreManager.lookup('orderList').loadData(data.list);
-                }
-              });
+              try {
+                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.telorder.del.member,
+                  params: {
+                    id: id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.data.StoreManager.lookup('orderList').loadData(data.list);
+                  }
+                });
+              } catch(e) {
+                Ext.Msg.alert("删除操作", "请单击表中的一项后再删除");
+              }
             },
             margin: "0 0 0 20"
           }]
@@ -418,17 +430,21 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">D</span> 删除",
               handler: function() {
-                var id = this.ownerCt.ownerCt.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.telorder.del.order,
-                  params: {
-                    id: id
-                  },
+                try {
+                  var id = this.ownerCt.ownerCt.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                  Ext.Ajax.request({
+                    url: env.services.web + env.api.telorder.del.order,
+                    params: {
+                      id: id
+                    },
                   success: function(resp) {
                     var data = Ext.JSON.decode(resp.responseText);
                     Ext.data.StoreManager.lookup('simpsonsStore').loadData(data.list);
                   }
-                });
+                  });
+                } catch(e) {
+                  Ext.Msg.alert("删除操作", "请单击表中的一项后再删除");
+                }
               },
               margin: "0 0 0 10"
             }, {

@@ -5,12 +5,12 @@ Ext.application({
 	// 会员列表
     var memberList = Ext.create('Ext.data.Store', {
       storeId: 'memberList',
-      fields: ['addrList', 'userCode', 'realName', 'status', "address1", "address2"],
+      fields: ['addrList', 'userCode', 'realName', 'source', "address1", "address2"],
       layout: "fit",
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.member.list,
+        url: env.services.web + env.api.business.list,
         reader: {
           type: 'json',
           root: 'list'
@@ -122,9 +122,9 @@ Ext.application({
                   dataIndex: "address2"
                 },
                 {
-                  text: '状态',
+                  text: '来源',
                   flex: 1,
-                  dataIndex: 'status'
+                  dataIndex: 'source'
                 }]
               }]
             }, {
@@ -202,7 +202,8 @@ Ext.application({
             border: 0,
             margin: "15 0 0 0",
             items: [{
-              xtype:'panel',
+              xtype:'form',
+			  itemId: "member",
               layout: "hbox",
               border: 0,
               defaultType: 'textfield',
@@ -211,7 +212,7 @@ Ext.application({
                 labelWidth: 60,
                 width: 120,
                 labelAlign: "right",
-				name:'realName'
+				name:"realName"
               },Ext.create("deliveryMethod"), {
                 xtype: "datefield",
                 fieldLabel: "毕业时间",
@@ -220,8 +221,7 @@ Ext.application({
 				name:"graduateDate"
               },  Ext.create("periodical")]
             }, {
-              itemId: "member",
-              xtype:'form',
+            
               layout: "hbox",
               border: 0,
               defaultType: 'textfield',

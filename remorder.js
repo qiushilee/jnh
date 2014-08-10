@@ -61,14 +61,7 @@ Ext.application({
           labelWidth: 60,
           labelAlign: "right"
         },
-        {
-          xtype: "combobox",
-          fieldLabel: "付款方式",
-          name: 'payMethord',
-          labelWidth: 60,
-          width: 130,
-          labelAlign: "right"
-        },
+         Ext.create("paymentMethord"),
         {
           xtype: "button",
           text: "搜索",
@@ -183,28 +176,21 @@ Ext.application({
       margin: "20 0 0 0",
       border: 0,
       layout: "column",
-      items: [{
+      items: [/*{
         xtype: "button",
         itemId: "addOrder",
         text: "<span class=\"key\">A</span> 增加",
         handler: function() {
           addOrder.show();
         }
-      }, {
+      },*/ {
         xtype: "button",
         text: "删除",
         margin: "0 0 0 10",
         handler: function() {
-          var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
-          Ext.Ajax.request({
-            url: env.services.web + env.api.order.del,
-            params: {
-              id: id
-            },
-            success: function(resp) {
-              var data = Ext.JSON.decode(resp.responseText);
-              Ext.data.StoreManager.lookup('orderList').loadData(data.list);
-            }
+          removeGridRow({
+            grid: list.getComponent("grid"),
+            api: env.services.web + env.api.order.del
           });
         }
       }]
@@ -235,12 +221,7 @@ Ext.application({
             defaultType: 'textfield',
             items: [
               Ext.create("periodical"),
-              {
-                xtype: "combobox",
-                fieldLabel: "付款方式",
-                name:"payMethord",
-                labelAlign: "right"
-              },
+              Ext.create("paymentMethord"),
               {
                 fieldLabel: '汇票号码',
                 name:"billNumber",
@@ -249,7 +230,7 @@ Ext.application({
               {
                 fieldLabel: '收汇局',
                 labelAlign: "right",
-                name: 'billNumber'
+                name: 'receiptProceedsOffice'
               }
             ]
           },
@@ -270,7 +251,8 @@ Ext.application({
                 xtype: "datefield",
                 fieldLabel: '汇款日期',
                 labelAlign: "right",
-                name: '汇款日期'
+                name: 'remittanceDate',
+				width:150
               },
               {
                 xtype: "checkboxfield",
@@ -284,7 +266,8 @@ Ext.application({
                 xtype: "datefield",
                 fieldLabel: '收款日期',
                 labelAlign: "right",
-                name: 'remittanceReceivedDate'
+                name: 'remittanceReceivedDate',
+				width:150
               }
             ]
           },
@@ -301,12 +284,8 @@ Ext.application({
                 name: 'youthStuck',
                 allowBlank: false
               },
-              {
-                xtype: "combobox",
-                fieldLabel: "寄送方式",
-                name:"deliveryMethod",
-                labelAlign: "right"
-              },{
+              Ext.create('deliveryMethod'),
+			  {
                 xtype: "datefield",
                 fieldLabel: '收订单日期',
                 labelAlign: "right",
@@ -316,7 +295,8 @@ Ext.application({
                 fieldLabel: "邮资",
                 labelAlign: "right",
                 name: 'postage',
-                allowBlank: false
+                allowBlank: false,
+				width:120
               }
             ]
           },
@@ -338,13 +318,22 @@ Ext.application({
                 fieldLabel: "不打折金额",
                 labelAlign: "right",
                 name: 'unDiscountAmount',
-                allowBlank: false
+                allowBlank: false,
+				width:150
               },
               {
                 fieldLabel: "抵价券",
                 labelAlign: "right",
                 name: 'preferentialTicket',
-                allowBlank: false
+                allowBlank: false,
+				width:150
+              },
+              {
+                fieldLabel: "使用青春贴",
+                labelAlign: "right",
+                name: 'youthStuck',
+                allowBlank: false,
+				width:150
               }
             ]
           },
