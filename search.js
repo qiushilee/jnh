@@ -933,7 +933,5 @@ Ext.application({
       ]
     });
 
-
-    add.show();
   }
 });
