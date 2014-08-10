@@ -156,12 +156,16 @@
   window.env = env;
 
   window.updateForm = function(form, data) {
-    Ext.Object.each(data, function(item, index) {
-      if (form.findField(item)) {
-        // TODO datefield 不能写入
-        form.findField(item).setValue(index);
-      }
-    });
+    try {
+      Ext.Object.each(data, function(item, index) {
+        if (form.findField(item)) {
+          // TODO datefield 不能写入
+          form.findField(item).setValue(index);
+        }
+      });
+    } catch(e) {
+      console.error(e.stack);
+    }
   }
 
   /**
