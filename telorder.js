@@ -2,6 +2,7 @@
 Ext.application({
   name: "JNH",
   launch: function() {
+    window.telorderMemberId = "";
    
     //电话订购列表
     var  orderList = Ext.create('Ext.data.Store', {
@@ -22,7 +23,7 @@ Ext.application({
    //搜索栏
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
-	  url: env.services.web + env.api.order.list,
+	  url: env.services.web + env.api.telorder.list,
       bodyPadding: 10,
       defaultType: 'textfield',
       margin: "10 0",
@@ -99,9 +100,7 @@ Ext.application({
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
-                    console.log(action)
-                  },
-                  failure: function(form, action) {
+                    telorderMemberId = action.result.id;
                     Ext.Msg.alert("增加", action.result.msg);
                   }
                 });
@@ -179,10 +178,11 @@ Ext.application({
               items: [Ext.create('deliveryMethod'), {
                 fieldLabel: "青春贴",
                 width:220,
-                labelAlign: "right"
+                labelAlign: "right",
+				name:'youthStuck'
               }, {
                 xtype: "label",
-                text: "(10枚)"
+                text: "(0枚)"
               }]
             }, {
               xtype:'panel',
@@ -192,17 +192,20 @@ Ext.application({
               margin: "10 0 0 0",
               items: [{
                 fieldLabel: "姓名",
-                labelAlign: "right"
+                labelAlign: "right",
+				name:'realName'
               }, {
                 fieldLabel: "收件人",
-                labelAlign: "right"
+                labelAlign: "right",
+				name:'consignee'
               }]
             }, {
               xtype: 'textfield',
               fieldLabel: "地址",
               width: 470,
               margin: "10 0 0 0",
-              labelAlign: "right"
+              labelAlign: "right",
+				name:'address'
             }, {
               xtype:'panel',
               layout: "hbox",
@@ -211,17 +214,20 @@ Ext.application({
               margin: "10 0 0 0",
               items: [{
                 fieldLabel: "邮编",
-                labelAlign: "right"
+                labelAlign: "right",
+				name:'zipCode'
               }, {
                 fieldLabel: "电话",
-                labelAlign: "right"
+                labelAlign: "right",
+				name:'mobile'
               }]
             }, {
               xtype: 'textfield',
               fieldLabel: "备注",
               margin: "10 0 0 0",
               width: 470,
-              labelAlign: "right"
+              labelAlign: "right",
+				name:'remark'
             }
           ]
         }, {
@@ -321,16 +327,30 @@ Ext.application({
           float: "right",
         },
         items: [{
-          xtype:'panel',
+          xtype:'form',
           layout: "hbox",
           border: 0,
           items: [{
             xtype: "button",
-            text: "出货单号"
+            text: "出货单号",
+            handler: function() {
+              var form = this.ownerCt.getForm();
+              Ext.Ajax.request({
+                url: env.services.web + env.api.deliverorder.telorderdelivercode,
+                params: {
+                  memberId: telorderMemberId
+                },
+                success: function(resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  form.findField("deliveryOrderCode").setValue(data.code);
+                }
+              });
+            }
           },{
             xtype: "textfield",
             width: 70,
-            margin: "0 10 0 20"
+            margin: "0 10 0 20",
+            name: "deliveryOrderCode"
           },  {
             xtype: "textfield",
             fieldLabel: "货号",

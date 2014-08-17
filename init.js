@@ -94,7 +94,8 @@
     change: "/deliverorder/update",
     add: "/deliverorder/create",
     del: "/deliverorder/delete",
-    code: "/deliverorder/generationcode",
+    remorderdelivercode: "/deliverorder/remorderdelivercode",
+	telorderdelivercode: "/deliverorder/telorderdelivercode",
     view: "/deliverorder/vieworderdetail",
 	saveorderproduct: "/deliverorder/saveorderproduct",
 	deleteorderproduct: "/deliverorder/deleteorderproduct"
@@ -130,11 +131,11 @@
     },
     change: {
       member: "/telorder/savemember",
-      order: "/telorder/saveorder",
+      order: "/deliverorder/saveorderproduct",
     },
     add: {
       member: "/telorder/savemember",
-      order: "/telorder/saveorder",
+      order: "/deliverorder/saveorderproduct",
     },
     del: {
       //左侧顶部删除订单
@@ -156,16 +157,12 @@
   window.env = env;
 
   window.updateForm = function(form, data) {
-    try {
-      Ext.Object.each(data, function(item, index) {
-        if (form.findField(item)) {
-          // TODO datefield 不能写入
-          form.findField(item).setValue(index);
-        }
-      });
-    } catch(e) {
-      console.error(e.stack);
-    }
+    Ext.Object.each(data, function(item, index) {
+      if (form.findField(item)) {
+        // TODO datefield 不能写入
+        form.findField(item).setValue(index);
+      }
+    });
   }
 
   /**
@@ -190,35 +187,6 @@
         }
       });
     }
-  }
-
-  /**
-   * 删除grid一行
-   * @param {Object} grid 需要删除的列表
-   * @param {Number} index 可选参数，删除指定的行数，默认删除选中的行数
-   * @param {String} api 删除接口
-   */
-  window.removeGridRow = function(opt) {
-    var current = opt.grid.getSelectionModel().getSelection()[0],
-        index = opt.index || current.index;
-
-    Ext.Ajax.request({
-      url: opt.api,
-      params: {
-        id: current.data.id
-      },
-      success: function(resp) {
-        resp = Ext.decode(resp.responseText);
-
-        if (resp.success) {
-          Ext.Msg.alert("删除操作", resp.msg, function() {
-            opt.grid.store.removeAt(index);
-          });
-        } else {
-          Ext.Msg.alert("删除操作", resp.msg);
-        }
-      }
-    });
   }
 
   Ext.application({
