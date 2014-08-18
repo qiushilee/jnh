@@ -345,7 +345,7 @@ Ext.application({
                 },
                 success: function(resp) {
                   var data = Ext.JSON.decode(resp.responseText);
-                  form.findField("deliveryOrderCode").setValue(data.code);
+                  form.findField("deliveryOrderCode").setValue(data.code).setDisabled(true);
                 }
               });
             }
