@@ -1,6 +1,7 @@
 (function() {
   var env = {},
       ValidIpAddressRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+
   env.api = {};
 
   if (["localhost", "127.0.0.1", "localhost.com", "0.0.0.0"].indexOf(window.location.hostname) !== -1 || window.location.hostname.match(ValidIpAddressRegex)) { //enable debug mode
@@ -39,7 +40,7 @@
   env.api.membertype = "/ajax/membertype";	  
   env.api.membersource = "/ajax/membersource";
 
-//汇款订购
+  //汇款订购
   env.api.order = {
     list: "/orderremittance/index",
     info: "/orderremittance/view/id/",
@@ -95,10 +96,10 @@
     add: "/deliverorder/create",
     del: "/deliverorder/delete",
     remorderdelivercode: "/deliverorder/remorderdelivercode",
-	telorderdelivercode: "/deliverorder/telorderdelivercode",
+    telorderdelivercode: "/deliverorder/telorderdelivercode",
     view: "/deliverorder/vieworderdetail",
-	saveorderproduct: "/deliverorder/saveorderproduct",
-	deleteorderproduct: "/deliverorder/deleteorderproduct"
+    saveorderproduct: "/deliverorder/saveorderproduct",
+    deleteorderproduct: "/deliverorder/deleteorderproduct"
   };
   
   env.api.package = {
@@ -107,7 +108,7 @@
     add: "/package/create",
     del: "/package/delete"
   };
-  //
+
   env.api.productrecord = {
     list: "/productrecord/index",
     change: "/productrecord/update",
@@ -115,7 +116,7 @@
     del: "/productrecord/delete"
   };
 
-  //TODO-url 业务管理
+  //业务管理
   env.api.business = {
     list: "/business/memberlist",
     change: "/business/save",
@@ -123,7 +124,7 @@
     del: "/business/delete"
   };
 
-  //TODO-url 电话订购
+  //电话订购
   env.api.telorder = {
     list: {
       member: "/telorder/memberlist",
@@ -157,12 +158,16 @@
   window.env = env;
 
   window.updateForm = function(form, data) {
-    Ext.Object.each(data, function(item, index) {
-      if (form.findField(item)) {
-        // TODO datefield 不能写入
-        form.findField(item).setValue(index);
-      }
-    });
+    try {
+      Ext.Object.each(data, function(item, index) {
+        if (form.findField(item)) {
+          // TODO datefield 不能写入
+          form.findField(item).setValue(index);
+        }
+      });
+    } catch(e) {
+      console.error(e.stack);
+    }
   }
 
   /**
@@ -187,6 +192,35 @@
         }
       });
     }
+  }
+
+  /**
+   * 删除grid一行
+   * @param {Object} grid 需要删除的列表
+   * @param {Number} index 可选参数，删除指定的行数，默认删除选中的行数
+   * @param {String} api 删除接口
+   */
+  window.removeGridRow = function(opt) {
+    var current = opt.grid.getSelectionModel().getSelection()[0],
+        index = opt.index || current.index;
+
+    Ext.Ajax.request({
+      url: opt.api,
+      params: {
+        id: current.data.id
+      },
+      success: function(resp) {
+        resp = Ext.decode(resp.responseText);
+
+        if (resp.success) {
+          Ext.Msg.alert("删除操作", resp.msg, function() {
+            opt.grid.store.removeAt(index);
+          });
+        } else {
+          Ext.Msg.alert("删除操作", resp.msg);
+        }
+      }
+    });
   }
 
   Ext.application({
@@ -231,7 +265,7 @@
         valueField: "id",
         labelAlign: "right",
         name: "periodicalId",
-		width:150
+        width:150
       });
 	  
 	  //学校类型
@@ -255,7 +289,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "type",
-		 width: 120,
+        width: 120,
       });
 	  
 	   //会员分类
@@ -279,7 +313,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "memberType",
-		width: 120,
+        width: 120,
       });
 	  
 	  //寄送方式
@@ -302,7 +336,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "deliveryMethod",
-		width: 185,
+        width: 185
       });
 	  
 	   //支付方式
@@ -326,7 +360,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "paymentMethord",
-		width: 155,
+       width: 155
       });
 	  
 	  
@@ -351,7 +385,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "companyType",
-		width: 185,
+        width: 185
       });
 	  
 	 //订单来源分类
@@ -375,7 +409,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "orderSource",
-		width: 185,
+        width: 185
       });
 	   //进转损分类
 	   Ext.define("jzsType", {
@@ -398,7 +432,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "type",
-		width: 150,
+        width: 150
       });
 	  
 	   //会员来源
@@ -422,12 +456,8 @@
         valueField: "value",
         labelAlign: "right",
         name: "source",
-		width: 150,
+        width: 150
       });
-	  
-	  
-	  
-	  
     }
   });
 })();
