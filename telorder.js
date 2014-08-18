@@ -102,6 +102,9 @@ Ext.application({
                   success: function(form, action) {
                     telorderMemberId = action.result.id;
                     Ext.Msg.alert("增加", action.result.msg);
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("增加", action.result.msg);
                   }
                 });
               }
