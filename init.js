@@ -128,7 +128,8 @@
   env.api.telorder = {
     list: {
       member: "/telorder/memberlist",
-      order: "/telorder/orderlist",
+      order: "/telorder/orderlist",//出货单搜索
+      orderproduct:"/telorder/orderproduct",//出货单产品搜索
     },
     change: {
       member: "/telorder/savemember",
