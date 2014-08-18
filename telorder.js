@@ -5,7 +5,7 @@ Ext.application({
     window.telorderMemberId = "";
 
     //电话订购列表
-    var  orderList = Ext.create('Ext.data.Store', {
+    var orderList = Ext.create('Ext.data.Store', {
       storeId: 'orderList',
       fields: ['id','deliveryOrderCode', 'preferentialTicket', 'unDiscountAmount','youthStuck','deliveryMethod', 'postage', "receivableAmount", "remark",'key','youthStuck','preferentialTicket','unDiscountAmount','remark'],
       layout: "fit",
@@ -20,6 +20,12 @@ Ext.application({
       }
     });
 
+    //电话订购右侧列表
+    var orderproduct = Ext.create('Ext.data.Store', {
+      storeId: 'orderproduct',
+      fields: ['id','deliveryOrderCode', 'preferentialTicket', 'unDiscountAmount','youthStuck','deliveryMethod', 'postage', "receivableAmount", "remark",'key','youthStuck','preferentialTicket','unDiscountAmount','remark'],
+      layout: "fit"
+    });
     //搜索栏
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
@@ -332,6 +338,7 @@ Ext.application({
         items: [{
           xtype:'form',
           layout: "hbox",
+          url: env.services.web + env.api.telorder.list.orderproduct,
           border: 0,
           items: [{
             xtype: "button",
@@ -345,10 +352,14 @@ Ext.application({
                 },
                 success: function(resp) {
                   var data = Ext.JSON.decode(resp.responseText);
+                  form.findField("deliveryOrderId").setValue(data.id);
                   form.findField("deliveryOrderCode").setValue(data.code).setDisabled(true);
                 }
               });
             }
+          },{
+            xtype: "hiddenfield",
+            name: "deliveryOrderId"
           },{
             xtype: "textfield",
             width: 70,
@@ -365,7 +376,19 @@ Ext.application({
           }, {
             xtype: "button",
             text: "搜索",
-            float:"right"
+            float:"right",
+            handler: function() {
+              var form = this.ownerCt.getForm();
+              form.submit({
+                success: function(form, action) {
+                  console.log(action.result);
+                  //orderproduct.loadData(action.result);
+                },
+                failure: function(form, action) {
+                  Ext.Msg.alert("搜索", action.result.msg);
+                }
+              });
+            }
           }]
         }, {
           xtype:'panel',
@@ -400,7 +423,7 @@ Ext.application({
           }, {
             itemId: "grid",
             xtype: "grid",
-            store: Ext.data.StoreManager.lookup('simpsonsStore'),
+            store: Ext.data.StoreManager.lookup('orderproduct'),
             margin: "10 0 0 0",
             columns: [{
               text: '序号',
