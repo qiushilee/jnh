@@ -357,7 +357,8 @@ Ext.application({
             labelWidth : 30,
             width: 100,
             labelAlign: "right",
-            margin: "0 10 0 20"
+            margin: "0 10 0 20",
+            name:"productCode"
           }, {
             xtype: "button",
             text: "搜索",
@@ -378,17 +379,20 @@ Ext.application({
               fieldLabel: "货号",
               labelWidth : 30,
               width: 100,
-              labelAlign: "right"
+              labelAlign: "right",
+              name:"productCode"
             }, {
               fieldLabel: "数量",
               labelWidth : 50,
               width: 120,
-              labelAlign: "right"
+              labelAlign: "right",
+              name:"number"
             }, {
               fieldLabel: "备注",
               labelWidth : 50,
               width: 120,
-              labelAlign: "right"
+              labelAlign: "right",
+              name:"remark"
             }]
           }, {
             itemId: "grid",
