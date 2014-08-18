@@ -344,7 +344,8 @@ Ext.application({
             xtype: "button",
             text: "出货单号",
             handler: function() {
-              var form = this.ownerCt.getForm();
+              var form = this.ownerCt.getForm(),
+                  detailForm = this.ownerCt.ownerCt.getComponent("detail").getForm();
               Ext.Ajax.request({
                 url: env.services.web + env.api.deliverorder.telorderdelivercode,
                 params: {
@@ -353,6 +354,7 @@ Ext.application({
                 success: function(resp) {
                   var data = Ext.JSON.decode(resp.responseText);
                   form.findField("deliveryOrderId").setValue(data.id);
+                  detailForm.findField("deliveryOrderId").setValue(data.id);
                   form.findField("deliveryOrderCode").setValue(data.code).setDisabled(true);
                 }
               });
@@ -391,7 +393,8 @@ Ext.application({
             }
           }]
         }, {
-          xtype:'panel',
+          itemId: "detail",
+          xtype:'form',
           bodyPadding: 5,
           margin: "10 0 0 0",
           items: [{
@@ -407,6 +410,9 @@ Ext.application({
               width: 100,
               labelAlign: "right",
               name:"productCode"
+            }, {
+              xtype: "hiddenfield",
+              name: "deliveryOrderId"
             }, {
               fieldLabel: "数量",
               labelWidth : 50,
