@@ -3,7 +3,7 @@ Ext.application({
   name: "JNH",
   launch: function() {
     window.telorderMemberId = "";
-   
+
     //电话订购列表
     var  orderList = Ext.create('Ext.data.Store', {
       storeId: 'orderList',
@@ -19,39 +19,39 @@ Ext.application({
         }
       }
     });
-	
-   //搜索栏
+
+    //搜索栏
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
-	  url: env.services.web + env.api.telorder.list,
+      url: env.services.web + env.api.telorder.list,
       bodyPadding: 10,
       defaultType: 'textfield',
       margin: "10 0",
       renderTo: document.body,
       items: [Ext.create('periodical'),
-	  {
+        {
           fieldLabel: "会员编号",
           name: 'userCode',
           labelWidth: 60,
           width: 150,
           labelAlign: "right"
-      }, {
-        fieldLabel: "姓名",
-         name: 'realName',
+        }, {
+          fieldLabel: "姓名",
+          name: 'realName',
           labelWidth: 60,
           width: 150,
           labelAlign: "right"
-      }, {
-        fieldLabel: "单号",
-         name: 'orderCode',
+        }, {
+          fieldLabel: "单号",
+          name: 'orderCode',
           labelWidth: 60,
           width: 150,
           labelAlign: "right"
-      }, {
-        xtype: "button",
-        text: "搜索",
-        margin: "0 0 0 20",
-		 handler: function() {
+        }, {
+          xtype: "button",
+          text: "搜索",
+          margin: "0 0 0 20",
+          handler: function() {
             var form = this.ownerCt.getForm();
             if (form.isValid()) {
               // TODO 接口需要加上 success: true
@@ -65,15 +65,15 @@ Ext.application({
               });
             }
           }
-      }, {
-        xtype: "button",
-        text: "重置",
-        margin: "0 0 0 20",
-		handler: function() {
-			var form = this.ownerCt.getForm();
-				form.reset();
-		}
-      }]
+        }, {
+          xtype: "button",
+          text: "重置",
+          margin: "0 0 0 20",
+          handler: function() {
+            var form = this.ownerCt.getForm();
+            form.reset();
+          }
+        }]
     });
 
     var list = Ext.create('Ext.Panel', {
@@ -147,7 +147,7 @@ Ext.application({
             text: "删除",
             handler: function() {
               try {
-                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
                 Ext.Ajax.request({
                   url: env.services.web + env.api.telorder.del.all,
                   params: {
@@ -179,7 +179,7 @@ Ext.application({
                 fieldLabel: "青春贴",
                 width:220,
                 labelAlign: "right",
-				name:'youthStuck'
+                name:'youthStuck'
               }, {
                 xtype: "label",
                 text: "(0枚)"
@@ -193,11 +193,11 @@ Ext.application({
               items: [{
                 fieldLabel: "姓名",
                 labelAlign: "right",
-				name:'realName'
+                name:'realName'
               }, {
                 fieldLabel: "收件人",
                 labelAlign: "right",
-				name:'consignee'
+                name:'consignee'
               }]
             }, {
               xtype: 'textfield',
@@ -205,7 +205,7 @@ Ext.application({
               width: 470,
               margin: "10 0 0 0",
               labelAlign: "right",
-				name:'address'
+              name:'address'
             }, {
               xtype:'panel',
               layout: "hbox",
@@ -215,11 +215,11 @@ Ext.application({
               items: [{
                 fieldLabel: "邮编",
                 labelAlign: "right",
-				name:'zipCode'
+                name:'zipCode'
               }, {
                 fieldLabel: "电话",
                 labelAlign: "right",
-				name:'mobile'
+                name:'mobile'
               }]
             }, {
               xtype: 'textfield',
@@ -227,7 +227,7 @@ Ext.application({
               margin: "10 0 0 0",
               width: 470,
               labelAlign: "right",
-				name:'remark'
+              name:'remark'
             }
           ]
         }, {
@@ -237,38 +237,38 @@ Ext.application({
           selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
           margin: "20 0 0 0",
           columns: [
-		  {  
-		    text: '序号',
-            dataIndex: 'id',
-            flex: 1},
-		  {
-            text: '出货单号',
-            dataIndex: 'deliveryOrderCode',
-            flex: 1
-          }, {
-            text: '抵价券',
-            dataIndex: 'preferentialTicket',
-            flex: 1
-          }, {
-            text: '不打折金额',
-            dataIndex: 'unDiscountAmount'
-          }, {
-            text: '青春贴',
-            dataIndex: 'youthStuck',
-            flex: 1
-          }, {
-            text: '寄送方式',
-            dataIndex: 'deliveryMethod',
-            flex: 1
-          }, {
-            text: '邮资',
-            dataIndex: 'postage',
-            flex: 1
-          }, {
-            text: '应付款',
-            dataIndex: 'qq',
-            flex: 1
-          }]
+            {
+              text: '序号',
+              dataIndex: 'id',
+              flex: 1},
+            {
+              text: '出货单号',
+              dataIndex: 'deliveryOrderCode',
+              flex: 1
+            }, {
+              text: '抵价券',
+              dataIndex: 'preferentialTicket',
+              flex: 1
+            }, {
+              text: '不打折金额',
+              dataIndex: 'unDiscountAmount'
+            }, {
+              text: '青春贴',
+              dataIndex: 'youthStuck',
+              flex: 1
+            }, {
+              text: '寄送方式',
+              dataIndex: 'deliveryMethod',
+              flex: 1
+            }, {
+              text: '邮资',
+              dataIndex: 'postage',
+              flex: 1
+            }, {
+              text: '应付款',
+              dataIndex: 'qq',
+              flex: 1
+            }]
         }, {
           xtype:'panel',
           layout: "hbox",
@@ -280,7 +280,7 @@ Ext.application({
             text: "<span class=\"key\">W</span>删除记录",
             handler: function() {
               try {
-                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
                 Ext.Ajax.request({
                   url: env.services.web + env.api.telorder.del.record,
                   params: {
@@ -301,7 +301,7 @@ Ext.application({
             text: "删除",
             handler: function() {
               try {
-                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
                 Ext.Ajax.request({
                   url: env.services.web + env.api.telorder.del.member,
                   params: {
@@ -451,16 +451,16 @@ Ext.application({
               text: "<span class=\"key\">D</span> 删除",
               handler: function() {
                 try {
-                  var id = this.ownerCt.ownerCt.getComponent("grid").getSelectionModel().getSelection()[0].data.id;          
+                  var id = this.ownerCt.ownerCt.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
                   Ext.Ajax.request({
                     url: env.services.web + env.api.telorder.del.order,
                     params: {
                       id: id
                     },
-                  success: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.data.StoreManager.lookup('simpsonsStore').loadData(data.list);
-                  }
+                    success: function(resp) {
+                      var data = Ext.JSON.decode(resp.responseText);
+                      Ext.data.StoreManager.lookup('simpsonsStore').loadData(data.list);
+                    }
                   });
                 } catch(e) {
                   Ext.Msg.alert("删除操作", "请单击表中的一项后再删除");
@@ -710,10 +710,10 @@ Ext.application({
         }]
       }]
     });
-    
+
     // search.hide();
     // list.hide();
     // add1.show();
-     //print.show();
+    //print.show();
   }
 });
