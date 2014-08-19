@@ -344,7 +344,8 @@ Ext.application({
             xtype: "button",
             text: "出货单号",
             handler: function() {
-              var form = this.ownerCt.getForm(),
+              var self = this,
+                  form = this.ownerCt.getForm(),
                   detailForm = this.ownerCt.ownerCt.getComponent("detail").getForm();
               if (telorderMemberId === "") {
                 Ext.Msg.alert("生成出货单号", "请先增加会员");
@@ -356,16 +357,17 @@ Ext.application({
                   },
                   success: function(resp) {
                     var data = Ext.JSON.decode(resp.responseText);
-                    form.findField("deliveryOrderId").setValue(data.id);
-                    detailForm.findField("deliveryOrderId").setValue(data.id);
-                    form.findField("deliveryOrderCode").setValue(data.code).setDisabled(true);
+                    form.findField("deliveryorderId").setValue(data.id);
+                    detailForm.findField("deliveryorderId").setValue(data.id);
+                    form.findField("deliveryOrderCode").setValue(data.code);
+                    self.setDisabled(true);
                   }
                 });
               }
             }
           },{
             xtype: "hiddenfield",
-            name: "deliveryOrderId"
+            name: "deliveryorderId"
           },{
             xtype: "textfield",
             width: 70,
@@ -416,7 +418,7 @@ Ext.application({
               name:"productCode"
             }, {
               xtype: "hiddenfield",
-              name: "deliveryOrderId"
+              name: "deliveryorderId"
             }, {
               fieldLabel: "数量",
               labelWidth : 50,
