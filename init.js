@@ -129,7 +129,7 @@
     list: {
       member: "/telorder/memberlist",
       order: "/telorder/orderlist",//出货单
-      orderproduct:"/deliverorder/vieworderdetail",//根据出货单查看产品
+      orderproduct:"/deliverorder/vieworderdetail",//出货单产品搜索
     },
     change: {
       member: "/telorder/savemember",

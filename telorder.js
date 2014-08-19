@@ -12,7 +12,7 @@ Ext.application({
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.telorder.list.order,
+        url: env.services.web + env.api.order.list,
         reader: {
           type: 'json',
           root: 'list'
