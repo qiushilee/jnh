@@ -27,52 +27,52 @@ Ext.application({
     });
 
      var search = Ext.create("Ext.form.Panel", {
-      layout: "hbox",
-	  url: env.services.web + env.api.package.list,
-      bodyPadding: 10,
-      defaultType: 'textfield',
-      margin: "10 0",
-      renderTo: document.body,
-      items: [
-        {
-        //TODO 更换成统一的periodical组件
-        xtype: "combobox",
-        fieldLabel: "期数",
-        store: Ext.create("Ext.data.Store", {
-          fields: ["title", "id"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.periodical.list,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
-        }),
-        labelWidth: 60,
-        displayField: "title",
-        valueField: "id",
-        labelAlign: "right",
-        name: "periodicalId"
-      },
+       layout: "hbox",
+       url: env.services.web + env.api.package.list,
+       bodyPadding: 10,
+       defaultType: 'textfield',
+       margin: "10 0",
+       renderTo: document.body,
+       items: [
+       {
+         //TODO 更换成统一的periodical组件
+         xtype: "combobox",
+         fieldLabel: "期数",
+         store: Ext.create("Ext.data.Store", {
+           fields: ["title", "id"],
+           autoLoad: true,
+           proxy: {
+             type: 'ajax',
+             url: env.services.web + env.api.periodical.list,
+             reader: {
+               type: 'json',
+               root: 'list'
+             }
+           }
+         }),
+         labelWidth: 60,
+         displayField: "title",
+         valueField: "id",
+         labelAlign: "right",
+         name: "periodicalId"
+        },
         {
           fieldLabel: "出货单号",
-		  name:'deliveryOrderCode',
+          name:'deliveryOrderCode',
           labelWidth: 60,
           width: 150,
           labelAlign: "right"
         },
         {
           fieldLabel: "会员编号",
-		  name:'userCode',
+          name:'userCode',
           labelWidth: 60,
           width: 150,
           labelAlign: "right"
         },
         {
           fieldLabel: "姓名",
-		  name:'userName',
+          name:'userName',
           labelWidth: 40,
           width: 150,
           labelAlign: "right"
@@ -80,7 +80,7 @@ Ext.application({
         {
           xtype: "datefield",
           fieldLabel: "邮寄日期",
-		  name:'mailingDate',
+          name:'mailingDate',
           labelWidth: 60,
           width: 160,
           labelAlign: "right"
@@ -90,20 +90,20 @@ Ext.application({
           xtype: "button",
           text: "搜索",
           margin: "0 0 0 20",
-		  handler: function() {
-          var form = this.up("form").getForm();
-          if (form.isValid()) {
-            // TODO 接口需要加上 success: true
-            form.submit({
-              success: function(form, action) {
-                console.log(action)
-              },
-              failure: function(form, action) {
-                dataList.loadData(action.result.list);
-              }
-            });
+          handler: function() {
+            var form = this.up("form").getForm();
+            if (form.isValid()) {
+              // TODO 接口需要加上 success: true
+              form.submit({
+                success: function(form, action) {
+                  console.log(action)
+                },
+                failure: function(form, action) {
+                  dataList.loadData(action.result.list);
+                }
+              });
+            }
           }
-         }
         },
         {
           xtype: "button",
@@ -113,7 +113,6 @@ Ext.application({
       ]
     });
 
-  
     var list = Ext.create("Ext.panel.Panel", {
       renderTo: Ext.getBody(),
       items: [
@@ -240,6 +239,7 @@ Ext.application({
       layout: 'form',
       bodyPadding: 10,
       defaultType: 'textfield',
+      closeAction: 'hide',
       items: [
         {
           itemId: "form",
@@ -520,6 +520,7 @@ Ext.application({
       title: "打印购物车",
       width: 1000,
       bodyPadding: 10,
+      closeAction: 'hide',
       items: [{
         layout: "hbox",
         bodyPadding: 10,
@@ -628,6 +629,7 @@ Ext.application({
       layout: 'form',
       bodyPadding: 5,
       defaultType: 'textfield',
+      closeAction: 'hide',
       fieldDefaults: {
         labelAlign: 'top'
       },
