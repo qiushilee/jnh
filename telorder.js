@@ -267,7 +267,7 @@ Ext.application({
               flex: 1
             }, {
               text: '寄送方式',
-              dataIndex: 'deliveryMethod',
+              dataIndex: 'deliveryMethodName',
               flex: 1
             }, {
               text: '邮资',
@@ -275,7 +275,7 @@ Ext.application({
               flex: 1
             }, {
               text: '应付款',
-              dataIndex: 'qq',
+              dataIndex: 'receivableAmount',
               flex: 1
             }]
         }, {
