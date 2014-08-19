@@ -695,7 +695,3 @@ Ext.application({
    // bujiDetail.show();
   }
 });
-
-
-
-
