@@ -346,18 +346,22 @@ Ext.application({
             handler: function() {
               var form = this.ownerCt.getForm(),
                   detailForm = this.ownerCt.ownerCt.getComponent("detail").getForm();
-              Ext.Ajax.request({
-                url: env.services.web + env.api.deliverorder.telorderdelivercode,
-                params: {
-                  memberId: telorderMemberId
-                },
-                success: function(resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  form.findField("deliveryOrderId").setValue(data.id);
-                  detailForm.findField("deliveryOrderId").setValue(data.id);
-                  form.findField("deliveryOrderCode").setValue(data.code).setDisabled(true);
-                }
-              });
+              if (telorderMemberId === "") {
+                Ext.Msg.alert("生成出货单号", "请先增加会员");
+              } else {
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.deliverorder.telorderdelivercode,
+                  params: {
+                    memberId: telorderMemberId
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    form.findField("deliveryOrderId").setValue(data.id);
+                    detailForm.findField("deliveryOrderId").setValue(data.id);
+                    form.findField("deliveryOrderCode").setValue(data.code).setDisabled(true);
+                  }
+                });
+              }
             }
           },{
             xtype: "hiddenfield",
@@ -469,18 +473,16 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">A</span> 增加",
               handler: function() {
-                var form = this.ownerCt.ownerCt.getComponent("order").getForm();
+                var form = this.ownerCt.ownerCt.ownerCt.getComponent("detail").getForm();
                 form.url = env.services.web + env.api.telorder.add.order;
-                if (form.isValid()) {
-                  form.submit({
-                    success: function(form, action) {
-                      console.log(action)
-                    },
-                    failure: function(form, action) {
-                      Ext.Msg.alert("增加", action.result.msg);
-                    }
-                  });
-                }
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("增加", action.result.msg);
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("增加", action.result.msg);
+                  }
+                });
               }
             }, {
               xtype: "button",
@@ -507,12 +509,12 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">M</span> 修改",
               handler: function() {
-                var form = this.ownerCt.ownerCt.getComponent("member").getForm();
+                var form = this.ownerCt.ownerCt.ownerCt.getComponent("detail").getForm();
                 form.url = env.services.web + env.api.telorder.change.order;
                 if (form.isValid()) {
                   form.submit({
                     success: function(form, action) {
-                      console.log(action)
+                      Ext.Msg.alert("修改", action.result.msg);
                     },
                     failure: function(form, action) {
                       Ext.Msg.alert("修改", action.result.msg);
@@ -525,12 +527,12 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">S</span> 保存",
               handler: function() {
-                var form = this.ownerCt.ownerCt.getComponent("member").getForm();
+                var form = this.ownerCt.ownerCt.ownerCt.getComponent("detail").getForm();
                 form.url = env.services.web + env.api.telorder.save.order;
                 if (form.isValid()) {
                   form.submit({
                     success: function(form, action) {
-                      console.log(action)
+                      Ext.Msg.alert("保存", action.result.msg);
                     },
                     failure: function(form, action) {
                       Ext.Msg.alert("保存", action.result.msg);
