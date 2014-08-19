@@ -122,6 +122,8 @@ Ext.application({
               var $container = this.ownerCt.ownerCt,
                   form = $container.getComponent("member").getForm(),
                   currentData = $container.getComponent("grid").getSelectionModel().getSelection()[0].data;
+
+              window.telorderMemberId = currentData.memberId;
               updateForm(form, currentData);
             },
             margin: "0 0 0 20"
