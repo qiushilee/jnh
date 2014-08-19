@@ -258,13 +258,15 @@ Ext.application({
                 fieldLabel: "出货单号",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'deliveryOrderCode'
               }, {
                 disabled: true,
                 fieldLabel: "会员编号",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'userCode'
               }]
             },
             {
@@ -280,13 +282,15 @@ Ext.application({
                 fieldLabel: "会员姓名",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'userName'
               }, {
                 disabled: true,
                 fieldLabel: "重量",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'weight'
               }]
             },
             {
@@ -302,7 +306,8 @@ Ext.application({
                 fieldLabel: "邮编",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'zipCode'
               },
               {
                 disabled: true,
@@ -310,7 +315,8 @@ Ext.application({
                 labelWidth: 55,
                 width: 250,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'address'
               }]
             },
             {
@@ -326,12 +332,14 @@ Ext.application({
                 fieldLabel: "邮寄日期",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'mailingDate'
               }, {
                 fieldLabel: "包裹单号",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'packageCode'
               }]
             },
             {
@@ -346,12 +354,14 @@ Ext.application({
                 fieldLabel: "邮寄重量",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'weight'
               }, {
                 fieldLabel: "邮资",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'postage'
               }]
             },
             {
@@ -366,7 +376,8 @@ Ext.application({
                 fieldLabel: "包装员",
                 labelWidth: 55,
                 margin: "5 0",
-                labelAlign: "right"
+                labelAlign: "right",
+                name:'packaging'
               }]
             },
             {
@@ -377,7 +388,7 @@ Ext.application({
               labelWidth: 55,
               margin: "5 0",
               labelAlign: "right",
-              name: 'first'
+              name: 'packageRemark'
             },
           ]
         },
