@@ -106,7 +106,7 @@ Ext.application({
                 text: "生成出货单编号",
                 handler: function() {
                   Ext.Ajax.request({
-                    url: env.services.web + env.api.deliverorder.code,
+                    url: env.services.web + env.api.deliverorder.remorderdelivercode,
                     params: {
                       orderRemittanceId: window.orderRemittanceId
                     },
@@ -249,14 +249,14 @@ Ext.application({
                 itemdblclick: function( that, record, item, index, e, eOpts) {
                   var detail = this.ownerCt.ownerCt.getComponent("detail"),
                       productStore = Ext.data.StoreManager.lookup("productData");
-                  window.orderRemittanceId = record.data.orderRemittanceId;
+                  window.deliveryOrderId = record.data.deliveryOrderId;
 
                   detail.getComponent("col").getComponent("createCode").setDisabled(false);
                   window.updateForm(detail.getForm(), record.data);
 
                   productStore.load({
                     params: {
-                      orderRemittanceId: window.orderRemittanceId
+                      deliveryorderId: window.deliveryOrderId
                     }
                   });
                  
