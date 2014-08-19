@@ -29,7 +29,7 @@ Ext.application({
     //搜索栏
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
-      url: env.services.web + env.api.telorder.list,
+      url: env.services.web + env.api.telorder.list.order,
       bodyPadding: 10,
       defaultType: 'textfield',
       margin: "10 0",
