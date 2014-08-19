@@ -119,18 +119,12 @@ Ext.application({
             xtype: "button",
             text: "<span class=\"key\">N</span> 修改",
             handler: function() {
-              var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-              form.url = env.services.web + env.api.telorder.change.member;
-              if (form.isValid()) {
-                form.submit({
-                  success: function(form, action) {
-                    console.log(action)
-                  },
-                  failure: function(form, action) {
-                    Ext.Msg.alert("修改", action.result.msg);
-                  }
-                });
-              }
+              var $container = this.ownerCt.ownerCt,
+                  form = $container.getComponent("member").getForm(),
+                  currentData = $container.getComponent("grid").getSelectionModel().getSelection()[0].data;
+
+              window.telorderMemberId = currentData.memberId;
+              updateForm(form, currentData);
             },
             margin: "0 0 0 20"
           }, {
@@ -156,7 +150,8 @@ Ext.application({
             text: "删除",
             handler: function() {
               try {
-                var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
+                var $container = this.ownerCt.ownerCt,
+                    id = $container.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
                 Ext.Ajax.request({
                   url: env.services.web + env.api.telorder.del.all,
                   params: {
@@ -480,6 +475,7 @@ Ext.application({
                 form.submit({
                   success: function(form, action) {
                     Ext.Msg.alert("增加", action.result.msg);
+                    Ext.data.StoreManager.lookup("orderList").load();
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("增加", action.result.msg);
