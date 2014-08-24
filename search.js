@@ -1,151 +1,14 @@
 Ext.application({
-  name: "JNH",
+  name: "search",
   launch: function () {
-    // 库存表
-    Ext.create('Ext.data.Store', {
-      storeId: 'kucun',
-      fields: ['id', "iid", 'name', 'price', 'price2', 'num', 'num2', 'num3', 'num4', 'style', "desc", "num5", "text"],
-      layout: "fit",
-      data: {
-        'items': [
-          {
-            'id': '1',
-            "iid": '55088',
-            "name": "人民邮电出版社",
-            "price": 30,
-            "price2": 50,
-            "num": 100,
-            "num2": 80,
-            "num3": 90,
-            "num4": 100,
-            "style": "箱包",
-            "desc": "这是商品的简要说明",
-            "num5": 5,
-            "text": "这是商品的备注信息"
-          },
-          {
-            'id': '2',
-            "iid": '55088',
-            "name": "人民邮电出版社",
-            "price": 30,
-            "price2": 50,
-            "num": 100,
-            "num2": 80,
-            "num3": 90,
-            "num4": 100,
-            "style": "箱包",
-            "desc": "这是商品的简要说明",
-            "num5": 5,
-            "text": "这是商品的备注信息"
-          },
-          {
-            'id': '3',
-            "iid": '55088',
-            "name": "人民邮电出版社",
-            "price": 30,
-            "price2": 50,
-            "num": 100,
-            "num2": 80,
-            "num3": 90,
-            "num4": 100,
-            "style": "箱包",
-            "desc": "这是商品的简要说明",
-            "num5": 5,
-            "text": "这是商品的备注信息"
-          },
-          {
-            'id': '4',
-            "iid": '55088',
-            "name": "人民邮电出版社",
-            "price": 30,
-            "price2": 50,
-            "num": 100,
-            "num2": 80,
-            "num3": 90,
-            "num4": 100,
-            "style": "箱包",
-            "desc": "这是商品的简要说明",
-            "num5": 5,
-            "text": "这是商品的备注信息"
-          },
-          {
-            'id': '5',
-            "iid": '55088',
-            "name": "人民邮电出版社",
-            "price": 30,
-            "price2": 50,
-            "num": 100,
-            "num2": 80,
-            "num3": 90,
-            "num4": 100,
-            "style": "箱包",
-            "desc": "这是商品的简要说明",
-            "num5": 5,
-            "text": "这是商品的备注信息"
-          },
-          {
-            'id': '6',
-            "iid": '55088',
-            "name": "人民邮电出版社",
-            "price": 30,
-            "price2": 50,
-            "num": 100,
-            "num2": 80,
-            "num3": 90,
-            "num4": 100,
-            "style": "箱包",
-            "desc": "这是商品的简要说明",
-            "num5": 5,
-            "text": "这是商品的备注信息"
-          },
-          {
-            'id': '7',
-            "iid": '55088',
-            "name": "人民邮电出版社",
-            "price": 30,
-            "price2": 50,
-            "num": 100,
-            "num2": 80,
-            "num3": 90,
-            "num4": 100,
-            "style": "箱包",
-            "desc": "这是商品的简要说明",
-            "num5": 5,
-            "text": "这是商品的备注信息"
-          },
-          {
-            'id': '8',
-            "iid": '55088',
-            "name": "人民邮电出版社",
-            "price": 30,
-            "price2": 50,
-            "num": 100,
-            "num2": 80,
-            "num3": 90,
-            "num4": 100,
-            "style": "箱包",
-            "desc": "这是商品的简要说明",
-            "num5": 5,
-            "text": "这是商品的备注信息"
-          }
-        ]
-      },
-      proxy: {
-        type: 'memory',
-        reader: {
-          type: 'json',
-          root: 'items'
-        }
-      }
-    });
 
     // 进货清单数据
     Ext.create('Ext.data.Store', {
-      storeId: 'jhdDataList',
+      storeId: 'purchaseList',
       fields: ["id", "productCode", "name", 'number', 'receiptCode','companyName','addDate','remark'],
       layout: "fit",
-	   autoLoad: true,
-       proxy: {
+      autoLoad: true,
+      proxy: {
         type: 'ajax',
         url: env.services.web + env.api.productrecord.list,
         reader: {
@@ -156,7 +19,7 @@ Ext.application({
     });
 
 
-//进货清单列表
+    //进货清单列表
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: document.body,
       layout: "fit",
@@ -167,7 +30,7 @@ Ext.application({
           padding: 15,
           items: [
             {
-              xtype: "panel",
+              xtype: "form",
               layout: 'hbox',
               bodyPadding: 5,
               border: 0,
@@ -176,39 +39,39 @@ Ext.application({
                 {
                   fieldLabel: "起始日期",
                   labelAlign: "right",
-				  name:'startDate'
+                  name:'startDate'
                 },
                 {
                   fieldLabel: "终止日期",
                   labelAlign: "right",
-				  name:'endDate'
+                  name:'endDate'
                 },
                 {
                   xtype: "button",
                   text: "搜索",
                   margin: "0 0 0 50",
-				  handler:function(){
-						var form = this.ownerCt.getForm();
-						if (form.isValid()) {
-						  form.submit({
-							success: function(form, action) {
-							  console.log(action)
-							},
-							failure: function(form, action) {
-							  orderList.loadData(action.result.list);
-							}
-						  });
-						}
-				  }
+                  handler:function(){
+                    var form = this.ownerCt.getForm();
+                    if (form.isValid()) {
+                      form.submit({
+                        success: function(form, action) {
+                          console.log(action)
+                        },
+                        failure: function(form, action) {
+                          purchaseList.loadData(action.result.list);
+                        }
+                      });
+                    }
+                  }
                 },
                 {
                   xtype: "button",
                   text: "重置",
                   margin: "0 0 0 20",
-				   handler:function(){
-				   		var form = this.ownerCt.getForm();
-						form.reset();
-				   }
+                  handler:function(){
+                    var form = this.ownerCt.getForm();
+                    form.reset();
+                  }
                 }
               ]
             },
@@ -274,11 +137,13 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "起始日期",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'startDate'
                 },
                 {
                   fieldLabel: "终止日期",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'endDate'
                 },
                 {
                   xtype: "button",
@@ -299,37 +164,37 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id1',
+                  dataIndex: 'id',
                   flex: 1
                 },
                 {
                   text: '货号',
-                  dataIndex: 'iid1',
+                  dataIndex: 'productCode',
                   flex: 1
                 },
                 {
                   text: '品名',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'name',
                   flex: 1
                 },
                 {
                   text: '出货量',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'shipments',
                   flex: 2
                 },
                 {
                   text: '售价',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'price',
                   flex: 1
                 },
                 {
                   text: '金额',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'amount',
                   flex: 1
                 },
                 {
                   text: '备注',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'remark',
                   flex: 1
                 }
               ]
@@ -350,7 +215,8 @@ Ext.application({
                 {
                   fieldLabel: "厂商编号",
                   labelWidth: 60,
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'companyCode'
                 },
                 {
                   fieldLabel: "~~~~",
@@ -361,27 +227,32 @@ Ext.application({
                   fieldLabel: "预估单量",
                   labelWidth: 60,
                   width: 120,
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'estimateNumber'
+
                 },
                 {
                   fieldLabel: "全期单数",
                   labelWidth: 60,
                   width: 120,
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'allPeriodNumber'
                 },
                 {
                   xtype:"datefield",
                   fieldLabel: "参考日期",
                   labelWidth: 60,
                   width: 160,
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'referenceStartDate'
                 },
                 {
                   xtype:"datefield",
                   fieldLabel: "到",
                   labelWidth: 20,
                   width: 120,
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'referenceEndDate'
                 },
                 {
                   xtype: "label",
@@ -402,92 +273,92 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id1',
+                  dataIndex: 'id',
                   flex: 1
                 },
                 {
                   text: '货号',
-                  dataIndex: 'iid1',
+                  dataIndex: 'productCode',
                   flex: 1
                 },
                 {
                   text: '品名',
-                  dataIndex: 'iid1',
+                  dataIndex: 'name',
                   flex: 1
                 },
                 {
                   text: '调整前累进量',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'tzqProgressiveNumber',
                   flex: 2
                 },
                 {
                   text: '调整后累进量',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'tzhProgressiveNumber',
                   flex: 2
                 },
                 {
                   text: '调整前出货数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'tzqShipmentNumber',
                   flex: 2
                 },
                 {
                   text: '调整后出货数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'tzhShipmentNumber',
                   flex: 2
                 },
                 {
                   text: '库存量',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'stock',
                   flex: 1
                 },
                 {
                   text: '损坏数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'corruptedNumber',
                   flex: 1
                 },
                 {
                   text: '供应单数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'supplyNumber',
                   flex: 1
                 },
                 {
                   text: '进价',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'price',
                   flex: 1
                 },
                 {
                   text: '调整前预计出货数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'tzqExpectedShipmentNumber',
                   flex: 2
                 },
                 {
                   text: '调整后预计出货数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'tzhExpectedShipmentNumber',
                   flex: 2
                 },
                 {
                   text: '调整前补货数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'tzqReplenishmentNumber',
                   flex: 2
                 },
                 {
                   text: '调整后补货数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'tzhReplenishmentNumber',
                   flex: 2
                 },
                 {
                   text: '补货金额',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'replenishmentAmount',
                   flex: 1
                 },
                 {
                   text: '全期预估',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'allPeriodPrediction',
                   flex: 1
                 },
                 {
                   text: '全期补货数',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'allReplenishmentNumber',
                   flex: 1
                 }
               ]
@@ -499,30 +370,30 @@ Ext.application({
               border: 0,
               margin: "10 0 0 0",
               items: [
-              {
-                xtype: "button",
-                text: "查询"
-              },
-              {
-                xtype: "button",
-                text: "日报表",
-                margin: "0 0 0 10"
-              },
-              {
-                xtype: "button",
-                text: "订货单",
-                margin: "0 0 0 10"
-              },
-              {
-                xtype: "button",
-                text: "预估缺货",
-                margin: "0 0 0 10"
-              },
-              {
-                xtype: "button",
-                text: "下架表",
-                margin: "0 0 0 10"
-              }
+                {
+                  xtype: "button",
+                  text: "查询"
+                },
+                {
+                  xtype: "button",
+                  text: "日报表",
+                  margin: "0 0 0 10"
+                },
+                {
+                  xtype: "button",
+                  text: "订货单",
+                  margin: "0 0 0 10"
+                },
+                {
+                  xtype: "button",
+                  text: "预估缺货",
+                  margin: "0 0 0 10"
+                },
+                {
+                  xtype: "button",
+                  text: "下架表",
+                  margin: "0 0 0 10"
+                }
               ]
             }
           ]
@@ -554,11 +425,13 @@ Ext.application({
                             {
                               fieldLabel: "姓名",
                               labelWidth: 40,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'realName'
                             }, {
                               fieldLabel: "会员编号",
                               labelWidth: 60,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'userCode'
                             }
                           ]
                         }
@@ -579,19 +452,22 @@ Ext.application({
                               fieldLabel: "地址",
                               labelWidth: 40,
                               width: 150,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'address'
                             },
                             {
                               fieldLabel: "邮编",
                               labelWidth: 40,
                               width: 150,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'zipCode'
                             },
                             {
                               fieldLabel: "电话",
                               labelWidth: 40,
                               width: 150,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'mobile'
                             }
                           ]
                         }
@@ -612,13 +488,15 @@ Ext.application({
                               fieldLabel: "加入时间",
                               labelWidth: 60,
                               width: 160,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'startDate'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'endDate'
                             }
                           ]
                         }, {
@@ -632,13 +510,15 @@ Ext.application({
                               fieldLabel: "购买时间",
                               labelWidth: 60,
                               width: 160,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'buyStartDate'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'buyEndDate'
                             }
                           ]
                         }, {
@@ -652,13 +532,15 @@ Ext.application({
                               fieldLabel: "毕业时间",
                               labelWidth: 60,
                               width: 160,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'graduationDate'
                             },
                             {
                               xtype: "checkboxfield",
                               fieldLabel: "反选毕业时间",
                               labelWidth: 100,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'unGraduationDate'
                             }
                           ]
                         }
@@ -793,18 +675,18 @@ Ext.application({
                         text: "块状打印",
                         margin: "0 0 0 50"
                       },
-                      {
-                        text: "条状打印",
-                        margin: "0 0 0 20"
-                      },
-                      {
-                        text: "面单打印",
-                        margin: "0 0 0 20"
-                      },
-                      {
-                        text: "批量修改",
-                        margin: "0 0 0 20"
-                      }]
+                        {
+                          text: "条状打印",
+                          margin: "0 0 0 20"
+                        },
+                        {
+                          text: "面单打印",
+                          margin: "0 0 0 20"
+                        },
+                        {
+                          text: "批量修改",
+                          margin: "0 0 0 20"
+                        }]
                     },
                     {
                       xtype: "panel",
@@ -816,10 +698,10 @@ Ext.application({
                         text: "搜索",
                         margin: "0 0 0 50"
                       },
-                      {
-                        text: "重置",
-                        margin: "0 0 0 20"
-                      }]
+                        {
+                          text: "重置",
+                          margin: "0 0 0 20"
+                        }]
                     }
                   ]
                 }
@@ -932,6 +814,5 @@ Ext.application({
         }
       ]
     });
-
   }
 });
