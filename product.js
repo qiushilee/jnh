@@ -111,13 +111,14 @@ Ext.application({
                   text: "搜索",
                   handler: function () {
                     var form = this.ownerCt.getForm();
-                    if (form.isValid()) {
-                      form.submit({
-                        failure: function (form, action) {
-                          Ext.data.StoreManager.lookup('product').loadData(action.result.list);
-                        }
-                      });
-                    }
+                    form.submit({
+                      success: function(form, action) {
+                        Ext.data.StoreManager.lookup('product').loadData(action.result.list);
+                      },
+                      failure: function (form, action) {
+                        Ext.Msg.alert("搜索", action.result.msg);
+                      }
+                    });
                   }
                 }
               ]
@@ -264,23 +265,37 @@ Ext.application({
             {
               xtype: "form",
               border: 0,
+              url: env.services.web + env.api.product.transitionLoss,
               layout: "column",
               items: [
                 {
                   xtype: "textfield",
                   labelWidth: 30,
-                  fieldLabel: "货号"
+                  fieldLabel: "货号",
+                  name: "productCode"
                 },
                 {
                   xtype: "textfield",
                   labelWidth: 30,
                   fieldLabel: "编号",
                   margin: "0 0 0 10",
+                  name: "receiptCode"
                 },
                 {
                   xtype: "button",
                   margin: "0 0 0 10",
-                  text: "搜索"
+                  text: "搜索",
+                  handler: function () {
+                    var form = this.ownerCt.getForm();
+                    form.submit({
+                      success: function(form, action) {
+                        Ext.data.StoreManager.lookup('product').loadData(action.result.list);
+                      },
+                      failure: function (form, action) {
+                        Ext.Msg.alert("搜索", action.result.msg);
+                      }
+                    });
+                  }
                 },
                 {
                   xtype: "button",
@@ -333,6 +348,7 @@ Ext.application({
             {
               xtype: "form",
               border: 0,
+              url: env.services.web + env.api.product.shipmentDetails,
               layout: "column",
               items: [
                 {
@@ -345,8 +361,16 @@ Ext.application({
                   xtype: "button",
                   margin: "0 0 0 10",
                   text: "搜索",
-                  handler: function() {
-                      // TODO 接口需要加上
+                  handler: function () {
+                    var form = this.ownerCt.getForm();
+                    form.submit({
+                      success: function(form, action) {
+                        Ext.data.StoreManager.lookup('product').loadData(action.result.list);
+                      },
+                      failure: function (form, action) {
+                        Ext.Msg.alert("搜索", action.result.msg);
+                      }
+                    });
                   }
                 },
                 {
