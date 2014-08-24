@@ -423,7 +423,7 @@ Ext.application({
             }, {
               fieldLabel: "备注",
               labelWidth : 50,
-              width: 120,
+              width: 250,
               labelAlign: "right",
               name:"remark"
             }]
