@@ -160,6 +160,14 @@
     list: "/actionlog/index",
     del: "/actionlog/delete"
   };
+
+  //查询模块
+  env.api.search = {
+    productrecord: env.api.productrecord.list,
+    deliverorder: env.api.deliverorder.list,
+    estimatepurchase: "/search/estimatepurchase",
+    member: "/search/member"
+  };
   
   window.env = env;
 
