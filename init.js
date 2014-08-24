@@ -305,6 +305,11 @@
         name: "periodicalId",
         width:150,
         listeners: {
+          render: function(combobox) {
+            setTimeout(function() {
+              combobox.setValue(combobox.store.data.getAt(0));
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
