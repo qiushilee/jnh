@@ -186,7 +186,10 @@
 
     Ext.Object.each(data, function(name, value) {
       Ext.Array.each(fields, function(item, index) {
-        if (item.getName() === name) {
+        //期数选择
+        if (item.xtype === "combobox" && item.getName() === name) {
+          item.fireEvent("setvalue", item, value);
+        } else if (item.getName() === name) {
           item.setValue(value);
         }
       });
@@ -267,8 +270,16 @@
         }
       });
 
+      function comboboxSetValue(combobox, value) {
+        combobox.store.data.each(function(item, i) {
+          if (item.data.value == value) {
+            combobox.setValue(item.data.value);
+          }
+        });
+      }
+
       var periodicalStore = Ext.create("Ext.data.Store", {
-        fields: ["title", "id"],
+        fields: ["name", "value"],
         autoLoad: true,
         proxy: {
           type: 'ajax',
@@ -288,20 +299,24 @@
         queryMode: "local",
         store: periodicalStore,
         labelWidth: 60,
-        displayField: "title",
-        valueField: "id",
+        displayField: "name",
+        valueField: "value",
         labelAlign: "right",
         name: "periodicalId",
-        width:150
+        width:150,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
 	  
 	  //学校类型
 	   Ext.define("addressType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "类型",
+        queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: false,
+          autoLoad: true,
           proxy: {
             type: 'ajax',
             url: env.services.web + env.api.addresstype,
@@ -317,15 +332,19 @@
         labelAlign: "right",
         name: "type",
         width: 120,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
 	  
 	   //会员分类
 	   Ext.define("memberType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "会员类型",
+        queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: false,
+          autoLoad: true,
           proxy: {
             type: 'ajax',
             url: env.services.web + env.api.membertype,
@@ -341,16 +360,20 @@
         labelAlign: "right",
         name: "memberType",
         width: 120,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
 	  
 	  //寄送方式
 	   Ext.define("deliveryMethod", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "寄送方式",
+        queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: false,
           proxy: {
+            autoLoad: true,
             type: 'ajax',
             url: env.services.web + env.api.sendmethord,
             reader: {
@@ -363,16 +386,20 @@
         valueField: "value",
         labelAlign: "right",
         name: "deliveryMethod",
-        width: 185
+        width: 185,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
 	  
 	   //支付方式
 	   Ext.define("paymentMethord", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
+        queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: false,
+          autoLoad: true,
           proxy: {
             type: 'ajax',
             url: env.services.web + env.api.paymentmethord,
@@ -387,7 +414,10 @@
         valueField: "value",
         labelAlign: "right",
         name: "paymentMethord",
-       width: 155
+        width: 155,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
 	  
 	  
@@ -395,9 +425,10 @@
 	   Ext.define("companyType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
+        queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: false,
+          autoLoad: true,
           proxy: {
             type: 'ajax',
             url: env.services.web + env.api.companytype,
@@ -412,16 +443,20 @@
         valueField: "value",
         labelAlign: "right",
         name: "companyType",
-        width: 185
+        width: 185,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
 	  
 	 //订单来源分类
 	   Ext.define("orderSource", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
+        queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: false,
+          autoLoad: true,
           proxy: {
             type: 'ajax',
             url: env.services.web + env.api.ordersource,
@@ -436,15 +471,19 @@
         valueField: "value",
         labelAlign: "right",
         name: "orderSource",
-        width: 185
+        width: 185,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
 	   //进转损分类
 	   Ext.define("jzsType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "类型",
+        queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: false,
+          autoLoad: true,
           proxy: {
             type: 'ajax',
             url: env.services.web + env.api.jzstype,
@@ -459,16 +498,20 @@
         valueField: "value",
         labelAlign: "right",
         name: "type",
-        width: 150
+        width: 150,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
 	  
 	   //会员来源
 	   Ext.define("memberSource", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "来源",
+        queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: false,
+          autoLoad: true,
           proxy: {
             type: 'ajax',
             url: env.services.web + env.api.membersource,
@@ -483,7 +526,10 @@
         valueField: "value",
         labelAlign: "right",
         name: "source",
-        width: 150
+        width: 150,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
       });
     }
   });
