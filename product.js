@@ -331,13 +331,25 @@ Ext.application({
                   dataIndex: 'remark',
                   flex: 1
                 }
-              ]
+              ],
+              listeners: {
+                itemdblclick: function (that, record, item, index, e, eOpts) {
+                  var form = addJzs.getComponent("form").getForm();
+                  addJzs.show();
+                  window.updateForm(form, record.data);
+                  form.url = env.services.web + env.api.product.changeTransitionLoss;
+                }
+              }
             },
             {
               xtype: "button",
               text: "<span class=\"key\">A</span> 增加",
               margin: "20 0 0 0",
-              scale: "medium"
+              scale: "medium",
+              handler: function () {
+                addJzs.getComponent("form").getForm().reset();
+                addJzs.show();
+              }
             }
           ]
         },
@@ -893,58 +905,80 @@ Ext.application({
       bodyStyle: {
         background: "#fff"
       },
-      items: [
-        {
-          fieldLabel: "类型",
-          labelAlign: "right",
-          name: 'first',
-          xtype: "combobox",
-          allowBlank: false
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        url: env.services.web + env.api.product.addTransitionLoss,
+        bodyPadding: 0,
+        border: 0,
+        defaultType: 'textfield',
+        bodyStyle: {
+          "background-color": "transparent"
         },
-        {
-          fieldLabel: '货号定位',
-          labelAlign: "right",
-          name: 'company'
-        },
-        {
-          fieldLabel: '日期',
-          labelAlign: "right",
-          name: 'company',
-          xtype: "datefield"
-        },
-        {
-          fieldLabel: '数量',
-          labelAlign: "right",
-          name: 'email',
-        },
-        {
-          xtype: 'panel',
-          layout: "column",
-          border: 0,
-          margin: "10 0",
-          bodyStyle: {
-            background: 'transparent'
+        items: [
+          Ext.create("jzsType", {
+            labelWidth: 100,
+            width: 200
+          }),
+          {
+            fieldLabel: '货号定位',
+            labelAlign: "right",
+            name: 'company'
           },
-          items: [
-            {
-              xtype: 'button',
-              layout: "absolute",
-              x: "30%",
-              columnWidth: 0.2,
-              scale: "medium",
-              text: "保存"
+          {
+            fieldLabel: '日期',
+            labelAlign: "right",
+            name: 'receiptDate',
+            xtype: "datefield"
+          },
+          {
+            fieldLabel: '数量',
+            labelAlign: "right",
+            name: 'number',
+          },
+          {
+            xtype: 'panel',
+            layout: "column",
+            border: 0,
+            margin: "10 0",
+            bodyStyle: {
+              background: 'transparent'
             },
-            {
-              xtype: 'button',
-              layout: "absolute",
-              x: "35%",
-              columnWidth: 0.2,
-              scale: "medium",
-              text: "返回"
-            }
-          ]
-        }
-      ]
+            items: [
+              {
+                xtype: 'button',
+                layout: "absolute",
+                x: "30%",
+                columnWidth: 0.2,
+                scale: "medium",
+                text: "保存",
+                handler: function () {
+                  var form = this.up("form").getForm();
+                  form.submit({
+                    success: function (form, action) {
+                      Ext.Msg.alert("增加进转损", action.result.msg);
+                    },
+                    failure: function (form, action) {
+                      Ext.Msg.alert("增加进转损", action.result.msg);
+                    }
+                  });
+                }
+              },
+              {
+                xtype: 'button',
+                layout: "absolute",
+                x: "35%",
+                columnWidth: 0.2,
+                scale: "medium",
+                text: "返回",
+                handler: function () {
+                  addJzs.hide();
+                }
+              }
+            ]
+          }
+        ]
+      }]
     });
 
     var addJHD = new Ext.create("Ext.window.Window", {

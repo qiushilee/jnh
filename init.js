@@ -63,7 +63,9 @@
     change: "/product/update",
     add: "/product/create",
     shipmentDetails:'/product/shipmentdetails',//出货明细
-    transitionLoss:'/product/transitionLoss'//进转损
+    transitionLoss:'/product/transitionLoss',//进转损
+    addTransitionLoss:'',
+    changeTransitionLoss:''
   };
 
   env.api.receipt = {
