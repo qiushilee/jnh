@@ -680,7 +680,7 @@ Ext.application({
     //进货单详情
     var receipt = new Ext.create("Ext.window.Window", {
       title: "进货单详情",
-      width: 600,
+      width: 650,
       layout: 'column',
       bodyPadding: 5,
       closeAction: 'hide',
@@ -695,7 +695,7 @@ Ext.application({
           itemId: "inputPanel",
           xtype: "panel",
           border: 0,
-          columnWidth: 0.5,
+          columnWidth: 0.4,
           items: [
             {
               xtype: "form",
@@ -817,11 +817,14 @@ Ext.application({
                       text: "<span class=\"key\">E</span> 删除",
                       margin: "0 0 0 5",
                       handler: function () {
-                        var form = this.up("form").getForm();
+                        var form = this.up("form").getForm(),
+                            record = receipt.getComponent("list").getSelectionModel().getSelection()[0];
                         form.url = env.services.web + env.api.receipt.del;
                         form.submit({
                           success: function (form, action) {
-                            Ext.Msg.alert("删除进货单", action.result.msg);
+                            Ext.Msg.alert("删除进货单", action.result.msg, function() {
+                              Ext.data.StoreManager.lookup("receipt").remove(record);
+                            });
                           },
                           failure: function (form, action) {
                             Ext.Msg.alert("删除进货单", action.result.msg);
@@ -866,10 +869,11 @@ Ext.application({
           ]
         },
         {
+          itemId: "list",
           xtype: "grid",
           title: '进货单简表',
           store: Ext.data.StoreManager.lookup('receipt'),
-          columnWidth: 0.5,
+          columnWidth: 0.6,
           columns: [
             {
               text: '序号',
@@ -1008,7 +1012,8 @@ Ext.application({
             "background-color": "transparent"
           },
           items: [
-            Ext.create('periodical'),
+            //TODO 因为此页面没有添加？所以不需要期数
+            //Ext.create('periodical'),
             Ext.create('jzsType'),
             {
               margin: "0 10",
@@ -1017,6 +1022,9 @@ Ext.application({
               name: "receiptCode"
             }
           ]
+        }, {
+          xtype: "hiddenfield",
+          name: "id"
         }, {
           xtype: "hiddenfield",
           name: "receiptId"
@@ -1043,13 +1051,14 @@ Ext.application({
               width: 100,
               labelAlign: "right"
             },
-            {
-              fieldLabel: "进价",
-              name: "purchasePrice",
-              labelWidth: 40,
-              width: 100,
-              labelAlign: "right"
-            },
+            //TODO 价格根据货号来的，禁止手动修改价格
+            //{
+              //fieldLabel: "进价",
+              //name: "purchasePrice",
+              //labelWidth: 40,
+              //width: 100,
+              //labelAlign: "right"
+            //},
             {
               fieldLabel: "备注",
               name: "remark",
@@ -1140,7 +1149,8 @@ Ext.application({
               text: "<span class=\"key\">D</span> 删除",
               margin: "0 0 0 10",
               handler: function () {
-                var id = addJHD.getComponent("list").getSelectionModel().getSelection()[0].data.id;
+                var record = addJHD.getComponent("list").getSelectionModel().getSelection()[0];
+                    id = record.data.id;
                 Ext.Ajax.request({
                   url: env.services.web + env.api.productrecord.del,
                   params: {
@@ -1148,8 +1158,9 @@ Ext.application({
                   },
                   success: function (resp) {
                     var data = Ext.JSON.decode(resp.responseText);
-                    Ext.Msg.alert("删除", data.msg);
-                    Ext.data.StoreManager.lookup('jhdProduct').load();
+                    Ext.Msg.alert("删除", data.msg, function() {
+                      Ext.data.StoreManager.lookup('jhdProduct').remove(record);
+                    });
                   }
                 });
               }
