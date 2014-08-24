@@ -340,11 +340,11 @@ Ext.application({
                 },
                 {
                   text: '调整前数量',
-                  dataIndex: 'tzqnum'
+                  dataIndex: 'tzqnumber'
                 },
                 {
                   text: '调整后数量',
-                  dataIndex: 'tzhnum'
+                  dataIndex: 'tzhnumber'
                 },
                 {
                   text: '状态',
@@ -377,7 +377,7 @@ Ext.application({
     //出货明细
     Ext.create('Ext.data.Store', {
       storeId: 'shipmentDetails',
-      fields: ['id', 'deliveryOrderCode', 'tzqnum', 'tzhnum', 'status'],
+      fields: ['id', 'deliveryOrderCode', 'tzqnumber', 'tzhnumber', 'status'],
       layout: "fit",
       autoLoad: true,
       proxy: {
