@@ -289,10 +289,12 @@ Ext.application({
                     var form = this.ownerCt.getForm();
                     form.submit({
                       success: function(form, action) {
-                        Ext.data.StoreManager.lookup('product').loadData(action.result.list);
+                        Ext.data.StoreManager.lookup('transitionLoss').loadData(action.result.list);
                       },
                       failure: function (form, action) {
-                        Ext.Msg.alert("搜索", action.result.msg);
+                        Ext.Msg.alert("搜索", action.result.msg, function() {
+                          Ext.data.StoreManager.lookup('transitionLoss').loadData(action.result.list);
+                        });
                       }
                     });
                   }
