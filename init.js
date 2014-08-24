@@ -73,7 +73,7 @@
     change: "/receipt/update",
     add: "/receipt/create",
     del: "/receipt/delete",
-    productCodeList: "/receipt/viewbycode "
+    searchReceiptByCode: "/receipt/searchreceiptbycode"
   };
 
   env.api.orderremittance = {
