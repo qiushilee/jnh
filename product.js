@@ -37,7 +37,7 @@ Ext.application({
     // 进货单——商品详情
     Ext.create('Ext.data.Store', {
       storeId: 'jhdProduct',
-      fields: ['bagShape', 'id', 'name', 'number', 'productCode', "remark"],
+      fields: ['bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -842,14 +842,14 @@ Ext.application({
                           receiptId = form.findField("id").value;
 
                         Ext.Ajax.request({
-                          url: env.services.web + env.api.receipt.list,
+                          url: env.services.web + env.api.productrecord.list,
                           params: {
                             receiptId: receiptId
                           },
                           success: function (resp) {
                             var data = Ext.JSON.decode(resp.responseText);
                             Ext.data.StoreManager.lookup('jhdProduct').loadData(data.list);
-                            addJHD.getComponent("search").getForm().findField("receiptId").setValue(receiptId);
+                            addJHD.getComponent("form").getForm().findField("receiptId").setValue(receiptId);
                             addJHD.show();
                           }
                         });
@@ -989,10 +989,13 @@ Ext.application({
       width: 800,
       bodyPadding: 10,
       closeAction: 'hide',
-      items: [
-        {
-          itemId: "search",
-          xtype: "form",
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        bodyPadding: 0,
+        border: 0,
+        url: env.services.web + env.api.productrecord.change,
+        items: [{
           layout: "hbox",
           bodyPadding: 10,
           border: 0,
@@ -1001,25 +1004,19 @@ Ext.application({
             "background-color": "transparent"
           },
           items: [
-            {
-              xtype: "hiddenfield",
-              name: "receiptId"
-            },
             Ext.create('periodical'),
             Ext.create('jzsType'),
             {
-              xtype: 'button',
               margin: "0 10",
-              text: "编号"
-            },
-            {
-              fieldLabel: "",
-              width: 170,
-              labelAlign: "right"
+              fieldLabel: "编号",
+              labelAlign: "right",
+              name: "receiptCode"
             }
           ]
-        },
-        {
+        }, {
+          xtype: "hiddenfield",
+          name: "receiptId"
+        }, {
           layout: "hbox",
           bodyPadding: 10,
           border: 0,
@@ -1056,8 +1053,9 @@ Ext.application({
               labelAlign: "right"
             }
           ]
-        },
-        {
+        }]
+      }, {
+          itemId: "list",
           xtype: "grid",
           store: Ext.data.StoreManager.lookup('jhdProduct'),
           margin: "10 0 0 0",
@@ -1096,7 +1094,14 @@ Ext.application({
               dataIndex: 'remark',
               flex: 1
             }
-          ]
+          ],
+          listeners: {
+            itemdblclick: function (that, record, item, index, e, eOpts) {
+              var form = addJHD.getComponent("form").getForm();
+              console.log(form, record.data);
+              window.updateForm(form, record.data);
+            }
+          }
         },
         {
           layout: "hbox",
@@ -1114,17 +1119,37 @@ Ext.application({
             {
               xtype: "button",
               text: "<span class=\"key\">M</span> 修改",
-              margin: "0 0 0 20"
-            },
-            {
-              xtype: "button",
-              text: "<span class=\"key\">S</span> 保存",
-              margin: "0 0 0 10"
+              margin: "0 0 0 20",
+              handler: function () {
+                var form = addJHD.getComponent("form").getForm();
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("修改", action.result.msg);
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("修改", action.result.msg);
+                  }
+                });
+              }
             },
             {
               xtype: "button",
               text: "<span class=\"key\">D</span> 删除",
-              margin: "0 0 0 10"
+              margin: "0 0 0 10",
+              handler: function () {
+                var id = addJHD.getComponent("list").getSelectionModel().getSelection()[0].data.id;
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.productrecord.del,
+                  params: {
+                    id: id
+                  },
+                  success: function (resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.Msg.alert("删除", data.msg);
+                    Ext.data.StoreManager.lookup('jhdProduct').load();
+                  }
+                });
+              }
             }
           ]
         }
