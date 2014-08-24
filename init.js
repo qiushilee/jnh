@@ -61,7 +61,9 @@
   env.api.product = {
     list: "/product/index",
     change: "/product/update",
-    add: "/product/create"
+    add: "/product/create",
+    shipmentDetails:'/product/shipmentdetails',//出货明细
+    transitionLoss:'/product/transitionLoss'//进转损
   };
 
   env.api.receipt = {
