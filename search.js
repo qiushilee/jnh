@@ -7,8 +7,8 @@ Ext.application({
       storeId: 'purchaseList',
       fields: ["id", "productCode", "name", 'number', 'receiptCode','companyName','addDate','remark'],
       layout: "fit",
-	    autoLoad: true,
-       proxy: {
+      autoLoad: true,
+      proxy: {
         type: 'ajax',
         url: env.services.web + env.api.productrecord.list,
         reader: {
@@ -19,7 +19,7 @@ Ext.application({
     });
 
 
-  //进货清单列表
+    //进货清单列表
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: document.body,
       layout: "fit",
@@ -39,12 +39,12 @@ Ext.application({
                 {
                   fieldLabel: "起始日期",
                   labelAlign: "right",
-				          name:'startDate'
+                  name:'startDate'
                 },
                 {
                   fieldLabel: "终止日期",
                   labelAlign: "right",
-				          name:'endDate'
+                  name:'endDate'
                 },
                 {
                   xtype: "button",
@@ -54,12 +54,12 @@ Ext.application({
                     var form = this.ownerCt.getForm();
                     if (form.isValid()) {
                       form.submit({
-                      success: function(form, action) {
-                        console.log(action)
-                      },
-                      failure: function(form, action) {
-                        purchaseList.loadData(action.result.list);
-                      }
+                        success: function(form, action) {
+                          console.log(action)
+                        },
+                        failure: function(form, action) {
+                          purchaseList.loadData(action.result.list);
+                        }
                       });
                     }
                   }
@@ -68,10 +68,10 @@ Ext.application({
                   xtype: "button",
                   text: "重置",
                   margin: "0 0 0 20",
-                   handler:function(){
-                      var form = this.ownerCt.getForm();
-                      form.reset();
-                   }
+                  handler:function(){
+                    var form = this.ownerCt.getForm();
+                    form.reset();
+                  }
                 }
               ]
             },
@@ -370,30 +370,30 @@ Ext.application({
               border: 0,
               margin: "10 0 0 0",
               items: [
-              {
-                xtype: "button",
-                text: "查询"
-              },
-              {
-                xtype: "button",
-                text: "日报表",
-                margin: "0 0 0 10"
-              },
-              {
-                xtype: "button",
-                text: "订货单",
-                margin: "0 0 0 10"
-              },
-              {
-                xtype: "button",
-                text: "预估缺货",
-                margin: "0 0 0 10"
-              },
-              {
-                xtype: "button",
-                text: "下架表",
-                margin: "0 0 0 10"
-              }
+                {
+                  xtype: "button",
+                  text: "查询"
+                },
+                {
+                  xtype: "button",
+                  text: "日报表",
+                  margin: "0 0 0 10"
+                },
+                {
+                  xtype: "button",
+                  text: "订货单",
+                  margin: "0 0 0 10"
+                },
+                {
+                  xtype: "button",
+                  text: "预估缺货",
+                  margin: "0 0 0 10"
+                },
+                {
+                  xtype: "button",
+                  text: "下架表",
+                  margin: "0 0 0 10"
+                }
               ]
             }
           ]
@@ -675,18 +675,18 @@ Ext.application({
                         text: "块状打印",
                         margin: "0 0 0 50"
                       },
-                      {
-                        text: "条状打印",
-                        margin: "0 0 0 20"
-                      },
-                      {
-                        text: "面单打印",
-                        margin: "0 0 0 20"
-                      },
-                      {
-                        text: "批量修改",
-                        margin: "0 0 0 20"
-                      }]
+                        {
+                          text: "条状打印",
+                          margin: "0 0 0 20"
+                        },
+                        {
+                          text: "面单打印",
+                          margin: "0 0 0 20"
+                        },
+                        {
+                          text: "批量修改",
+                          margin: "0 0 0 20"
+                        }]
                     },
                     {
                       xtype: "panel",
@@ -698,10 +698,10 @@ Ext.application({
                         text: "搜索",
                         margin: "0 0 0 50"
                       },
-                      {
-                        text: "重置",
-                        margin: "0 0 0 20"
-                      }]
+                        {
+                          text: "重置",
+                          margin: "0 0 0 20"
+                        }]
                     }
                   ]
                 }
@@ -814,6 +814,5 @@ Ext.application({
         }
       ]
     });
-
   }
 });
