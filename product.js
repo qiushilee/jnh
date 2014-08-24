@@ -1,6 +1,7 @@
 Ext.application({
   name: "JNH",
   launch: function () {
+
     // 库存表&进货单——商品详情
     Ext.create('Ext.data.Store', {
       storeId: 'product',
@@ -17,7 +18,7 @@ Ext.application({
       }
     });
 
-    // 进货单
+    //进货单
     Ext.create('Ext.data.Store', {
       storeId: 'receipt',
       fields: ['id', "receiptCode", 'receiptDate', 'purchaseAmount', "remark"],
