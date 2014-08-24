@@ -948,14 +948,11 @@ Ext.application({
             Ext.create('periodical'),
             Ext.create('jzsType'),
             {
-              xtype: 'button',
-              margin: "0 10",
-              text: "编号"
-            },
-            {
-              fieldLabel: "",
-              width: 170,
-              labelAlign: "right"
+              fieldLabel: "编号",
+              name: "receiptCode",
+              labelWidth: 40,
+              labelAlign: "right",
+              readOnly:true
             }
           ]
         },
