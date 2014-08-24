@@ -50,6 +50,38 @@ Ext.application({
       }
     });
 
+    // 进转损
+    Ext.create('Ext.data.Store', {
+      storeId: 'transitionLoss',
+      fields: ['id', 'typeName', 'receiptCode', 'receiptDate', "number","remark"],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.product.transitionLoss,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    //出货明细
+    Ext.create('Ext.data.Store', {
+      storeId: 'shipmentDetails',
+      fields: ['id', 'deliveryOrderCode', 'tzqnumber', 'tzhnumber', 'status'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.product.shipmentDetails,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     //库存表列表
     var productlist = Ext.create('Ext.tab.Panel', {
       renderTo: document.body,
@@ -327,7 +359,6 @@ Ext.application({
             {
               xtype: "grid",
               title: '出货明细',
-              store: Ext.data.StoreManager.lookup('product'),
               store: Ext.data.StoreManager.lookup('shipmentDetails'),
               columns: [
                 {
@@ -358,39 +389,6 @@ Ext.application({
         }
       ]
     });
-
-    // 进转损
-    Ext.create('Ext.data.Store', {
-      storeId: 'transitionLoss',
-      fields: ['id', 'typeName', 'receiptCode', 'receiptDate', "number","remark"],
-      layout: "fit",
-      autoLoad: true,
-      proxy: {
-        type: 'ajax',
-        url: env.services.web + env.api.product.transitionLoss,
-        reader: {
-          type: 'json',
-          root: 'list'
-        }
-      }
-    });
-
-    //出货明细
-    Ext.create('Ext.data.Store', {
-      storeId: 'shipmentDetails',
-      fields: ['id', 'deliveryOrderCode', 'tzqnumber', 'tzhnumber', 'status'],
-      layout: "fit",
-      autoLoad: true,
-      proxy: {
-        type: 'ajax',
-        url: env.services.web + env.api.product.shipmentDetails,
-        reader: {
-          type: 'json',
-          root: 'list'
-        }
-      }
-    });
-
 
     //编辑查看
     var productEdit = new Ext.create("Ext.window.Window", {
