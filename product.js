@@ -1102,7 +1102,6 @@ Ext.application({
           listeners: {
             itemdblclick: function (that, record, item, index, e, eOpts) {
               var form = addJHD.getComponent("form").getForm();
-              console.log(form, record.data);
               window.updateForm(form, record.data);
             }
           }
