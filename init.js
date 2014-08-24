@@ -160,17 +160,37 @@
   
   window.env = env;
 
+  /**
+   * 设置表单子元素值
+   * @param {Form} form 表单，需要使用getForm()转换后传入
+   * @param {Object} data 表单数据
+   * TODO datefield 不能写入
+   */
   window.updateForm = function(form, data) {
-    try {
-      Ext.Object.each(data, function(item, index) {
-        if (form.findField(item)) {
-          // TODO datefield 不能写入
-          form.findField(item).setValue(index);
+    var fields = [];
+
+    function eachField(form) {
+      if (form.items) {
+        form.items.each(function(item, index, length) { 
+          try {
+            item.getName();
+            fields.push(item);
+          } catch(e) {
+            eachField(item);
+          }
+        });
+      }
+    }
+    
+    eachField(form.owner);
+
+    Ext.Object.each(data, function(name, value) {
+      Ext.Array.each(fields, function(item, index) {
+        if (item.getName() === name) {
+          item.setValue(value);
         }
       });
-    } catch(e) {
-      console.error(e.stack);
-    }
+    });
   }
 
   /**
@@ -247,22 +267,26 @@
         }
       });
 
+      var periodicalStore = Ext.create("Ext.data.Store", {
+        fields: ["title", "id"],
+        autoLoad: true,
+        proxy: {
+          type: 'ajax',
+          url: env.services.web + env.api.periodical.list,
+          reader: {
+            type: 'json',
+            root: 'list'
+          }
+        }
+      });
+
       //期数
       Ext.define("periodical", {
+        itemId: "periodical",
         extend: "Ext.form.ComboBox",
         fieldLabel: "期数",
-        store: Ext.create("Ext.data.Store", {
-          fields: ["title", "id"],
-          autoLoad: false,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.periodical.list,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
-        }),
+        queryMode: "local",
+        store: periodicalStore,
         labelWidth: 60,
         displayField: "title",
         valueField: "id",
