@@ -372,8 +372,8 @@
         queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
+          autoLoad: true,
           proxy: {
-            autoLoad: true,
             type: 'ajax',
             url: env.services.web + env.api.sendmethord,
             reader: {
