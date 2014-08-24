@@ -72,7 +72,8 @@
     list: "/receipt/index",
     change: "/receipt/update",
     add: "/receipt/create",
-    del: "/receipt/delete"
+    del: "/receipt/delete",
+    productCodeList: ""
   };
 
   env.api.orderremittance = {

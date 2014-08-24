@@ -695,7 +695,7 @@ Ext.application({
           items: [
             {
               xtype: "form",
-              url: env.services.web + env.api.receipt.list,
+              url: env.services.web + env.api.receipt.productCodeList,
               border: 0,
               defaultType: 'textfield',
               columnWidth: 0.5,
