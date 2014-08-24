@@ -725,7 +725,6 @@ Ext.application({
                 },
                 ]
               },
-                // +TODO: 增加搜索、重置按钮
                 {
                   xtype: "panel",
                   layout: 'vbox',
