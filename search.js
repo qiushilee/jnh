@@ -10,7 +10,39 @@ Ext.application({
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.productrecord.list,
+        url: env.services.web + env.api.search.productrecord,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 预估采购数据
+    Ext.create('Ext.data.Store', {
+      storeId: 'estimatepurchase',
+      fields: [],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.search.estimatepurchase,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 出货清单数据
+    Ext.create('Ext.data.Store', {
+      storeId: 'member',
+      fields: [],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.search.member,
         reader: {
           type: 'json',
           root: 'list'
@@ -23,7 +55,7 @@ Ext.application({
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: document.body,
       layout: "fit",
-      activeItem: 1,
+      activeItem: 0,
       items: [
         {
           title: '进货清单',
@@ -31,6 +63,7 @@ Ext.application({
           items: [
             {
               xtype: "form",
+              url: env.services.web + env.api.productrecord.list,
               layout: 'hbox',
               bodyPadding: 5,
               border: 0,
@@ -52,23 +85,21 @@ Ext.application({
                   margin: "0 0 0 50",
                   handler:function(){
                     var form = this.ownerCt.getForm();
-                    if (form.isValid()) {
-                      form.submit({
-                        success: function(form, action) {
-                          console.log(action)
-                        },
-                        failure: function(form, action) {
-                          purchaseList.loadData(action.result.list);
-                        }
-                      });
-                    }
+                    form.submit({
+                      success: function(form, action) {
+                        console.log(action)
+                      },
+                      failure: function(form, action) {
+                        Ext.data.StoreManager.lookup('purchaseList').loadData(action.result.list);
+                      }
+                    });
                   }
                 },
                 {
                   xtype: "button",
                   text: "重置",
                   margin: "0 0 0 20",
-                  handler:function(){
+                  handler: function() {
                     var form = this.ownerCt.getForm();
                     form.reset();
                   }
@@ -78,7 +109,7 @@ Ext.application({
             {
               xtype: "grid",
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jhdDataList'),
+              store: Ext.data.StoreManager.lookup('purchaseList'),
               columns: [
                 {
                   text: '序号',
@@ -129,7 +160,8 @@ Ext.application({
           padding: 15,
           items: [
             {
-              xtype: "panel",
+              xtype: "form",
+              url: env.services.web + env.api.deliverorder.list,
               layout: 'hbox',
               bodyPadding: 5,
               border: 0,
@@ -148,19 +180,34 @@ Ext.application({
                 {
                   xtype: "button",
                   text: "搜索",
-                  margin: "0 0 0 50"
+                  margin: "0 0 0 50",
+                  handler: function() {
+                    var form = this.ownerCt.getForm();
+                    form.submit({
+                      success: function(form, action) {
+                        console.log(action)
+                      },
+                      failure: function(form, action) {
+                        Ext.data.StoreManager.lookup("deliverorder").loadData(action.result.list);
+                      }
+                    });
+                  }
                 },
                 {
                   xtype: "button",
                   text: "重置",
-                  margin: "0 0 0 20"
+                  margin: "0 0 0 20",
+                  handler: function() {
+                    var form = this.ownerCt.getForm();
+                    form.reset();
+                  }
                 }
               ]
             },
             {
               xtype: "grid",
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jzs'),
+              store: Ext.data.StoreManager.lookup("deliverorder"),
               columns: [
                 {
                   text: '序号',
@@ -206,7 +253,9 @@ Ext.application({
           padding: 15,
           items: [
             {
-              xtype: "panel",
+              itemId: "estimatepurchaseForm",
+              xtype: "form",
+              url: env.services.web + env.api.search.estimatepurchase,
               layout: 'hbox',
               bodyPadding: 5,
               border: 0,
@@ -269,7 +318,7 @@ Ext.application({
             {
               xtype: "grid",
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jzs'),
+              store: Ext.data.StoreManager.lookup('estimatepurchase'),
               columns: [
                 {
                   text: '序号',
@@ -372,7 +421,18 @@ Ext.application({
               items: [
                 {
                   xtype: "button",
-                  text: "查询"
+                  text: "查询",
+                  handler: function() {
+                    var form = this.ownerCt.ownerCt.getComponent("estimatepurchaseForm").getForm();
+                    form.submit({
+                      success: function(form, action) {
+                        Ext.data.StoreManager.lookup("estimatepurchase").loadData(action.result.list);
+                      },
+                      failure: function(form, action) {
+                        Ext.Msg.alert("预估采购查询", action.result.msg);
+                      }
+                    });
+                  }
                 },
                 {
                   xtype: "button",
@@ -407,6 +467,12 @@ Ext.application({
               layout: "hbox",
               border: 0,
               items: [
+              {
+                itemId: "searchForm",
+                xtype: "form",
+                border: 0,
+                url: env.services.web + env.api.search.member,
+                items: [
                 {
                   xtype: "tabpanel",
                   width: 500,
@@ -657,6 +723,8 @@ Ext.application({
                     }
                   ]
                 },
+                ]
+              },
                 // +TODO: 增加搜索、重置按钮
                 {
                   xtype: "panel",
@@ -696,12 +764,27 @@ Ext.application({
                       defaultType: "button",
                       items: [{
                         text: "搜索",
-                        margin: "0 0 0 50"
+                        margin: "0 0 0 50",
+                        handler: function() {
+                          var form = this.ownerCt.ownerCt.ownerCt.getComponent("searchForm").getForm();
+                          form.submit({
+                            success: function(form, action) {
+                              Ext.data.StoreManager.lookup("member").loadData(action.result.list);
+                            },
+                            failure: function(form, action) {
+                              Ext.Msg.alert("会员查询", action.result.msg);
+                            }
+                          });
+                        }
                       },
-                        {
-                          text: "重置",
-                          margin: "0 0 0 20"
-                        }]
+                      {
+                        text: "重置",
+                        margin: "0 0 0 20",
+                        handler: function() {
+                          var form = this.ownerCt.ownerCt.ownerCt.getComponent("searchForm").getForm();
+                          form.reset();
+                        }
+                      }]
                     }
                   ]
                 }
@@ -710,7 +793,7 @@ Ext.application({
             {
               xtype: "grid",
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('jzs'),
+              store: Ext.data.StoreManager.lookup("member"),
               columns: [
                 {
                   text: '序号',
