@@ -53,7 +53,7 @@ Ext.application({
     // 进转损
     Ext.create('Ext.data.Store', {
       storeId: 'transitionLoss',
-      fields: ['id', 'typeName', 'receiptCode', 'receiptDate', "number","remark"],
+      fields: ['id', 'typeName', 'receiptCode', 'receiptDate', "number", "remark", "type"],
       layout: "fit",
       autoLoad: true,
       proxy: {
