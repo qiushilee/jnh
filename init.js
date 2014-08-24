@@ -245,22 +245,26 @@
         }
       });
 
+      var periodicalStore = Ext.create("Ext.data.Store", {
+        fields: ["title", "id"],
+        autoLoad: true,
+        proxy: {
+          type: 'ajax',
+          url: env.services.web + env.api.periodical.list,
+          reader: {
+            type: 'json',
+            root: 'list'
+          }
+        }
+      });
+
       //期数
       Ext.define("periodical", {
+        itemId: "periodical",
         extend: "Ext.form.ComboBox",
         fieldLabel: "期数",
-        store: Ext.create("Ext.data.Store", {
-          fields: ["title", "id"],
-          autoLoad: false,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.periodical.list,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
-        }),
+        queryMode: "local",
+        store: periodicalStore,
         labelWidth: 60,
         displayField: "title",
         valueField: "id",
