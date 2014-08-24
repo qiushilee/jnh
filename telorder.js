@@ -12,7 +12,7 @@ Ext.application({
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.order.list,
+        url: env.services.web + env.api.telorder.list.order,
         reader: {
           type: 'json',
           root: 'list'
@@ -423,7 +423,7 @@ Ext.application({
             }, {
               fieldLabel: "备注",
               labelWidth : 50,
-              width: 120,
+              width: 250,
               labelAlign: "right",
               name:"remark"
             }]
