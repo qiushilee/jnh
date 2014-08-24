@@ -327,6 +327,7 @@ Ext.application({
             {
               xtype: "grid",
               title: '出货明细',
+              store: Ext.data.StoreManager.lookup('product'),
               store: Ext.data.StoreManager.lookup('shipmentDetails'),
               columns: [
                 {
@@ -1076,5 +1077,3 @@ Ext.application({
     // addJHD.show();
   }
 });
-
-// 库存表
