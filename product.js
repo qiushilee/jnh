@@ -713,8 +713,11 @@ Ext.application({
                     if (e.getKey() == Ext.EventObject.ENTER) {
                       var form = this.up('form').getForm();
                       form.submit({
-                        failure: function (form, action) {
+                        success: function (form, action) {
                           Ext.data.StoreManager.lookup('receipt').loadData(action.result.list);
+                        },
+                        failure: function (form, action) {
+                          Ext.Msg.alert("搜索进货单简表", action.result.msg);
                         }
                       });
                     }
