@@ -7,7 +7,7 @@ Ext.application({
     //电话订购列表
     var orderList = Ext.create('Ext.data.Store', {
       storeId: 'orderList',
-      fields: ["id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "zipCode", "address", "packaging", "remark", "deliveryMethod"],
+      fields: ["id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "consignee", "mobile", "zipCode", "address", "packaging", "remark", "deliveryMethod", "deliveryMethodName"],
       layout: "fit",
       autoLoad: true,
       proxy: {
