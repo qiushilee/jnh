@@ -629,13 +629,15 @@ Ext.application({
                               fieldLabel: "参考时间",
                               labelWidth: 60,
                               width: 160,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'amount1'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'amount2'
                             }
                           ]
                         }, {
@@ -649,13 +651,15 @@ Ext.application({
                               fieldLabel: "参考期数",
                               labelWidth: 60,
                               width: 160,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'periodicalId1'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'periodicalId2'
                             }
                           ]
                         }
@@ -676,26 +680,30 @@ Ext.application({
                               fieldLabel: "期数",
                               labelWidth: 60,
                               width: 120,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'periodicalId3'
                             },
                             {
                               fieldLabel: "~",
                               labelWidth: 20,
                               width: 80,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'periodicalId4'
                             },
                             {
                               xtype: "combobox",
                               fieldLabel: "来源",
                               labelWidth: 40,
                               width: 120,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'source'
                             },
                             {
                               xtype: "radiofield",
                               fieldLabel: "代理会员",
                               labelWidth: 60,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'agent'
                             },
                           ]
                         },
