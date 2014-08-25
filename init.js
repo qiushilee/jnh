@@ -165,6 +165,8 @@
   env.api.search = {
     productrecord: env.api.productrecord.list,
     deliverorder: env.api.deliverorder.list,
+    searchpurchase: "/search/purchase",
+    searchshipment: "/search/shipment",
     estimatepurchase: "/search/estimatepurchase",
     member: "/search/member"
   };
