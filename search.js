@@ -630,14 +630,14 @@ Ext.application({
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
-                              name:'amount1'
+                              name:'date1'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
                               labelAlign: "right",
-                              name:'amount2'
+                              name:'date2'
                             }
                           ]
                         }, {
