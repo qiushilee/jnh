@@ -18,6 +18,8 @@ Ext.application({
       }
     });
 
+
+
     // 预估采购数据
     Ext.create('Ext.data.Store', {
       storeId: 'estimatepurchase',
@@ -34,10 +36,10 @@ Ext.application({
       }
     });
 
-    // 出货清单数据
+    // 会员查询数据
     Ext.create('Ext.data.Store', {
-      storeId: 'member',
-      fields: [],
+      storeId: 'memberList',
+      fields: ["id", "userCode", "realName", 'address1', 'address2','zipCode1','zipCode2','buyAmount','mobile','graduateDate','remark','preferentialTicket','youthStuck','unDiscountAmount'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -792,76 +794,76 @@ Ext.application({
             {
               xtype: "grid",
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup("member"),
+              store: Ext.data.StoreManager.lookup("memberList"),
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id1',
+                  dataIndex: 'id',
                   flex: 1
                 },
                 {
                   text: '会员编号',
-                  dataIndex: 'iid1',
+                  dataIndex: 'userCode',
                   flex: 2
                 },
                 {
                   text: '姓名',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'realName',
                   flex: 1
                 },
                 {
                   text: '电话',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'mobile',
                   flex: 1
                 },
                 {
                   text: '默认地址',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'address1',
                   flex: 2
                 },
                 {
                   text: '邮编',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'zipCode1',
                   flex: 1
                 },
                 {
                   text: '地址2',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'address2',
                   flex: 1
                 },
                 {
                   text: '邮编2',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'zipCode2',
                   flex: 1
                 },
                 {
                   text: '购买金额',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'buyAmount',
                   flex: 1
                 },
                 {
                   text: '抵价券',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'preferentialTicket',
                   flex: 1
                 },
                 {
                   text: '青春贴',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'youthStuck',
                   flex: 1
                 },
                 {
                   text: '不打折抵价券',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'unDiscountAmount',
                   flex: 2
                 },
                 {
                   text: '毕业时间',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'graduateDate',
                   flex: 1
                 },
                 {
                   text: '备注',
-                  dataIndex: 'bnum1',
+                  dataIndex: 'remark',
                   flex: 1
                 }
               ]
