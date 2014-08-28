@@ -38,7 +38,7 @@ Ext.application({
     // 预估采购数据
     Ext.create('Ext.data.Store', {
       storeId: 'estimatepurchase',
-      fields: [],
+      fields: ['id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -283,12 +283,13 @@ Ext.application({
                   fieldLabel: "厂商编号",
                   labelWidth: 60,
                   labelAlign: "right",
-                  name:'companyCode'
+                  name:'companyCode1'
                 },
                 {
                   fieldLabel: "~~~~",
                   labelWidth: 45,
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'companyCode2'
                 },
                 {
                   fieldLabel: "预估单量",
@@ -340,7 +341,7 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id',
+                  dataIndex: 'key',
                   flex: 1
                 },
                 {
@@ -375,7 +376,7 @@ Ext.application({
                 },
                 {
                   text: '库存量',
-                  dataIndex: 'stock',
+                  dataIndex: 'number',
                   flex: 1
                 },
                 {
