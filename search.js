@@ -21,7 +21,7 @@ Ext.application({
     // 出货清单数据
     Ext.create('Ext.data.Store', {
       storeId: 'shipmentList',
-      fields: ["id", "key","productCode", "name", 'number', 'receiptCode','companyName','addDate','remark'],
+      fields: ["id", "key","productCode", "name", 'number','price','amount', 'deliveryOrderCode','addDate','mailingDate','remark'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -229,7 +229,7 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id',
+                  dataIndex: 'key',
                   flex: 1
                 },
                 {
@@ -244,7 +244,7 @@ Ext.application({
                 },
                 {
                   text: '出货量',
-                  dataIndex: 'shipments',
+                  dataIndex: 'number',
                   flex: 2
                 },
                 {
