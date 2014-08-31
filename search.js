@@ -623,14 +623,14 @@ Ext.application({
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
-                              name:'startDate'
+                              name:'addDate1'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
                               labelAlign: "right",
-                              name:'endDate'
+                              name:'addDate2'
                             }
                           ]
                         }, {
@@ -645,14 +645,14 @@ Ext.application({
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
-                              name:'buyStartDate'
+                              name:'buyDate1'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
                               labelAlign: "right",
-                              name:'buyEndDate'
+                              name:'buyDate2'
                             }
                           ]
                         }, {
@@ -674,7 +674,7 @@ Ext.application({
                               fieldLabel: "反选毕业时间",
                               labelWidth: 100,
                               labelAlign: "right",
-                              name:'unGraduationDate'
+                              name:'reverseSelectionGraduationDate'
                             }
                           ]
                         }
@@ -696,14 +696,14 @@ Ext.application({
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
-                              name:'date1'
+                              name:'referenceDate1'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
                               labelAlign: "right",
-                              name:'date2'
+                              name:'referenceDate2'
                             }
                           ]
                         }, {
@@ -718,14 +718,14 @@ Ext.application({
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
-                              name:'periodicalId1'
+                              name:'referencePeriodicalId1'
                             },
                             {
                               fieldLabel: "到",
                               labelWidth: 20,
                               width: 120,
                               labelAlign: "right",
-                              name:'periodicalId2'
+                              name:'referencePeriodicalId2'
                             }
                           ]
                         }
@@ -747,14 +747,14 @@ Ext.application({
                               labelWidth: 60,
                               width: 120,
                               labelAlign: "right",
-                              name:'periodicalId3'
+                              name:'periodicalId1'
                             },
                             {
                               fieldLabel: "~",
                               labelWidth: 20,
                               width: 80,
                               labelAlign: "right",
-                              name:'periodicalId4'
+                              name:'periodicalId2'
                             },
                             {
                               xtype: "combobox",
@@ -785,13 +785,15 @@ Ext.application({
                               fieldLabel: "寄送方式",
                               labelWidth: 60,
                               width: 120,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'deliveryMethod'
                             },
                             {
                               fieldLabel: "类型",
                               labelWidth: 40,
                               width: 120,
-                              labelAlign: "right"
+                              labelAlign: "right",
+                              name:'memberType'
                             }
                           ]
                         }
