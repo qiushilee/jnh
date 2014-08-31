@@ -5,12 +5,28 @@ Ext.application({
     // 进货清单数据
     Ext.create('Ext.data.Store', {
       storeId: 'purchaseList',
-      fields: ["id", "productCode", "name", 'number', 'receiptCode','companyName','addDate','remark'],
+      fields: ["id",'key',"productCode", "name", 'number', 'receiptCode','companyName','receiptDate','addDate','remark'],
       layout: "fit",
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.search.productrecord,
+        url: env.services.web + env.api.search.searchpurchase,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 出货清单数据
+    Ext.create('Ext.data.Store', {
+      storeId: 'shipmentList',
+      fields: ["id", "key","productCode", "name", 'number','price','amount', 'deliveryOrderCode','addDate','mailingDate','remark'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.search.searchshipment,
         reader: {
           type: 'json',
           root: 'list'
@@ -19,11 +35,10 @@ Ext.application({
     });
 
 
-
     // 预估采购数据
     Ext.create('Ext.data.Store', {
       storeId: 'estimatepurchase',
-      fields: [],
+      fields: ['id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -53,7 +68,7 @@ Ext.application({
     });
 
 
-    //进货清单列表
+
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: document.body,
       layout: "fit",
@@ -65,7 +80,7 @@ Ext.application({
           items: [
             {
               xtype: "form",
-              url: env.services.web + env.api.productrecord.list,
+              url: env.services.web + env.api.search.searchpurchase,
               layout: 'hbox',
               bodyPadding: 5,
               border: 0,
@@ -92,7 +107,7 @@ Ext.application({
                         console.log(action)
                       },
                       failure: function(form, action) {
-                        Ext.data.StoreManager.lookup('purchaseList').loadData(action.result.list);
+                        purchaseList.loadData(action.result.list);
                       }
                     });
                   }
@@ -115,9 +130,15 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id',
+                  dataIndex: 'key',
                   flex: 1
                 },
+                {
+                  text: '进货编号',
+                  dataIndex: 'receiptCode',
+                  flex: 1
+                },
+
                 {
                   text: '货号',
                   dataIndex: 'productCode',
@@ -134,18 +155,13 @@ Ext.application({
                   flex: 2
                 },
                 {
-                  text: '进货编号',
-                  dataIndex: 'receiptCode',
-                  flex: 1
-                },
-                {
                   text: '厂商',
                   dataIndex: 'companyName',
                   flex: 1
                 },
                 {
                   text: '进货日期',
-                  dataIndex: 'addDate',
+                  dataIndex: 'receiptDate',
                   flex: 1
                 },
                 {
@@ -163,7 +179,7 @@ Ext.application({
           items: [
             {
               xtype: "form",
-              url: env.services.web + env.api.deliverorder.list,
+              url: env.services.web + env.api.search.searchshipment,
               layout: 'hbox',
               bodyPadding: 5,
               border: 0,
@@ -190,7 +206,7 @@ Ext.application({
                         console.log(action)
                       },
                       failure: function(form, action) {
-                        Ext.data.StoreManager.lookup("deliverorder").loadData(action.result.list);
+                        Ext.data.StoreManager.lookup("shipmentList").loadData(action.result.list);
                       }
                     });
                   }
@@ -209,11 +225,11 @@ Ext.application({
             {
               xtype: "grid",
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup("deliverorder"),
+              store: Ext.data.StoreManager.lookup("shipmentList"),
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id',
+                  dataIndex: 'key',
                   flex: 1
                 },
                 {
@@ -228,7 +244,7 @@ Ext.application({
                 },
                 {
                   text: '出货量',
-                  dataIndex: 'shipments',
+                  dataIndex: 'number',
                   flex: 2
                 },
                 {
@@ -267,12 +283,13 @@ Ext.application({
                   fieldLabel: "厂商编号",
                   labelWidth: 60,
                   labelAlign: "right",
-                  name:'companyCode'
+                  name:'companyCode1'
                 },
                 {
                   fieldLabel: "~~~~",
                   labelWidth: 45,
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  name:'companyCode2'
                 },
                 {
                   fieldLabel: "预估单量",
@@ -324,7 +341,7 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id',
+                  dataIndex: 'key',
                   flex: 1
                 },
                 {
@@ -359,7 +376,7 @@ Ext.application({
                 },
                 {
                   text: '库存量',
-                  dataIndex: 'stock',
+                  dataIndex: 'number',
                   flex: 1
                 },
                 {

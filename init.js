@@ -170,7 +170,17 @@
     estimatepurchase: "/search/estimatepurchase",
     member: "/search/member"
   };
-  
+
+
+
+  env.api.manager = {
+    list: "/manager/index",
+    change: "/manager/update",
+    add: "/manager/create",
+    del: "/manager/delete"
+  };
+
+
   window.env = env;
 
   /**
