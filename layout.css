@@ -3,10 +3,10 @@
 
 .base-panel {
   height: auto !important;
-  overflow: auto !important; }
+  overflow: inherit !important; }
   .base-panel .base-panel-body {
     height: auto !important;
-    overflow: auto !important; }
+    overflow: inherit !important; }
 
 .mod .hd {
   height: 80px;

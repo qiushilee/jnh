@@ -19,11 +19,11 @@
 
 .base-panel {
   height: auto!important;
-  overflow: auto!important;
+  overflow: inherit!important;
 
   .base-panel-body {
     height: auto!important;
-    overflow: auto!important;
+    overflow: inherit!important;
   }
 }
 
