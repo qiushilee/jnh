@@ -21,14 +21,14 @@ Ext.application({
 
    
     
-    // 期数管理列表
+    // 管理员管理列表
     var cs = Ext.create('Ext.grid.Panel', {
 	  renderTo: document.body,
       title: '管理员列表',
       store: Ext.data.StoreManager.lookup('managerList'),
       columns: [{
         text: '编号',
-        dataIndex: 'key',
+        dataIndex: 'id',
         flex: 1
       },  {
         text: '账号',
@@ -106,18 +106,18 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">A</span> 增加",
             handler: function() {
-              var form = periodicalAdd.getComponent("form").getForm();
-              form.url = env.services.web + env.api.periodical.add;
+              var form = managerAdd.getComponent("form").getForm();
+              form.url = env.services.web + env.api.manager.add;
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
-                     Ext.Msg.alert("新增期数", action.result.msg, function() {
-						 periodicalAdd.hide();
-						 periodicalList.load();
+                     Ext.Msg.alert("新增管理员", action.result.msg, function() {
+						 managerAdd.hide();
+						 managerList.load();
 					  });
                   },
                   failure: function(form, action) {
-                    Ext.Msg.alert("新增期数", action.result.msg);
+                    Ext.Msg.alert("新增管理员", action.result.msg);
                   }
                 });
               }
@@ -127,7 +127,7 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">E</span> 返回",
             handler: function() {
-              periodicalAdd.hide();
+              managerAdd.hide();
             }
           }]
         }]
@@ -136,8 +136,8 @@ Ext.application({
       closeAction: 'hide',
     });
 	
-	var periodicalEdit = new Ext.create("Ext.window.Window", {
-      title: "编辑期数",
+	var managerEdit = new Ext.create("Ext.window.Window", {
+      title: "编辑管理员",
       layout: "column",
      
       items: [{
@@ -148,25 +148,19 @@ Ext.application({
         width: 500,
         bodyPadding: 5,
         defaultType: 'textfield',
-        url: env.services.web + env.api.periodical.add,
+        url: env.services.web + env.api.manager.add,
         items: [ {
-           fieldLabel: "编号",
-           name: "code",
-           labelAlign: "right",
-         }, {
-           fieldLabel: "名称",
-           name: "title",
-          
-           labelAlign: "right"
-         }, {
-          fieldLabel: '开始日期',
-          name: "startDate",
-          xtype: "datefield",
+          fieldLabel: "账号",
+          name: "username",
+
           labelAlign: "right"
         }, {
-          fieldLabel: '结束日期',
-          name: "endDate",
-         xtype: "datefield",
+          fieldLabel: '真实姓名',
+          name: "realname",
+          labelAlign: "right"
+        },  {
+          fieldLabel: '备注说明',
+          name: "remark",
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
@@ -181,18 +175,18 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">A</span> 保存",
             handler: function() {
-              var form = periodicalEdit.getComponent("form").getForm();
-              form.url = env.services.web + env.api.periodical.change;
+              var form = managerEdit.getComponent("form").getForm();
+              form.url = env.services.web + env.api.manager.change;
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
-                     Ext.Msg.alert("修改期数", action.result.msg, function() {
-						 periodicalEdit.hide();
-						 periodicalList.load();
+                     Ext.Msg.alert("修改管理员", action.result.msg, function() {
+						 managerEdit.hide();
+						 managerList.load();
 					  });
                   },
                   failure: function(form, action) {
-                    Ext.Msg.alert("修改期数", action.result.msg);
+                    Ext.Msg.alert("修改管理员", action.result.msg);
                   }
                 });
               }
@@ -202,13 +196,13 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">E</span> 返回",
             handler: function() {
-              periodicalAdd.hide();
+              managerAdd.hide();
             }
           }]
         }]
         }
       ],
-      closeAction: 'hide',
+      closeAction: 'hide'
     });
   }
 });
