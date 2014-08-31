@@ -84,7 +84,7 @@ Ext.application({
         defaultType: 'textfield',
         url: env.services.web + env.api.manager.add,
         items: [ {
-           fieldLabel: "账号",
+           fieldLabel: "登录账号",
            name: "username",
           
            labelAlign: "right"
@@ -93,6 +93,10 @@ Ext.application({
           name: "realname",
           labelAlign: "right"
         },  {
+          fieldLabel: '登录密码',
+          name: "password",
+          labelAlign: "right"
+        }, {
           fieldLabel: '备注说明',
           name: "remark",
           labelAlign: "right"
@@ -150,7 +154,7 @@ Ext.application({
         defaultType: 'textfield',
         url: env.services.web + env.api.manager.add,
         items: [ {
-          fieldLabel: "账号",
+          fieldLabel: "登录账号",
           name: "username",
 
           labelAlign: "right"
@@ -159,6 +163,10 @@ Ext.application({
           name: "realname",
           labelAlign: "right"
         },  {
+          fieldLabel: '登录密码',
+          name: "password",
+          labelAlign: "right"
+        }, {
           fieldLabel: '备注说明',
           name: "remark",
           labelAlign: "right"
