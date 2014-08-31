@@ -117,6 +117,21 @@ Ext.application({
         xtype: "button",
         text: "<span class=\"key\">A</span> 增加",
         handler: function() {
+          var form = win.getComponent("form").getForm();
+          form.url = env.services.web + env.api.company.add;
+          form.reset();
+          win.show();
+        }
+      }, {
+        xtype: "button",
+        text: "修改",
+        margin: "0 0 0 10",
+        handler: function() {
+          var form = win.getComponent("form").getForm(),
+              currentProduct = cs.getSelectionModel().getSelection()[0].data;
+          form.url = env.services.web + env.api.company.change;
+          form.reset();
+          window.updateForm(form, currentProduct);
           win.show();
         }
       }, {
@@ -148,7 +163,6 @@ Ext.application({
         width: 500,
         bodyPadding: 5,
         defaultType: 'textfield',
-        url: env.services.web + env.api.company.add,
         items: [Ext.create("periodical"), {
            fieldLabel: "厂商编号",
            name: "companyCode",
@@ -246,19 +260,19 @@ Ext.application({
             text: "<span class=\"key\">S</span> 保存",
             handler: function() {
               var form = win.getComponent("form").getForm();
-              form.url = env.services.web + env.api.company.change;
-              if (form.isValid()) {
-                form.submit({
-                  success: function(form, action) {
+              console.log(form.url);
+              form.submit({
+                success: function(form, action) {
+                  Ext.Msg.alert("保存", action.result.msg, function() {
                     form.reset();
                     win.hide();
                     companyList.load();
-                  },
-                  failure: function(form, action) {
-                    console.log(action.result)
-                  }
-                });
-              }
+                  });
+                },
+                failure: function(form, action) {
+                  Ext.Msg.alert("保存", action.result.msg);
+                }
+              });
             }
           }, {
             xtype:'button',
