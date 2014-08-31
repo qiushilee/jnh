@@ -234,20 +234,21 @@ Ext.onReady(function() {
             xtype: 'button',
             margin: "0 5",
             text: "Q增加",
-       handler: function() {
-            var form = panel.getComponent("memberInfo").getForm();
-            form.url = env.services.web + env.api.member.add;
-            if (form.isValid()) {
-              form.submit({
-                success: function(form, action) {
-                  console.log(action)
-                },
-                failure: function(form, action) {
-                  Ext.Msg.alert("添加会员", action.result.msg);
-                }
-              });
+            handler: function() {
+              var form = panel.getComponent("memberInfo").getForm();
+              form.url = env.services.web + env.api.member.add;
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    Ext.data.StoreManager.lookup('memberList').loadData(action.result.list);
+                    Ext.Msg.alert("添加会员", action.result.msg);
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("添加会员", action.result.msg);
+                  }
+                });
+              }
             }
-          }
           },
           {
             xtype: 'button',
