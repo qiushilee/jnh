@@ -104,10 +104,11 @@ Ext.application({
                     var form = this.ownerCt.getForm();
                     form.submit({
                       success: function(form, action) {
-                        console.log(action)
+                        purchaseList.loadData(action.result.list);
                       },
                       failure: function(form, action) {
                         purchaseList.loadData(action.result.list);
+                        Ext.Msg.alert("进货清单查询", action.result.msg);
                       }
                     });
                   }
@@ -203,10 +204,11 @@ Ext.application({
                     var form = this.ownerCt.getForm();
                     form.submit({
                       success: function(form, action) {
-                        console.log(action)
+                        Ext.data.StoreManager.lookup("shipmentList").loadData(action.result.list);
                       },
                       failure: function(form, action) {
                         Ext.data.StoreManager.lookup("shipmentList").loadData(action.result.list);
+                        Ext.Msg.alert("出货清单查询", action.result.msg);
                       }
                     });
                   }
@@ -448,6 +450,7 @@ Ext.application({
                         Ext.data.StoreManager.lookup("estimatepurchase").loadData(action.result.list);
                       },
                       failure: function(form, action) {
+                        Ext.data.StoreManager.lookup("estimatepurchase").loadData(action.result.list);
                         Ext.Msg.alert("预估采购查询", action.result.msg);
                       }
                     });
@@ -798,6 +801,7 @@ Ext.application({
                               Ext.data.StoreManager.lookup("member").loadData(action.result.list);
                             },
                             failure: function(form, action) {
+                              Ext.data.StoreManager.lookup("member").loadData(action.result.list);
                               Ext.Msg.alert("会员查询", action.result.msg);
                             }
                           });
