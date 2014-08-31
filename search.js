@@ -104,10 +104,11 @@ Ext.application({
                     var form = this.ownerCt.getForm();
                     form.submit({
                       success: function(form, action) {
-                        console.log(action)
+                        purchaseList.loadData(action.result.list);
                       },
                       failure: function(form, action) {
                         purchaseList.loadData(action.result.list);
+                        Ext.Msg.alert("进货清单查询", action.result.msg);
                       }
                     });
                   }
@@ -203,10 +204,11 @@ Ext.application({
                     var form = this.ownerCt.getForm();
                     form.submit({
                       success: function(form, action) {
-                        console.log(action)
+                        Ext.data.StoreManager.lookup("shipmentList").loadData(action.result.list);
                       },
                       failure: function(form, action) {
                         Ext.data.StoreManager.lookup("shipmentList").loadData(action.result.list);
+                        Ext.Msg.alert("出货清单查询", action.result.msg);
                       }
                     });
                   }
@@ -261,6 +263,32 @@ Ext.application({
                   text: '备注',
                   dataIndex: 'remark',
                   flex: 1
+                }
+              ]
+            }, {
+              xtype: "panel",
+              margin: "20 0 0 17",
+              border: 0,
+              layout: "column",
+              items: [
+                {
+                  xtype: "button",
+                  text: "<span class=\"key\">C</span> 查询",
+                  scale: "medium",
+                  handler: function() {
+                  }
+                },
+                {
+                  xtype: "button",
+                  text: "<span class=\"key\">P</span> 打印",
+                  margin: "0 0 0 20",
+                  scale: "medium"
+                },
+                {
+                  xtype: "button",
+                  text: "<span class=\"key\">R</span> 重打",
+                  margin: "0 0 0 20",
+                  scale: "medium"
                 }
               ]
             }
@@ -448,6 +476,7 @@ Ext.application({
                         Ext.data.StoreManager.lookup("estimatepurchase").loadData(action.result.list);
                       },
                       failure: function(form, action) {
+                        Ext.data.StoreManager.lookup("estimatepurchase").loadData(action.result.list);
                         Ext.Msg.alert("预估采购查询", action.result.msg);
                       }
                     });
@@ -798,6 +827,7 @@ Ext.application({
                               Ext.data.StoreManager.lookup("member").loadData(action.result.list);
                             },
                             failure: function(form, action) {
+                              Ext.data.StoreManager.lookup("member").loadData(action.result.list);
                               Ext.Msg.alert("会员查询", action.result.msg);
                             }
                           });
@@ -894,32 +924,6 @@ Ext.application({
               ]
             }
           ]
-        }
-      ]
-    });
-
-    var button = Ext.create("Ext.panel.Panel", {
-      renderTo: Ext.getBody(),
-      margin: "20 0 0 17",
-      border: 0,
-      layout: "column",
-      items: [
-        {
-          xtype: "button",
-          text: "<span class=\"key\">C</span> 查询",
-          scale: "medium"
-        },
-        {
-          xtype: "button",
-          text: "<span class=\"key\">P</span> 打印",
-          margin: "0 0 0 20",
-          scale: "medium"
-        },
-        {
-          xtype: "button",
-          text: "<span class=\"key\">R</span> 重打",
-          margin: "0 0 0 20",
-          scale: "medium"
         }
       ]
     });
