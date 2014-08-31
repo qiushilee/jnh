@@ -120,10 +120,12 @@ Ext.application({
             text: "<span class=\"key\">N</span> 修改",
             handler: function() {
               var $container = this.ownerCt.ownerCt,
+                  $sidebar = $container.ownerCt.getComponent("sidebar"),
                   form = $container.getComponent("member").getForm(),
                   currentData = $container.getComponent("grid").getSelectionModel().getSelection()[0].data;
 
               window.telorderMemberId = currentData.memberId;
+              $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(false);
               updateForm(form, currentData);
             },
             margin: "0 0 0 20"
@@ -324,6 +326,7 @@ Ext.application({
           }]
         }]
       }, {
+        itemId: "sidebar",
         xtype: "panel",
         border: 0,
         columnWidth: 0.49,
@@ -331,11 +334,13 @@ Ext.application({
           float: "right",
         },
         items: [{
+          itemId: "searchbar",
           xtype:'form',
           layout: "hbox",
           url: env.services.web + env.api.telorder.list.orderproduct,
           border: 0,
           items: [{
+            itemId: "deliveryOrderCode",
             xtype: "button",
             text: "出货单号",
             handler: function() {
@@ -356,6 +361,10 @@ Ext.application({
                     detailForm.findField("deliveryorderId").setValue(data.id);
                     form.findField("deliveryOrderCode").setValue(data.code);
                     self.setDisabled(true);
+                  },
+                  failure: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.Msg.alert("生成出货单号", data.msg);
                   }
                 });
               }
