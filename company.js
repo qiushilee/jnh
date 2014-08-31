@@ -55,23 +55,15 @@ Ext.application({
         text: "搜索",
         margin: "0 0 0 20",
         handler: function() {
-          var form = this.up("form").getForm();
-          if (form.isValid()) {
-            // TODO 接口需要加上 success: true
-            form.submit({
-              success: function(form, action) {
-                console.log(action)
-              },
-              failure: function(form, action) {
-                companyList.loadData(action.result.list);
-              }
-            });
-          }
+          searchHandler.call(this, "companyList");
         }
       }, {
         xtype: "button",
         text: "重置",
-        margin: "0 0 0 20"
+        margin: "0 0 0 20",
+        handler: function() {
+          this.up("form").getForm().reset();
+        }
       }]
     });
     

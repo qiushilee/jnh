@@ -186,18 +186,7 @@ Ext.onReady(function() {
             margin: "0 5 0 50",
             text: "搜索",
             handler: function() {
-              var form = this.ownerCt.ownerCt.getComponent("searchBar");
-              if (form.isValid()) {
-                // TODO 接口需要加上 success: true
-                form.submit({
-                  success: function(form, action) {
-                    console.log(action)
-                  },
-                  failure: function(form, action) {
-                    memberList.loadData(action.result.list);
-                  }
-                });
-              }
+              searchHandler.call(this.ownerCt.ownerCt.getComponent("searchBar"), "memberList");
             }
           },
           {

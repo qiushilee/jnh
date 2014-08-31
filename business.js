@@ -71,24 +71,16 @@ Ext.application({
               xtype: "button",
               text: "搜索",
               margin: "0 0 0 20",
-			    handler: function() {
-                var form = this.ownerCt.ownerCt.getComponent("searchBar");
-                if (form.isValid()) {
-                  // TODO 接口需要加上 success: true
-                  form.submit({
-                    success: function(form, action) {
-                      console.log(action)
-                    },
-                    failure: function(form, action) {
-                      memberList.loadData(action.result.list);
-                    }
-                  });
-                }
+              handler: function() {
+                searchHandler.call(this.ownerCt.ownerCt.getComponent("searchBar"), "memberList");
               }
             }, {
               xtype: "button",
               text: "重置",
-              margin: "0 0 0 20"
+              margin: "0 0 0 20",
+              handler: function() {
+                this.ownerCt.ownerCt.getComponent("searchBar").getForm().reset();
+              }
             }]
           },
           {

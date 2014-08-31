@@ -110,15 +110,7 @@ Ext.application({
                   margin: "0 0 15 10",
                   text: "搜索",
                   handler: function () {
-                    var form = this.ownerCt.getForm();
-                    form.submit({
-                      success: function(form, action) {
-                        Ext.data.StoreManager.lookup('product').loadData(action.result.list);
-                      },
-                      failure: function (form, action) {
-                        Ext.Msg.alert("搜索", action.result.msg);
-                      }
-                    });
+                    searchHandler.call(this, "product");
                   }
                 }
               ]
@@ -286,23 +278,16 @@ Ext.application({
                   margin: "0 0 0 10",
                   text: "搜索",
                   handler: function () {
-                    var form = this.ownerCt.getForm();
-                    form.submit({
-                      success: function(form, action) {
-                        Ext.data.StoreManager.lookup('transitionLoss').loadData(action.result.list);
-                      },
-                      failure: function (form, action) {
-                        Ext.Msg.alert("搜索", action.result.msg, function() {
-                          Ext.data.StoreManager.lookup('transitionLoss').loadData(action.result.list);
-                        });
-                      }
-                    });
+                    searchHandler.call(this, "transitionLoss");
                   }
                 },
                 {
                   xtype: "button",
                   margin: "0 0 15 5",
-                  text: "重置"
+                  text: "重置",
+                  handler: function () {
+                    this.up("form").getForm().reset();
+                  }
                 }
               ]
             },
@@ -376,23 +361,16 @@ Ext.application({
                   margin: "0 0 0 10",
                   text: "搜索",
                   handler: function () {
-                    var form = this.ownerCt.getForm();
-                    form.submit({
-                      success: function(form, action) {
-                        Ext.data.StoreManager.lookup('shipmentDetails').loadData(action.result.list);
-                      },
-                      failure: function (form, action) {
-                        Ext.Msg.alert("搜索", action.result.msg, function() {
-                          Ext.data.StoreManager.lookup('shipmentDetails').loadData(action.result.list);
-                        });
-                      }
-                    });
+                    searchHandler.call(this, "shipmentDetails");
                   }
                 },
                 {
                   xtype: "button",
                   margin: "0 0 15 5",
-                  text: "重置"
+                  text: "重置",
+                  handler: function () {
+                    this.up("form").getForm().reset();
+                  }
                 }
               ]
             },

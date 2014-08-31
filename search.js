@@ -101,16 +101,7 @@ Ext.application({
                   text: "搜索",
                   margin: "0 0 0 50",
                   handler:function(){
-                    var form = this.ownerCt.getForm();
-                    form.submit({
-                      success: function(form, action) {
-                        purchaseList.loadData(action.result.list);
-                      },
-                      failure: function(form, action) {
-                        purchaseList.loadData(action.result.list);
-                        Ext.Msg.alert("进货清单查询", action.result.msg);
-                      }
-                    });
+                    searchHandler.call(this, "purchaseList");
                   }
                 },
                 {
@@ -118,8 +109,7 @@ Ext.application({
                   text: "重置",
                   margin: "0 0 0 20",
                   handler: function() {
-                    var form = this.ownerCt.getForm();
-                    form.reset();
+                    this.up("form").getForm().reset();
                   }
                 }
               ]
@@ -201,16 +191,7 @@ Ext.application({
                   text: "搜索",
                   margin: "0 0 0 50",
                   handler: function() {
-                    var form = this.ownerCt.getForm();
-                    form.submit({
-                      success: function(form, action) {
-                        Ext.data.StoreManager.lookup("shipmentList").loadData(action.result.list);
-                      },
-                      failure: function(form, action) {
-                        Ext.data.StoreManager.lookup("shipmentList").loadData(action.result.list);
-                        Ext.Msg.alert("出货清单查询", action.result.msg);
-                      }
-                    });
+                    searchHandler.call(this, "shipmentList");
                   }
                 },
                 {
@@ -218,8 +199,7 @@ Ext.application({
                   text: "重置",
                   margin: "0 0 0 20",
                   handler: function() {
-                    var form = this.ownerCt.getForm();
-                    form.reset();
+                    this.up("form").getForm().reset();
                   }
                 }
               ]
@@ -470,16 +450,7 @@ Ext.application({
                   xtype: "button",
                   text: "查询",
                   handler: function() {
-                    var form = this.ownerCt.ownerCt.getComponent("estimatepurchaseForm").getForm();
-                    form.submit({
-                      success: function(form, action) {
-                        Ext.data.StoreManager.lookup("estimatepurchase").loadData(action.result.list);
-                      },
-                      failure: function(form, action) {
-                        Ext.data.StoreManager.lookup("estimatepurchase").loadData(action.result.list);
-                        Ext.Msg.alert("预估采购查询", action.result.msg);
-                      }
-                    });
+                    searchHandler.call(this.ownerCt.ownerCt.getComponent("estimatepurchaseForm").getForm(), "estimatepurchase");
                   }
                 },
                 {
@@ -843,16 +814,7 @@ Ext.application({
                         text: "搜索",
                         margin: "0 0 0 50",
                         handler: function() {
-                          var form = this.ownerCt.ownerCt.ownerCt.getComponent("searchForm").getForm();
-                          form.submit({
-                            success: function(form, action) {
-                              Ext.data.StoreManager.lookup("memberList").loadData(action.result.list);
-                            },
-                            failure: function(form, action) {
-                              Ext.data.StoreManager.lookup("memberList").loadData(action.result.list);
-                              Ext.Msg.alert("会员查询", action.result.msg);
-                            }
-                          });
+                          searchHandler.call(this.ownerCt.ownerCt.ownerCt.getComponent("searchForm").getForm(), "memberList");
                         }
                       },
                       {

@@ -3,7 +3,7 @@ Ext.application({
   launch: function () {
 
     //汇款订购管理列表
-    var  orderList = Ext.create('Ext.data.Store', {
+    Ext.create('Ext.data.Store', {
       storeId: 'orderList',
       fields: ['id','billNumber', 'receiptProceedsOffice', 'remittanceDate','remitter','remittanceAmount', 'isRemittanceReceived', "remittanceReceivedDate", "isOrderReceived",'orderReceivedDate','youthStuck','preferentialTicket','unDiscountAmount','remark'],
       layout: "fit",
@@ -67,19 +67,7 @@ Ext.application({
           text: "搜索",
           margin: "0 0 0 20",
           handler: function() {
-            var form = this.ownerCt.getForm();
-            if (form.isValid()) {
-              // TODO 接口需要加上 success: true
-              form.submit({
-                success: function(form, action) {
-                  orderList.loadData(action.result.list);
-                },
-                failure: function(form, action) {
-                  orderList.loadData(action.result.list);
-                  Ext.Msg.alert("汇款定购搜索", action.result.msg);
-                }
-              });
-            }
+            searchHandler.call(this, "orderList");
           }
         },
         {

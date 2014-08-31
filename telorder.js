@@ -5,7 +5,7 @@ Ext.application({
     window.telorderMemberId = "";
 
     //电话订购列表
-    var orderList = Ext.create('Ext.data.Store', {
+    Ext.create('Ext.data.Store', {
       storeId: 'orderList',
       fields: ["id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "consignee", "mobile", "zipCode", "address", "packaging", "remark", "deliveryMethod", "deliveryMethodName"],
       layout: "fit",
@@ -58,18 +58,7 @@ Ext.application({
           text: "搜索",
           margin: "0 0 0 20",
           handler: function() {
-            var form = this.ownerCt.getForm();
-            if (form.isValid()) {
-              // TODO 接口需要加上 success: true
-              form.submit({
-                success: function(form, action) {
-                  console.log(action)
-                },
-                failure: function(form, action) {
-                  orderList.loadData(action.result.list);
-                }
-              });
-            }
+            searchHandler.call(this, "orderList");
           }
         }, {
           xtype: "button",
@@ -390,16 +379,7 @@ Ext.application({
             text: "搜索",
             float:"right",
             handler: function() {
-              var form = this.ownerCt.getForm();
-              form.submit({
-                success: function(form, action) {
-                  console.log(action.result);
-                  //orderproduct.loadData(action.result);
-                },
-                failure: function(form, action) {
-                  Ext.Msg.alert("搜索", action.result.msg);
-                }
-              });
+              searchHandler.call(this, "orderproduct");
             }
           }]
         }, {

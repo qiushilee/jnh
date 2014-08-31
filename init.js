@@ -225,15 +225,21 @@
    * TODO 替换所有的搜索事件
    */
   window.searchHandler = function(store) {
-    var form = this.up("form").getForm();
+    var form = this.up && this.up("form") ? this.up("form").getForm() : this;
     if (form.isValid()) {
       form.submit({
+        success: function(form, action) {
+          try {
+            Ext.data.StoreManager.lookup(store).loadData(action.result.list);
+          } catch(e) {
+            console.error(e.stack);
+          }
+        },
         failure: function(form, action) {
           try {
-            if (action.result.list.length > 0) {
-              Ext.data.StoreManager.lookup(store).loadData(action.result.list);
-            } else {
-              Ext.Msg.alert("搜索", "对不起，没有找到符合条件的结果。");
+            Ext.data.StoreManager.lookup(store).loadData(action.result.list);
+            if (action.result.msg) {
+              Ext.Msg.alert("搜索", action.result.msg);
             }
           } catch(e) {
             console.error(e.stack);
