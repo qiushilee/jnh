@@ -72,10 +72,11 @@ Ext.application({
               // TODO 接口需要加上 success: true
               form.submit({
                 success: function(form, action) {
-                  console.log(action)
+                  orderList.loadData(action.result.list);
                 },
                 failure: function(form, action) {
                   orderList.loadData(action.result.list);
+                  Ext.Msg.alert("汇款定购搜索", action.result.msg);
                 }
               });
             }
@@ -84,6 +85,10 @@ Ext.application({
         {
           xtype: "button",
           text: "重置",
+          handler: function() {
+            var form = this.ownerCt.getForm();
+            form.reset();
+          },
           margin: "0 0 0 20"
         }
       ]
