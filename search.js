@@ -265,6 +265,32 @@ Ext.application({
                   flex: 1
                 }
               ]
+            }, {
+              xtype: "panel",
+              margin: "20 0 0 17",
+              border: 0,
+              layout: "column",
+              items: [
+                {
+                  xtype: "button",
+                  text: "<span class=\"key\">C</span> 查询",
+                  scale: "medium",
+                  handler: function() {
+                  }
+                },
+                {
+                  xtype: "button",
+                  text: "<span class=\"key\">P</span> 打印",
+                  margin: "0 0 0 20",
+                  scale: "medium"
+                },
+                {
+                  xtype: "button",
+                  text: "<span class=\"key\">R</span> 重打",
+                  margin: "0 0 0 20",
+                  scale: "medium"
+                }
+              ]
             }
           ]
         },
@@ -898,32 +924,6 @@ Ext.application({
               ]
             }
           ]
-        }
-      ]
-    });
-
-    var button = Ext.create("Ext.panel.Panel", {
-      renderTo: Ext.getBody(),
-      margin: "20 0 0 17",
-      border: 0,
-      layout: "column",
-      items: [
-        {
-          xtype: "button",
-          text: "<span class=\"key\">C</span> 查询",
-          scale: "medium"
-        },
-        {
-          xtype: "button",
-          text: "<span class=\"key\">P</span> 打印",
-          margin: "0 0 0 20",
-          scale: "medium"
-        },
-        {
-          xtype: "button",
-          text: "<span class=\"key\">R</span> 重打",
-          margin: "0 0 0 20",
-          scale: "medium"
         }
       ]
     });
