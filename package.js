@@ -32,7 +32,7 @@ Ext.application({
        bodyPadding: 10,
        defaultType: 'textfield',
        margin: "10 0",
-       renderTo: document.body,
+       renderTo: window.$bd,
        items: [
        {
          //TODO 更换成统一的periodical组件
@@ -114,7 +114,7 @@ Ext.application({
     });
 
     var list = Ext.create("Ext.panel.Panel", {
-      renderTo: Ext.getBody(),
+      renderTo: window.$bd,
       items: [
         {
           itemId: "grid",
@@ -174,7 +174,7 @@ Ext.application({
     });
 
     var button = Ext.create("Ext.panel.Panel", {
-      renderTo: Ext.getBody(),
+      renderTo: window.$bd,
       margin: "10 0 0 0",
       border: 0,
       layout: "column",

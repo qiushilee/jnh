@@ -4,46 +4,34 @@
   <meta charset="UTF-8">
   <title>Document</title>
   <link rel="stylesheet" type="text/css" href="resources/css/ext-all.css">
-  <style>
-  body {
-    padding: 20px;
-  }
-  .menu {
-    overflow: hidden;
-  }
-  .menu a {
-    float: left;
-    margin: 0 20px 50px 20px;
-    cursor: pointer;
-  }
-  span.key {
-    text-decoration: underline;
-  }
-  .sell-col {
-    background-image: url(http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-classic/resources/images/icons/fam/delete.gif);
-  }
-  .buy-col {
-    background-image: url(http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-classic/resources/images/icons/fam/accept.png);
-  }
-  </style>
+  <link rel="stylesheet" type="text/css" href="layout.css">
   <script type="text/javascript" src="extjs/ext-debug.js"></script>
+  <script src="app.js"></script>
   <script src="init.js"></script>
 </head>
 <body>
-  <div class="menu">
-    <a href="#company">厂商管理</a>
-    <a href="#product">库存管理</a>
-    <a href="#business">业务管理</a>
-    <a href="#member">会员管理</a>
-    <a href="#remorder">汇款定购</a>
-    <a href="#telorder">电话订购</a>
-    <a href="#deliverorder">出货单</a>
-    <a href="#package">包裹管理</a>
-    <a href="#search">查询</a>
-    <a href="#periodical">期数设置</a>
-    <a href="#log">操作日志</a>
-    <a href="#manager">管理员管理</a>
-  </div>
+  <textarea id="menu" class="hidden">
+    <div class="mod">
+      <div class="hd">
+        <a class="logo" href="/">嘉年华</a>
+        <div class="menu">
+          <a href="#company" class="company">厂商管理</a>
+          <a href="#product" class="product">库存管理</a>
+          <a href="#business" class="business">业务管理</a>
+          <a href="#member" class="member">会员管理</a>
+          <a href="#remorder" class="remorder">汇款定购</a>
+          <a href="#telorder" class="telorder">电话订购</a>
+          <a href="#deliverorder" class="deliverorder">出货单</a>
+          <a href="#package" class="package">包裹管理</a>
+          <a href="#search" class="search">查询</a>
+        </div>
+      </div>
+
+      <div class="bd">
+        <div></div>
+      </div>
+    </div>
+  </textarea>
 
   <script>
   (function(src) {

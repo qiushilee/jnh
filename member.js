@@ -114,7 +114,7 @@ Ext.onReady(function() {
   }
 
   var panel = Ext.create("Ext.panel.Panel", {
-    renderTo: Ext.getBody(),
+    renderTo: window.$bd,
     border: 0,
     items: [
       {

@@ -25,7 +25,7 @@ Ext.application({
       bodyPadding: 10,
       defaultType: 'textfield',
       margin: "10 0",
-      renderTo: document.body,
+      renderTo: window.$bd,
       border: 0,
       items: [{
         //TODO 更换成统一的periodical组件
@@ -121,7 +121,7 @@ Ext.application({
         dataIndex: 'email',
         flex: 1
       }],
-      renderTo: Ext.getBody()
+      renderTo: window.$bd
     });
 
     Ext.create("Ext.Panel", {
@@ -129,7 +129,7 @@ Ext.application({
       border: 0,
       defaultType: 'textfield',
       margin: "10 0 0 0",
-      renderTo: Ext.getBody(),
+      renderTo: window.$bd,
       items: [{
         xtype: "button",
         text: "<span class=\"key\">A</span> 增加",

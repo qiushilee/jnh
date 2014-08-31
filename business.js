@@ -21,7 +21,7 @@ Ext.application({
 	  
   
     var panel = Ext.create('Ext.tab.Panel', {
-      renderTo: document.body,
+      renderTo: window.$bd,
       layout: "fit",
       items: [
         {

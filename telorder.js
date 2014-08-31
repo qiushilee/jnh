@@ -33,7 +33,7 @@ Ext.application({
       bodyPadding: 10,
       defaultType: 'textfield',
       margin: "10 0",
-      renderTo: document.body,
+      renderTo: window.$bd,
       items: [Ext.create('periodical'),
         {
           fieldLabel: "会员编号",
@@ -85,7 +85,7 @@ Ext.application({
     var list = Ext.create('Ext.Panel', {
       layout: "column",
       border: 0,
-      renderTo: Ext.getBody(),
+      renderTo: window.$bd,
       margin: "30 0",
       items: [{
         xtype: "panel",

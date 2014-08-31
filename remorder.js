@@ -25,7 +25,7 @@ Ext.application({
       bodyPadding: 10,
       defaultType: 'textfield',
       margin: "10 0",
-      renderTo: document.body,
+      renderTo: window.$bd,
       items: [
         Ext.create("periodical"),
         {
@@ -90,7 +90,7 @@ Ext.application({
     });
 
     var list = Ext.create("Ext.panel.Panel", {
-      renderTo: Ext.getBody(),
+      renderTo: window.$bd,
       items: [
         {
           itemId: "grid",
@@ -172,7 +172,7 @@ Ext.application({
 
 
     var button = Ext.create("Ext.panel.Panel", {
-      renderTo: Ext.getBody(),
+      renderTo: window.$bd,
       margin: "20 0 0 0",
       border: 0,
       layout: "column",

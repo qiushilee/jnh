@@ -1,0 +1,88 @@
+@mixin menu($item:"menu-item") {
+  &.#{$item} {
+    background-image: url(images/menu/#{$item}.png);
+
+    &.active,
+    &:hover {
+      background-image: url(images/menu/#{$item}-hover.png);
+    }
+
+    &.disable {
+      background-image: url(images/menu/#{$item}-disable.png);
+    }
+  }
+}
+
+.hidden {
+  display: none!important;
+}
+
+.base-panel {
+  height: auto!important;
+  overflow: auto!important;
+
+  .base-panel-body {
+    height: auto!important;
+    overflow: auto!important;
+  }
+}
+
+.mod {
+  .hd {
+    height: 80px;
+    padding: 8px 0;
+    background-color: #daeaf6;
+    box-sizing: border-box;
+    border: 1px solid #0093cf;
+    border-bottom: none;
+
+    .logo {
+      float: left;
+      width: 105px;
+      height: 57px;
+      margin-left: 18px;
+      background-image: url(images/logo.png);
+      text-indent: -99999px;
+    }
+
+    .menu {
+      float: left;
+      margin: 8px 0 0 58px;
+      
+      a {
+        float: left;
+        width: 75px;
+        height: 52px;
+        margin: 0 20px 0 20px;
+        cursor: pointer;
+        text-indent: -99999px;
+
+        @include menu("company");
+        @include menu("product");
+        @include menu("business");
+        @include menu("member");
+        @include menu("remorder");
+        @include menu("telorder");
+        @include menu("deliverorder");
+        @include menu("package");
+        @include menu("search");
+      }
+    }
+  }
+
+  .bd {
+    padding: 10px;
+  }
+}
+
+span.key {
+  text-decoration: underline;
+}
+
+.sell-col {
+  background-image: url(http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-classic/resources/images/icons/fam/delete.gif);
+}
+
+.buy-col {
+  background-image: url(http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-classic/resources/images/icons/fam/accept.png);
+}

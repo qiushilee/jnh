@@ -1,0 +1,99 @@
+.hidden {
+  display: none !important; }
+
+.base-panel {
+  height: auto !important;
+  overflow: auto !important; }
+  .base-panel .base-panel-body {
+    height: auto !important;
+    overflow: auto !important; }
+
+.mod .hd {
+  height: 80px;
+  padding: 8px 0;
+  background-color: #daeaf6;
+  box-sizing: border-box;
+  border: 1px solid #0093cf;
+  border-bottom: none; }
+  .mod .hd .logo {
+    float: left;
+    width: 105px;
+    height: 57px;
+    margin-left: 18px;
+    background-image: url(images/logo.png);
+    text-indent: -99999px; }
+  .mod .hd .menu {
+    float: left;
+    margin: 8px 0 0 58px; }
+    .mod .hd .menu a {
+      float: left;
+      width: 75px;
+      height: 52px;
+      margin: 0 20px 0 20px;
+      cursor: pointer;
+      text-indent: -99999px; }
+      .mod .hd .menu a.company {
+        background-image: url(images/menu/company.png); }
+        .mod .hd .menu a.company.active, .mod .hd .menu a.company:hover {
+          background-image: url(images/menu/company-hover.png); }
+        .mod .hd .menu a.company.disable {
+          background-image: url(images/menu/company-disable.png); }
+      .mod .hd .menu a.product {
+        background-image: url(images/menu/product.png); }
+        .mod .hd .menu a.product.active, .mod .hd .menu a.product:hover {
+          background-image: url(images/menu/product-hover.png); }
+        .mod .hd .menu a.product.disable {
+          background-image: url(images/menu/product-disable.png); }
+      .mod .hd .menu a.business {
+        background-image: url(images/menu/business.png); }
+        .mod .hd .menu a.business.active, .mod .hd .menu a.business:hover {
+          background-image: url(images/menu/business-hover.png); }
+        .mod .hd .menu a.business.disable {
+          background-image: url(images/menu/business-disable.png); }
+      .mod .hd .menu a.member {
+        background-image: url(images/menu/member.png); }
+        .mod .hd .menu a.member.active, .mod .hd .menu a.member:hover {
+          background-image: url(images/menu/member-hover.png); }
+        .mod .hd .menu a.member.disable {
+          background-image: url(images/menu/member-disable.png); }
+      .mod .hd .menu a.remorder {
+        background-image: url(images/menu/remorder.png); }
+        .mod .hd .menu a.remorder.active, .mod .hd .menu a.remorder:hover {
+          background-image: url(images/menu/remorder-hover.png); }
+        .mod .hd .menu a.remorder.disable {
+          background-image: url(images/menu/remorder-disable.png); }
+      .mod .hd .menu a.telorder {
+        background-image: url(images/menu/telorder.png); }
+        .mod .hd .menu a.telorder.active, .mod .hd .menu a.telorder:hover {
+          background-image: url(images/menu/telorder-hover.png); }
+        .mod .hd .menu a.telorder.disable {
+          background-image: url(images/menu/telorder-disable.png); }
+      .mod .hd .menu a.deliverorder {
+        background-image: url(images/menu/deliverorder.png); }
+        .mod .hd .menu a.deliverorder.active, .mod .hd .menu a.deliverorder:hover {
+          background-image: url(images/menu/deliverorder-hover.png); }
+        .mod .hd .menu a.deliverorder.disable {
+          background-image: url(images/menu/deliverorder-disable.png); }
+      .mod .hd .menu a.package {
+        background-image: url(images/menu/package.png); }
+        .mod .hd .menu a.package.active, .mod .hd .menu a.package:hover {
+          background-image: url(images/menu/package-hover.png); }
+        .mod .hd .menu a.package.disable {
+          background-image: url(images/menu/package-disable.png); }
+      .mod .hd .menu a.search {
+        background-image: url(images/menu/search.png); }
+        .mod .hd .menu a.search.active, .mod .hd .menu a.search:hover {
+          background-image: url(images/menu/search-hover.png); }
+        .mod .hd .menu a.search.disable {
+          background-image: url(images/menu/search-disable.png); }
+.mod .bd {
+  padding: 10px; }
+
+span.key {
+  text-decoration: underline; }
+
+.sell-col {
+  background-image: url(http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-classic/resources/images/icons/fam/delete.gif); }
+
+.buy-col {
+  background-image: url(http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-classic/resources/images/icons/fam/accept.png); }
