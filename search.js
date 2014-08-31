@@ -522,8 +522,28 @@ Ext.application({
                 url: env.services.web + env.api.search.member,
                 items: [
                 {
+                  xtype: "hiddenfield",
+                  name: "type",
+                  value: "1"
+                }, {
                   xtype: "tabpanel",
                   width: 500,
+                  listeners: {
+                    beforetabchange: function(tabs, newTab, oldTab) {
+                      var $type = this.ownerCt.getForm().findField("type"),
+                          type = {
+                            "会员定位": 1,
+                            "地址定位": 2,
+                            "时间定位": 3,
+                            "金额定位": 4,
+                            "其它定位": 5,
+                          };
+
+                      if (type[newTab.title]) {
+                        $type.setValue(type[newTab.title]);
+                      }
+                    }
+                  },
                   items: [
                     {
                       title: "会员定位",
@@ -824,10 +844,10 @@ Ext.application({
                           var form = this.ownerCt.ownerCt.ownerCt.getComponent("searchForm").getForm();
                           form.submit({
                             success: function(form, action) {
-                              Ext.data.StoreManager.lookup("member").loadData(action.result.list);
+                              Ext.data.StoreManager.lookup("memberList").loadData(action.result.list);
                             },
                             failure: function(form, action) {
-                              Ext.data.StoreManager.lookup("member").loadData(action.result.list);
+                              Ext.data.StoreManager.lookup("memberList").loadData(action.result.list);
                               Ext.Msg.alert("会员查询", action.result.msg);
                             }
                           });
