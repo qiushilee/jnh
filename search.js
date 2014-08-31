@@ -3,7 +3,7 @@ Ext.application({
   launch: function () {
 
     // 进货清单数据
-    Ext.create('Ext.data.Store', {
+    var purchaseList = Ext.create('Ext.data.Store', {
       storeId: 'purchaseList',
       fields: ["id",'key',"productCode", "name", 'number', 'receiptCode','companyName','receiptDate','addDate','remark'],
       layout: "fit",
