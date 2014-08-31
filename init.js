@@ -222,7 +222,9 @@
   /**
    * 通用的搜索功能
    * Usage: search.call(this, "store");
-   * TODO 替换所有的搜索事件
+   * @param {Object|Form} this 
+   *    情景一：this.up("form") 直接获取到form；
+   *    情景二：直接传入form；
    */
   window.searchHandler = function(store) {
     var form = this.up && this.up("form") ? this.up("form").getForm() : this;
