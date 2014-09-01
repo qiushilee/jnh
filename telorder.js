@@ -2,12 +2,10 @@
 Ext.application({
   name: "JNH",
   launch: function() {
-    window.telorderMemberId = "";
-
     //电话订购列表
     Ext.create('Ext.data.Store', {
       storeId: 'orderList',
-      fields: ["id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "consignee", "mobile", "zipCode", "address", "packaging", "remark", "deliveryMethod", "deliveryMethodName"],
+      fields: ["memberId", "id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "consignee", "mobile", "zipCode", "address", "packaging", "remark", "deliveryMethod", "deliveryMethodName"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -23,7 +21,7 @@ Ext.application({
     //电话订购右侧列表
     var orderproduct = Ext.create('Ext.data.Store', {
       storeId: 'orderproduct',
-      fields: ['id','deliveryOrderCode', 'preferentialTicket', 'unDiscountAmount','youthStuck','deliveryMethod', 'postage', "receivableAmount", "remark",'key','youthStuck','preferentialTicket','unDiscountAmount','remark'],
+      fields: ['id','productCode', 'name', 'number', 'price','amount', 'remark'],
       layout: "fit"
     });
     //搜索栏
@@ -95,7 +93,7 @@ Ext.application({
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
-                    telorderMemberId = action.result.id;
+                    telorderCurrent.memberId = action.result.id;
                     Ext.Msg.alert("增加", action.result.msg);
                   },
                   failure: function(form, action) {
@@ -110,11 +108,16 @@ Ext.application({
             handler: function() {
               var $container = this.ownerCt.ownerCt,
                   $sidebar = $container.ownerCt.getComponent("sidebar"),
+                  $sidebarForm = $sidebar.getComponent("searchbar").getForm(),
                   form = $container.getComponent("member").getForm(),
                   currentData = $container.getComponent("grid").getSelectionModel().getSelection()[0].data;
 
-              window.telorderMemberId = currentData.memberId;
+              window.telorderCurrent = currentData;
               $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(false);
+              searchHandler.call($sidebarForm, "orderproduct");
+              $sidebarForm.findField("deliveryorderId").setValue(currentData.id);
+              $sidebarForm.findField("deliveryOrderCode").setValue(currentData.deliveryOrderCode);
+              $sidebar.getComponent("detail").getForm().findField("deliveryorderId").setValue(currentData.id);
               updateForm(form, currentData);
             },
             margin: "0 0 0 20"
@@ -336,13 +339,13 @@ Ext.application({
               var self = this,
                   form = this.ownerCt.getForm(),
                   detailForm = this.ownerCt.ownerCt.getComponent("detail").getForm();
-              if (telorderMemberId === "") {
+              if (telorderCurrent.memberId === "") {
                 Ext.Msg.alert("生成出货单号", "请先增加会员");
               } else {
                 Ext.Ajax.request({
                   url: env.services.web + env.api.deliverorder.telorderdelivercode,
                   params: {
-                    memberId: telorderMemberId
+                    memberId: telorderCurrent.memberId
                   },
                   success: function(resp) {
                     var data = Ext.JSON.decode(resp.responseText);
@@ -423,30 +426,30 @@ Ext.application({
             margin: "10 0 0 0",
             columns: [{
               text: '序号',
-              dataIndex: 'key'
+              dataIndex: 'id'
             }, {
               text: '货号',
-              dataIndex: 'adder1',
+              dataIndex: 'productCode',
               flex: 1
             }, {
               text: '品名',
-              dataIndex: 'man1',
+              dataIndex: 'name',
               flex: 1
             }, {
               text: '数量',
-              dataIndex: 'phone1',
+              dataIndex: 'number',
               flex: 1
             }, {
               text: '单价',
-              dataIndex: 'phone21',
+              dataIndex: 'price',
               flex: 1
             }, {
               text: '金额',
-              dataIndex: 'qq',
+              dataIndex: 'amount',
               flex: 1
             }, {
               text: '备注',
-              dataIndex: 'qq1',
+              dataIndex: 'remark',
               flex: 1
             }]
           }, {
