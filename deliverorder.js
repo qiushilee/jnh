@@ -105,6 +105,7 @@ Ext.application({
                 disabled: true,
                 text: "生成出货单编号",
                 handler: function() {
+                  var self = this;
                   Ext.Ajax.request({
                     url: env.services.web + env.api.deliverorder.remorderdelivercode,
                     params: {
@@ -113,8 +114,9 @@ Ext.application({
                     success: function(resp) {
                       var data = Ext.JSON.decode(resp.responseText);
                       //TODO 期数应该放在list中比较合理
-                      //TODO 新增一个input，用来存放出货单编号
-                      //id.setText("出货单编号：" + data.code);
+                      //TODO 右侧需要显示code
+                      list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("deliveryOrderId").setValue(data.deliveryOrderId);
+                      self.setDisabled(true);
                     }
                   });
                 }
@@ -249,7 +251,8 @@ Ext.application({
               listeners: {
                 itemdblclick: function( that, record, item, index, e, eOpts) {
                   var detail = this.ownerCt.ownerCt.getComponent("detail"),
-                      productStore = Ext.data.StoreManager.lookup("productData");
+                      productStore = Ext.data.StoreManager.lookup("productData"),
+                      $sidebarForm = list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm();
                   window.deliveryOrderId = record.data.deliveryOrderId;
                   window.orderRemittanceId = record.data.orderRemittanceId;
 
@@ -258,12 +261,13 @@ Ext.application({
 
                   productStore.load({
                     params: {
-                      deliveryorderId: window.deliveryOrderId
+                      deliveryOrderId: window.deliveryOrderId
                     }
                   });
                  
                   //订单产品
-                  list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("orderremittanceId").setValue(window.deliveryOrderId);
+                  $sidebarForm.findField("orderRemittanceId").setValue(window.orderRemittanceId);
+                  $sidebarForm.findField("deliveryOrderId").setValue(window.deliveryOrderId);
                 }
               }
             },
@@ -325,14 +329,14 @@ Ext.application({
             ]
             },
             {
-			 itemId: "orderproduct",	
-			   xtype: "panel",
+              itemId: "orderproduct",	
+              xtype: "panel",
               bodyPadding: 5,
               margin: "10 0 0 0",
               items: [
                 {
-				  itemId: "product",
-				   xtype: "form",
+                  itemId: "product",
+                  xtype: "form",
                   layout: "hbox",
                   border: 0,
                   defaultType: 'textfield',
@@ -342,14 +346,14 @@ Ext.application({
                       fieldLabel: "货号",
                       labelWidth: 30,
                       width: 100,
-					  name:'productCode',
+                      name:'productCode',
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: "数量",
                       labelWidth: 50,
                       width: 120,
-					   name:'number',
+                      name:'number',
                       labelAlign: "right"
                     },
                     {
@@ -360,12 +364,15 @@ Ext.application({
                       labelAlign: "right"
                     }, {
                       xtype: "hiddenfield",
-                      name: "orderremittanceId"
+                      name: "orderRemittanceId"
+                    }, {
+                      xtype: "hiddenfield",
+                      name: "deliveryOrderId"
                     }
                   ]
                 },
                 {
-				  itemId: "orderproductlist",	
+                  itemId: "orderproductlist",	
                   xtype: "grid",
                   store: Ext.data.StoreManager.lookup('productData'),
                   margin: "10 0 0 0",
