@@ -47,8 +47,8 @@ Ext.application({
         labelWidth: 40,
         labelAlign: "right"
       }, {
-        fieldLabel: "邮箱",
-        name:'email',
+        fieldLabel: "货号",
+        name:'productCode',
         labelWidth: 40,
         labelAlign: "right"
       }, {
