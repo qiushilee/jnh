@@ -6,7 +6,7 @@ Ext.application({
       // 厂商管理列表
       var companyList = Ext.create('Ext.data.Store', {
         storeId: 'companyList',
-        fields: ['companyCode', 'address', 'linkMan', 'mobile1', "mobile2", "email"],
+        fields: ['companyCode', 'address', 'linkMan', 'mobile1', "mobile2", "email","qq"],
         layout: "fit",
         autoLoad: true,
         proxy: {
@@ -93,8 +93,8 @@ Ext.application({
         dataIndex: 'mobile2',
         flex: 1
       }, {
-        text: 'email',
-        dataIndex: 'email',
+        text: 'QQ',
+        dataIndex: 'qq',
         flex: 1
       }],
       renderTo: window.$bd
