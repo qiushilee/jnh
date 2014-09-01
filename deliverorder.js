@@ -113,7 +113,8 @@ Ext.application({
                     success: function(resp) {
                       var data = Ext.JSON.decode(resp.responseText);
                       //TODO 期数应该放在list中比较合理
-                      id.setText("出货单编号：" + data.code);
+                      //TODO 新增一个input，用来存放出货单编号
+                      //id.setText("出货单编号：" + data.code);
                     }
                   });
                 }
@@ -250,6 +251,7 @@ Ext.application({
                   var detail = this.ownerCt.ownerCt.getComponent("detail"),
                       productStore = Ext.data.StoreManager.lookup("productData");
                   window.deliveryOrderId = record.data.deliveryOrderId;
+                  window.orderRemittanceId = record.data.orderRemittanceId;
 
                   detail.getComponent("col").getComponent("createCode").setDisabled(false);
                   window.updateForm(detail.getForm(), record.data);
@@ -260,10 +262,8 @@ Ext.application({
                     }
                   });
                  
-				  //订单产品
-				  list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("orderremittanceId").setValue(window.orderRemittanceId);
-				  
-				 
+                  //订单产品
+                  list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("orderremittanceId").setValue(window.deliveryOrderId);
                 }
               }
             },
@@ -356,12 +356,12 @@ Ext.application({
                       fieldLabel: "备注",
                       labelWidth: 50,
                       width: 300,
-					   name:'remark',
+                      name:'remark',
                       labelAlign: "right"
                     }, {
-						xtype: "hiddenfield",
-						name: "orderremittanceId"
-					 }
+                      xtype: "hiddenfield",
+                      name: "orderremittanceId"
+                    }
                   ]
                 },
                 {
