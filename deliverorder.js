@@ -4,7 +4,7 @@ Ext.application({
     // 出货单列表
     Ext.create('Ext.data.Store', {
       storeId: 'list',
-      fields: ["orderCode", "deliveryOrderCode", "id", "remittanceAmount", "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
+      fields: ["deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount", "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
       layout: "fit",
       autoLoad: true,
       proxy: {
