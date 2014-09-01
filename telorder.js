@@ -5,7 +5,7 @@ Ext.application({
     //电话订购列表
     Ext.create('Ext.data.Store', {
       storeId: 'orderList',
-      fields: ["memberId", "id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "consignee", "mobile", "zipCode", "address", "packaging", "remark", "deliveryMethod", "deliveryMethodName"],
+      fields: ["memberId","key", "id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "consignee", "mobile", "zipCode", "address", "packaging", "remark", "deliveryMethod", "deliveryMethodName"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -243,7 +243,7 @@ Ext.application({
           columns: [
             {
               text: '序号',
-              dataIndex: 'id',
+              dataIndex: 'key',
               flex: 1},
             {
               text: '出货单号',
