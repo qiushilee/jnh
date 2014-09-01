@@ -451,7 +451,13 @@ Ext.application({
               text: '备注',
               dataIndex: 'remark',
               flex: 1
-            }]
+            }],
+            listeners: {
+              itemdblclick: function( that, record, item, index, e, eOpts) {
+                var detail = this.ownerCt.ownerCt.getComponent("detail");
+                window.updateForm(detail.getForm(), record.data);
+              }
+            }
           }, {
             xtype:'panel',
             layout: "hbox",
@@ -487,7 +493,7 @@ Ext.application({
                     },
                     success: function(resp) {
                       var data = Ext.JSON.decode(resp.responseText);
-                      Ext.data.StoreManager.lookup('simpsonsStore').loadData(data.list);
+                      Ext.data.StoreManager.lookup('orderproduct').load();
                     }
                   });
                 } catch(e) {
@@ -508,24 +514,6 @@ Ext.application({
                     },
                     failure: function(form, action) {
                       Ext.Msg.alert("修改", action.result.msg);
-                    }
-                  });
-                }
-              },
-              margin: "0 0 0 10"
-            }, {
-              xtype: "button",
-              text: "<span class=\"key\">S</span> 保存",
-              handler: function() {
-                var form = this.ownerCt.ownerCt.ownerCt.getComponent("detail").getForm();
-                form.url = env.services.web + env.api.telorder.save.order;
-                if (form.isValid()) {
-                  form.submit({
-                    success: function(form, action) {
-                      Ext.Msg.alert("保存", action.result.msg);
-                    },
-                    failure: function(form, action) {
-                      Ext.Msg.alert("保存", action.result.msg);
                     }
                   });
                 }
