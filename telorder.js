@@ -130,7 +130,7 @@ Ext.application({
             text: "<span class=\"key\">W</span> 保存",
             handler: function() {
               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-              form.url = env.services.web + env.api.telorder.save.member;
+              form.url = env.services.web + env.api.telorder.change.member;
               form.submit({
                 success: function(form, action) {
                   Ext.Msg.alert("保存", action.result.msg);
@@ -154,8 +154,7 @@ Ext.application({
                     id: id
                   },
                   success: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.data.StoreManager.lookup('orderList').loadData(data.list);
+                    Ext.data.StoreManager.lookup('orderList').load;
                   }
                 });
               } catch(e) {
@@ -175,7 +174,12 @@ Ext.application({
               border: 0,
               defaultType: 'textfield',
               margin: "20 0 0 0",
-              items: [Ext.create('deliveryMethod'), {
+              items: [{
+                xtype: "hiddenfield",
+                name: "id"
+              },
+              Ext.create('deliveryMethod'),
+              {
                 fieldLabel: "青春贴",
                 width:220,
                 labelAlign: "right",
