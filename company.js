@@ -33,13 +33,14 @@ Ext.application({
         }),
       {
         fieldLabel: "厂商编号",
-        name:'companyCode',
+        name:'companyCode1',
         labelWidth: 60,
         labelAlign: "right"
       }, {
         fieldLabel: "~",
         labelWidth: 20,
-        labelAlign: "right"
+        labelAlign: "right",
+        name:'companyCode2'
       }, {
         fieldLabel: "地址",
         name:'address',
