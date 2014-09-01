@@ -55,7 +55,8 @@
     info: "/company/view/companyId/",
     del: "/company/del/companyId/",
     add: "/company/create",
-    change: "/company/update"
+    change: "/company/update",
+    copy: "/company/copy"   //厂商复制
   };
 
   env.api.product = {
