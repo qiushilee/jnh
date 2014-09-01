@@ -113,10 +113,14 @@ Ext.application({
                   currentData = $container.getComponent("grid").getSelectionModel().getSelection()[0].data;
 
               window.telorderCurrent = currentData;
-              $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(false);
               searchHandler.call($sidebarForm, "orderproduct");
               $sidebarForm.findField("deliveryorderId").setValue(currentData.id);
-              $sidebarForm.findField("deliveryOrderCode").setValue(currentData.deliveryOrderCode);
+              if (currentData.deliveryOrderCode) {
+                $sidebarForm.findField("deliveryOrderCode").setValue(currentData.deliveryOrderCode);
+                $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(true);
+              } else {
+                $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(false);
+              }
               $sidebar.getComponent("detail").getForm().findField("deliveryorderId").setValue(currentData.id);
               updateForm(form, currentData);
             },
@@ -127,16 +131,14 @@ Ext.application({
             handler: function() {
               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
               form.url = env.services.web + env.api.telorder.save.member;
-              if (form.isValid()) {
-                form.submit({
-                  success: function(form, action) {
-                    Ext.Msg.alert("保存", action.result.msg);
-                  },
-                  failure: function(form, action) {
-                    Ext.Msg.alert("保存", action.result.msg);
-                  }
-                });
-              }
+              form.submit({
+                success: function(form, action) {
+                  Ext.Msg.alert("保存", action.result.msg);
+                },
+                failure: function(form, action) {
+                  Ext.Msg.alert("保存", action.result.msg);
+                }
+              });
             },
             margin: "0 0 0 20"
           }, {
