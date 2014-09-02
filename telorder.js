@@ -482,9 +482,8 @@ Ext.application({
                 form.url = env.services.web + env.api.telorder.add.order;
                 form.submit({
                   success: function(form, action) {
-                    Ext.Msg.alert("增加", action.result.msg, function() {
-                      searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
-                    });
+                    form.reset();
+                    searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("增加", action.result.msg);
