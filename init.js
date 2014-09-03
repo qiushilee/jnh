@@ -56,7 +56,8 @@
     del: "/company/del/companyId/",
     add: "/company/create",
     change: "/company/update",
-    copy: "/company/copy"   //厂商复制
+    copy: "/company/copy",   //厂商复制
+    findByCompanyCode:"/company/findbycompanycode"//根据厂商编号获取企业信息
   };
 
   env.api.product = {
