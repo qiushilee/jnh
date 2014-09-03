@@ -129,7 +129,8 @@
     change: "/business/save",
     add: "/business/save",
     del: "/business/delete",
-    addtoprintcart:"/business/addprintcart"//添加打印购物车
+    addprintcart:"/printcart/add",//添加打印购物车
+    delprintcart:"/printcart/delete"//删除打印购物车
   };
 
   //电话订购
