@@ -128,7 +128,8 @@
     list: "/business/memberlist",
     change: "/business/save",
     add: "/business/save",
-    del: "/business/delete"
+    del: "/business/delete",
+    addtoprintcart:"/business/addprintcart"//添加打印购物车
   };
 
   //电话订购
