@@ -129,7 +129,7 @@
     change: "/business/save",
     add: "/business/save",
     del: "/business/delete",
-    addprintcart:"/printcart/add",//添加打印购物车
+    addprintcart:"/printcart/create",//添加打印购物车
     delprintcart:"/printcart/delete"//删除打印购物车
   };
 
