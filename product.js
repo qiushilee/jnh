@@ -202,11 +202,15 @@ Ext.application({
               listeners: {
                 itemdblclick: function (that, record, item, index, e, eOpts) {
                   var form = productEdit.getComponent("form").getForm();
+
                   form.findField("address").setDisabled(true);
                   form.findField("productCode").setDisabled(true);
+                  form.url = env.services.web + env.api.product.change;
+
                   productEdit.show();
                   productEdit.setTitle("查看库存详情");
-                  window.updateForm(productEdit.getComponent("form").getForm(), record.data);
+
+                  window.updateForm(form, record.data);
                 }
               }
             },
@@ -532,15 +536,12 @@ Ext.application({
                 text: "<span class=\"key\">S</span> 保存",
                 handler: function () {
                   var form = this.up("form").getForm();
-                  form.url = env.services.web + env.api.product.change;
                   form.submit({
                     success: function (form, action) {
                       productEdit.hide();
                     },
                     failure: function (form, action) {
-                      Ext.Msg.alert("修改库存", action.result.msg, function() {
-                        productEdit.hide();
-                      });
+                      Ext.Msg.alert("修改库存", action.result.msg);
                     }
                   });
                 }
