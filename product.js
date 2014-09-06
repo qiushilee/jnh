@@ -539,6 +539,7 @@ Ext.application({
                   form.submit({
                     success: function (form, action) {
                       productEdit.hide();
+                      Ext.data.StoreManager.lookup("product").load();
                     },
                     failure: function (form, action) {
                       Ext.Msg.alert("修改库存", action.result.msg);
