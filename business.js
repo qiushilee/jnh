@@ -122,7 +122,14 @@ Ext.application({
                         flex: 1,
                         dataIndex: 'source'
                       }
-                    ]
+                    ],
+                    listeners: {
+                      itemdblclick: function (that, record, item, index, e, eOpts) {
+                        var form = this.ownerCt.ownerCt.ownerCt.getComponent("memberContainer").getComponent("member").getForm();
+
+                        window.updateForm(form, record.data);
+                      }
+                    }
                   }
                 ]
                 }, {
@@ -204,6 +211,7 @@ Ext.application({
                 ]
                 },
                 {
+                  itemId: "memberContainer",
                   xtype: "panel",
                   layout: "column",
                   border: 0,
