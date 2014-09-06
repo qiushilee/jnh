@@ -31,7 +31,7 @@ Ext.application({
             {
               itemId: "searchBar",
               xtype: "form",
-              url: env.services.web + env.api.member.list,
+              url: env.services.web + env.api.business.list,
               layout: "hbox",
               bodyPadding: 10,
               defaultType: 'textfield',
