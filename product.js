@@ -455,7 +455,11 @@ Ext.application({
                   },
                   success: function (resp) {
                     var data = Ext.JSON.decode(resp.responseText);
-                    form.findField("address").setValue(data.info.address);
+                    if (data.success) {
+                      form.findField("address").setValue(data.info.address);
+                    } else {
+                      Ext.Msg.alert("填充地址", data.msg);
+                    }
                   }
                 });
               }
