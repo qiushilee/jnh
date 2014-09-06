@@ -220,7 +220,6 @@ Ext.application({
                 productEdit.setTitle("新增库存");
 
                 form.reset();
-                form.findField("address").setDisabled(false);
                 form.findField("productCode").setDisabled(false);
 
                 form.url = env.services.web + env.api.product.add;
@@ -444,16 +443,15 @@ Ext.application({
             labelAlign: "right",
             listeners: {
               blur: function(that) {
-                var form = this.up("form");
+                var form = this.up("form").getForm();
                 Ext.Ajax.request({
-                  url: env.api.company.findByCompanyCode,
+                  url: env.services.web + env.api.company.findByCompanyCode,
                   params: {
                     companyCode: that.value
                   },
                   success: function (resp) {
                     var data = Ext.JSON.decode(resp.responseText);
-                    form.findField("address").setValue(data.info[0]);
-                    console.log(data);
+                    form.findField("address").setValue(data.info.address);
                   }
                 });
               }
@@ -463,6 +461,7 @@ Ext.application({
             labelWidth: 70,
             width: 300,
             name: "address",
+            disabled: true,
             labelAlign: "right"
           }, {
             fieldLabel: "货号",
