@@ -56,7 +56,8 @@
     del: "/company/del/companyId/",
     add: "/company/create",
     change: "/company/update",
-    copy: "/company/copy"   //厂商复制
+    copy: "/company/copy",   //厂商复制
+    findByCompanyCode:"/company/findbycompanycode"//根据厂商编号获取企业信息
   };
 
   env.api.product = {
@@ -127,7 +128,9 @@
     list: "/business/memberlist",
     change: "/business/save",
     add: "/business/save",
-    del: "/business/delete"
+    del: "/business/delete",
+    addprintcart:"/printcart/create",//添加打印购物车
+    delprintcart:"/printcart/delete"//删除打印购物车
   };
 
   //电话订购
