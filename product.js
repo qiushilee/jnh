@@ -201,7 +201,11 @@ Ext.application({
               ],
               listeners: {
                 itemdblclick: function (that, record, item, index, e, eOpts) {
+                  var form = productEdit.getComponent("form").getForm();
+                  form.findField("address").setDisabled(true);
+                  form.findField("productCode").setDisabled(true);
                   productEdit.show();
+                  productEdit.setTitle("查看库存详情");
                   window.updateForm(productEdit.getComponent("form").getForm(), record.data);
                 }
               }
@@ -212,8 +216,15 @@ Ext.application({
               margin: "20 0 0 0",
               scale: "medium",
               handler: function () {
-                productAdd.getComponent("form").getForm().reset();
-                productAdd.show();
+                var form = productEdit.getComponent("form").getForm();
+                productEdit.setTitle("新增库存");
+
+                form.reset();
+                form.findField("address").setDisabled(false);
+                form.findField("productCode").setDisabled(false);
+
+                form.url = env.services.web + env.api.product.add;
+                productEdit.show();
               }
             },
             {
@@ -422,65 +433,88 @@ Ext.application({
           xtype: "form",
           border: 0,
           defaultType: 'textfield',
-          items: [Ext.create("periodical"), {
-            fieldLabel: "厂商地址",
-            labelWidth: 60,
+          items: [
+          Ext.create("periodical", {
+            labelWidth: 70,
+          }), {
+            fieldLabel: "厂商编号",
+            labelWidth: 70,
             width: 300,
-            disabled: true,
+            name: "companyCode",
+            labelAlign: "right",
+            listeners: {
+              blur: function(that) {
+                var form = this.up("form");
+                Ext.Ajax.request({
+                  url: env.api.company.findByCompanyCode,
+                  params: {
+                    companyCode: that.value
+                  },
+                  success: function (resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    form.findField("address").setValue(data.info[0]);
+                    console.log(data);
+                  }
+                });
+              }
+            }
+          }, {
+            fieldLabel: "厂商地址",
+            labelWidth: 70,
+            width: 300,
             name: "address",
             labelAlign: "right"
           }, {
             fieldLabel: "货号",
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
-            disabled: true,
             name: "productCode",
             labelAlign: "right"
           }, {
             fieldLabel: '品名',
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
             name: "name",
             labelAlign: "right"
           }, {
             fieldLabel: '进价',
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
             name: "purchasePrice",
             labelAlign: "right"
           }, {
             fieldLabel: '包装形式',
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
             labelAlign: "right",
             name: 'bagShape',
           }, {
             fieldLabel: '重量',
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
             name: "weight",
             labelAlign: "right"
           }, {
             fieldLabel: '售价',
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
             name: "price",
             labelAlign: "right"
           }, {
             fieldLabel: '商品说明',
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
             name: "content",
             labelAlign: "right"
           }, {
             fieldLabel: '调整基数',
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
             name: "cardinalNumber",
             labelAlign: "right"
           }, {
             fieldLabel: '安全库存量',
-            labelWidth: 60,
+            labelWidth: 70,
             width: 300,
             name: 'safetyStock',
             labelAlign: "right"
@@ -502,12 +536,12 @@ Ext.application({
                   form.url = env.services.web + env.api.product.change;
                   form.submit({
                     success: function (form, action) {
-                      Ext.Msg.alert("修改库存", action.result.msg, function () {
-                        productEdit.hide();
-                      });
+                      productEdit.hide();
                     },
                     failure: function (form, action) {
-                      Ext.Msg.alert("修改库存", action.result.msg);
+                      Ext.Msg.alert("修改库存", action.result.msg, function() {
+                        productEdit.hide();
+                      });
                     }
                   });
                 }
@@ -518,130 +552,6 @@ Ext.application({
                 text: "<span class=\"key\">E</span> 返回",
                 handler: function () {
                   productEdit.hide();
-                }
-              }
-            ]
-          }]
-        }
-      ]
-    });
-
-    //新增
-    var productAdd = new Ext.create("Ext.window.Window", {
-      title: "新增库存",
-      width: 400,
-      layout: 'vbox',
-      bodyPadding: 5,
-      closeAction: 'hide',
-      fieldDefaults: {
-        labelAlign: 'top'
-      },
-      bodyStyle: {
-        background: "#fff"
-      },
-      items: [
-        {
-          itemId: "form",
-          xtype: "form",
-          border: 0,
-          defaultType: 'textfield',
-          items: [Ext.create("periodical"), {
-            fieldLabel: "厂商编号",
-            labelWidth: 60,
-            width: 300,
-            name: "companyCode",
-            labelAlign: "right"
-          }, {
-            fieldLabel: "货号",
-            labelWidth: 60,
-            width: 300,
-            name: "productCode",
-            labelAlign: "right"
-          }, {
-            fieldLabel: '品名',
-            labelWidth: 60,
-            width: 300,
-            name: "name",
-            labelAlign: "right"
-          }, {
-            fieldLabel: '进价',
-            labelWidth: 60,
-            width: 300,
-            name: "purchasePrice",
-            labelAlign: "right"
-          }, {
-            fieldLabel: '包装形式',
-            labelWidth: 60,
-            width: 300,
-            labelAlign: "right",
-            name: 'bagShape',
-          }, {
-            fieldLabel: '重量',
-            labelWidth: 60,
-            width: 300,
-            name: "weight",
-            labelAlign: "right"
-          }, {
-            fieldLabel: '进货说明',
-            labelWidth: 60,
-            width: 300,
-            name: "remark",
-            labelAlign: "right"
-          }, {
-            fieldLabel: '售价',
-            labelWidth: 60,
-            width: 300,
-            name: "price",
-            labelAlign: "right"
-          }, {
-            fieldLabel: '商品说明',
-            labelWidth: 60,
-            width: 300,
-            name: "content",
-            labelAlign: "right"
-          }, {
-            fieldLabel: '调整基数',
-            labelWidth: 60,
-            width: 300,
-            name: "cardinalNumber",
-            labelAlign: "right"
-          }, {
-            fieldLabel: '安全库存量',
-            labelWidth: 60,
-            width: 300,
-            name: 'safetyStock',
-            labelAlign: "right"
-          }, {
-            xtype: 'panel',
-            layout: "hbox",
-            border: 0,
-            margin: "0 0 0 53",
-            items: [
-              {
-                xtype: 'button',
-                margin: "0 0 0 10",
-                text: "<span class=\"key\">A</span> 增加",
-                handler: function () {
-                  var form = this.up("form").getForm();
-                  form.url = env.services.web + env.api.product.add;
-                  form.submit({
-                    success: function (form, action) {
-                      Ext.Msg.alert("新增库存", action.result.msg, function () {
-                        productAdd.hide();
-                      });
-                    },
-                    failure: function (form, action) {
-                      Ext.Msg.alert("新增库存", action.result.msg);
-                    }
-                  });
-                }
-              },
-              {
-                xtype: 'button',
-                margin: "0 0 0 10",
-                text: "<span class=\"key\">E</span> 返回",
-                handler: function () {
-                  productAdd.hide();
                 }
               }
             ]
@@ -917,9 +827,5 @@ Ext.application({
         }
       ]
     });
-
-    // add.show();
-    // addJzs.show();
-    // addJHD.show();
   }
 });
