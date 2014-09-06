@@ -18,6 +18,22 @@ Ext.application({
       }
     });
 
+    //进货单
+    Ext.create('Ext.data.Store', {
+      storeId: 'receipt',
+      fields: ['id', "receiptCode", 'receiptDate', 'purchaseAmount', "remark"],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.receipt.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     // 进货单——商品详情
     Ext.create('Ext.data.Store', {
       storeId: 'jhdProduct',
@@ -214,8 +230,12 @@ Ext.application({
               scale: "medium",
               handler: function () {
                 try {
-                  //厂商ID
-                  var productCode = productlist.getComponent("product").getComponent("productList").getSelectionModel().getSelection()[0].data.productCode;
+                  var data = productlist.getComponent("product").getComponent("productList").getSelectionModel().getSelection()[0].data;
+                  var form = productlist.getComponent("transitionLoss").getComponent("form").getForm();
+
+                  window.updateForm(form, data);
+                  productlist.setActiveTab(1);
+                  searchHandler.call(form, "transitionLoss");
                 } catch (e) {
                   Ext.Msg.alert("查看进货单", "请单击库存表中的一项后再查看进货单");
                 }
@@ -224,10 +244,12 @@ Ext.application({
           ]
         },
         {
+          itemId: "transitionLoss",
           title: '进转损',
           padding: 15,
           items: [
             {
+              itemId: "form",
               xtype: "form",
               border: 0,
               url: env.services.web + env.api.product.transitionLoss,
