@@ -4,7 +4,7 @@ Ext.application({
 
      var dataList = Ext.create('Ext.data.Store', {
       storeId: 'dataList',
-      fields: ['key', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','packaging','userName','address','packageRemark'],
+      fields: ['key', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','bjtimes','packaging','userName','address','packageRemark'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -151,6 +151,10 @@ Ext.application({
           }, {
             text: '邮资',
             dataIndex: 'postage',
+            flex: 1
+          },{
+            text: '补寄',
+            dataIndex: 'bjtimes',
             flex: 1
           }, {
             text: '包装员',
