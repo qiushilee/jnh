@@ -313,6 +313,7 @@ Ext.application({
                               form.submit({
                                 success: function(form, action) {
                                   Ext.data.StoreManager.lookup("memberList").load();
+                                  form.reset();
                                 },
                                 failure: function(form, action) {
                                   Ext.Msg.alert("增加名单", action.result.msg);
@@ -327,7 +328,8 @@ Ext.application({
                               form.url = env.services.web + env.api.business.change;
                               form.submit({
                                 success: function(form, action) {
-                                  console.log(action)
+                                  Ext.data.StoreManager.lookup("memberList").load();
+                                  form.reset();
                                 },
                                 failure: function(form, action) {
                                   Ext.Msg.alert("修改名单", action.result.msg);
@@ -338,6 +340,7 @@ Ext.application({
                           }, {
                             xtype: "button",
                             text: "<span class=\"key\">S</span> 保存",
+                            disabled: true,
                             handler: function() {
                               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
                               form.url = env.services.web + env.api.business.save;
@@ -356,19 +359,19 @@ Ext.application({
                           }, {
                             xtype: "button",
                             text: "<span class=\"key\">Q</span> 添加",
+                            disabled: true,
                             handler: function() {
                               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
                               form.url = env.services.web + env.api.business.create;
-                              if (form.isValid()) {
-                                form.submit({
-                                  success: function(form, action) {
-                                    console.log(action)
-                                  },
-                                  failure: function(form, action) {
-                                    Ext.Msg.alert("添加名单", action.result.msg);
-                                  }
-                                });
-                              }
+                              form.submit({
+                                success: function(form, action) {
+                                  Ext.data.StoreManager.lookup("memberList").load();
+                                  form.reset();
+                                },
+                                failure: function(form, action) {
+                                  Ext.Msg.alert("添加名单", action.result.msg);
+                                }
+                              });
                             },
                             margin: "0 0 0 20"
                           }, {
