@@ -194,78 +194,89 @@ Ext.application({
                             border: 0,
                             margin: "15 0 0 0",
                             items: [{
-                              xtype:'form',
+                              xtype: "form",
                               itemId: "member",
-                              layout: "hbox",
                               border: 0,
-                              defaultType: 'textfield',
-                              items: [Ext.create("memberType"), {
-                                fieldLabel: "姓名",
-                                labelWidth: 60,
-                                width: 120,
-                                labelAlign: "right",
-                                name:"realName"
-                              },Ext.create("deliveryMethod"), {
-                                xtype: "datefield",
-                                fieldLabel: "毕业时间",
-                                labelWidth: 60,
-                                labelAlign: "right",
-                                name:"graduateDate"
-                              },  Ext.create("periodical")]
-                              }, {
-
+                              items: [{
+                                xtype:'panel',
                                 layout: "hbox",
                                 border: 0,
                                 defaultType: 'textfield',
-                                margin: "10 0 0 0",
-                                items: [Ext.create("addressType"), {
-                                  xtype: 'textfield',
-                                  fieldLabel: "邮编",
-                                  name: "zipCode",
-                                  labelWidth: 40,
-                                  width: 100,
-                                  labelAlign: "right"
+                                items: [
+                                  Ext.create("memberType"),
+                                  {
+                                    fieldLabel: "姓名",
+                                    labelWidth: 60,
+                                    width: 120,
+                                    labelAlign: "right",
+                                    name:"realName"
+                                  },
+                                  Ext.create("deliveryMethod"),
+                                  {
+                                    xtype: "datefield",
+                                    fieldLabel: "毕业时间",
+                                    labelWidth: 60,
+                                    labelAlign: "right",
+                                    name:"graduateDate"
+                                  },
+                                  Ext.create("periodical")
+                                ]
                                 }, {
-                                  xtype: 'textfield',
-                                  fieldLabel: "地址",
-                                  name: "address",
-                                  labelWidth: 60,
-                                  width: 300,
-                                  labelAlign: "right"
-                                }, {
-                                  xtype: 'textfield',
-                                  fieldLabel: "电话",
-                                  name: "mobile",
-                                  labelWidth: 40,
-                                  width: 145,
-                                  labelAlign: "right"
-                                }, {
-                                  xtype: 'textfield',
-                                  fieldLabel: "收件人",
-                                  name: "consignee",
-                                  labelWidth: 60,
-                                  width: 120,
-                                  labelAlign: "right"
-                                }, {
-                                  xtype: 'textfield',
-                                  fieldLabel: "索取数量",
-                                  name: "askNumber",
-                                  labelWidth: 60,
-                                  width: 120,
-                                  labelAlign: "right"
-                                }, {
-                                  xtype: 'button',
-                                  text: "设为默认",
-                                  margin: "0 0 0 10"
-                                }, {
-                                  xtype: 'button',
-                                  text: "删除",
-                                  margin: "0 0 0 10"
-                                }, {
-                                  xtype: 'button',
-                                  text: "增加地址",
-                                  margin: "0 0 0 10"
-                                }]
+                                  layout: "hbox",
+                                  border: 0,
+                                  defaultType: 'textfield',
+                                  margin: "10 0 0 0",
+                                  items: [
+                                    Ext.create("addressType"),
+                                    {
+                                      xtype: 'textfield',
+                                      fieldLabel: "邮编",
+                                      name: "zipCode",
+                                      labelWidth: 40,
+                                      width: 100,
+                                      labelAlign: "right"
+                                    }, {
+                                      xtype: 'textfield',
+                                      fieldLabel: "地址",
+                                      name: "address",
+                                      labelWidth: 60,
+                                      width: 300,
+                                      labelAlign: "right"
+                                    }, {
+                                      xtype: 'textfield',
+                                      fieldLabel: "电话",
+                                      name: "mobile",
+                                      labelWidth: 40,
+                                      width: 145,
+                                      labelAlign: "right"
+                                    }, {
+                                      xtype: 'textfield',
+                                      fieldLabel: "收件人",
+                                      name: "consignee",
+                                      labelWidth: 60,
+                                      width: 120,
+                                      labelAlign: "right"
+                                    }, {
+                                      xtype: 'textfield',
+                                      fieldLabel: "索取数量",
+                                      name: "askNumber",
+                                      labelWidth: 60,
+                                      width: 120,
+                                      labelAlign: "right"
+                                    }, {
+                                      xtype: 'button',
+                                      text: "设为默认",
+                                      margin: "0 0 0 10"
+                                    }, {
+                                      xtype: 'button',
+                                      text: "删除",
+                                      margin: "0 0 0 10"
+                                    }, {
+                                      xtype: 'button',
+                                      text: "增加地址",
+                                      margin: "0 0 0 10"
+                                    }]
+                                    }]
                                 // +TODO: 增加一个按钮：增加地址
                               }, {
                                 xtype:'panel',
@@ -279,16 +290,14 @@ Ext.application({
                                   handler: function() {
                                     var form = this.ownerCt.ownerCt.getComponent("member").getForm();
                                     form.url = env.services.web + env.api.business.add;
-                                    if (form.isValid()) {
-                                      form.submit({
-                                        success: function(form, action) {
-                                          console.log(action)
-                                        },
-                                        failure: function(form, action) {
-                                          Ext.Msg.alert("增加名单", action.result.msg);
-                                        }
-                                      });
-                                    }
+                                    form.submit({
+                                      success: function(form, action) {
+                                        Ext.data.StoreManager.lookup("memberList").load();
+                                      },
+                                      failure: function(form, action) {
+                                        Ext.Msg.alert("增加名单", action.result.msg);
+                                      }
+                                    });
                                   }
                                 }, {
                                   xtype: "button",
@@ -296,16 +305,14 @@ Ext.application({
                                   handler: function() {
                                     var form = this.ownerCt.ownerCt.getComponent("member").getForm();
                                     form.url = env.services.web + env.api.business.change;
-                                    if (form.isValid()) {
-                                      form.submit({
-                                        success: function(form, action) {
-                                          console.log(action)
-                                        },
-                                        failure: function(form, action) {
-                                          Ext.Msg.alert("修改名单", action.result.msg);
-                                        }
-                                      });
-                                    }
+                                    form.submit({
+                                      success: function(form, action) {
+                                        console.log(action)
+                                      },
+                                      failure: function(form, action) {
+                                        Ext.Msg.alert("修改名单", action.result.msg);
+                                      }
+                                    });
                                   },
                                   margin: "0 0 0 20"
                                 }, {
