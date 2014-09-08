@@ -210,6 +210,13 @@ Ext.application({
         margin: "0 0 0 10"
       }, {
         xtype: "button",
+        text: "补寄",
+        handler: function() {
+          bujiDetail.show();
+        },
+        margin: "0 0 0 10"
+      }, {
+        xtype: "button",
         text: "<span class=\"key\">D</span> 打印",
         margin: "0 0 0 10",
         handler: function() {
@@ -694,21 +701,10 @@ Ext.application({
           border: 0,
           defaultType: 'button',
           items: [{
-            text: "修改"
-          }, {
-            text: "保存",
-            margin: "0 0 0 10"
+            text: "保存"
           }]
         }
       ]
     });
-
-    // search.hide();
-    // list.hide();
-    // button.hide();
-   // add.show();
-   // print.show();
-  //  printCart.show();
-   // bujiDetail.show();
   }
 });
