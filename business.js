@@ -370,12 +370,12 @@ Ext.application({
                             handler: function() {
                               var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
                               .getSelectionModel()
-                              .getSelection()[0];
+                              .getSelection()[0].data;
 
                               Ext.Ajax.request({
                                 url: env.services.web + env.api.business.addprintcart,
                                 params: {
-                                  memberId: record.userCode
+                                  memberId: record.id
                                 },
                                 success: function(resp) {
                                   var data = Ext.JSON.decode(resp.responseText);
