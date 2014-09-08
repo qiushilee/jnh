@@ -2,6 +2,8 @@
 Ext.application({
   name: "JNH",
   launch: function() {
+    window.telorderCurrent = {};
+
     //电话订购列表
     Ext.create('Ext.data.Store', {
       storeId: 'orderList',
@@ -115,29 +117,6 @@ Ext.application({
             xtype: "button",
             text: "<span class=\"key\">N</span> 修改",
             handler: function() {
-              var $container = this.ownerCt.ownerCt,
-                  $sidebar = $container.ownerCt.getComponent("sidebar"),
-                  $sidebarForm = $sidebar.getComponent("searchbar").getForm(),
-                  form = $container.getComponent("member").getForm(),
-                  currentData = $container.getComponent("grid").getSelectionModel().getSelection()[0].data;
-
-              window.telorderCurrent = currentData;
-              searchHandler.call($sidebarForm, "orderproduct");
-              $sidebarForm.findField("deliveryorderId").setValue(currentData.id);
-              if (currentData.deliveryOrderCode) {
-                $sidebarForm.findField("deliveryOrderCode").setValue(currentData.deliveryOrderCode);
-                $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(true);
-              } else {
-                $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(false);
-              }
-              $sidebar.getComponent("detail").getForm().findField("deliveryorderId").setValue(currentData.id);
-              updateForm(form, currentData);
-            },
-            margin: "0 0 0 20"
-          }, {
-            xtype: "button",
-            text: "<span class=\"key\">W</span> 保存",
-            handler: function() {
               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
               form.url = env.services.web + env.api.telorder.change.member;
               form.submit({
@@ -247,41 +226,69 @@ Ext.application({
           itemId: "grid",
           xtype: "grid",
           store: Ext.data.StoreManager.lookup('orderList'),
-          selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
           margin: "20 0 0 0",
           columns: [
             {
               text: '序号',
               dataIndex: 'key',
-              flex: 1},
+              flex: 1
+            },
             {
               text: '出货单号',
               dataIndex: 'deliveryOrderCode',
               flex: 1
-            }, {
+            },
+            {
               text: '抵价券',
               dataIndex: 'preferentialTicket',
               flex: 1
-            }, {
+            },
+            {
               text: '不打折金额',
               dataIndex: 'unDiscountAmount'
-            }, {
+            },
+            {
               text: '青春贴',
               dataIndex: 'youthStuck',
               flex: 1
-            }, {
+            },
+            {
               text: '寄送方式',
               dataIndex: 'deliveryMethodName',
               flex: 1
-            }, {
+            },
+            {
               text: '邮资',
               dataIndex: 'postage',
               flex: 1
-            }, {
+            },
+            {
               text: '应付款',
               dataIndex: 'receivableAmount',
               flex: 1
-            }]
+            }
+          ],
+          listeners: {
+            itemdblclick: function( that, record, item, index, e, eOpts) {
+              var $container = this.ownerCt,
+                  $sidebar = $container.ownerCt.getComponent("sidebar"),
+                  $sidebarForm = $sidebar.getComponent("searchbar").getForm(),
+                  form = $container.getComponent("member").getForm(),
+                  currentData = record.data;
+
+              window.telorderCurrent = currentData;
+              searchHandler.call($sidebarForm, "orderproduct");
+              $sidebarForm.findField("deliveryorderId").setValue(currentData.id);
+              if (currentData.deliveryOrderCode) {
+                $sidebarForm.findField("deliveryOrderCode").setValue(currentData.deliveryOrderCode);
+                $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(true);
+              } else {
+                $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(false);
+              }
+              $sidebar.getComponent("detail").getForm().findField("deliveryorderId").setValue(currentData.id);
+              updateForm(form, currentData);
+            }
+          }
         }, {
           xtype:'panel',
           layout: "hbox",
