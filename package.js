@@ -121,7 +121,6 @@ Ext.application({
           xtype: "grid",
           title: "包裹列表",
           store: Ext.data.StoreManager.lookup('dataList'),
-          selModel: Ext.create('Ext.selection.CheckboxModel', {mode: "SIMPLE"}),
           border: 0,
           columnWidth: 0.5,
           columns: [{
@@ -172,7 +171,18 @@ Ext.application({
             text: '备注',
             dataIndex: 'packageRemark',
             flex: 1
-          }]
+          }],
+          listeners: {
+            itemdblclick: function( that, record, item, index, e, eOpts) {
+              var form = add.getComponent("form").getForm(),
+                  data = record.data;
+
+              add.show();
+              window.create = false;
+
+              updateForm(form, data);
+            }
+          }
         }
       ]
     });
@@ -183,23 +193,6 @@ Ext.application({
       border: 0,
       layout: "column",
       items: [{
-        xtype: "button",
-        text: "<span class=\"key\">M</span> 修改",
-        handler: function() {
-          try {
-            var form = add.getComponent("form").getForm(),
-                data = list.getComponent("grid").getSelectionModel().getSelection()[0].data;          
-
-            add.show();
-            window.create = false;
-
-            updateForm(form, data);
-          } catch(e) {
-            Ext.Msg.alert("修改操作", "请单击表中的一项后再修改");
-          }
-        },
-        margin: "0 0 0 10"
-      }, {
         // 添加到打印购物车
         xtype: "button",
         text: "<span class=\"key\">W</span> 添加",

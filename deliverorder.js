@@ -85,9 +85,12 @@ Ext.application({
         ],
         listeners: {
           afterlayout: function(that) {
-            var form = that.getForm()
-            form.findField("userCode").setValue(location.search.replace(/.*=/, ""));
-            searchHandler.call(that, "list");
+            var memberId = location.search.replace(/.*=/, "");
+            if (memberId) {
+              var form = that.getForm()
+              form.findField("userCode").setValue(memberId);
+              searchHandler.call(that, "list");
+            }
           }
         }
       });
