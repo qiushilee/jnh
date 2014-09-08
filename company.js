@@ -72,7 +72,6 @@ Ext.application({
     var cs = Ext.create('Ext.grid.Panel', {
       title: '厂商管理列表',
       store: Ext.data.StoreManager.lookup('companyList'),
-      selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
       columns: [{
         text: '厂商编号',
         dataIndex: 'companyCode'
@@ -97,6 +96,16 @@ Ext.application({
         dataIndex: 'qq',
         flex: 1
       }],
+      listeners: {
+        itemdblclick: function( that, record, item, index, e, eOpts) {
+          var form = win.getComponent("form").getForm(),
+              currentProduct = record.data;
+          form.url = env.services.web + env.api.company.change;
+          form.reset();
+          window.updateForm(form, currentProduct);
+          win.show();
+        }
+      },
       renderTo: window.$bd
     });
 
@@ -113,18 +122,6 @@ Ext.application({
           var form = win.getComponent("form").getForm();
           form.url = env.services.web + env.api.company.add;
           form.reset();
-          win.show();
-        }
-      }, {
-        xtype: "button",
-        text: "修改",
-        margin: "0 0 0 10",
-        handler: function() {
-          var form = win.getComponent("form").getForm(),
-              currentProduct = cs.getSelectionModel().getSelection()[0].data;
-          form.url = env.services.web + env.api.company.change;
-          form.reset();
-          window.updateForm(form, currentProduct);
           win.show();
         }
       }, {
