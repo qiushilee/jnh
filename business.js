@@ -367,17 +367,27 @@ Ext.application({
                           }, {
                             xtype: "button",
                             text: "<span class=\"key\">Q</span> 添加",
-                            disabled: true,
                             handler: function() {
-                              var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-                              form.url = env.services.web + env.api.business.create;
-                              form.submit({
-                                success: function(form, action) {
-                                  Ext.data.StoreManager.lookup("memberList").load();
-                                  form.reset();
+                              var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                              .getSelectionModel()
+                              .getSelection()[0];
+
+                              Ext.Ajax.request({
+                                url: env.services.web + env.api.business.addprintcart,
+                                params: {
+                                  memberId: record.userCode
                                 },
-                                failure: function(form, action) {
-                                  Ext.Msg.alert("添加名单", action.result.msg);
+                                success: function(resp) {
+                                  var data = Ext.JSON.decode(resp.responseText);
+                                  console.log(data);
+                                },
+                                failure: function(resp) {
+                                  try {
+                                    var data = Ext.JSON.decode(resp.responseText);
+                                    Ext.Msg.alert("添加到打印购物车", data.msg);
+                                  } catch(e) {
+                                    console.error(e.stack);
+                                  }
                                 }
                               });
                             },
