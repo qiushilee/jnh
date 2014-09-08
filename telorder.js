@@ -21,10 +21,11 @@ Ext.application({
 
     Ext.data.StoreManager.lookup("orderList").load({
       params: {
-        id: location.search.replace(/.*=/, "")
+        memberId: location.search.replace(/.*=/, "")
       },
       callback: function(records) {
-        console.log(records);
+        var form = Ext.ComponentQuery.query("form[itemId=member]")[0].getForm();
+        updateForm(form, records[0].data);
       }
     });
 
