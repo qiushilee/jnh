@@ -368,28 +368,32 @@ Ext.application({
                             xtype: "button",
                             text: "<span class=\"key\">Q</span> 添加",
                             handler: function() {
-                              var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
-                              .getSelectionModel()
-                              .getSelection()[0].data;
+                              try {
+                                var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                                .getSelectionModel()
+                                .getSelection()[0].data;
 
-                              Ext.Ajax.request({
-                                url: env.services.web + env.api.business.addprintcart,
-                                params: {
-                                  memberId: record.id
-                                },
-                                success: function(resp) {
-                                  var data = Ext.JSON.decode(resp.responseText);
-                                  console.log(data);
-                                },
-                                failure: function(resp) {
-                                  try {
+                                Ext.Ajax.request({
+                                  url: env.services.web + env.api.business.addprintcart,
+                                  params: {
+                                    memberId: record.id
+                                  },
+                                  success: function(resp) {
                                     var data = Ext.JSON.decode(resp.responseText);
-                                    Ext.Msg.alert("添加到打印购物车", data.msg);
-                                  } catch(e) {
-                                    console.error(e.stack);
+                                    console.log(data);
+                                  },
+                                  failure: function(resp) {
+                                    try {
+                                      var data = Ext.JSON.decode(resp.responseText);
+                                      Ext.Msg.alert("添加到打印购物车", data.msg);
+                                    } catch(e) {
+                                      console.error(e.stack);
+                                    }
                                   }
-                                }
-                              });
+                                });
+                              } catch (e) {
+                                Ext.Msg.alert("添加打印购物车", "请选中列表中的一项后再操作");
+                              }
                             },
                             margin: "0 0 0 20"
                           }, {
