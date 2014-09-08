@@ -64,7 +64,7 @@
     list: "/product/index",
     change: "/product/update",
     add: "/product/create",
-    del: "",
+    del:"/product/delete",
     shipmentDetails:'/product/shipmentdetails',//出货明细
     delShipmentDetails:'',//删除出货明细
     transitionLoss:'/product/transitionLoss',//进转损
