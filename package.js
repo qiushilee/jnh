@@ -204,7 +204,7 @@ Ext.application({
         xtype: "button",
         text: "<span class=\"key\">W</span> 添加",
         handler: function() {
-          add.show();
+          printCart.show();
           window.create = true;
         },
         margin: "0 0 0 10"
