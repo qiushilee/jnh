@@ -630,7 +630,6 @@ Ext.application({
                   var form = this.up("form").getForm();
                   form.submit({
                     success: function (form, action) {
-                      Ext.Msg.alert("增加进转损", action.result.msg);
                     },
                     failure: function (form, action) {
                       Ext.Msg.alert("增加进转损", action.result.msg);
@@ -799,7 +798,6 @@ Ext.application({
                 var form = addJHD.getComponent("form").getForm();
                 form.submit({
                   success: function(form, action) {
-                    Ext.Msg.alert("修改", action.result.msg);
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("修改", action.result.msg);
@@ -821,9 +819,7 @@ Ext.application({
                   },
                   success: function (resp) {
                     var data = Ext.JSON.decode(resp.responseText);
-                    Ext.Msg.alert("删除", data.msg, function() {
-                      Ext.data.StoreManager.lookup('jhdProduct').remove(record);
-                    });
+                    Ext.data.StoreManager.lookup('jhdProduct').remove(record);
                   }
                 });
               }

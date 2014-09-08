@@ -253,11 +253,9 @@ Ext.application({
               console.log(form.url);
               form.submit({
                 success: function(form, action) {
-                  Ext.Msg.alert("保存", action.result.msg, function() {
-                    form.reset();
-                    win.hide();
-                    companyList.load();
-                  });
+                  form.reset();
+                  win.hide();
+                  companyList.load();
                 },
                 failure: function(form, action) {
                   Ext.Msg.alert("保存", action.result.msg);

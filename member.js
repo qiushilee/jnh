@@ -237,7 +237,6 @@ Ext.onReady(function() {
                 form.submit({
                   success: function(form, action) {
                     Ext.data.StoreManager.lookup('memberList').loadData(action.result.list);
-                    Ext.Msg.alert("添加会员", action.result.msg);
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("添加会员", action.result.msg);
@@ -257,7 +256,6 @@ Ext.onReady(function() {
               Ext.Ajax.request({
                 url: env.services.web + env.api.member.del +'id/'+ member.id,
                 success: function(response) {
-                  Ext.Msg.alert("删除成功", "您已成功删除会员：" + member.realName);
                 },
                 failure: function(form, action) {
                   Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
@@ -594,7 +592,6 @@ Ext.onReady(function() {
                 Ext.Ajax.request({
                   url: env.services.web + env.api.order.del + data.id,
                   success: function(response) {
-                    Ext.Msg.alert("删除成功", "您已成功删除汇款订购：" + order.id);
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
@@ -1133,9 +1130,7 @@ Ext.onReady(function() {
             form.url = env.services.web + env.api.order.add;
             form.submit({
               success: function(form, action) {
-                Ext.Msg.alert("新增汇款订购", action.result.msg, function() {
-                  addOrder.hide();
-                });
+                addOrder.hide();
               },
               failure: function(form, action) {
                 Ext.Msg.alert("新增汇款订购", action.result.msg);

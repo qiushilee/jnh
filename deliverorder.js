@@ -448,19 +448,18 @@ Ext.application({
                       xtype: "button",
                       text: "<span class=\"key\">A</span> 增加",
                       margin: "0 0 0 10",
-					  handler: function() {
-						  var form =  list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm();
-						  form.url = env.services.web + env.api.deliverorder.saveorderproduct;
-						  form.submit({
-							   success: function(form, action) {
-								Ext.Msg.alert("新增订单产品", action.result.msg);
-								form.reset();
-							  },
-							  failure: function(form, action) {
-								Ext.Msg.alert("修改订单产品", action.result.msg);
-							  }
-						  });
-						}
+                      handler: function() {
+                        var form =  list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm();
+                        form.url = env.services.web + env.api.deliverorder.saveorderproduct;
+                        form.submit({
+                          success: function(form, action) {
+                            form.reset();
+                          },
+                          failure: function(form, action) {
+                            Ext.Msg.alert("修改订单产品", action.result.msg);
+                          }
+                        });
+                      }
                     },
                     {
                       xtype: "button",
@@ -471,21 +470,19 @@ Ext.application({
                       xtype: "button",
                       text: "<span class=\"key\">M</span> 修改",
                       margin: "0 0 0 10",
-					  handler: function() {
-						  //需要传递id参数
-						  var form = this.up("form").getForm();
-						  form.url = env.services.web + env.api.deliverorder.saveorderproduct;
-						  form.submit({
-							success: function(form, action) {
-							  Ext.Msg.alert("修改订单产品", action.result.msg, function() {
-								product.hide();
-							  });
-							},
-							failure: function(form, action) {
-							  Ext.Msg.alert("修改订单产品", action.result.msg);
-							}
-						  });
-						}
+                      handler: function() {
+                        //需要传递id参数
+                        var form = this.up("form").getForm();
+                        form.url = env.services.web + env.api.deliverorder.saveorderproduct;
+                        form.submit({
+                          success: function(form, action) {
+                            product.hide();
+                          },
+                          failure: function(form, action) {
+                            Ext.Msg.alert("修改订单产品", action.result.msg);
+                          }
+                        });
+                      }
                     },
                    
                     {

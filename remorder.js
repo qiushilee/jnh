@@ -419,9 +419,7 @@ Ext.application({
                   form.url = env.services.web + env.api.order.create;
                   form.submit({
                     success: function(form, action) {
-                      Ext.Msg.alert("新增汇款订购", action.result.msg, function() {
-                        addOrder.hide();
-                      });
+                      addOrder.hide();
                     },
                     failure: function(form, action) {
                       Ext.Msg.alert("新增汇款订购", action.result.msg);

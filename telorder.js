@@ -106,7 +106,6 @@ Ext.application({
                 form.submit({
                   success: function(form, action) {
                     telorderCurrent.memberId = action.result.id;
-                    Ext.Msg.alert("增加", action.result.msg);
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("增加", action.result.msg);
@@ -122,7 +121,6 @@ Ext.application({
               form.url = env.services.web + env.api.telorder.change.member;
               form.submit({
                 success: function(form, action) {
-                  Ext.Msg.alert("保存", action.result.msg);
                 },
                 failure: function(form, action) {
                   Ext.Msg.alert("保存", action.result.msg);
@@ -537,9 +535,7 @@ Ext.application({
                 form.url = env.services.web + env.api.telorder.change.order;
                 form.submit({
                   success: function(form, action) {
-                    Ext.Msg.alert("修改", action.result.msg, function() {
-                      searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
-                    });
+                    searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("修改", action.result.msg);
