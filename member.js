@@ -2,7 +2,7 @@ Ext.onReady(function() {
   // 会员列表
   var memberList = Ext.create('Ext.data.Store', {
     storeId: 'memberList',
-    fields: ['addrList', 'userCode', 'realName', 'source', "address1", "address2"],
+    fields: ['addrList', 'userCode', 'realName', 'source', "address1", "address2", "memberId"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -34,7 +34,7 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ['id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod", "memberType"],
+    fields: ["key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod", "memberType"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -563,7 +563,14 @@ Ext.onReady(function() {
             text: '来源',
             dataIndex: 'source'
           }
-        ]
+        ],
+        listeners: {
+          itemdblclick: function (that, record, item, index, e, eOpts) {
+            var form = addOrder.getComponent("orderForm").getForm();
+            updateForm(form, record.data);
+            addOrder.show();
+          }
+        }
       },
       {
         xtype: "panel",
@@ -604,7 +611,7 @@ Ext.onReady(function() {
             text: "订单详情",
             margin: "0 0 0 10",
             handler: function() {
-              var record = Ext.ComponentQuery.query("grid[itemId=orderlist]")[0]
+              var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
               .getSelectionModel()
               .getSelection()[0].data;
 
