@@ -491,7 +491,10 @@ Ext.application({
                     {
                       xtype: "button",
                       text: "<span class=\"key\">H</span> 预览",
-                      margin: "0 0 0 10"
+                      margin: "0 0 0 10",
+                      handler: function() {
+                        print.show();
+                      }
                     },
                     {
                       xtype: "button",
@@ -501,7 +504,10 @@ Ext.application({
                     {
                       xtype: "button",
                       text: "加入抵价券",
-                      margin: "0 0 0 10"
+                      margin: "0 0 0 10",
+                      handler: function() {
+                        addDjq.show();
+                      }
                     }
                   ]
                 }
@@ -590,6 +596,7 @@ Ext.application({
       title: "打印",
       width: 600,
       bodyPadding: 10,
+      closeAction: "hide",
       items: [
         {
           layout: "hbox",
@@ -678,6 +685,7 @@ Ext.application({
       title: "抵价券",
       width: 830,
       bodyPadding: 10,
+      closeAction: "hide",
       items: [
         {
           xtype: "grid",
