@@ -211,13 +211,7 @@ Ext.application({
       }, {
         xtype: "button",
         text: "<span class=\"key\">D</span> 打印",
-        margin: "0 0 0 10",
-        handler: function() {
-          var data = list.getComponent("grid").getSelectionModel().getSelection()[0].data
-
-          printStore.loadData(data);
-          print.show();
-        }
+        margin: "0 0 0 10"
       }, {
         xtype: "button",
         text: "<span class=\"key\">C</span> 预览",
@@ -225,7 +219,13 @@ Ext.application({
       }, {
         xtype: "button",
         text: "<span class=\"key\">B</span> 连续打印",
-        margin: "0 0 0 10"
+        margin: "0 0 0 10",
+        handler: function() {
+          var data = list.getComponent("grid").getSelectionModel().getSelection()[0].data
+
+          printStore.loadData(data);
+          print.show();
+        }
       }, {
         xtype: "button",
         text: "批量修改",
