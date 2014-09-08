@@ -126,6 +126,30 @@ Ext.application({
         }
       }, {
         xtype: "button",
+        text: "删除",
+        margin: "0 0 0 10",
+        handler: function() {
+          var record = cs.getSelectionModel()
+          .getSelection()[0].data;
+
+          Ext.Ajax.request({
+            url: env.services.web + env.api.company.del,
+            params: {
+              id: record.id
+            },
+            success: function(resp) {
+              var data = Ext.JSON.decode(resp.responseText);
+              console.log(data);
+              Ext.data.StoreManager.lookup("companyList").load();
+            },
+            failure: function(resp) {
+              var data = Ext.JSON.decode(resp.responseText);
+              Ext.Msg.alert("删除", data.msg);
+            }
+          });
+        }
+      }, {
+        xtype: "button",
         text: "导入",
         margin: "0 0 0 10"
       }, {

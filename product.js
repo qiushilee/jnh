@@ -232,6 +232,32 @@ Ext.application({
             },
             {
               xtype: "button",
+              text: "删除",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function() {
+                var record = Ext.ComponentQuery.query("grid[itemId=productList]")[0].getSelectionModel()
+                .getSelection()[0].data;
+
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.company.del,
+                  params: {
+                    id: record.id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    console.log(data);
+                    Ext.data.StoreManager.lookup("product").load();
+                  },
+                  failure: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.Msg.alert("删除", data.msg);
+                  }
+                });
+              }
+            },
+            {
+              xtype: "button",
               text: "<span class=\"key\">I</span> 导入",
               margin: "20 0 0 20",
               disabled: true,
@@ -346,6 +372,32 @@ Ext.application({
                 addJzs.getComponent("form").getForm().reset();
                 addJzs.show();
               }
+            },
+            {
+              xtype: "button",
+              text: "删除",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function() {
+                var record = Ext.ComponentQuery.query("grid[title=进转损]")[0].getSelectionModel()
+                .getSelection()[0].data;
+
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.product.delTransitionLoss,
+                  params: {
+                    id: record.id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    console.log(data);
+                    Ext.data.StoreManager.lookup("transitionLoss").load();
+                  },
+                  failure: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.Msg.alert("删除", data.msg);
+                  }
+                });
+              }
             }
           ]
         },
@@ -411,6 +463,32 @@ Ext.application({
                   flex: 1
                 }
               ]
+            },
+            {
+              xtype: "button",
+              text: "删除",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function() {
+                var record = Ext.ComponentQuery.query("grid[title=进转损]")[0].getSelectionModel()
+                .getSelection()[0].data;
+
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.product.delTransitionLoss,
+                  params: {
+                    id: record.id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    console.log(data);
+                    Ext.data.StoreManager.lookup("transitionLoss").load();
+                  },
+                  failure: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.Msg.alert("删除", data.msg);
+                  }
+                });
+              }
             }
           ]
         }
