@@ -624,7 +624,6 @@ Ext.application({
           xtype: "grid",
           store: Ext.data.StoreManager.lookup('simpsonsStore'),
           margin: "10 0 0 0",
-          selModel: Ext.create('Ext.selection.CheckboxModel', {mode: "SIMPLE"}),
           columns: [
             {
               text: '出货单号',
@@ -675,7 +674,7 @@ Ext.application({
     });
     
     // TODO 左侧增加一个列表
-    var addQhd = new Ext.create("Ext.window.Window", {
+    var addDjq = new Ext.create("Ext.window.Window", {
       title: "抵价券",
       width: 830,
       bodyPadding: 10,
@@ -684,7 +683,6 @@ Ext.application({
           xtype: "grid",
           store: Ext.data.StoreManager.lookup('simpsonsStore'),
           margin: "10 0 0 0",
-          selModel: Ext.create('Ext.selection.CheckboxModel', {mode: "SIMPLE"}),
           columns: [
             {
               text: '序号',

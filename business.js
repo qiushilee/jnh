@@ -532,7 +532,6 @@ Ext.application({
                             xtype: "grid",
                             store: Ext.data.StoreManager.lookup('simpsonsStore'),
                             margin: "10 0 0 0",
-                            selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
                             columns: [
                               {
                                 text: '序号',
@@ -636,7 +635,6 @@ Ext.application({
                                   xtype: "grid",
                                   store: Ext.data.StoreManager.lookup('simpsonsStore'),
                                   margin: "10 0 0 0",
-                                  selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
                                   columns: [
                                     {
                                       text: '序号',
