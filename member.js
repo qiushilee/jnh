@@ -199,7 +199,7 @@ Ext.onReady(function() {
               .getSelectionModel()
               .getSelection()[0].data;
 
-              location.href = location.origin + location.pathname + "?id=" + record.id + "#telorder";
+              location.href = location.origin + location.pathname + "?id=" + record.memberId + "#telorder";
             }
           },
           {
@@ -510,7 +510,7 @@ Ext.onReady(function() {
         columns: [
           {
             text: '序号',
-            dataIndex: 'id'
+            dataIndex: 'key'
           },
           {
             text: '期数',
@@ -611,7 +611,7 @@ Ext.onReady(function() {
               .getSelectionModel()
               .getSelection()[0].data;
 
-              location.href = location.origin + location.pathname + "?id=" + record.userCode + "#deliverorder";
+              location.href = location.origin + location.pathname + "?id=" + record.memberId + "#deliverorder";
             }
           }
         ]
