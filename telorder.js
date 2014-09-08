@@ -7,7 +7,6 @@ Ext.application({
       storeId: 'orderList',
       fields: ["memberId","key", "id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "consignee", "mobile", "zipCode", "address", "packaging", "remark", "deliveryMethod", "deliveryMethodName"],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.telorder.list.order,
@@ -18,12 +17,22 @@ Ext.application({
       }
     });
 
+    Ext.data.StoreManager.lookup("orderList").load({
+      params: {
+        id: location.search.replace(/.*=/, "")
+      },
+      callback: function(records) {
+        console.log(records);
+      }
+    });
+
     //电话订购右侧列表
     var orderproduct = Ext.create('Ext.data.Store', {
       storeId: 'orderproduct',
       fields: ['id','productCode', 'name', 'number', 'price','amount', 'remark'],
       layout: "fit"
     });
+
     //搜索栏
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",

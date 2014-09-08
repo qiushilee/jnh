@@ -193,7 +193,14 @@ Ext.onReady(function() {
             // TODO 有电话订购颜色不一样并显示数量
             xtype: 'button',
             margin: "0 5",
-            text: "E电话订购"
+            text: "E电话订购",
+            handler: function() {
+              var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+              .getSelectionModel()
+              .getSelection()[0].data;
+
+              location.href = location.origin + location.pathname + "?id=" + record.id + "#telorder";
+            }
           },
           {
             xtype: 'button',
@@ -566,34 +573,48 @@ Ext.onReady(function() {
         defaultType: "button",
         border: 0,
         margin: "20 0 0 0",
-        items: [{
-          text: "<span class=\"key\">A</span> 增加",
-          handler: function() {
-            var form = addOrder.getComponent("orderForm").getForm();
-            addOrderModelHandler(function(data) {
-              updateForm(form, data);
-              addOrder.show();
-            });
-          }
-        },  {
-          text: "<span class=\"key\">D</span> 删除",
-          margin: "0 0 0 10",
-          handler: function() {
-            var order = panel.getComponent("grid").getComponent("orderlist").getSelectionModel().getSelection()[0].data;
-
-            Ext.Msg.alert("删除汇款订购", "确认删除汇款订：" + order.id, function() {
-              Ext.Ajax.request({
-                url: env.services.web + env.api.order.del + data.id,
-                success: function(response) {
-                  Ext.Msg.alert("删除成功", "您已成功删除汇款订购：" + order.id);
-                },
-                failure: function(form, action) {
-                  Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
-                }
+        items: [
+          {
+            text: "<span class=\"key\">A</span> 增加",
+            handler: function() {
+              var form = addOrder.getComponent("orderForm").getForm();
+              addOrderModelHandler(function(data) {
+                updateForm(form, data);
+                addOrder.show();
               });
-            });
+            }
+          },
+          {
+            text: "<span class=\"key\">D</span> 删除",
+            margin: "0 0 0 10",
+            handler: function() {
+              var order = panel.getComponent("grid").getComponent("orderlist").getSelectionModel().getSelection()[0].data;
+
+              Ext.Msg.alert("删除汇款订购", "确认删除汇款订：" + order.id, function() {
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.order.del + data.id,
+                  success: function(response) {
+                    Ext.Msg.alert("删除成功", "您已成功删除汇款订购：" + order.id);
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
+                  }
+                });
+              });
+            }
+          },
+          {
+            text: "订单详情",
+            margin: "0 0 0 10",
+            handler: function() {
+              var record = Ext.ComponentQuery.query("grid[itemId=orderlist]")[0]
+              .getSelectionModel()
+              .getSelection()[0].data;
+
+              location.href = location.origin + location.pathname + "?id=" + record.userCode + "#deliverorder";
+            }
           }
-        }]
+        ]
       }
     ]
   });

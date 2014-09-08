@@ -45,31 +45,36 @@ Ext.application({
       margin: "10 0",
       renderTo: window.$bd,
       url: env.services.web + env.api.deliverorder.list,
-      items: [Ext.create("periodical"),
+      items: [
+        Ext.create("periodical"),
         {
           fieldLabel: "会员姓名",
           labelWidth: 60,
           name: "userName",
           labelAlign: "right"
-        }, {
+        },
+        {
           fieldLabel: "会员编号",
           labelWidth: 60,
           name: "userCode",
           labelAlign: "right"
-        }, {
+        },
+        {
           fieldLabel: "出货单编号",
           labelWidth: 70,
           name: "deliveryOrderCode",
           labelAlign: "right"
-        //TODO 增加键盘事件 enter
-        }, {
+          //TODO 增加键盘事件 enter
+        },
+        {
           xtype: "button",
           text: "搜索",
           margin: "0 0 0 20",
           handler: function() {
             searchHandler.call(this, "list");
           }
-        }, {
+        },
+        {
           xtype: "button",
           text: "重置",
           margin: "0 0 0 20",
@@ -77,8 +82,15 @@ Ext.application({
             this.up("form").getForm().reset();
           }
         }
-      ]
-    });
+        ],
+        listeners: {
+          afterlayout: function(that) {
+            var form = that.getForm()
+            form.findField("userCode").setValue(location.search.replace(/.*=/, ""));
+            searchHandler.call(that, "list");
+          }
+        }
+      });
 
     var list = Ext.create('Ext.Panel', {
       layout: "column",
