@@ -52,8 +52,8 @@
 
   env.api.company = {
     list: "/company/index",
-    info: "/company/view/companyId/",
-    del: "/company/del/companyId/",
+    info: "/company/view",
+    del: "/company/delete",
     add: "/company/create",
     change: "/company/update",
     copy: "/company/copy",   //厂商复制
