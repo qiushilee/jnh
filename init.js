@@ -28,7 +28,8 @@
     del: "/member/delete/",
     folwCharts: "/member/orderremittance/memberId/",
     add: "/member/create",
-    change: "/member/update"
+    change: "/member/update",
+    counttelorder: "/member/counttelorder" //会员电话订购数量
   };
 
   env.api.paymentmethord = "/ajax/paymentmethord";//支付方式
