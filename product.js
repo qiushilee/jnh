@@ -356,8 +356,8 @@ Ext.application({
               ],
               listeners: {
                 itemdblclick: function (that, record, item, index, e, eOpts) {
-                  var form = addJzs.getComponent("form").getForm();
-                  addJzs.show();
+                  var form = addJHD.getComponent("form").getForm();
+                  addJHD.show();
                   window.updateForm(form, record.data);
                   form.url = env.services.web + env.api.product.changeTransitionLoss;
                 }
@@ -369,8 +369,8 @@ Ext.application({
               margin: "20 0 0 0",
               scale: "medium",
               handler: function () {
-                addJzs.getComponent("form").getForm().reset();
-                addJzs.show();
+                addJHD.getComponent("form").getForm().reset();
+                addJHD.show();
               }
             },
             {
@@ -644,94 +644,6 @@ Ext.application({
     });
 
     //进转损详情
-    var addJzs = new Ext.create("Ext.window.Window", {
-      title: "进转损详情",
-      width: 300,
-      layout: 'form',
-      bodyPadding: "5 50 5 0",
-      defaultType: 'textfield',
-      closeAction: 'hide',
-      fieldDefaults: {
-        labelAlign: 'top'
-      },
-      bodyStyle: {
-        background: "#fff"
-      },
-      items: [{
-        itemId: "form",
-        xtype: "form",
-        url: env.services.web + env.api.product.addTransitionLoss,
-        bodyPadding: 0,
-        border: 0,
-        defaultType: 'textfield',
-        bodyStyle: {
-          "background-color": "transparent"
-        },
-        items: [
-          Ext.create("jzsType", {
-            labelWidth: 100,
-            width: 200
-          }),
-          {
-            fieldLabel: '货号定位',
-            labelAlign: "right",
-            name: 'company'
-          },
-          {
-            fieldLabel: '日期',
-            labelAlign: "right",
-            name: 'receiptDate',
-            xtype: "datefield"
-          },
-          {
-            fieldLabel: '数量',
-            labelAlign: "right",
-            name: 'number',
-          },
-          {
-            xtype: 'panel',
-            layout: "column",
-            border: 0,
-            margin: "10 0",
-            bodyStyle: {
-              background: 'transparent'
-            },
-            items: [
-              {
-                xtype: 'button',
-                layout: "absolute",
-                x: "30%",
-                columnWidth: 0.2,
-                scale: "medium",
-                text: "保存",
-                handler: function () {
-                  var form = this.up("form").getForm();
-                  form.submit({
-                    success: function (form, action) {
-                    },
-                    failure: function (form, action) {
-                      Ext.Msg.alert("增加进转损", action.result.msg);
-                    }
-                  });
-                }
-              },
-              {
-                xtype: 'button',
-                layout: "absolute",
-                x: "35%",
-                columnWidth: 0.2,
-                scale: "medium",
-                text: "返回",
-                handler: function () {
-                  addJzs.hide();
-                }
-              }
-            ]
-          }
-        ]
-      }]
-    });
-
     var addJHD = new Ext.create("Ext.window.Window", {
       title: "进货单商品详情",
       width: 800,
