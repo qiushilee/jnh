@@ -130,19 +130,23 @@ Ext.application({
           var record = cs.getSelectionModel()
           .getSelection()[0].data;
 
-          Ext.Ajax.request({
-            url: env.services.web + env.api.company.del,
-            params: {
-              id: record.id
-            },
-            success: function(resp) {
-              var data = Ext.JSON.decode(resp.responseText);
-              console.log(data);
-              searchHandler.call(search.getForm(), "companyList");
-            },
-            failure: function(resp) {
-              var data = Ext.JSON.decode(resp.responseText);
-              Ext.Msg.alert("删除", data.msg);
+          Ext.Msg.confirm("删除", "确认删除" + record.title + "吗？", function(type) {
+            if (type === "yes") {
+              Ext.Ajax.request({
+                url: env.services.web + env.api.company.del,
+                params: {
+                  id: record.id
+                },
+                success: function(resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  console.log(data);
+                  searchHandler.call(search.getForm(), "companyList");
+                },
+                failure: function(resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  Ext.Msg.alert("删除", data.msg);
+                }
+              });
             }
           });
         }
