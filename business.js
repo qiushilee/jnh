@@ -184,35 +184,35 @@ Ext.application({
                                 dataIndex: 'id1'
                               }, {
                                 text: '寄送方式',
-                                dataIndex: 'adder1',
+                                dataIndex: 'mailingDate',
                                 flex: 1
                               }, {
                                 text: '期数',
-                                dataIndex: 'man1',
+                                dataIndex: 'periodicalId',
                                 flex: 1
                               }, {
                                 text: '索取数',
-                                dataIndex: 'phone11',
+                                dataIndex: 'askNumber',
                                 flex: 1
                               }, {
                                 text: '数量1',
-                                dataIndex: 'phone21',
+                                dataIndex: 'sendNumber1',
                                 flex: 1
                               }, {
                                 text: '数量2',
-                                dataIndex: 'qq1',
+                                dataIndex: 'sendNumber2',
                                 flex: 1
                               }, {
                                 text: '单号',
-                                dataIndex: 'qq1',
+                                dataIndex: 'printcartCode',
                                 flex: 1
                               }, {
                                 text: '备注',
-                                dataIndex: 'qq1',
+                                dataIndex: 'remark',
                                 flex: 1
                               }, {
                                 text: '状态',
-                                dataIndex: 'qq1',
+                                dataIndex: 'status',
                                 flex: 1
                               }
                             ]
@@ -603,37 +603,37 @@ Ext.application({
                                   "background-color": "transparent"
                                 },
                                 items: [
-                                  {
-                                    xtype: "combobox",
-                                    fieldLabel: "寄送方式",
-                                    labelWidth: 60,
-                                    labelAlign: "right"
-                                  }, {
+                                  Ext.create("deliveryMethod"), {
                                     fieldLabel: "编号",
                                     labelWidth: 40,
-                                    labelAlign: "right"
+                                    labelAlign: "right",
+                                    name:'code'
                                   }, {
                                     fieldLabel: "参考期数",
                                     labelWidth: 60,
                                     width: 110,
-                                    labelAlign: "right"
+                                    labelAlign: "right",
+                                    name:'periodicalId1'
                                   }, {
                                     fieldLabel: "~",
                                     labelWidth: 20,
                                     width: 70,
-                                    labelAlign: "right"
+                                    labelAlign: "right",
+                                    name:'periodicalId2'
                                   }, {
                                     xtype: "datefield",
                                     fieldLabel: "参考时间",
                                     labelWidth: 60,
                                     width: 160,
-                                    labelAlign: "right"
+                                    labelAlign: "right",
+                                    name:'addDate1'
                                   }, {
                                     xtype: "datefield",
                                     fieldLabel: "~",
                                     labelWidth: 20,
                                     width: 120,
-                                    labelAlign: "right"
+                                    labelAlign: "right",
+                                    name:'addDate2'
                                   }, {
                                     xtype: "button",
                                     text: "搜索",
