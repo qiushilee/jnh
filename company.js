@@ -1,23 +1,20 @@
 Ext.application({
   name: "JNH",
   launch: function() {
-
-
-      // 厂商管理列表
-      var companyList = Ext.create('Ext.data.Store', {
-        storeId: 'companyList',
-        fields: ['companyCode', 'address', 'linkMan', 'mobile1', "mobile2", "email","qq"],
-        layout: "fit",
-        autoLoad: true,
-        proxy: {
-          type: 'ajax',
-          url: env.services.web + env.api.company.list,
-          reader: {
-            type: 'json',
-            root: 'list'
-          }
+    // 厂商管理列表
+    var companyList = Ext.create('Ext.data.Store', {
+      storeId: 'companyList',
+      fields: ["id", "periodicalId", "companyCode", "title", "linkMan", "address", "type", "zipCode", "mobile1", "mobile2", "productClass", "fax", "email", "qq", "website", "needTime", "payMethod", "openingBank", "openingAccount", "remark", "addDate", "delFlag"],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.company.list,
+        reader: {
+          type: 'json',
+          root: 'list'
         }
-      });
+      }
+    });
 
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
@@ -72,6 +69,7 @@ Ext.application({
     var cs = Ext.create('Ext.grid.Panel', {
       title: '厂商管理列表',
       store: Ext.data.StoreManager.lookup('companyList'),
+      height: 450,
       columns: [{
         text: '厂商编号',
         dataIndex: 'companyCode'
@@ -140,7 +138,7 @@ Ext.application({
             success: function(resp) {
               var data = Ext.JSON.decode(resp.responseText);
               console.log(data);
-              Ext.data.StoreManager.lookup("companyList").load();
+              searchHandler.call(search.getForm(), "companyList");
             },
             failure: function(resp) {
               var data = Ext.JSON.decode(resp.responseText);
@@ -151,14 +149,17 @@ Ext.application({
       }, {
         xtype: "button",
         text: "导入",
+        disabled: true,
         margin: "0 0 0 10"
       }, {
         xtype: "button",
         text: "打印",
+        disabled: true,
         margin: "0 0 0 10"
       }, {
         xtype: "button",
         text: "复制",
+        disabled: true,
         margin: "0 0 0 10"
       }]
     });
@@ -177,13 +178,20 @@ Ext.application({
         width: 500,
         bodyPadding: 5,
         defaultType: 'textfield',
-        items: [Ext.create("periodical"), {
-           fieldLabel: "厂商编号",
-           name: "companyCode",
-           labelWidth: 60,
-           width: 300,
-           labelAlign: "right"
-         },{
+        items: [
+          {
+            xtype: "hiddenfield",
+            name: "id"
+          },
+          Ext.create("periodical"),
+          {
+            fieldLabel: "厂商编号",
+            name: "companyCode",
+            labelWidth: 60,
+            width: 300,
+            labelAlign: "right"
+          },
+         {
           fieldLabel: '地址',
           name: "address",
           labelWidth: 60,
@@ -274,12 +282,11 @@ Ext.application({
             text: "<span class=\"key\">S</span> 保存",
             handler: function() {
               var form = win.getComponent("form").getForm();
-              console.log(form.url);
               form.submit({
                 success: function(form, action) {
                   form.reset();
                   win.hide();
-                  companyList.load();
+                  searchHandler.call(search.getForm(), "companyList");
                 },
                 failure: function(form, action) {
                   Ext.Msg.alert("保存", action.result.msg);
@@ -299,18 +306,16 @@ Ext.application({
             text: "<span class=\"key\">A</span> 增加",
             handler: function() {
               var form = win.getComponent("form").getForm();
-              if (form.isValid()) {
-                form.submit({
-                  success: function(form, action) {
-                    form.reset();
-                    win.hide();
-                    companyList.load();
-                  },
-                  failure: function(form, action) {
-                    console.log(action.result)
-                  }
-                });
-              }
+              form.url = env.services.web + env.api.company.add;
+              form.submit({
+                success: function(form, action) {
+                  form.reset();
+                  searchHandler.call(search.getForm(), "companyList");
+                },
+                failure: function(form, action) {
+                  console.log(action.result)
+                }
+              });
             }
           }]
         }]
