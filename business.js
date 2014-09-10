@@ -7,7 +7,6 @@ Ext.application({
       storeId: 'memberList',
       fields: ['addrList', 'userCode', 'realName', 'source', "address1", "address2"],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.business.list,
