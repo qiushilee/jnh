@@ -197,8 +197,16 @@ Ext.application({
         xtype: "button",
         text: "<span class=\"key\">W</span> 添加",
         handler: function() {
-          printCart.show();
-          window.create = true;
+          try {
+            var record = Ext.ComponentQuery.query("grid")[0]
+            .getSelectionModel()
+            .getSelection()[0].data;
+
+            printCart.show();
+            window.create = true;
+          } catch (e) {
+            Ext.Msg.alert("添加", "请选中列表中的一项后再操作");
+          }
         },
         margin: "0 0 0 10"
       }, {
@@ -565,6 +573,7 @@ Ext.application({
       }, {
         xtype: "grid",
         store: Ext.data.StoreManager.lookup('jhStore'),
+        height: 155,
         margin: "10 0 0 0",
         selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
         columns: [{
