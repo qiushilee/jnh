@@ -17,7 +17,21 @@ Ext.application({
       }
     });
 
-
+    // 打印购物车
+    Ext.create("Ext.data.Store", {
+      storeId: "printcart",
+      fields: ["key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", "mailingDate", "weight", "postage", "amount", "remark"],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.business.printcartlist,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
 
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
@@ -632,12 +646,12 @@ Ext.application({
                                 ]
                                 }, {
                                   xtype: "grid",
-                                  store: Ext.data.StoreManager.lookup('simpsonsStore'),
+                                  store: Ext.data.StoreManager.lookup("printcart"),
                                   margin: "10 0 0 0",
                                   columns: [
                                     {
                                       text: '序号',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'key',
                                       flex: 1
                                     }, {
                                       text: '流水号',
