@@ -70,7 +70,7 @@
     delShipmentDetails:'',//删除出货明细
     transitionLoss:'/product/transitionLoss',//进转损
     addTransitionLoss:'/product/addtransitionloss',//添加进转损
-    delTransitionLoss:'',//删除进转损
+    delTransitionLoss:'/product/deletetransitionloss',//删除进转损
     changeTransitionLoss:'/product/updatetransitionloss',//修改进转损
   };
 
