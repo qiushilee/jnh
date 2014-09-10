@@ -7,7 +7,6 @@ Ext.application({
       storeId: 'purchaseList',
       fields: ["id",'key',"productCode", "name", 'number', 'receiptCode','companyName','receiptDate','addDate','remark'],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.search.searchpurchase,
@@ -23,7 +22,6 @@ Ext.application({
       storeId: 'shipmentList',
       fields: ["id", "key","productCode", "name", 'number','price','amount', 'deliveryOrderCode','addDate','mailingDate','remark'],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.search.searchshipment,
@@ -40,7 +38,6 @@ Ext.application({
       storeId: 'estimatepurchase',
       fields: ['id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.search.estimatepurchase,
@@ -56,7 +53,6 @@ Ext.application({
       storeId: 'memberList',
       fields: ["id", "userCode", "realName", 'address1', 'address2','zipCode1','zipCode2','buyAmount','mobile','graduateDate','remark','preferentialTicket','youthStuck','unDiscountAmount'],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.search.member,
