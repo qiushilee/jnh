@@ -20,7 +20,7 @@ Ext.application({
     // 打印购物车
     Ext.create("Ext.data.Store", {
       storeId: "printcart",
-      fields: ["key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", "mailingDate", "weight", "postage", "amount", "remark"],
+      fields: ["key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", 'sendNumber1','sendNumber2',"mailingDate", "weight", "postage", "amount", "remark"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -655,55 +655,55 @@ Ext.application({
                                       flex: 1
                                     }, {
                                       text: '流水号',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'serialNumber',
                                       flex: 1
                                     }, {
                                       text: '姓名',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'userName',
                                       flex: 1
                                     }, {
                                       text: '地址',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'address',
                                       flex: 2
                                     }, {
                                       text: '索取数',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'askNumber',
                                       flex: 1
                                     }, {
                                       text: '寄出数量1',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'sendNumber1',
                                       flex: 1
                                     }, {
                                       text: '寄出数量2',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'sendNumber2',
                                       flex: 1
                                     }, {
                                       text: '期数',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'periodicalName',
                                       flex: 1
                                     }, {
                                       text: '寄出日',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'mailingDate',
                                       flex: 1
                                     }, {
                                       text: '重量',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'weight',
                                       flex: 1
                                     }, {
                                       text: '邮资',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'postage',
                                       flex: 1
                                     }, {
                                       text: '包裹单号',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'printcartCode',
                                       flex: 1
                                     }, {
                                       text: '备注',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'remark',
                                       flex: 1
                                     }, {
                                       text: '购买金额',
-                                      dataIndex: 'id1',
+                                      dataIndex: 'amount',
                                       flex: 1
                                     }
                                     ],
