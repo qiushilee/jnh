@@ -163,8 +163,25 @@ Ext.application({
       }, {
         xtype: "button",
         text: "复制",
-        disabled: true,
-        margin: "0 0 0 10"
+        margin: "0 0 0 10",
+        handler: function() {
+          var record = cs.getSelectionModel()
+          .getSelection()[0].data;
+
+          Ext.Ajax.request({
+            url: env.services.web + env.api.company.copy,
+            params: {
+              companyId: record.id
+            },
+            success: function(resp) {
+              searchHandler.call(search.getForm(), "companyList");
+            },
+            failure: function(resp) {
+              var data = Ext.JSON.decode(resp.responseText);
+              Ext.Msg.alert("复制", data.msg);
+            }
+          });
+        }
       }]
     });
 
