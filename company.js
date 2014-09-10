@@ -4,7 +4,7 @@ Ext.application({
     // 厂商管理列表
     var companyList = Ext.create('Ext.data.Store', {
       storeId: 'companyList',
-      fields: ["id", "periodicalId", "companyCode", "title", "linkMan", "address", "type", "zipCode", "mobile1", "mobile2", "productClass", "fax", "email", "qq", "website", "needTime", "payMethod", "openingBank", "openingAccount", "remark", "addDate", "delFlag"],
+      fields: ["id",'key', "periodicalId", "companyCode", "title", "linkMan", "address", "type", "zipCode", "mobile1", "mobile2", "productClass", "fax", "email", "qq", "website", "needTime", "payMethod", "openingBank", "openingAccount", "remark", "addDate", "delFlag"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -71,8 +71,15 @@ Ext.application({
       store: Ext.data.StoreManager.lookup('companyList'),
       height: 450,
       columns: [{
+        text: '序号',
+        dataIndex: 'key'
+      },{
         text: '厂商编号',
         dataIndex: 'companyCode'
+      }, {
+        text: '厂商名称',
+        dataIndex: 'title',
+        flex: 1
       }, {
         text: '地址',
         dataIndex: 'address',
