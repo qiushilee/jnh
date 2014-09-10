@@ -240,7 +240,7 @@ Ext.application({
                 .getSelection()[0].data;
 
                 Ext.Ajax.request({
-                  url: env.services.web + env.api.company.del,
+                  url: env.services.web + env.api.product.del,
                   params: {
                     id: record.id
                   },

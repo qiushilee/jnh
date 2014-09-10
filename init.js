@@ -28,7 +28,8 @@
     del: "/member/delete/",
     folwCharts: "/member/orderremittance/memberId/",
     add: "/member/create",
-    change: "/member/update"
+    change: "/member/update",
+    counttelorder: "/member/counttelorder" //会员电话订购数量
   };
 
   env.api.paymentmethord = "/ajax/paymentmethord";//支付方式
@@ -52,8 +53,8 @@
 
   env.api.company = {
     list: "/company/index",
-    info: "/company/view/companyId/",
-    del: "/company/del/companyId/",
+    info: "/company/view",
+    del: "/company/delete",
     add: "/company/create",
     change: "/company/update",
     copy: "/company/copy",   //厂商复制
@@ -64,7 +65,7 @@
     list: "/product/index",
     change: "/product/update",
     add: "/product/create",
-    del: "",
+    del:"/product/delete",
     shipmentDetails:'/product/shipmentdetails',//出货明细
     delShipmentDetails:'',//删除出货明细
     transitionLoss:'/product/transitionLoss',//进转损
