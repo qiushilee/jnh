@@ -51,7 +51,7 @@ Ext.application({
     // 会员查询数据
     Ext.create('Ext.data.Store', {
       storeId: 'memberList',
-      fields: ["id", "userCode", "realName", 'address1', 'address2','zipCode1','zipCode2','buyAmount','mobile','graduateDate','remark','preferentialTicket','youthStuck','unDiscountAmount'],
+      fields: ["id", 'key',"userCode", "realName", 'address1', 'address2','zipCode1','zipCode2','buyAmount','mobile','graduateDate','remark','preferentialTicket','youthStuck','unDiscountAmount'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -799,7 +799,7 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id',
+                  dataIndex: 'key',
                   flex: 1
                 },
                 {
