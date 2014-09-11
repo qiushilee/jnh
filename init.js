@@ -270,21 +270,26 @@
     var current = opt.grid.getSelectionModel().getSelection()[0],
         index = opt.index || current.index;
 
-    Ext.Ajax.request({
-      url: opt.api,
-      params: {
-        id: current.data.id
-      },
-      success: function(resp) {
-        resp = Ext.decode(resp.responseText);
+    Ext.Msg.confirm("删除", "确认删除？", function(type) {
+      if (type === "yes") {
+        Ext.Ajax.request({
+          url: opt.api,
+          params: {
+            id: current.data.id
+          },
+          success: function(resp) {
+            resp = Ext.decode(resp.responseText);
 
-        if (resp.success) {
-          Ext.Msg.alert("删除操作", resp.msg, function() {
-            opt.grid.store.removeAt(index);
-          });
-        } else {
-          Ext.Msg.alert("删除操作", resp.msg);
-        }
+            if (resp.success === false) {
+              Ext.Msg.alert("删除操作", resp.msg);
+            }
+          },
+          failure: function(resp) {
+            resp = Ext.decode(resp.responseText);
+
+            Ext.Msg.alert("删除操作", action.result.msg);
+          }
+        });
       }
     });
   }
