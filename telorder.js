@@ -106,6 +106,7 @@ Ext.application({
                 form.submit({
                   success: function(form, action) {
                     telorderCurrent.memberId = action.result.id;
+                    form.reset();
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("增加", action.result.msg);
@@ -121,6 +122,7 @@ Ext.application({
               form.url = env.services.web + env.api.telorder.change.member;
               form.submit({
                 success: function(form, action) {
+                  form.reset();
                 },
                 failure: function(form, action) {
                   Ext.Msg.alert("保存", action.result.msg);
@@ -531,7 +533,7 @@ Ext.application({
               margin: "0 0 0 10"
             }, {
               xtype: "button",
-              text: "<span class=\"key\">M</span> 修改",
+              text: "<span class=\"key\">M</span> 保存",
               handler: function() {
                 var $container = this.ownerCt.ownerCt.ownerCt,
                     form = $container.getComponent("detail").getForm();
@@ -541,7 +543,7 @@ Ext.application({
                     searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
                   },
                   failure: function(form, action) {
-                    Ext.Msg.alert("修改", action.result.msg);
+                    Ext.Msg.alert("保存", action.result.msg);
                   }
                 });
               },
