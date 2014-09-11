@@ -37,7 +37,7 @@ Ext.application({
     // 进货单——商品详情
     Ext.create('Ext.data.Store', {
       storeId: 'jhdProduct',
-      fields: ['bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type"],
+      fields: ['bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type", "key"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -703,14 +703,6 @@ Ext.application({
               width: 100,
               labelAlign: "right"
             },
-            //TODO 价格根据货号来的，禁止手动修改价格
-            //{
-              //fieldLabel: "进价",
-              //name: "purchasePrice",
-              //labelWidth: 40,
-              //width: 100,
-              //labelAlign: "right"
-            //},
             {
               fieldLabel: "备注",
               name: "remark",
@@ -718,16 +710,52 @@ Ext.application({
               labelAlign: "right"
             }
           ]
-        }]
+          },
+          {
+            xtype: "button",
+            text: "<span class=\"key\">M</span> 保存",
+            margin: "0 0 30 20",
+            handler: function () {
+              var form = addJHD.getComponent("form").getForm();
+              form.url = env.services.web + env.api.product.changeTransitionLoss;
+              form.submit({
+                success: function(form, action) {
+                  form.reset();
+                },
+                failure: function (form, action) {
+                  Ext.Msg.alert("保存", action.result.msg);
+                }
+              });
+            }
+          },
+          {
+            xtype: "button",
+            text: "新增",
+            margin: "0 0 30 20",
+            handler: function () {
+              var form = addJHD.getComponent("form").getForm();
+              form.url = env.services.web + env.api.product.addTransitionLoss;
+              form.submit({
+                success: function(form, action) {
+                  form.reset();
+                },
+                failure: function (form, action) {
+                  Ext.Msg.alert("新增", action.result.msg);
+                }
+              });
+            }
+          }
+        ]
       }, {
           itemId: "list",
           xtype: "grid",
           store: Ext.data.StoreManager.lookup('jhdProduct'),
+          height: 200,
           margin: "10 0 0 0",
           columns: [
             {
               text: '序号',
-              dataIndex: 'id'
+              dataIndex: 'key'
             },
             {
               text: '货号',
@@ -782,34 +810,23 @@ Ext.application({
           items: [
             {
               xtype: "button",
-              text: "<span class=\"key\">M</span> 修改",
-              margin: "0 0 0 20",
-              handler: function () {
-                var form = addJHD.getComponent("form").getForm();
-                form.submit({
-                  success: function(form, action) {
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("修改", action.result.msg);
-                  }
-                });
-              }
-            },
-            {
-              xtype: "button",
               text: "<span class=\"key\">D</span> 删除",
               margin: "0 0 0 10",
               handler: function () {
-                var record = addJHD.getComponent("list").getSelectionModel().getSelection()[0];
-                    id = record.data.id;
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.productrecord.del,
-                  params: {
-                    id: id
-                  },
-                  success: function (resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.data.StoreManager.lookup('jhdProduct').remove(record);
+                var record = addJHD.getComponent("list").getSelectionModel().getSelection()[0].data;
+
+                Ext.Msg.confirm("删除", "确认删除“" + record.name + "”吗？", function(type) {
+                  if (type === "yes") {
+                    Ext.Ajax.request({
+                      url: env.services.web + env.api.productrecord.del,
+                      params: {
+                        id: record.id
+                      },
+                      success: function (resp) {
+                        var data = Ext.JSON.decode(resp.responseText);
+                        Ext.data.StoreManager.lookup('jhdProduct').remove(record);
+                      }
+                    });
                   }
                 });
               }
