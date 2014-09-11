@@ -20,7 +20,7 @@ Ext.application({
     // 右侧商品列表
     Ext.create('Ext.data.Store', {
       storeId: 'productData',
-      fields: ["id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
+      fields: ["key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -394,7 +394,7 @@ Ext.application({
                   columns: [
                     {
                       text: '序号',
-                      dataIndex: 'id'
+                      dataIndex: 'key'
                     },
                     {
                       text: '货号',
@@ -845,7 +845,7 @@ Ext.application({
           columns: [
           {
             text: '序号',
-            dataIndex: 'id1'
+            dataIndex: 'key'
           },
           {
             text: '出货单编号',
