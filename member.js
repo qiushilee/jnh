@@ -190,10 +190,10 @@ Ext.onReady(function() {
             }
           },
           {
-            // TODO 有电话订购颜色不一样并显示数量
+            itemId: "order-button",
             xtype: 'button',
             margin: "0 5",
-            text: "E电话订购",
+            text: "<span class=\"key\">E</span> 电话订购",
             handler: function() {
               var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
               .getSelectionModel()
@@ -308,6 +308,25 @@ Ext.onReady(function() {
               }
             ],
             listeners: {
+              itemclick: function(that, record) {
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.member.counttelorder,
+                  params: {
+                    memberId: record.data.id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    var button = Ext.ComponentQuery.query("button[itemId=order-button]")[0]
+                    button.setText("<span class=\"key\">E</span> 电话订购（" + data + "）")
+                    console.log(data, button);
+                  },
+                  failure: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    console.log(data);
+                  }
+                });
+              },
+
               itemdblclick: function( that, record, item, index, e, eOpts) {
                 showMemberInfo(record.data.id);
                 showFolwCharts(record.data.id);
