@@ -249,20 +249,20 @@ Ext.onReady(function() {
             xtype: 'button',
             margin: "0 5",
             text: "删除",
-       handler: function() {
-            var member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
+            handler: function() {
+              var member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
 
-            Ext.Msg.alert("删除会员", "确认删除会员：" + member.realName, function() {
-              Ext.Ajax.request({
-                url: env.services.web + env.api.member.del +'id/'+ member.id,
-                success: function(response) {
-                },
-                failure: function(form, action) {
-                  Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
-                }
+              Ext.Msg.alert("删除会员", "确认删除会员：" + member.realName, function() {
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.member.del +'id/'+ member.id,
+                  success: function(response) {
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
+                  }
+                });
               });
-            });
-          }
+            }
           }
         ]
       },
