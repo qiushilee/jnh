@@ -108,6 +108,7 @@ Ext.application({
         {
           xtype: "button",
           text: "重置",
+          disabled: true,
           margin: "0 0 0 20"
         }
       ]
@@ -219,10 +220,12 @@ Ext.application({
       }, {
         xtype: "button",
         text: "<span class=\"key\">D</span> 打印",
+        disabled: true,
         margin: "0 0 0 10"
       }, {
         xtype: "button",
         text: "<span class=\"key\">C</span> 预览",
+        disabled: true,
         margin: "0 0 0 10"
       }, {
         xtype: "button",
@@ -237,10 +240,12 @@ Ext.application({
       }, {
         xtype: "button",
         text: "批量修改",
+        disabled: true,
         margin: "0 0 0 10"
       }, {
         xtype: "button",
         text: "扫描包裹单",
+        disabled: true,
         margin: "0 0 0 10"
       }]
     });
@@ -474,10 +479,12 @@ Ext.application({
         }, {
           xtype: "button",
           text: "搜索",
+          disabled: true,
           margin: "0 0 0 20"
         }, {
           xtype: "button",
           text: "重置",
+          disabled: true,
           margin: "0 0 0 10"
         }]
       }, {
@@ -523,17 +530,20 @@ Ext.application({
         items: [{
           xtype: "button",
           text: "查询",
+          disabled: true,
           margin: "0 0 0 20"
         }, {
           xtype: "button",
           text: "打印",
           margin: "0 0 0 10",
+          disabled: true,
           handler: function() {
             ;
           }
         }, {
           xtype: "button",
           text: "重打",
+          disabled: true,
           margin: "0 0 0 10"
         }]
       }]
@@ -564,10 +574,12 @@ Ext.application({
         }, {
           xtype: "button",
           text: "搜索",
+          disabled: true,
           margin: "0 0 0 20"
         }, {
           xtype: "button",
           text: "重置",
+          disabled: true,
           margin: "0 0 0 10"
         }]
       }, {
@@ -634,14 +646,17 @@ Ext.application({
         items: [{
           xtype: "button",
           text: "<span class=\"key\">M</span> 修改",
+          disabled: true,
           margin: "0 0 0 10"
         }, {
           xtype: "button",
           text: "<span class=\"key\">S</span> 保存",
+          disabled: true,
           margin: "0 0 0 10"
         }, {
           xtype: "button",
           text: "<span class=\"key\">D</span> 打印",
+          disabled: true,
           margin: "0 0 0 10"
         }]
       }]
@@ -703,6 +718,7 @@ Ext.application({
           border: 0,
           defaultType: 'button',
           items: [{
+            disabled: true,
             text: "保存"
           }]
         }

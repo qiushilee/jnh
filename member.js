@@ -419,14 +419,17 @@ Ext.onReady(function() {
               xtype: 'button',
               text: "设为默认",
               name: "isDefault",
+              disabled: true,
               margin: "0 0 0 10"
             }, {
               xtype: 'button',
               text: "删除",
+              disabled: true,
               margin: "0 0 0 10"
             }, {
               xtype: 'button',
               text: "增加地址",
+              disabled: true,
               margin: "0 0 0 10"
             }]
           },
@@ -834,12 +837,14 @@ Ext.onReady(function() {
           {
             xtype: 'button',
             scale: "medium",
+            disabled: true,
             text: "保存"
           },
           {
             xtype: 'button',
             scale: "medium",
             margin: "0 0 0 30",
+            disabled: true,
             text: "返回"
           }
         ]
@@ -902,8 +907,10 @@ Ext.onReady(function() {
         border: 0,
         defaultType: 'button',
         items: [{
+          disabled: true,
           text: "修改"
         }, {
+          disabled: true,
           text: "保存",
           margin: "0 0 0 10"
         }]

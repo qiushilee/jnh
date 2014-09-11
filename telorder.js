@@ -131,6 +131,7 @@ Ext.application({
           }, {
             xtype: "button",
             text: "删除",
+            disabled: true,
             handler: function() {
               try {
                 var $container = this.ownerCt.ownerCt,
@@ -297,6 +298,7 @@ Ext.application({
           items: [{
             xtype: "button",
             text: "<span class=\"key\">W</span>删除记录",
+            disabled: true,
             handler: function() {
               try {
                 var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
@@ -318,6 +320,7 @@ Ext.application({
           }, {
             xtype: "button",
             text: "删除",
+            disabled: true,
             handler: function() {
               try {
                 var id = list.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
@@ -546,10 +549,12 @@ Ext.application({
             }, {
               xtype: "button",
               text: "<span class=\"key\">H</span> 预览",
+              disabled: true,
               margin: "0 0 0 10"
             }, {
               xtype: "button",
               text: "<span class=\"key\">R</span>批量打印",
+              disabled: true,
               margin: "0 0 0 10"
             }]
           }]
@@ -604,6 +609,7 @@ Ext.application({
           x: "30%",
           columnWidth: 0.2,
           scale: "medium",
+          disabled: true,
           text: "保存"
         }, {
           xtype:'button',
@@ -611,6 +617,7 @@ Ext.application({
           x: "35%",
           columnWidth: 0.2,
           scale: "medium",
+          disabled: true,
           text: "返回"
         }]
       }]
@@ -664,6 +671,7 @@ Ext.application({
           x: "30%",
           columnWidth: 0.2,
           scale: "medium",
+          disabled: true,
           text: "保存"
         }, {
           xtype:'button',
@@ -671,6 +679,7 @@ Ext.application({
           x: "35%",
           columnWidth: 0.2,
           scale: "medium",
+          disabled: true,
           text: "返回"
         }]
       }]
@@ -697,10 +706,12 @@ Ext.application({
         }, {
           xtype: "button",
           text: "搜索",
+          disabled: true,
           margin: "0 0 0 20"
         }, {
           xtype: "button",
           text: "重置",
+          disabled: true,
           margin: "0 0 0 10"
         }]
       }, {
@@ -734,18 +745,22 @@ Ext.application({
         items: [{
           xtype: "button",
           text: "查询",
+          disabled: true,
           margin: "0 0 0 20"
         }, {
           xtype: "button",
           text: "名单打印",
+          disabled: true,
           margin: "0 0 0 10"
         }, {
           xtype: "button",
           text: "明细打印",
+          disabled: true,
           margin: "0 0 0 10"
         }, {
           xtype: "button",
           text: "重打",
+          disabled: true,
           margin: "0 0 0 10"
         }]
       }]

@@ -186,6 +186,7 @@ Ext.application({
                   xtype: "button",
                   text: "打印",
                   margin: "0 0 0 20",
+                  disabled: true,
                   handler: function() {
                     this.up("form").getForm().reset();
                   }
@@ -418,21 +419,25 @@ Ext.application({
                 {
                   xtype: "button",
                   text: "日报表",
+                  disabled: true,
                   margin: "0 0 0 10"
                 },
                 {
                   xtype: "button",
                   text: "订货单",
+                  disabled: true,
                   margin: "0 0 0 10"
                 },
                 {
                   xtype: "button",
                   text: "预估缺货",
+                  disabled: true,
                   margin: "0 0 0 10"
                 },
                 {
                   xtype: "button",
                   text: "下架表",
+                  disabled: true,
                   margin: "0 0 0 10"
                 }
               ]
@@ -749,22 +754,28 @@ Ext.application({
                       bodyPadding: 5,
                       border: 0,
                       defaultType: "button",
-                      items: [{
-                        text: "块状打印",
-                        margin: "0 0 0 50"
-                      },
+                      items: [
+                        {
+                          text: "块状打印",
+                          disabled: true,
+                          margin: "0 0 0 50"
+                        },
                         {
                           text: "条状打印",
+                          disabled: true,
                           margin: "0 0 0 20"
                         },
                         {
                           text: "面单打印",
+                          disabled: true,
                           margin: "0 0 0 20"
                         },
                         {
                           text: "批量修改",
+                          disabled: true,
                           margin: "0 0 0 20"
-                        }]
+                        }
+                      ]
                     },
                     {
                       xtype: "panel",

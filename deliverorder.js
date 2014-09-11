@@ -321,17 +321,20 @@ Ext.application({
                 xtype: "button",
                 text: "搜索",
                 margin: "0 0 0 40",
+                disabled: true,
                 float: "right"
               },
               {
                 xtype: "button",
                 text: "导入电话订单",
                 margin: "0 0 0 10",
+                disabled: true,
                 float: "right"
               },
               {
                 xtype: "button",
                 text: "导入网上订单",
+                disabled: true,
                 margin: "0 0 0 10",
                 float: "right"
               },
@@ -339,6 +342,7 @@ Ext.application({
                 xtype: "button",
                 text: "查看抵价券",
                 margin: "0 0 0 10",
+                disabled: true,
                 float: "right"
               }
             ]
@@ -442,6 +446,7 @@ Ext.application({
                   items: [
                     {
                       xtype: "button",
+                      disabled: true,
                       text: "连续打印"
                     },
                     {
@@ -464,6 +469,7 @@ Ext.application({
                     {
                       xtype: "button",
                       text: "<span class=\"key\">D</span> 删除",
+                      disabled: true,
                       margin: "0 0 0 10"
                     },
                     {
@@ -496,6 +502,7 @@ Ext.application({
                     {
                       xtype: "button",
                       text: "<span class=\"key\">R</span> 重打",
+                      disabled: true,
                       margin: "0 0 0 10"
                     },
                     {
@@ -576,12 +583,14 @@ Ext.application({
               xtype: 'button',
               layout: "absolute",
               x: "30%",
+              disabled: true,
               text: "保存"
             },
             {
               xtype: 'button',
               layout: "absolute",
               x: "35%",
+              disabled: true,
               text: "返回"
             }
           ]
@@ -615,11 +624,13 @@ Ext.application({
             {
               xtype: "button",
               text: "搜索",
+              disabled: true,
               margin: "0 0 0 20"
             },
             {
               xtype: "button",
               text: "重置",
+              disabled: true,
               margin: "0 0 0 10"
             }
           ]
@@ -660,16 +671,19 @@ Ext.application({
             {
               xtype: "button",
               text: "查询",
+              disabled: true,
               margin: "0 0 0 20"
             },
             {
               xtype: "button",
               text: "名单打印",
+              disabled: true,
               margin: "0 0 0 10"
             },
             {
               xtype: "button",
               text: "明细打印",
+              disabled: true,
               margin: "0 0 0 10"
             }
           ]
@@ -769,11 +783,13 @@ Ext.application({
             {
               xtype: "button",
               text: "<span class=\"key\">X</span> 生成抵价券",
+              disabled: true,
               margin: "0 0 0 10"
             },
             {
               xtype: "button",
               text: "<span class=\"key\">Z</span> 打印",
+              disabled: true,
               margin: "0 0 0 10"
             }
           ]
@@ -824,16 +840,19 @@ Ext.application({
           {
             xtype: "button",
             text: "会员卡查询",
+            disabled: true,
             margin: "0 0 0 50"
           },
           {
             xtype: "button",
             text: "会员卡预览",
+            disabled: true,
             margin: "0 0 0 20"
           },
           {
             xtype: "button",
             text: "会员卡打印",
+            disabled: true,
             margin: "0 0 0 20"
           }
           ]
@@ -877,11 +896,14 @@ Ext.application({
           border: 0,
           defaultType: 'button',
           items: [{
+            disabled: true,
             text: "<span class=\"key\">C</span> 查询"
           }, {
+            disabled: true,
             text: "<span class=\"key\">P</span> 打印",
             margin: "0 0 0 10"
           }, {
+            disabled: true,
             text: "<span class=\"key\">R</span> 重打",
             margin: "0 0 0 10"
           }]
