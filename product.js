@@ -2,10 +2,10 @@ Ext.application({
   name: "JNH",
   launch: function () {
 
-    // 库存表&进货单——商品详情
+    // 库存表
     Ext.create('Ext.data.Store', {
       storeId: 'product',
-      fields: ['addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content", "companyCode", "address", "companyId"],
+      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content", "companyCode", "address", "companyId"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -21,7 +21,7 @@ Ext.application({
     //进货单
     Ext.create('Ext.data.Store', {
       storeId: 'receipt',
-      fields: ['id', "receiptCode", 'receiptDate', 'purchaseAmount', "remark"],
+      fields: ["key", 'id', "receiptCode", 'receiptDate', 'purchaseAmount', "remark"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -37,7 +37,7 @@ Ext.application({
     // 进货单——商品详情
     Ext.create('Ext.data.Store', {
       storeId: 'jhdProduct',
-      fields: ['bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type", "key"],
+      fields: ["key"'bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -53,7 +53,7 @@ Ext.application({
     // 进转损
     Ext.create('Ext.data.Store', {
       storeId: 'transitionLoss',
-      fields: ['id', 'typeName', 'receiptCode', 'receiptDate', "number", "remark", "type"],
+      fields: ["key", 'id', 'typeName', 'receiptCode', 'receiptDate', "number", "remark", "type"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -69,7 +69,7 @@ Ext.application({
     //出货明细
     Ext.create('Ext.data.Store', {
       storeId: 'shipmentDetails',
-      fields: ['id', 'deliveryOrderCode', 'tzqnumber', 'tzhnumber', 'status'],
+      fields: ["key", 'id', 'deliveryOrderCode', 'tzqnumber', 'tzhnumber', 'status'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -124,7 +124,7 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id',
+                  dataIndex: 'key',
                   flex: 1
                 },
                 {
@@ -442,7 +442,7 @@ Ext.application({
               columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id'
+                  dataIndex: 'key'
                 },
                 {
                   text: '出货单号',
