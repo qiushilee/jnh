@@ -37,7 +37,7 @@ Ext.application({
     // 进货单——商品详情
     Ext.create('Ext.data.Store', {
       storeId: 'jhdProduct',
-      fields: ["key"'bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type"],
+      fields: ["key", 'bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type"],
       layout: "fit",
       autoLoad: true,
       proxy: {
