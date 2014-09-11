@@ -416,16 +416,19 @@ Ext.application({
                             handler: function() {
                               var form = this.ownerCt.ownerCt.getComponent("member").getForm();
                               form.url = env.services.web + env.api.business.del;
-                              if (form.isValid()) {
-                                form.submit({
-                                  success: function(form, action) {
-                                    console.log(action)
-                                  },
-                                  failure: function(form, action) {
-                                    Ext.Msg.alert("删除名单", action.result.msg);
-                                  }
-                                });
-                              }
+
+                              Ext.Msg.confirm("删除", "确认删除？", function(type) {
+                                if (type === "yes") {
+                                  form.submit({
+                                    success: function(form, action) {
+                                      console.log(action)
+                                    },
+                                    failure: function(form, action) {
+                                      Ext.Msg.alert("删除名单", action.result.msg);
+                                    }
+                                  });
+                                }
+                              });
                             }
                           }, {
                             xtype: "button",
