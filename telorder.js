@@ -329,14 +329,14 @@ Ext.application({
                   },
                   success: function(resp) {
                     var data = Ext.JSON.decode(resp.responseText);
-                    form.findField("deliveryorderId").setValue(data.id);
-                    detailForm.findField("deliveryorderId").setValue(data.id);
-                    Ext.ComponentQuery.query("label[name=deliveryOrderCode]")[0].setText(data.code);
-                    self.setDisabled(true);
-                  },
-                  failure: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.Msg.alert("生成出货单号", data.msg);
+                    if (data.success) {
+                      form.findField("deliveryorderId").setValue(data.id);
+                      detailForm.findField("deliveryorderId").setValue(data.id);
+                      Ext.ComponentQuery.query("label[name=deliveryOrderCode]")[0].setText(data.code);
+                      self.setDisabled(true);
+                    } else {
+                      Ext.Msg.alert("生成出货单号", data.msg);
+                    }
                   }
                 });
               }
