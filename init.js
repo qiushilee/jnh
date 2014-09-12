@@ -84,7 +84,8 @@
 
   env.api.orderremittance = {
     list: "/orderremittance/index",
-    add: "/orderremittance/create"
+    add: "/orderremittance/create",
+    del: "/orderremittance/delete"
   };
 
   env.api.catalog = {
@@ -121,7 +122,7 @@
   };
 
   env.api.productrecord = {
-    list: "/productrecord/index",
+      q: "/productrecord/index",
     change: "/productrecord/update",
     add: "/productrecord/create",
     del: "/productrecord/delete"
