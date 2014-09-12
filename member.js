@@ -318,7 +318,6 @@ Ext.onReady(function() {
                     var data = Ext.JSON.decode(resp.responseText);
                     var button = Ext.ComponentQuery.query("button[itemId=order-button]")[0]
                     button.setText("<span class=\"key\">E</span> 电话订购（" + data + "）")
-                    console.log(data, button);
                   },
                   failure: function(resp) {
                     var data = Ext.JSON.decode(resp.responseText);
@@ -615,9 +614,9 @@ Ext.onReady(function() {
             text: "<span class=\"key\">D</span> 删除",
             margin: "0 0 0 10",
             handler: function() {
-              var order = panel.getComponent("grid").getComponent("orderlist").getSelectionModel().getSelection()[0].data;
+              var order = Ext.ComponentQuery.query("grid[itemId=orderlist]")[0].getSelectionModel().getSelection()[0].data;
 
-              Ext.Msg.alert("删除汇款订购", "确认删除汇款订：" + order.id, function() {
+              Ext.Msg.confirm("删除汇款订购", "确认删除汇款订：" + order.id, function() {
                 Ext.Ajax.request({
                   url: env.services.web + env.api.order.del + data.id,
                   success: function(response) {
