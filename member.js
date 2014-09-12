@@ -590,6 +590,7 @@ Ext.onReady(function() {
             var form = addOrder.getComponent("orderForm").getForm();
             updateForm(form, record.data);
             addOrder.show();
+            addOrder.setTitle("查看添加汇款订购");
           }
         }
       },
@@ -607,6 +608,7 @@ Ext.onReady(function() {
               addOrderModelHandler(function(data) {
                 updateForm(form, data);
                 addOrder.show();
+                addOrder.setTitle("增加添加汇款订购");
               });
             }
           },
@@ -940,7 +942,7 @@ Ext.onReady(function() {
   });
 
   var addOrder = Ext.create("Ext.window.Window", {
-    title: "添加汇款订购",
+    title: "增加汇款订购",
     width: 1000,
     closeAction: 'hide',
     layout: 'form',
@@ -988,6 +990,10 @@ Ext.onReady(function() {
           border: 0,
           defaultType: 'textfield',
           items: [
+            {
+              xtype: "hiddenfield",
+              name: 'id'
+            },
             {
               xtype: "hiddenfield",
               name: 'memberId'
@@ -1162,7 +1168,7 @@ Ext.onReady(function() {
           text: "保存",
           handler: function() {
             var form = this.ownerCt.ownerCt.getForm();
-            form.url = env.services.web + env.api.order.add;
+            form.url = env.services.web + env.api.order.change;
             form.submit({
               success: function(form, action) {
                 addOrder.hide();
