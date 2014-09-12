@@ -618,7 +618,10 @@ Ext.onReady(function() {
 
               Ext.Msg.confirm("删除汇款订购", "确认删除汇款订：" + order.id, function() {
                 Ext.Ajax.request({
-                  url: env.services.web + env.api.order.del + data.id,
+                  url: env.services.web + env.api.orderremittance.del,
+                  params: {
+                    id: order.id
+                  },
                   success: function(response) {
                   },
                   failure: function(form, action) {
