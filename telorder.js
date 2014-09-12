@@ -270,7 +270,7 @@ Ext.application({
               searchHandler.call($sidebarForm, "orderproduct");
               $sidebarForm.findField("deliveryorderId").setValue(currentData.id);
               if (currentData.deliveryOrderCode) {
-                $sidebarForm.findField("deliveryOrderCode").setValue(currentData.deliveryOrderCode);
+                Ext.ComponentQuery.query("label[name=deliveryOrderCode]")[0].setText(currentData.deliveryOrderCode);
                 $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(true);
               } else {
                 $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(false);
@@ -331,7 +331,7 @@ Ext.application({
                     var data = Ext.JSON.decode(resp.responseText);
                     form.findField("deliveryorderId").setValue(data.id);
                     detailForm.findField("deliveryorderId").setValue(data.id);
-                    form.findField("deliveryOrderCode").setValue(data.code);
+                    Ext.ComponentQuery.query("label[name=deliveryOrderCode]")[0].setText(data.code);
                     self.setDisabled(true);
                   },
                   failure: function(resp) {
@@ -345,9 +345,10 @@ Ext.application({
             xtype: "hiddenfield",
             name: "deliveryorderId"
           },{
-            xtype: "textfield",
+            xtype: "label",
             width: 70,
-            margin: "0 10 0 20",
+            margin: "3 50 0 20",
+            text: "",
             name: "deliveryOrderCode"
           },  {
             xtype: "textfield",
