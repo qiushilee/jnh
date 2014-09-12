@@ -131,9 +131,9 @@
   //业务管理
   env.api.business = {
     list: "/business/memberlist",
-    change: "/business/save",
-    add: "/business/save",
-    del: "/business/delete",
+    change: "/business/savemember",
+    add: "/business/savemember",
+    del: "/business/deletemember",
     printcartlist:"/printcart/index",//打印购物车列表
     addprintcart:"/printcart/create",//添加打印购物车
     delprintcart:"/printcart/delete"//删除打印购物车
