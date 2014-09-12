@@ -318,7 +318,6 @@ Ext.onReady(function() {
                     var data = Ext.JSON.decode(resp.responseText);
                     var button = Ext.ComponentQuery.query("button[itemId=order-button]")[0]
                     button.setText("<span class=\"key\">E</span> 电话订购（" + data + "）")
-                    console.log(data, button);
                   },
                   failure: function(resp) {
                     var data = Ext.JSON.decode(resp.responseText);
@@ -591,6 +590,7 @@ Ext.onReady(function() {
             var form = addOrder.getComponent("orderForm").getForm();
             updateForm(form, record.data);
             addOrder.show();
+            addOrder.setTitle("查看添加汇款订购");
           }
         }
       },
@@ -608,6 +608,7 @@ Ext.onReady(function() {
               addOrderModelHandler(function(data) {
                 updateForm(form, data);
                 addOrder.show();
+                addOrder.setTitle("增加添加汇款订购");
               });
             }
           },
@@ -615,11 +616,14 @@ Ext.onReady(function() {
             text: "<span class=\"key\">D</span> 删除",
             margin: "0 0 0 10",
             handler: function() {
-              var order = panel.getComponent("grid").getComponent("orderlist").getSelectionModel().getSelection()[0].data;
+              var order = Ext.ComponentQuery.query("grid[itemId=orderlist]")[0].getSelectionModel().getSelection()[0].data;
 
-              Ext.Msg.alert("删除汇款订购", "确认删除汇款订：" + order.id, function() {
+              Ext.Msg.confirm("删除汇款订购", "确认删除汇款订：" + order.id, function() {
                 Ext.Ajax.request({
-                  url: env.services.web + env.api.order.del + data.id,
+                  url: env.services.web + env.api.orderremittance.del,
+                  params: {
+                    id: order.id
+                  },
                   success: function(response) {
                   },
                   failure: function(form, action) {
@@ -938,7 +942,7 @@ Ext.onReady(function() {
   });
 
   var addOrder = Ext.create("Ext.window.Window", {
-    title: "添加汇款订购",
+    title: "增加汇款订购",
     width: 1000,
     closeAction: 'hide',
     layout: 'form',
@@ -986,6 +990,10 @@ Ext.onReady(function() {
           border: 0,
           defaultType: 'textfield',
           items: [
+            {
+              xtype: "hiddenfield",
+              name: 'id'
+            },
             {
               xtype: "hiddenfield",
               name: 'memberId'
@@ -1160,7 +1168,7 @@ Ext.onReady(function() {
           text: "保存",
           handler: function() {
             var form = this.ownerCt.ownerCt.getForm();
-            form.url = env.services.web + env.api.order.add;
+            form.url = env.services.web + env.api.order.change;
             form.submit({
               success: function(form, action) {
                 addOrder.hide();
