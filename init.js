@@ -125,7 +125,7 @@
   };
 
   env.api.productrecord = {
-      q: "/productrecord/index",
+    list: "/productrecord/index",
     change: "/productrecord/update",
     add: "/productrecord/create",
     del: "/productrecord/delete"
