@@ -105,6 +105,7 @@ Ext.application({
             },
             {
               xtype: "grid",
+              height: 455,
               margin: "20 0 0 0",
               store: Ext.data.StoreManager.lookup('purchaseList'),
               columns: [
@@ -197,6 +198,7 @@ Ext.application({
             },
             {
               xtype: "grid",
+              height: 455,
               margin: "20 0 0 0",
               store: Ext.data.StoreManager.lookup("shipmentList"),
               columns: [
@@ -310,6 +312,7 @@ Ext.application({
             },
             {
               xtype: "grid",
+              height: 455,
               margin: "20 0 0 0",
               store: Ext.data.StoreManager.lookup('estimatepurchase'),
               columns: [
@@ -812,6 +815,7 @@ Ext.application({
             },
             {
               xtype: "grid",
+              height: 355,
               margin: "20 0 0 0",
               store: Ext.data.StoreManager.lookup("memberList"),
               columns: [

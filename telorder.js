@@ -215,6 +215,7 @@ Ext.application({
         }, {
           itemId: "orderList",
           xtype: "grid",
+          height: 155,
           store: Ext.data.StoreManager.lookup('orderList'),
           margin: "20 0 0 0",
           columns: [
@@ -406,6 +407,7 @@ Ext.application({
           }, {
             itemId: "grid",
             xtype: "grid",
+            height: 155,
             store: Ext.data.StoreManager.lookup('orderproduct'),
             margin: "10 0 0 0",
             columns: [{
@@ -673,6 +675,7 @@ Ext.application({
         }]
       }, {
         xtype: "grid",
+        height: 155,
         store: Ext.data.StoreManager.lookup('simpsonsStore'),
         margin: "10 0 0 0",
         selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
