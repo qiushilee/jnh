@@ -707,7 +707,7 @@ Ext.application({
                 {
                   xtype: "datefield",
                   fieldLabel: "补寄日期",
-                  name:'deliveryOrderCode',
+                  name:'sendDate',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
@@ -718,7 +718,7 @@ Ext.application({
                 }),
                 {
                   fieldLabel: "包裹单号",
-                  name:'deliveryOrderCode',
+                  name:'packageCode',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
@@ -733,21 +733,21 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "邮资",
-                  name:'deliveryOrderCode',
+                  name:'postage',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "重量",
-                  name:'deliveryOrderCode',
+                  name:'weight',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "备注",
-                  name:'deliveryOrderCode',
+                  name:'remark',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
