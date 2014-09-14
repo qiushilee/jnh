@@ -111,6 +111,7 @@ Ext.application({
                     {
                       itemId: "memberList",
                       xtype: "grid",
+                      height: 155,
                       store: Ext.data.StoreManager.lookup('memberList'),
                       columns: [ {
                         text: '会员号',
@@ -176,6 +177,7 @@ Ext.application({
                           ]
                           }, {
                             xtype: "grid",
+                            height: 155,
                             store: Ext.data.StoreManager.lookup('simpsonsStore'),
                             margin: "10 0 0 0",
                             columns: [
@@ -553,6 +555,7 @@ Ext.application({
                           ]
                           }, {
                             xtype: "grid",
+                            height: 155,
                             store: Ext.data.StoreManager.lookup('simpsonsStore'),
                             margin: "10 0 0 0",
                             columns: [
@@ -659,6 +662,7 @@ Ext.application({
                                 ]
                                 }, {
                                   xtype: "grid",
+                                  height: 155,
                                   store: Ext.data.StoreManager.lookup("printcart"),
                                   margin: "10 0 0 0",
                                   columns: [

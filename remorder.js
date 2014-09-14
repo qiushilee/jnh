@@ -88,6 +88,7 @@ Ext.application({
         {
           itemId: "grid",
           xtype: "grid",
+          height: 155,
           title: "汇款订购列表",
           store: Ext.data.StoreManager.lookup('orderList'),
           border: 0,

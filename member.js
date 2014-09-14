@@ -279,6 +279,7 @@ Ext.onReady(function() {
             // +TODO: 参照 module9.js 地址，索取数量不要
             itemId: "memberList",
             xtype: "grid",
+            height: 155,
             columnWidth: 0.5,
             height: 155,
             store: Ext.data.StoreManager.lookup('memberList'),
@@ -334,6 +335,7 @@ Ext.onReady(function() {
           },
           {
             xtype: "grid",
+            height: 155,
             columnWidth: 0.4,
             margin: "0 0 0 100",
             height: 155,
@@ -521,6 +523,7 @@ Ext.onReady(function() {
       {
      itemId: "orderlist",
         xtype: "grid",
+        height: 155,
         title: "流程表",
         margin: "20 0 0 0",
         columnWidth: 0.5,
@@ -890,6 +893,7 @@ Ext.onReady(function() {
     items: [
       {
         xtype: "grid",
+        height: 155,
         margin: "20 0 0 0",
         store: Ext.data.StoreManager.lookup('memberList'),
         columns: [

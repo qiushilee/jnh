@@ -69,7 +69,7 @@ Ext.application({
     var cs = Ext.create('Ext.grid.Panel', {
       title: '厂商管理列表',
       store: Ext.data.StoreManager.lookup('companyList'),
-      height: 450,
+      height: 355,
       columns: [{
         text: '序号',
         dataIndex: 'key'

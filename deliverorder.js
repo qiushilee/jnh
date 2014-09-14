@@ -240,6 +240,7 @@ Ext.application({
             },
             {
               xtype: "grid",
+              height: 155,
               store: Ext.data.StoreManager.lookup('list'),
               margin: "20 0 0 0",
               columns: [
@@ -393,6 +394,7 @@ Ext.application({
                 {
                   itemId: "orderproductlist",	
                   xtype: "grid",
+                  height: 155,
                   store: Ext.data.StoreManager.lookup('productData'),
                   margin: "10 0 0 0",
                   columns: [
@@ -637,6 +639,7 @@ Ext.application({
         },
         {
           xtype: "grid",
+          height: 155,
           store: Ext.data.StoreManager.lookup('simpsonsStore'),
           margin: "10 0 0 0",
           columns: [
@@ -700,6 +703,7 @@ Ext.application({
       items: [
         {
           xtype: "grid",
+          height: 155,
           store: Ext.data.StoreManager.lookup('simpsonsStore'),
           margin: "10 0 0 0",
           columns: [
@@ -859,6 +863,7 @@ Ext.application({
         },
         {
           xtype: "grid",
+          height: 155,
           margin: "20 0 0 0",
           store: Ext.data.StoreManager.lookup('simpsonsStore'),
           columns: [

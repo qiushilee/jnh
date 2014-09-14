@@ -112,6 +112,7 @@ Ext.application({
       items: [
         {
           itemId: "grid",
+          height: 155,
           xtype: "grid",
           title: "包裹列表",
           store: Ext.data.StoreManager.lookup('dataList'),
@@ -497,6 +498,7 @@ Ext.application({
       }, {
         itemId: "list",
         xtype: "grid",
+        height: 155,
         store: Ext.data.StoreManager.lookup('printStore'),
         margin: "10 0 0 0",
         columns: [{
@@ -591,6 +593,7 @@ Ext.application({
         }]
       }, {
         xtype: "grid",
+        height: 155,
         store: Ext.data.StoreManager.lookup('jhStore'),
         height: 155,
         margin: "10 0 0 0",
@@ -792,6 +795,7 @@ Ext.application({
         },
         {
           xtype: "grid",
+          height: 155,
           margin: "20 0 0 0",
           store: Ext.data.StoreManager.lookup('bujiList'),
           columns: [

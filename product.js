@@ -98,7 +98,8 @@ Ext.application({
               border: 0,
               layout: "column",
               url: env.services.web + env.api.product.list,
-              items: [Ext.create('periodical'),
+              items: [
+                Ext.create('periodical'),
                 {
                   xtype: "textfield",
                   labelWidth: 30,
@@ -118,9 +119,9 @@ Ext.application({
             {
               itemId: "productList",
               xtype: "grid",
+              height: 155,
               title: '库存表',
               store: Ext.data.StoreManager.lookup('product'),
-              height: 450,
               columns: [
                 {
                   text: '序号',
@@ -328,6 +329,7 @@ Ext.application({
             },
             {
               xtype: "grid",
+              height: 155,
               title: '进转损',
               store: Ext.data.StoreManager.lookup('transitionLoss'),
               columns: [
@@ -437,6 +439,7 @@ Ext.application({
             },
             {
               xtype: "grid",
+              height: 155,
               title: '出货明细',
               store: Ext.data.StoreManager.lookup('shipmentDetails'),
               columns: [
@@ -748,6 +751,7 @@ Ext.application({
       }, {
           itemId: "list",
           xtype: "grid",
+          height: 155,
           store: Ext.data.StoreManager.lookup('jhdProduct'),
           height: 200,
           margin: "10 0 0 0",
