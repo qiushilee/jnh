@@ -218,7 +218,7 @@ Ext.application({
             Ext.data.StoreManager.lookup("bujiList").load({
               params: {
                 packageId: record.id
-              },
+              }
             });
           } catch (e) {
             Ext.Msg.alert("补寄", "请选中列表中的一项后再操作");
@@ -765,7 +765,11 @@ Ext.application({
                 form.submit({
                   success: function(form, action) {
                     form.reset();
-                    Ext.data.StoreManager.lookup("bujiList").load();
+                    Ext.data.StoreManager.lookup("bujiList").load({
+                      params: {
+                        packageId: form.findField("packageId").value
+                      }
+                    });
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("新增", action.result.msg);
