@@ -664,8 +664,7 @@ Ext.application({
             "background-color": "transparent"
           },
           items: [
-            //TODO 因为此页面没有添加？所以不需要期数
-            //Ext.create('periodical'),
+            Ext.create('periodical'),
             Ext.create('jzsType'),
             {
               margin: "0 10",

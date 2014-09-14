@@ -82,6 +82,7 @@ Ext.application({
               border: 0,
               defaultType: 'datefield',
               items: [
+                Ext.create('periodical'),
                 {
                   fieldLabel: "起始日期",
                   labelAlign: "right",
@@ -164,6 +165,7 @@ Ext.application({
               border: 0,
               defaultType: 'datefield',
               items: [
+                Ext.create('periodical'),
                 {
                   fieldLabel: "起始日期",
                   labelAlign: "right",
@@ -250,6 +252,7 @@ Ext.application({
               border: 0,
               defaultType: 'textfield',
               items: [
+                Ext.create('periodical'),
                 {
                   fieldLabel: "厂商编号",
                   labelWidth: 60,
@@ -494,6 +497,7 @@ Ext.application({
                           border: 0,
                           defaultType: 'textfield',
                           items: [
+                            Ext.create('periodical'),
                             {
                               fieldLabel: "姓名",
                               labelWidth: 40,
@@ -520,6 +524,7 @@ Ext.application({
                           border: 0,
                           defaultType: 'textfield',
                           items: [
+                            Ext.create('periodical'),
                             {
                               fieldLabel: "地址",
                               labelWidth: 40,
@@ -556,6 +561,7 @@ Ext.application({
                           border: 0,
                           defaultType: 'datefield',
                           items: [
+                            Ext.create('periodical'),
                             {
                               fieldLabel: "加入时间",
                               labelWidth: 60,
@@ -629,6 +635,7 @@ Ext.application({
                           border: 0,
                           defaultType: 'datefield',
                           items: [
+                            Ext.create('periodical'),
                             {
                               fieldLabel: "参考时间",
                               labelWidth: 60,

@@ -48,28 +48,7 @@ Ext.application({
        margin: "10 0",
        renderTo: window.$bd,
        items: [
-       {
-         //TODO 更换成统一的periodical组件
-         xtype: "combobox",
-         fieldLabel: "期数",
-         store: Ext.create("Ext.data.Store", {
-           fields: ["title", "id"],
-           autoLoad: true,
-           proxy: {
-             type: 'ajax',
-             url: env.services.web + env.api.periodical.list,
-             reader: {
-               type: 'json',
-               root: 'list'
-             }
-           }
-         }),
-         labelWidth: 60,
-         displayField: "title",
-         valueField: "id",
-         labelAlign: "right",
-         name: "periodicalId"
-        },
+        Ext.create('periodical'),
         {
           fieldLabel: "出货单号",
           name:'deliveryOrderCode',

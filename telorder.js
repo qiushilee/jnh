@@ -44,7 +44,7 @@ Ext.application({
       defaultType: 'textfield',
       margin: "10 0",
       renderTo: window.$bd,
-      items: [Ext.create('periodical'),
+      items: [
         {
           fieldLabel: "会员编号",
           name: 'userCode',
