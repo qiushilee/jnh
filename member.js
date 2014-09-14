@@ -15,6 +15,72 @@ Ext.onReady(function() {
     }
   });
 
+  window.address = Ext.create("Ext.panel.Panel", {
+    layout: "hbox",
+    border: 0,
+    defaultType: 'textfield',
+    margin: "10 0 0 0",
+    items: [
+      Ext.create("addressType"),
+      {
+        xtype: 'textfield',
+        fieldLabel: "邮编",
+        name: "zipCode",
+        labelWidth: 40,
+        width: 100,
+        labelAlign: "right"
+      },
+      {
+        xtype: 'textfield',
+        fieldLabel: "地址",
+        labelWidth: 60,
+        name: "address",
+        width: 300,
+        labelAlign: "right"
+      },
+      {
+        xtype: 'textfield',
+        fieldLabel: "电话",
+        labelWidth: 40,
+        name: "mobile",
+        width: 145,
+        labelAlign: "right"
+      },
+      {
+        xtype: 'textfield',
+        fieldLabel: "收件人",
+        labelWidth: 60,
+        name: "consignee",
+        width: 180,
+        labelAlign: "right"
+      },
+      {
+        xtype: 'button',
+        text: "设为默认",
+        name: "isDefault",
+        disabled: true,
+        margin: "0 0 0 10"
+      },
+      {
+        xtype: 'button',
+        text: "删除",
+        disabled: true,
+        margin: "0 0 0 10"
+      },
+      {
+        xtype: 'button',
+        text: "增加地址",
+        margin: "0 0 0 10",
+        handler: function() {
+          var $container = Ext.ComponentQuery.query("panel[itemId=addressContainer]")[0]
+          $container.add(address);
+          address.show();
+          $container.doLayout();
+        }
+      }
+    ]
+  });
+
   // 目录寄送
   Ext.create('Ext.data.Store', {
     storeId: 'directoryList',
@@ -401,57 +467,9 @@ Ext.onReady(function() {
 
           // 第四行
           {
+            itemId: "addressContainer",
             xtype:'panel',
-            layout: "hbox",
-            border: 0,
-            defaultType: 'textfield',
-            margin: "10 0 0 0",
-            items: [Ext.create("addressType"),
-       {
-              xtype: 'textfield',
-              fieldLabel: "邮编",
-              name: "zipCode",
-              labelWidth: 40,
-              width: 100,
-              labelAlign: "right"
-            }, {
-              xtype: 'textfield',
-              fieldLabel: "地址",
-              labelWidth: 60,
-              name: "address",
-              width: 300,
-              labelAlign: "right"
-            }, {
-              xtype: 'textfield',
-              fieldLabel: "电话",
-              labelWidth: 40,
-              name: "mobile",
-              width: 145,
-              labelAlign: "right"
-            }, {
-              xtype: 'textfield',
-              fieldLabel: "收件人",
-              labelWidth: 60,
-              name: "consignee",
-              width: 180,
-              labelAlign: "right"
-            }, {
-              xtype: 'button',
-              text: "设为默认",
-              name: "isDefault",
-              disabled: true,
-              margin: "0 0 0 10"
-            }, {
-              xtype: 'button',
-              text: "删除",
-              disabled: true,
-              margin: "0 0 0 10"
-            }, {
-              xtype: 'button',
-              text: "增加地址",
-              disabled: true,
-              margin: "0 0 0 10"
-            }]
+            border: 0
           },
 
           // 第六行
