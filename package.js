@@ -1,7 +1,6 @@
 Ext.application({
   name: "JNH",
   launch: function () {
-
      var dataList = Ext.create('Ext.data.Store', {
       storeId: 'dataList',
       fields: ['key', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','bjtimes','packaging','userName','address','packageRemark'],
@@ -16,6 +15,21 @@ Ext.application({
           }
         }
     });
+
+    var dataList = Ext.create('Ext.data.Store', {
+      storeId: "bujiList",
+      fields: [],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.package.sendlist,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
 
     var printStore = Ext.create('Ext.data.Store', {
       storeId: 'printStore',
@@ -214,7 +228,16 @@ Ext.application({
         xtype: "button",
         text: "补寄",
         handler: function() {
-          bujiDetail.show();
+          try {
+            var record = Ext.ComponentQuery.query("grid")[0]
+            .getSelectionModel()
+            .getSelection()[0].data;
+
+            bujiDetail.show();
+            Ext.data.StoreManager.lookup("bujiList").load();
+          } catch (e) {
+            Ext.Msg.alert("补寄", "请选中列表中的一项后再操作");
+          }
         },
         margin: "0 0 0 10"
       }, {
@@ -677,50 +700,150 @@ Ext.application({
       },
       items: [
         {
-          xtype: "grid",
-          margin: "20 0 0 0",
-          store: Ext.data.StoreManager.lookup('jhStore'),
-          columns: [
-          {
-            text: '序号',
-            dataIndex: 'id1'
-          },
-          {
-            text: '补寄日期',
-            dataIndex: 'iid1'
-          },
-          {
-            text: '寄送方式',
-            dataIndex: 'bnum1'
-          },
-          {
-            text: '包裹单号',
-            dataIndex: 'bnum1'
-          },
-          {
-            text: '邮资',
-            dataIndex: 'bnum1'
-          },
-          {
-            text: '重量',
-            dataIndex: 'bnum1'
-          },
-          {
-            text: '备注',
-            dataIndex: 'bnum1'
-          }
+          itemId: "bujiForm",
+          xtype: "form",
+          border: 0,
+          items: [
+            {
+              layout: "hbox",
+              defaultType: 'textfield',
+              border: 0,
+              items: [
+                {
+                  xtype: "hiddenfield",
+                  name: "id",
+                },
+                {
+                  xtype: "datefield",
+                  fieldLabel: "补寄日期",
+                  name:'deliveryOrderCode',
+                  labelWidth: 60,
+                  width: 160,
+                  labelAlign: "right"
+                },
+                Ext.create("deliveryMethod", {
+                  labelWidth: 60,
+                  width: 160,
+                }),
+                {
+                  fieldLabel: "包裹单号",
+                  name:'deliveryOrderCode',
+                  labelWidth: 60,
+                  width: 160,
+                  labelAlign: "right"
+                }
+              ]
+            },
+            {
+              layout: "hbox",
+              defaultType: 'textfield',
+              border: 0,
+              margin: "10 0 0 0",
+              items: [
+                {
+                  fieldLabel: "邮资",
+                  name:'deliveryOrderCode',
+                  labelWidth: 60,
+                  width: 160,
+                  labelAlign: "right"
+                },
+                {
+                  fieldLabel: "重量",
+                  name:'deliveryOrderCode',
+                  labelWidth: 60,
+                  width: 160,
+                  labelAlign: "right"
+                },
+                {
+                  fieldLabel: "备注",
+                  name:'deliveryOrderCode',
+                  labelWidth: 60,
+                  width: 160,
+                  labelAlign: "right"
+                }
+              ]
+            },
+            {
+              xtype: "button",
+              text: "新增",
+              margin: "10 0 0 30",
+              handler: function() {
+                var form = this.up("form").getForm();
+                form.url = env.services.web + env.api.package.sendadd;
+
+                form.submit({
+                  success: function(form, action) {
+                    form.reset();
+                    Ext.data.StoreManager.lookup("bujiList").load();
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("新增", action.result.msg);
+                  }
+                });
+              }
+            },
+            {
+              xtype: "button",
+              text: "保存",
+              margin: "10 0 0 10",
+              handler: function() {
+                var form = this.up("form").getForm();
+                form.url = env.services.web + env.api.package.sendchange;
+
+                form.submit({
+                  success: function(form, action) {
+                    form.reset();
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("保存", action.result.msg);
+                  }
+                });
+              }
+            }
           ]
         },
         {
-          xtype: "panel",
-          layout: 'hbox',
-          bodyPadding: 5,
-          border: 0,
-          defaultType: 'button',
-          items: [{
-            disabled: true,
-            text: "保存"
-          }]
+          xtype: "grid",
+          margin: "20 0 0 0",
+          store: Ext.data.StoreManager.lookup('bujiList'),
+          columns: [
+            {
+              text: '序号',
+              dataIndex: 'id1'
+            },
+            {
+              text: '补寄日期',
+              dataIndex: 'iid1'
+            },
+            {
+              text: '寄送方式',
+              dataIndex: 'bnum1'
+            },
+            {
+              text: '包裹单号',
+              dataIndex: 'bnum1'
+            },
+            {
+              text: '邮资',
+              dataIndex: 'bnum1'
+            },
+            {
+              text: '重量',
+              dataIndex: 'bnum1'
+            },
+            {
+              text: '备注',
+              dataIndex: 'bnum1'
+            }
+          ],
+          listeners: {
+            itemdblclick: function( that, record, item, index, e, eOpts) {
+              var form = bujiDetail.getComponent("bujiForm").getForm(),
+                  data = record.data;
+
+              updateForm(form, data);
+            }
+          }
         }
       ]
     });
