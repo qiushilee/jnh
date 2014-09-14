@@ -118,7 +118,8 @@
     list: "/package/index",
     change: "/package/update",
     add: "/package/create",
-    del: "/package/delete"
+    del: "/package/delete",
+    send:'/package/replacement'//补寄
   };
 
   env.api.productrecord = {
