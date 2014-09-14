@@ -18,7 +18,7 @@ Ext.application({
 
     var dataList = Ext.create('Ext.data.Store', {
       storeId: "bujiList",
-      fields: [],
+      fields: ['id','key','packageCode','deliveryOrderCode','deliveryMethodName','sendDate','postage','weight','remark'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -33,7 +33,7 @@ Ext.application({
 
     var printStore = Ext.create('Ext.data.Store', {
       storeId: 'printStore',
-      fields: ['key', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','packaging','userName','address','packageRemark'],
+      fields: ['key','id', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','packaging','userName','address','packageRemark'],
       layout: "fit",
       data: {
         "id":"8","key":5,"deliveryOrderCode":"DO20140722103818","packageCode":null,"serialNumber":null,"mailingDate":"","weight":"0","postage":"0.00","packaging":null,"userName":"","address":"","packageRemark":null
@@ -809,31 +809,31 @@ Ext.application({
           columns: [
             {
               text: '序号',
-              dataIndex: 'id1'
+              dataIndex: 'key'
             },
             {
               text: '补寄日期',
-              dataIndex: 'iid1'
+              dataIndex: 'sendDate'
             },
             {
               text: '寄送方式',
-              dataIndex: 'bnum1'
+              dataIndex: 'deliveryMethodName'
             },
             {
               text: '包裹单号',
-              dataIndex: 'bnum1'
+              dataIndex: 'packageCode'
             },
             {
               text: '邮资',
-              dataIndex: 'bnum1'
+              dataIndex: 'postage'
             },
             {
               text: '重量',
-              dataIndex: 'bnum1'
+              dataIndex: 'weight'
             },
             {
               text: '备注',
-              dataIndex: 'bnum1'
+              dataIndex: 'remark'
             }
           ],
           listeners: {
