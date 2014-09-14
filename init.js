@@ -120,8 +120,8 @@
     add: "/package/create",
     del: "/package/delete",
     sendlist:'/package/sendreplacement',//补寄列表
-    sendadd:'/package/addsendreplacement',//补寄添加
-    sendchange:'/package/updatesendreplacement'//补寄修改
+    sendadd:'/package/savesendreplacement',//补寄添加
+    sendchange:'/package/savesendreplacement'//补寄修改
   };
 
   env.api.productrecord = {
