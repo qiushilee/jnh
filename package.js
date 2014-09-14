@@ -16,7 +16,7 @@ Ext.application({
         }
     });
 
-    var dataList = Ext.create('Ext.data.Store', {
+    Ext.create('Ext.data.Store', {
       storeId: "bujiList",
       fields: ['id','key','packageCode','deliveryOrderCode','deliveryMethodName','sendDate','postage','weight','remark'],
       layout: "fit",
@@ -213,7 +213,12 @@ Ext.application({
             .getSelection()[0].data;
 
             bujiDetail.show();
-            Ext.data.StoreManager.lookup("bujiList").load();
+            bujiDetail.getComponent("bujiForm").getForm().findField("packageId").setValue(record.id);
+            Ext.data.StoreManager.lookup("bujiList").load({
+              params: {
+                packageId: record.id
+              },
+            });
           } catch (e) {
             Ext.Msg.alert("补寄", "请选中列表中的一项后再操作");
           }
@@ -684,14 +689,18 @@ Ext.application({
           border: 0,
           items: [
             {
+              xtype: "hiddenfield",
+              name: "packageId",
+            },
+            {
+              xtype: "hiddenfield",
+              name: "id",
+            },
+            {
               layout: "hbox",
               defaultType: 'textfield',
               border: 0,
               items: [
-                {
-                  xtype: "hiddenfield",
-                  name: "id",
-                },
                 {
                   xtype: "datefield",
                   fieldLabel: "补寄日期",
