@@ -84,7 +84,8 @@
 
   env.api.orderremittance = {
     list: "/orderremittance/index",
-    add: "/orderremittance/create"
+    add: "/orderremittance/create",
+    del: "/orderremittance/delete"
   };
 
   env.api.catalog = {
@@ -117,11 +118,14 @@
     list: "/package/index",
     change: "/package/update",
     add: "/package/create",
-    del: "/package/delete"
+    del: "/package/delete",
+    sendlist:'/package/sendreplacement',//补寄列表
+    sendadd:'/package/addsendreplacement',//补寄添加
+    sendchange:'/package/updatesendreplacement'//补寄修改
   };
 
   env.api.productrecord = {
-    list: "/productrecord/index",
+      q: "/productrecord/index",
     change: "/productrecord/update",
     add: "/productrecord/create",
     del: "/productrecord/delete"
@@ -130,9 +134,9 @@
   //业务管理
   env.api.business = {
     list: "/business/memberlist",
-    change: "/business/save",
-    add: "/business/save",
-    del: "/business/delete",
+    change: "/business/savemember",
+    add: "/business/savemember",
+    del: "/business/deletemember",
     printcartlist:"/printcart/index",//打印购物车列表
     addprintcart:"/printcart/create",//添加打印购物车
     delprintcart:"/printcart/delete"//删除打印购物车

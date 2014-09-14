@@ -98,7 +98,7 @@ Ext.application({
               border: 0,
               layout: "column",
               url: env.services.web + env.api.product.list,
-              items: [
+              items: [Ext.create('periodical'),
                 {
                   xtype: "textfield",
                   labelWidth: 30,
@@ -294,7 +294,7 @@ Ext.application({
               border: 0,
               url: env.services.web + env.api.product.transitionLoss,
               layout: "column",
-              items: [
+              items: [Ext.create('periodical'),
                 {
                   xtype: "textfield",
                   labelWidth: 30,
@@ -410,7 +410,7 @@ Ext.application({
               border: 0,
               url: env.services.web + env.api.product.shipmentDetails,
               layout: "column",
-              items: [
+              items: [Ext.create('periodical'),
                 {
                   xtype: "textfield",
                   labelWidth: 60,
