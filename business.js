@@ -261,68 +261,14 @@ Ext.application({
                             },
                             Ext.create("periodical")
                           ]
-                          }, {
-                            layout: "hbox",
+                          },
+                          {
+                            itemId: "addressContainer",
+                            xtype:'panel',
                             border: 0,
-                            defaultType: 'textfield',
-                            margin: "10 0 0 0",
-                            items: [
-                              Ext.create("addressType"),
-                              {
-                                xtype: 'textfield',
-                                fieldLabel: "邮编",
-                                name: "zipCode",
-                                labelWidth: 40,
-                                width: 100,
-                                labelAlign: "right"
-                              }, {
-                                xtype: 'textfield',
-                                fieldLabel: "地址",
-                                name: "address",
-                                labelWidth: 60,
-                                width: 300,
-                                labelAlign: "right"
-                              }, {
-                                xtype: 'textfield',
-                                fieldLabel: "电话",
-                                name: "mobile",
-                                labelWidth: 40,
-                                width: 145,
-                                labelAlign: "right"
-                              }, {
-                                xtype: 'textfield',
-                                fieldLabel: "收件人",
-                                name: "consignee",
-                                labelWidth: 60,
-                                width: 120,
-                                labelAlign: "right"
-                              }, {
-                                xtype: 'textfield',
-                                fieldLabel: "索取数量",
-                                name: "askNumber",
-                                labelWidth: 60,
-                                width: 120,
-                                labelAlign: "right"
-                              }, {
-                                xtype: 'button',
-                                text: "设为默认",
-                                disabled: true,
-                                margin: "0 0 0 10"
-                              }, {
-                                xtype: 'button',
-                                text: "删除",
-                                disabled: true,
-                                margin: "0 0 0 10"
-                              }, {
-                                xtype: 'button',
-                                text: "增加地址",
-                                disabled: true,
-                                margin: "0 0 0 10"
-                              }
-                            ]
+                            items: [ window.address.get() ]
                           }
                         ]
-                        // +TODO: 增加一个按钮：增加地址
                       }, {
                         xtype:'panel',
                         layout: "hbox",

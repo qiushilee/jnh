@@ -15,100 +15,6 @@ Ext.onReady(function() {
     }
   });
 
-  var address = {
-    index: 0,
-    get: function() {
-      var that = this,
-          index = this.index;
-
-      if (index >= 3) {
-        Ext.Msg.alert("增加地址", "每个会员地址总数不允许超过3个");
-        return;
-      }
-
-      this.index++;
-
-      return Ext.create("Ext.panel.Panel", {
-        layout: "hbox",
-        border: 0,
-        defaultType: 'textfield',
-        margin: "10 0 0 0",
-        items: [
-          {
-            xtype: "hiddenfield",
-            name: "addressDefault" + index
-          },
-          Ext.create("addressType"),
-          {
-            xtype: 'textfield',
-            fieldLabel: "邮编",
-            name: "zipCode" + index,
-            labelWidth: 40,
-            width: 100,
-            labelAlign: "right"
-          },
-          {
-            xtype: 'textfield',
-            fieldLabel: "地址",
-            labelWidth: 60,
-            name: "address" + index,
-            width: 300,
-            labelAlign: "right"
-          },
-          {
-            xtype: 'textfield',
-            fieldLabel: "电话",
-            labelWidth: 40,
-            name: "mobile" + index,
-            width: 145,
-            labelAlign: "right"
-          },
-          {
-            xtype: 'textfield',
-            fieldLabel: "收件人",
-            labelWidth: 60,
-            name: "consignee" + index,
-            width: 180,
-            labelAlign: "right"
-          },
-          {
-            xtype: 'button',
-            text: "设为默认",
-            name: "isDefault",
-            margin: "0 0 0 10",
-            handler: function() {
-              var addressDefault = Ext.ComponentQuery.query("hiddenfield[name=addressDefault" + index + "]")[0]
-              for (var i = 0; i < that.index; i++) {
-                var item = Ext.ComponentQuery.query("hiddenfield[name=addressDefault" + i + "]")[0]
-                item.setValue("false");
-              }
-              addressDefault.setValue("true");
-            }
-          },
-          {
-            xtype: 'button',
-            text: "删除",
-            margin: "0 0 0 10",
-            handler: function() {
-              var $container = Ext.ComponentQuery.query("panel[itemId=addressContainer]")[0]
-              $container.remove(this.ownerCt);
-            }
-          },
-          {
-            xtype: 'button',
-            text: "增加地址",
-            margin: "0 0 0 10",
-            handler: function() {
-              var $container = Ext.ComponentQuery.query("panel[itemId=addressContainer]")[0]
-              $container.add(address.get());
-              $container.doLayout();
-            }
-          }
-        ]
-      });
-    }
-  };
-
   // 目录寄送
   Ext.create('Ext.data.Store', {
     storeId: 'directoryList',
@@ -498,7 +404,7 @@ Ext.onReady(function() {
             itemId: "addressContainer",
             xtype:'panel',
             border: 0,
-            items: [address.get()]
+            items: [ window.address.get() ]
           },
 
           // 第六行
