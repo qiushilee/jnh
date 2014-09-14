@@ -388,6 +388,12 @@ Ext.onReady(function() {
                 blankText: "姓名为必填项"
               }, Ext.create("deliveryMethod"),
               {
+                xtype: "datefield",
+                fieldLabel: "生日",
+                labelWidth: 60,
+                labelAlign: "right",
+                name:"birth"
+              },{
                 // TODO 缺少name，所以暂时禁用 xtype
                 xtype: "datefield",
                 fieldLabel: "毕业时间",
