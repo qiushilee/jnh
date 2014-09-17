@@ -237,6 +237,7 @@ Ext.onReady(function() {
                 form.submit({
                   success: function(form, action) {
                     Ext.data.StoreManager.lookup('memberList').loadData(action.result.list);
+                    form.reset();
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("添加会员", action.result.msg);
@@ -256,6 +257,8 @@ Ext.onReady(function() {
                 Ext.Ajax.request({
                   url: env.services.web + env.api.member.del +'id/'+ member.id,
                   success: function(response) {
+                    var data = Ext.JSON.decode(response.responseText);
+                    Ext.data.StoreManager.lookup("memberList").load();
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
