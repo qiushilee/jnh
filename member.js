@@ -572,6 +572,7 @@ Ext.onReady(function() {
               var form = addOrder.getComponent("orderForm").getForm();
               addOrderModelHandler(function(data) {
                 updateForm(form, data);
+                form.findField("id").setValue("");
                 addOrder.show();
                 addOrder.setTitle("增加添加汇款订购");
               });
