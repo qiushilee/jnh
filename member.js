@@ -565,6 +565,7 @@ Ext.onReady(function() {
             text: "<span class=\"key\">A</span> 增加",
             handler: function() {
               var form = addOrder.getComponent("orderForm").getForm();
+              form.reset();
               addOrderModelHandler(function(data) {
                 updateForm(form, data);
                 form.findField("id").setValue("");
