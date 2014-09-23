@@ -625,7 +625,9 @@
                 xtype: "hiddenfield",
                 name: "addressDefault" + index
               },
-              Ext.create("addressType"),
+              Ext.create("addressType", {
+                name: "type" + index
+              }),
               {
                 xtype: 'textfield',
                 fieldLabel: "邮编",

@@ -408,7 +408,7 @@ Ext.onReady(function() {
             itemId: "addressContainer",
             xtype:'panel',
             border: 0,
-            items: [ window.address.get() ]
+            items: [ window.address.get(), window.address.get(), window.address.get() ]
           },
 
           // 第六行
@@ -1071,18 +1071,18 @@ Ext.onReady(function() {
             {
               fieldLabel: "邮编",
               labelAlign: "right",
-              name: 'zipCode'
+              name: 'zipCode1'
             },
             {
               fieldLabel: "地址",
               labelAlign: "right",
-              name: 'address'
+              name: 'address1'
             },
             {
               fieldLabel: "收件人",
               labelAlign: "right",
               width: 170,
-              name: 'consignee'
+              name: 'consignee1'
             }
           ]
         },
