@@ -59,6 +59,7 @@
     change: "/company/update",
     copy: "/company/copy",   //厂商复制
     findByCompanyCode:"/company/findbycompanycode"//根据厂商编号获取企业信息
+    import: "/company/import",   //导入
   };
 
   env.api.product = {
@@ -186,12 +187,27 @@
 
 
 
+//管理员
   env.api.manager = {
     list: "/manager/index",
     change: "/manager/update",
     add: "/manager/create",
-    del: "/manager/delete"
+    del: "/manager/delete",
   };
+
+  //管理员角色
+  env.api.manager = {
+    list: "/managerrole/index",
+    change: "/managerrole/update",
+    add: "/managerrole/create",
+    del: "/managerrole/delete",
+  };
+
+  //权限
+  env.api.privaction = {
+    list: "/privaction/index"
+  };
+
 
 
   window.env = env;
