@@ -99,11 +99,6 @@ Ext.onReady(function() {
     if (currentMember) {
       getMemberInfo(currentMember.data.id, function(resp) {
         var data = resp.info;
-        Ext.Object.each(resp.addressList[0], function(item, value) {
-          if (item !== "index") {
-            data[item] = value;
-          }
-        });
         data.memberId = data.id;
 
         callback(data);
@@ -570,6 +565,7 @@ Ext.onReady(function() {
             text: "<span class=\"key\">A</span> 增加",
             handler: function() {
               var form = addOrder.getComponent("orderForm").getForm();
+              form.reset();
               addOrderModelHandler(function(data) {
                 updateForm(form, data);
                 form.findField("id").setValue("");
@@ -1138,7 +1134,12 @@ Ext.onReady(function() {
             form.url = env.services.web + env.api.order.add;
             form.submit({
               success: function(form, action) {
-                addOrder.reset();
+                var form = addOrder.getComponent("orderForm").getForm();
+                form.reset();
+                addOrderModelHandler(function(data) {
+                  updateForm(form, data);
+                  form.findField("id").setValue("");
+                });
               },
               failure: function(form, action) {
                 Ext.Msg.alert("新增汇款订购", action.result.msg);
