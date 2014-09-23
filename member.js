@@ -971,7 +971,7 @@ Ext.onReady(function() {
               fieldLabel: '汇款日期',
               labelAlign: "right",
               name: 'remittanceDate',
-              width:180
+              width: 200
             },
             {
               xtype: "checkboxfield",
@@ -986,7 +986,7 @@ Ext.onReady(function() {
               fieldLabel: '收款日期',
               labelAlign: "right",
               name: 'remittanceReceivedDate',
-              width:180
+              width: 200
             }
           ]
         },
@@ -1007,13 +1007,14 @@ Ext.onReady(function() {
               xtype: "datefield",
               fieldLabel: '收订单日期',
               labelAlign: "right",
-              name: 'orderReceivedDate'
+              name: 'orderReceivedDate',
+              width: 200
             },
             {
               fieldLabel: "邮资",
               labelAlign: "right",
               name: 'postage',
-              width:120
+              width:180
             }
           ]
         },
