@@ -131,7 +131,7 @@ Ext.application({
                         var data = Ext.JSON.decode(resp.responseText);
                         //TODO 期数应该放在list中比较合理
                         list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("deliveryOrderId").setValue(data.deliveryOrderId);
-                        Ext.ComponentQuery.query("label[name=code]")[0].setText("出货单编号：" + data.code);
+                        Ext.ComponentQuery.query("label[name=code]")[0].setText(data.code);
                         self.setDisabled(true);
                       }
                     });
