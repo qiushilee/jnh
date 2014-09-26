@@ -71,10 +71,8 @@ Ext.onReady(function() {
       window.updateForm(con, data.info);
 
       // Update address
-      if (data.addressList.length > 0) {
-        Ext.each(data.addressList, function(item) {
-          window.updateForm(con, item);
-        });
+      if (data.addressList) {
+        window.updateForm(con, data.addressList);
       } else {
         window.updateForm(con, {"memberType":"","id":"","memberId":"","type":"","address":"","zipCode":"","mobile":"","consignee":"","isDefault":""});
       }
@@ -1071,18 +1069,18 @@ Ext.onReady(function() {
             {
               fieldLabel: "邮编",
               labelAlign: "right",
-              name: 'zipCode1'
+              name: 'zipCode0'
             },
             {
               fieldLabel: "地址",
               labelAlign: "right",
-              name: 'address1'
+              name: 'address0'
             },
             {
               fieldLabel: "收件人",
               labelAlign: "right",
               width: 170,
-              name: 'consignee1'
+              name: 'consignee0'
             }
           ]
         },
