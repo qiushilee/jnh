@@ -68,6 +68,7 @@ Ext.onReady(function() {
     getMemberInfo(memberId, function(data) {
       var con = panel.getComponent("memberInfo").getForm();
 
+      con.reset();
       window.updateForm(con, data.info);
 
       // Update address
