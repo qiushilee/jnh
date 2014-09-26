@@ -113,29 +113,36 @@ Ext.application({
               layout: "hbox",
               border: 0,
               defaultType: 'textfield',
-              items: [{
-                itemId: "createCode",
-                xtype: "button",
-                margin: "0 0 0 50",
-                disabled: true,
-                text: "生成出货单编号",
-                handler: function() {
-                  var self = this;
-                  Ext.Ajax.request({
-                    url: env.services.web + env.api.deliverorder.remorderdelivercode,
-                    params: {
-                      orderRemittanceId: window.orderRemittanceId
-                    },
-                    success: function(resp) {
-                      var data = Ext.JSON.decode(resp.responseText);
-                      //TODO 期数应该放在list中比较合理
-                      //TODO 右侧需要显示code
-                      list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("deliveryOrderId").setValue(data.deliveryOrderId);
-                      self.setDisabled(true);
-                    }
-                  });
+              items: [
+                {
+                  itemId: "createCode",
+                  xtype: "button",
+                  margin: "0 0 0 50",
+                  disabled: true,
+                  text: "生成出货单编号",
+                  handler: function() {
+                    var self = this;
+                    Ext.Ajax.request({
+                      url: env.services.web + env.api.deliverorder.remorderdelivercode,
+                      params: {
+                        orderRemittanceId: window.orderRemittanceId
+                      },
+                      success: function(resp) {
+                        var data = Ext.JSON.decode(resp.responseText);
+                        //TODO 期数应该放在list中比较合理
+                        list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("deliveryOrderId").setValue(data.deliveryOrderId);
+                        Ext.ComponentQuery.query("label[name=code]")[0].setText(data.code);
+                        self.setDisabled(true);
+                      }
+                    });
+                  }
+                },
+                {
+                  xtype: "label",
+                  margin: "3 0 0 15",
+                  name: "code"
                 }
-              }]
+              ]
             },
             {
               xtype: "hidden",
