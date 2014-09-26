@@ -709,6 +709,13 @@
         }
       };
 
+      /**
+       * 获取文件后缀
+       */
+      window.getExt = function(file) {
+        return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
+      }      
+
     }
   });
 })();
