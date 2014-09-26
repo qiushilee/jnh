@@ -198,7 +198,7 @@ Ext.onReady(function() {
           {
             xtype: 'button',
             margin: "0 5",
-            text: "N修改" ,
+            text: "<span class=\"key\">N</span> 保存" ,
             handler: function() {
               var form = panel.getComponent("memberInfo").getForm(),
               member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
