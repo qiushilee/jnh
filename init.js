@@ -603,6 +603,7 @@
       });
 
       window.address = {
+        length: 0,
         index: 0,
         get: function() {
           var that = this,
@@ -614,6 +615,7 @@
           }
 
           this.index++;
+          this.length++;
 
           return Ext.create("Ext.panel.Panel", {
             layout: "hbox",
@@ -679,8 +681,17 @@
                 text: "删除",
                 margin: "0 0 0 10",
                 handler: function() {
-                  var $container = Ext.ComponentQuery.query("panel[itemId=addressContainer]")[0]
-                  $container.remove(this.ownerCt);
+                  var $container;
+
+                  console.log(that.length);
+                  if (that.length <= 1) {
+                    Ext.Msg.alert("删除地址", "地址不可以全部删除哦，必须保留最后一个~");
+                    return false;
+                  } else {
+                    $container = Ext.ComponentQuery.query("panel[itemId=addressContainer]")[0];
+                    that.length--;
+                    $container.remove(this.ownerCt);
+                  }
                 }
               },
               {
