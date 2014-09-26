@@ -199,25 +199,25 @@ Ext.onReady(function() {
             xtype: 'button',
             margin: "0 5",
             text: "N修改" ,
-      handler: function() {
-            var form = panel.getComponent("memberInfo").getForm(),
-                member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
-            form.url = env.services.web + env.api.member.change;
-            if (form.isValid()) {
-              console.log(member.id)
-              form.submit({
-                params: {
-                  id: member.id
-                },
-                success: function(form, action) {
-                  console.log(action)
-                },
-                failure: function(form, action) {
-                  Ext.Msg.alert("修改会员", action.result.msg);
-                }
-              });
+            handler: function() {
+              var form = panel.getComponent("memberInfo").getForm(),
+              member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
+              form.url = env.services.web + env.api.member.change;
+              if (form.isValid()) {
+                console.log(member.id)
+                form.submit({
+                  params: {
+                    id: member.id
+                  },
+                  success: function(form, action) {
+                    console.log(action)
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改会员", action.result.msg);
+                  }
+                });
+              }
             }
-          }
           },
           {
             xtype: 'button',
