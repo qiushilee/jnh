@@ -1,3 +1,8 @@
+Ext.require([
+  "Ext.data.*",
+  "Ext.ux.grid.Printer"
+]);
+
 Ext.application({
   name: "JNH",
   launch: function () {
@@ -228,8 +233,12 @@ Ext.application({
       }, {
         xtype: "button",
         text: "<span class=\"key\">D</span> 打印",
-        disabled: true,
-        margin: "0 0 0 10"
+        margin: "0 0 0 10",
+        handler: function() {
+          Ext.ux.grid.Printer.stylesheetPath = "extjs/src/ux/grid/gridPrinterCss/package.css";
+          Ext.ux.grid.Printer.printAutomatically = false;
+          Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid")[0]);
+        }
       }, {
         xtype: "button",
         text: "<span class=\"key\">C</span> 预览",

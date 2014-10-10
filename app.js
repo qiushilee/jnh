@@ -1,3 +1,11 @@
+Ext.Loader.setConfig({
+  enabled: true,
+  paths: {
+    Ext: "extjs/src",
+    "Ext.ux": "extjs/src/ux/"
+  }
+});
+
 Ext.application({
   name: "JNH",
   launch: function() {
