@@ -136,6 +136,7 @@ Ext.application({
                         url: env.services.web + env.api.deliverorder.remorderdelivercode,
                         params: {
                           orderRemittanceId: record.orderRemittanceId
+                          deliveryOrderId: record.deliveryOrderId
                         },
                         success: function(resp) {
                           var data = Ext.JSON.decode(resp.responseText);
