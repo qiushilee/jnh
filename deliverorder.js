@@ -129,29 +129,26 @@ Ext.application({
                   handler: function() {
                     var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
 
-                    if (record.deliveryOrderCode) {
-                      createCode(record.deliveryOrderCode, record.deliveryOrderId);
-                    } else {
-                      Ext.Ajax.request({
-                        url: env.services.web + env.api.deliverorder.remorderdelivercode,
-                        params: {
-                          orderRemittanceId: record.orderRemittanceId,
-                          deliveryOrderId: record.deliveryOrderId
-                        },
-                        success: function(resp) {
-                          var data = Ext.JSON.decode(resp.responseText);
-                          if (data.success) {
-                            createCode(data.code, data.deliveryOrderId);
-                          } else {
-                            Ext.Msg.alert("生成出货单编号失败", data.msg);
-                          }
-                        },
-                        failure: function(resp) {
-                          Ext.Msg.alert("生成出货单编号失败", resp.statusText);
-                          console.error(resp.statusText);
+                    Ext.Ajax.request({
+                      url: env.services.web + env.api.deliverorder.remorderdelivercode,
+                      params: {
+                        orderRemittanceId: record.orderRemittanceId,
+                        deliveryOrderId: record.deliveryOrderId
+                      },
+                      success: function(resp) {
+                        var data = Ext.JSON.decode(resp.responseText);
+                        if (data.success) {
+                          createCode(data.code, data.deliveryOrderId);
+                          Ext.data.StoreManager.lookup("list").load();
+                        } else {
+                          Ext.Msg.alert("生成出货单编号失败", data.msg);
                         }
-                      });
-                    }
+                      },
+                      failure: function(resp) {
+                        Ext.Msg.alert("生成出货单编号失败", resp.statusText);
+                        console.error(resp.statusText);
+                      }
+                    });
                   }
                 },
                 {
@@ -309,6 +306,10 @@ Ext.application({
                   //订单产品
                   $sidebarForm.findField("orderRemittanceId").setValue(record.data.orderRemittanceId);
                   $sidebarForm.findField("deliveryOrderId").setValue(window.deliveryOrderId);
+
+                  if (record.data.deliveryOrderCode) {
+                    createCode(record.data.deliveryOrderCode, record.data.deliveryOrderId);
+                  }
                 }
               }
             },
