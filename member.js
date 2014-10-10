@@ -34,7 +34,7 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ["key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod", "memberType"],
+    fields: ["key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -496,7 +496,7 @@ Ext.onReady(function() {
           },
           {
             text: '付款方式',
-            dataIndex: 'paymentMethord'
+            dataIndex: 'paymentMethordName'
           },
           {
             text: '会员编号',
@@ -516,7 +516,7 @@ Ext.onReady(function() {
           },
           {
             text: '寄送方式',
-            dataIndex: 'deliveryMethod'
+            dataIndex: 'deliveryMethodName'
           },
           {
             text: '邮资',
