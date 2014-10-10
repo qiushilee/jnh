@@ -68,13 +68,12 @@ Ext.onReady(function() {
     getMemberInfo(memberId, function(data) {
       var con = panel.getComponent("memberInfo").getForm();
 
+      con.reset();
       window.updateForm(con, data.info);
 
       // Update address
-      if (data.addressList.length > 0) {
-        Ext.each(data.addressList, function(item) {
-          window.updateForm(con, item);
-        });
+      if (data.addressList) {
+        window.updateForm(con, data.addressList);
       } else {
         window.updateForm(con, {"memberType":"","id":"","memberId":"","type":"","address":"","zipCode":"","mobile":"","consignee":"","isDefault":""});
       }
@@ -200,26 +199,26 @@ Ext.onReady(function() {
           {
             xtype: 'button',
             margin: "0 5",
-            text: "N修改" ,
-      handler: function() {
-            var form = panel.getComponent("memberInfo").getForm(),
-                member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
-            form.url = env.services.web + env.api.member.change;
-            if (form.isValid()) {
-              console.log(member.id)
-              form.submit({
-                params: {
-                  id: member.id
-                },
-                success: function(form, action) {
-                  console.log(action)
-                },
-                failure: function(form, action) {
-                  Ext.Msg.alert("修改会员", action.result.msg);
-                }
-              });
+            text: "<span class=\"key\">N</span> 保存" ,
+            handler: function() {
+              var form = panel.getComponent("memberInfo").getForm(),
+              member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
+              form.url = env.services.web + env.api.member.change;
+              if (form.isValid()) {
+                console.log(member.id)
+                form.submit({
+                  params: {
+                    id: member.id
+                  },
+                  success: function(form, action) {
+                    console.log(action)
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改会员", action.result.msg);
+                  }
+                });
+              }
             }
-          }
           },
           {
             xtype: 'button',
@@ -408,7 +407,7 @@ Ext.onReady(function() {
             itemId: "addressContainer",
             xtype:'panel',
             border: 0,
-            items: [ window.address.get() ]
+            items: [ window.address.get(), window.address.get(), window.address.get() ]
           },
 
           // 第六行
@@ -971,7 +970,7 @@ Ext.onReady(function() {
               fieldLabel: '汇款日期',
               labelAlign: "right",
               name: 'remittanceDate',
-              width:180
+              width: 200
             },
             {
               xtype: "checkboxfield",
@@ -986,7 +985,7 @@ Ext.onReady(function() {
               fieldLabel: '收款日期',
               labelAlign: "right",
               name: 'remittanceReceivedDate',
-              width:180
+              width: 200
             }
           ]
         },
@@ -1007,13 +1006,14 @@ Ext.onReady(function() {
               xtype: "datefield",
               fieldLabel: '收订单日期',
               labelAlign: "right",
-              name: 'orderReceivedDate'
+              name: 'orderReceivedDate',
+              width: 200
             },
             {
               fieldLabel: "邮资",
               labelAlign: "right",
               name: 'postage',
-              width:120
+              width:180
             }
           ]
         },
@@ -1070,18 +1070,18 @@ Ext.onReady(function() {
             {
               fieldLabel: "邮编",
               labelAlign: "right",
-              name: 'zipCode'
+              name: 'zipCode0'
             },
             {
               fieldLabel: "地址",
               labelAlign: "right",
-              name: 'address'
+              name: 'address0'
             },
             {
               fieldLabel: "收件人",
               labelAlign: "right",
               width: 170,
-              name: 'consignee'
+              name: 'consignee0'
             }
           ]
         },
