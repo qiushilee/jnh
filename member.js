@@ -34,7 +34,7 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ["key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
+    fields: ["memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -92,7 +92,7 @@ Ext.onReady(function() {
     });
   }
 
-  function addOrderModelHandler(callback) {
+  function orderModelHandler(opt) {
     var currentMember = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0];
 
     if (currentMember) {
@@ -100,10 +100,10 @@ Ext.onReady(function() {
         var data = resp.info;
         data.memberId = data.id;
 
-        callback(data);
+        opt.success(data);
       });
     } else {
-      Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
+      opt.fail();
     }
   }
 
@@ -565,11 +565,16 @@ Ext.onReady(function() {
             handler: function() {
               var form = addOrder.getComponent("orderForm").getForm();
               form.reset();
-              addOrderModelHandler(function(data) {
-                updateForm(form, data);
-                form.findField("id").setValue("");
-                addOrder.show();
-                addOrder.setTitle("增加添加汇款订购");
+              orderModelHandler({
+                success: function(data) {
+                  updateForm(form, data);
+                  form.findField("id").setValue("");
+                  addOrder.show();
+                  addOrder.setTitle("增加添加汇款订购");
+                },
+                fail: function() {
+                  Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
+                }
               });
             }
           },
@@ -1136,9 +1141,14 @@ Ext.onReady(function() {
               success: function(form, action) {
                 var form = addOrder.getComponent("orderForm").getForm();
                 form.reset();
-                addOrderModelHandler(function(data) {
-                  updateForm(form, data);
-                  form.findField("id").setValue("");
+                orderModelHandler({
+                  success: function(data) {
+                    updateForm(form, data);
+                    form.findField("id").setValue("");
+                  },
+                  fail: function() {
+                    Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
+                  }
                 });
               },
               failure: function(form, action) {
