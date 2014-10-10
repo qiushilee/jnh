@@ -37,7 +37,7 @@ Ext.application({
           fieldLabel: "用户名",
           name: "username",
           allowBlank:false,
-          labelWidth: 40,
+          labelWidth: 60,
           width: 120,
           labelAlign: "right"
         }, {
