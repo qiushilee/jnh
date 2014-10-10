@@ -135,7 +135,7 @@ Ext.application({
                       Ext.Ajax.request({
                         url: env.services.web + env.api.deliverorder.remorderdelivercode,
                         params: {
-                          orderRemittanceId: record.orderRemittanceId
+                          orderRemittanceId: record.orderRemittanceId,
                           deliveryOrderId: record.deliveryOrderId
                         },
                         success: function(resp) {
