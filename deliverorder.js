@@ -95,6 +95,12 @@ Ext.application({
         }
       });
 
+    function createCode(code, orderId) {
+      list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("deliveryOrderId").setValue(orderId);
+      Ext.ComponentQuery.query("label[name=code]")[0].setText(code);
+      Ext.ComponentQuery.query("button[itemId=createCode]")[0].setDisabled(true);
+    }
+
     var list = Ext.create('Ext.Panel', {
       layout: "column",
       border: 0,
@@ -121,20 +127,30 @@ Ext.application({
                   disabled: true,
                   text: "生成出货单编号",
                   handler: function() {
-                    var self = this;
-                    Ext.Ajax.request({
-                      url: env.services.web + env.api.deliverorder.remorderdelivercode,
-                      params: {
-                        orderRemittanceId: window.orderRemittanceId
-                      },
-                      success: function(resp) {
-                        var data = Ext.JSON.decode(resp.responseText);
-                        //TODO 期数应该放在list中比较合理
-                        list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("deliveryOrderId").setValue(data.deliveryOrderId);
-                        Ext.ComponentQuery.query("label[name=code]")[0].setText(data.code);
-                        self.setDisabled(true);
-                      }
-                    });
+                    var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
+
+                    if (record.deliveryOrderCode) {
+                      createCode(record.deliveryOrderCode, record.deliveryOrderId);
+                    } else {
+                      Ext.Ajax.request({
+                        url: env.services.web + env.api.deliverorder.remorderdelivercode,
+                        params: {
+                          orderRemittanceId: record.orderRemittanceId
+                        },
+                        success: function(resp) {
+                          var data = Ext.JSON.decode(resp.responseText);
+                          if (data.success) {
+                            createCode(data.code, data.deliveryOrderId);
+                          } else {
+                            Ext.Msg.alert("生成出货单编号失败", data.msg);
+                          }
+                        },
+                        failure: function(resp) {
+                          Ext.Msg.alert("生成出货单编号失败", resp.statusText);
+                          console.error(resp.statusText);
+                        }
+                      });
+                    }
                   }
                 },
                 {
@@ -246,6 +262,7 @@ Ext.application({
               ]
             },
             {
+              itemId: "orderList",
               xtype: "grid",
               height: 155,
               store: Ext.data.StoreManager.lookup('list'),
@@ -277,9 +294,9 @@ Ext.application({
                       productStore = Ext.data.StoreManager.lookup("productData"),
                       $sidebarForm = list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm();
                   window.deliveryOrderId = record.data.deliveryOrderId;
-                  window.orderRemittanceId = record.data.orderRemittanceId;
 
                   detail.getComponent("col").getComponent("createCode").setDisabled(false);
+                  Ext.ComponentQuery.query("label[name=code]")[0].setText("");
                   window.updateForm(detail.getForm(), record.data);
 
                   productStore.load({
@@ -289,7 +306,7 @@ Ext.application({
                   });
                  
                   //订单产品
-                  $sidebarForm.findField("orderRemittanceId").setValue(window.orderRemittanceId);
+                  $sidebarForm.findField("orderRemittanceId").setValue(record.data.orderRemittanceId);
                   $sidebarForm.findField("deliveryOrderId").setValue(window.deliveryOrderId);
                 }
               }
