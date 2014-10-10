@@ -428,9 +428,7 @@ Ext.application({
                 var form = this.up('form').getForm();
                 var ext = window.getExt(form.findField("file").getValue());
 
-                if (/^(xls|xlsx)$/.test(ext)) {
-                  return true;
-                } else {
+                if (/^(xls|xlsx)$/.test(ext)==false) {
                   Ext.Msg.alert("选择文件", "您选择的文件不是Excel，请重新选择");
                   return false;
                 }
