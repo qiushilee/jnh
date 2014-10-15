@@ -506,15 +506,18 @@ Ext.application({
               },
               margin: "0 0 0 10"
             }, {
+              //TODO 打印预览功能
               xtype: "button",
               text: "<span class=\"key\">H</span> 预览",
               disabled: true,
               margin: "0 0 0 10"
             }, {
               xtype: "button",
-              text: "<span class=\"key\">R</span>批量打印",
-              disabled: true,
-              margin: "0 0 0 10"
+              text: "<span class=\"key\">R</span> 连续打印",
+              margin: "0 0 0 10",
+              handler: function() {
+                print.show();
+              }
             }]
           }]
         }]
@@ -659,7 +662,7 @@ Ext.application({
         items: [{
           fieldLabel: "出货单号",
           labelAlign: "right",
-          labelWidth: 52
+          labelWidth: 62
         }, {
           fieldLabel: ""
         }, {

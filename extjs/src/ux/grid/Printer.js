@@ -20,7 +20,7 @@
  * });
  * 
  * 3 - Print!
- * Ext.ux.grid.Printer.mainTitle = 'Your Title here'; //optional
+ * Ext.ux.grid.Printer.opt.title = 'Your Title here'; //optional
  * Ext.ux.grid.Printer.print(grid);
  * 
  * Original url: http://edspencer.net/2009/07/printing-grids-with-ext-js.html
@@ -85,7 +85,12 @@ Ext.define("Ext.ux.grid.Printer", {
             // We generate an XTemplate here by using 2 intermediary
             // XTemplates - one to create the header, the other
             // to create the body (see the escaped {} below)
-            var isGrouped = grid.store.isGrouped ? grid.store.isGrouped() : false;
+            try {
+              var isGrouped = grid.store.isGrouped ? grid.store.isGrouped() : false;
+            } catch(e) {
+              console.error("没有找到grid\n", e.stack);
+            }
+
             var groupField;
             if ( isGrouped ) {
                 //var feature = this.getFeature( grid, featureId );
@@ -231,6 +236,7 @@ Ext.define("Ext.ux.grid.Printer", {
             
             var title = (grid.title) ? grid.title : this.pageTitle;
             var summaryFeature = this.getFeature(grid, 'summary');
+            var date = new Date();
 
             //Here because inline styles using CSS, the browser did not show the correct formatting of the data the first time that loaded
             var htmlMarkup = [
@@ -246,7 +252,16 @@ Ext.define("Ext.ux.grid.Printer", {
                       '<a class="' + Ext.baseCSSPrefix + 'ux-grid-printer-linkprint" href="javascript:void(0);" onclick="window.print();">' + this.printLinkText + '</a>',
                       '<a class="' + Ext.baseCSSPrefix + 'ux-grid-printer-linkclose" href="javascript:void(0);" onclick="window.close();">' + this.closeLinkText + '</a>',
                   '</div>',
-                  '<h1>' + this.mainTitle + '</h1>',
+                  '<div class="clear">',
+                  '<p class="print-date">打印日期：' + date.getFullYear() + date.getMonth() + date.getDay() + '</p>',
+                  '<p class="name">打印人：' + this.opt.name + '</p>',
+                  '</div>',
+                  '<h1>' + this.opt.title + '</h1>',
+
+                  '<tpl if="opt.inputDate">',
+                    '<p class="input-date">' + this.opt.inputDate + '</p>',
+                  '</tpl>',
+
                     '<table>',
                       '<tr>',
                         headings,
@@ -517,7 +532,9 @@ Ext.define("Ext.ux.grid.Printer", {
             win.document.close();
             
             if (this.printAutomatically){
-                win.print();
+                setTimeout(function() {
+                    win.print();
+                }, 100);
             }
             
             //Another way to set the closing of the main
@@ -967,14 +984,29 @@ Ext.define("Ext.ux.grid.Printer", {
          * (defaults to empty)
          */
         pageTitle: 'Print View',
-				
+
         /**
-         * @property mainTitle
-         * @type String
-         * Title to be used on top of the table
-         * (defaults to empty)
+         * 自定义属性
          */
-        mainTitle: '',
+        opt: {
+          /**
+           * @property title
+           * @type String
+           * Title to be used on top of the table
+           * (defaults to empty)
+           */
+          title: '',
+
+          /**
+           * 打印人姓名
+           */
+          name: '',
+
+          /**
+           * 输入日期
+           */
+          inputDate: undefined,
+        },
 
          /**
          * Text show on print link

@@ -1,3 +1,8 @@
+Ext.require([
+  "Ext.data.*",
+  "Ext.ux.grid.Printer"
+]);
+
 Ext.application({
   name: "JNH",
   launch: function () {
@@ -359,7 +364,9 @@ Ext.application({
               listeners: {
                 itemdblclick: function (that, record, item, index, e, eOpts) {
                   var form = addJHD.getComponent("form").getForm();
+                  form.url = env.services.web + env.api.product.changeTransitionLoss;
                   addJHD.show();
+                  Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(false);
                   window.updateForm(form, record.data);
                   form.url = env.services.web + env.api.product.changeTransitionLoss;
                 }
@@ -371,8 +378,11 @@ Ext.application({
               margin: "20 0 0 0",
               scale: "medium",
               handler: function () {
+                var form = addJHD.getComponent("form").getForm();
+                form.url = env.services.web + env.api.product.addTransitionLoss;
                 addJHD.getComponent("form").getForm().reset();
                 addJHD.show();
+                Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(true);
               }
             },
             {
@@ -719,7 +729,6 @@ Ext.application({
             margin: "0 0 30 20",
             handler: function () {
               var form = addJHD.getComponent("form").getForm();
-              form.url = env.services.web + env.api.product.changeTransitionLoss;
               form.submit({
                 success: function(form, action) {
                   form.reset();
@@ -736,15 +745,7 @@ Ext.application({
             margin: "0 0 30 20",
             handler: function () {
               var form = addJHD.getComponent("form").getForm();
-              form.url = env.services.web + env.api.product.addTransitionLoss;
-              form.submit({
-                success: function(form, action) {
-                  form.reset();
-                },
-                failure: function (form, action) {
-                  Ext.Msg.alert("新增", action.result.msg);
-                }
-              });
+              form.reset();
             }
           }
         ]
@@ -832,6 +833,22 @@ Ext.application({
                     });
                   }
                 });
+              }
+            },
+            {
+              name: "jhd-print",
+              xtype: "button",
+              text: "打印",
+              disabled: true,
+              margin: "0 0 0 10",
+              handler: function () {
+                Ext.ux.grid.Printer.stylesheetPath = "extjs/src/ux/grid/gridPrinterCss/product.css";
+                Ext.ux.grid.Printer.printAutomatically = true;
+                Ext.ux.grid.Printer.opt = {
+                  title: "转接单明细",
+                  name: "李求是"
+                };
+                Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=list]")[0]);
               }
             }
           ]

@@ -249,9 +249,9 @@ Ext.application({
         text: "<span class=\"key\">B</span> 连续打印",
         margin: "0 0 0 10",
         handler: function() {
-          var data = list.getComponent("grid").getSelectionModel().getSelection()[0].data
+          //var data = list.getComponent("grid").getSelectionModel().getSelection()[0].data
 
-          printStore.loadData(data);
+          //printStore.loadData(data);
           print.show();
         }
       }, {

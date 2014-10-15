@@ -474,8 +474,10 @@ Ext.application({
                   items: [
                     {
                       xtype: "button",
-                      disabled: true,
-                      text: "连续打印"
+                      text: "连续打印",
+                      handler: function() {
+                        print.show();
+                      }
                     },
                     {
                       xtype: "button",
@@ -518,14 +520,10 @@ Ext.application({
                         });
                       }
                     },
-                   
                     {
                       xtype: "button",
                       text: "<span class=\"key\">H</span> 预览",
-                      margin: "0 0 0 10",
-                      handler: function() {
-                        print.show();
-                      }
+                      margin: "0 0 0 10"
                     },
                     {
                       xtype: "button",
@@ -644,7 +642,7 @@ Ext.application({
             {
               fieldLabel: "出货单号",
               labelAlign: "right",
-              labelWidth: 52
+              labelWidth: 62
             },
             {
               fieldLabel: ""
@@ -657,7 +655,7 @@ Ext.application({
             },
             {
               xtype: "button",
-              text: "重置",
+              text: "打印",
               disabled: true,
               margin: "0 0 0 10"
             }
@@ -681,39 +679,6 @@ Ext.application({
               text: '地址',
               dataIndex: 'man1',
               flex: 1
-            }
-          ]
-        },
-        {
-          layout: "hbox",
-          bodyPadding: 10,
-          border: 0,
-          defaultType: 'textfield',
-          width: 230,
-          style: {
-            float: "right"
-          },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-            {
-              xtype: "button",
-              text: "查询",
-              disabled: true,
-              margin: "0 0 0 20"
-            },
-            {
-              xtype: "button",
-              text: "名单打印",
-              disabled: true,
-              margin: "0 0 0 10"
-            },
-            {
-              xtype: "button",
-              text: "明细打印",
-              disabled: true,
-              margin: "0 0 0 10"
             }
           ]
         }
