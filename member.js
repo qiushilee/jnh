@@ -996,11 +996,6 @@ Ext.onReady(function() {
           border: 0,
           defaultType: 'textfield',
           items: [
-            {
-              fieldLabel: "使用青春贴",
-              labelAlign: "right",
-              name: 'youthStuck'
-            },
             Ext.create('deliveryMethod'),
             {
               xtype: "datefield",
