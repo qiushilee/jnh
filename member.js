@@ -699,11 +699,6 @@ Ext.onReady(function() {
         defaultType: 'textfield',
         items: [
           {
-            fieldLabel: "使用青春贴",
-            labelAlign: "right",
-            name: 'first'
-          },
-          {
             xtype: "combobox",
             store: Ext.data.StoreManager.lookup('adderList'),
             queryMode: 'local',
