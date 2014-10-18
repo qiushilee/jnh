@@ -404,12 +404,117 @@ Ext.onReady(function() {
 
           // 第四行
           {
-            itemId: "addressContainer",
             xtype:'panel',
+            layout: "hbox",
             border: 0,
-            items: [ window.address.get(), window.address.get(), window.address.get() ]
+            defaultType: 'textfield',
+            margin: "10 0 0 0",
+            items: [ {
+              xtype: "hiddenfield",
+              name: "addressDefault0"
+            },
+              Ext.create("addressType", {
+                name: "type0"
+              }),
+              {
+                xtype: 'textfield',
+                fieldLabel: "邮编",
+                name: "zipCode0",
+                labelWidth: 40,
+                width: 100,
+                labelAlign: "right"
+              },
+              {
+                xtype: 'textfield',
+                fieldLabel: "地址",
+                labelWidth: 60,
+                name: "address0" ,
+                width: 300,
+                labelAlign: "right"
+              },
+              {
+                xtype: 'textfield',
+                fieldLabel: "电话",
+                labelWidth: 40,
+                name: "mobile0",
+                width: 145,
+                labelAlign: "right"
+              },
+              {
+                xtype: 'textfield',
+                fieldLabel: "收件人",
+                labelWidth: 60,
+                name: "consignee0",
+                width: 180,
+                labelAlign: "right"
+              },
+              {
+                xtype: 'radio',
+                id   : 'isDefault0',
+                fieldLabel: '默认地址',
+                labelAlign: 'right',
+                labelWidth: 80,
+                name: 'isDefault',
+                inputValue:'0',
+                checked : true
+              }
+            ]
           },
-
+          // 第五行
+          {
+            xtype:'panel',
+            layout: "hbox",
+            border: 0,
+            defaultType: 'textfield',
+            margin: "10 0 0 0",
+            items: [ {
+              xtype: "hiddenfield",
+              name: "addressDefault1"
+            },
+              Ext.create("addressType", {
+                name: "type1"
+              }),
+              {
+                xtype: 'textfield',
+                fieldLabel: "邮编",
+                name: "zipCode1",
+                labelWidth: 40,
+                width: 100,
+                labelAlign: "right"
+              },
+              {
+                xtype: 'textfield',
+                fieldLabel: "地址",
+                labelWidth: 60,
+                name: "address1" ,
+                width: 300,
+                labelAlign: "right"
+              },
+              {
+                xtype: 'textfield',
+                fieldLabel: "电话",
+                labelWidth: 40,
+                name: "mobile1",
+                width: 145,
+                labelAlign: "right"
+              },
+              {
+                xtype: 'textfield',
+                fieldLabel: "收件人",
+                labelWidth: 60,
+                name: "consignee1",
+                width: 180,
+                labelAlign: "right"
+              },{
+                xtype: 'radio',
+                id   : 'isDefault1',
+                labelAlign: 'right',
+                fieldLabel: '默认地址',
+                labelWidth: 80,
+                name: 'isDefault',
+                inputValue:'1'
+              }]
+          },
           // 第六行
           {
             xtype: "panel",
@@ -1030,19 +1135,19 @@ Ext.onReady(function() {
               fieldLabel: "不打折金额",
               labelAlign: "right",
               name: 'unDiscountAmount',
-              width:150
+              width:180
             },
             {
               fieldLabel: "抵价券",
               labelAlign: "right",
               name: 'preferentialTicket',
-              width:150
+              width:180
             },
             {
               fieldLabel: "使用青春贴",
               labelAlign: "right",
               name: 'youthStuck',
-              width:150
+              width:180
             }
           ]
         },
