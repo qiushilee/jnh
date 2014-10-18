@@ -1159,29 +1159,33 @@ Ext.onReady(function() {
           defaultType: 'textfield',
           items: [
             {
+              labelWidth: 60,
               fieldLabel: "姓名",
               labelAlign: "right",
-              name: 'realName'
-            },{
+              name: 'realName',
+              width:180
+            },{labelWidth: 60,
               fieldLabel: "会员编号",
               labelAlign: "right",
-              name: 'userCode'
+              name: 'userCode',
+              width:220
             },
-            {
+            {labelWidth: 60,
               fieldLabel: "邮编",
               labelAlign: "right",
-              name: 'zipCode0'
+              name: 'zipCode',
+              width:180
             },
-            {
+            {labelWidth: 60,
               fieldLabel: "地址",
               labelAlign: "right",
-              name: 'address0'
+              name: 'address'
             },
-            {
+            {labelWidth: 60,
               fieldLabel: "收件人",
               labelAlign: "right",
               width: 170,
-              name: 'consignee0'
+              name: 'consignee'
             }
           ]
         },
@@ -1192,25 +1196,34 @@ Ext.onReady(function() {
           border: 0,
           defaultType: 'textfield',
           items: [
-            {
+            {labelWidth: 80,
               fieldLabel: "折扣",
               labelAlign: "right",
+              disabled:true,
+              name:'orderDiscount',
               readOnly:true
             },
-            {
+            {labelWidth: 80,
               fieldLabel: "邮寄",
               labelAlign: "right",
-              name: 'mailingCost'
+              disabled:true,
+              name: 'mailingCost',
+              width: 180
             },
             {
               fieldLabel: "青春贴",
               labelAlign: "right",
-              name: 'youthStuck'
+              disabled:true,
+              name: 'orderYouthStuck',
+              width: 180
             },
             {
               fieldLabel: "多付款",
               readOnly:true,
-              labelAlign: "right"
+              labelAlign: "right",
+              disabled:true,
+              name: 'orderMoreAmount',
+              width: 180
             }
           ]
         }
