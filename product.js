@@ -678,7 +678,9 @@ Ext.application({
           },
           items: [
             Ext.create('periodical'),
-            Ext.create('jzsType'),
+            Ext.create('jzsType', {
+              itemId: "jhd-type"
+            }),
             {
               margin: "0 10",
               fieldLabel: "编号",
@@ -842,11 +844,13 @@ Ext.application({
               disabled: true,
               margin: "0 0 0 10",
               handler: function () {
+                var type = Ext.ComponentQuery.query("[itemId=jhd-type]")[0].rawValue;
+
                 Ext.ux.grid.Printer.stylesheetPath = "extjs/src/ux/grid/gridPrinterCss/product.css";
                 Ext.ux.grid.Printer.printAutomatically = true;
                 Ext.ux.grid.Printer.opt = {
-                  title: "转接单明细",
-                  name: "李求是"
+                  title: type + "明细",
+                  name: document.body.dataset.user
                 };
                 Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=list]")[0]);
               }
