@@ -34,7 +34,7 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ["memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
+    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
     layout: "fit",
     autoLoad: true,
     proxy: {
