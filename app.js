@@ -1,10 +1,12 @@
 Ext.Loader.setConfig({
   enabled: true,
   paths: {
-    Ext: "extjs/src",
-    "Ext.ux": "extjs/src/ux/"
+    Ext: "/app/extjs/src",
+    "Ext.ux": "/app/extjs/src/ux/"
   }
 });
+
+Ext.Loader.setPath("Ext", "http://jnh.www.webwei.cn/app/extjs/src");
 
 Ext.application({
   name: "JNH",

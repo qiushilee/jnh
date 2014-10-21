@@ -317,23 +317,7 @@
   Ext.application({
     name: "JNH",
     launch: function() {
-      Ext.Ajax.request({
-        url: env.services.web + env.api.uc.session,
-        success: function(response) {
-          if (Ext.JSON.decode(response.responseText).success === false && location.href.indexOf("login.html") === -1) {
-            location.href = "login.html";
-          } else if (Ext.JSON.decode(response.responseText).success) {
-            if (location.href.indexOf("login.html") !== -1) {
-              location.href = "index.html";
-            }
-          }
-        },
-        failure: function(form, action) {
-          Ext.Msg.alert("登录超时", action.result.errors.msg, function() {
-            location.href = "login.html";
-          });
-        }
-      });
+
 
       function comboboxSetValue(combobox, value) {
         combobox.store.data.each(function(item, i) {
