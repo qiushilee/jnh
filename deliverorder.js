@@ -173,13 +173,15 @@ Ext.application({
                   xtype: "textfield",
                   fieldLabel: "会员姓名",
                   name: "userName",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 },
                 {
                   xtype: 'textfield',
                   fieldLabel: "应收金额",
                   name: "receivableAmount",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 }
               ]
             },
@@ -193,12 +195,14 @@ Ext.application({
                 {
                   fieldLabel: "销货合计",
                   name: "totalSales",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 },
                 {
                   fieldLabel: "已收汇款",
                   name: "receivedRemittance",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 }
               ]
             },
@@ -212,12 +216,14 @@ Ext.application({
                 {
                   fieldLabel: "不打折金额",
                   name: "unDiscountAmount",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 },
                 {
                   fieldLabel: "抵价券",
                   name: "preferentialTicket",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 }
               ]
             },
@@ -231,12 +237,14 @@ Ext.application({
                 {
                   fieldLabel: "折扣",
                   name: "discount",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 },
                 {
                   fieldLabel: "多付金额",
                   name: "overpaidAmount",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 }
               ]
             },
@@ -250,12 +258,14 @@ Ext.application({
                 {
                   fieldLabel: "邮资",
                   name: "postage",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 },
                 {
                   fieldLabel: "会员编号",
                   name: "userCode",
-                  labelAlign: "right"
+                  labelAlign: "right",
+                  disabled:true
                 }
               ]
             },
@@ -488,6 +498,7 @@ Ext.application({
                         form.url = env.services.web + env.api.deliverorder.saveorderproduct;
                         form.submit({
                           success: function(form, action) {
+                            Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
                             form.reset();
                           },
                           failure: function(form, action) {

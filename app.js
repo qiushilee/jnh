@@ -1,8 +1,8 @@
 Ext.Loader.setConfig({
   enabled: true,
   paths: {
-    Ext: "extjs/src",
-    "Ext.ux": "extjs/src/ux/"
+    Ext: window.path + "extjs/src",
+    "Ext.ux": window.path + "extjs/src/ux/"
   }
 });
 

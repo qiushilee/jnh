@@ -19,12 +19,10 @@ Ext.application({
               if (form.isValid()) {
                 form.submit({
                   success: function() {
-                    location.href = "index.html";
+                    location.href="/index.php/index"
                   },
                   failure: function(form, action) {
-                    Ext.Msg.alert("登录失败", action.result.errors.msg, function() {
-                      location.href = "login.html";
-                    });
+                    Ext.Msg.alert("登录失败", action.result.errors.msg);
                   }
                 });
               }
@@ -57,12 +55,10 @@ Ext.application({
             if (form.isValid()) {
               form.submit({
                 success: function() {
-                  location.href = "index.html";
+                  location.href="/index.php/index"
                 },
                 failure: function(form, action) {
-                  Ext.Msg.alert("登录失败", action.result.errors.msg, function() {
-                    location.href = "login.html";
-                  });
+                  Ext.Msg.alert("登录失败", action.result.errors.msg);
                 }
               });
             }
