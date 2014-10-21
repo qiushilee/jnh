@@ -5,6 +5,13 @@
   <title>邮购嘉年华管理系统</title>
   <link rel="stylesheet" type="text/css" href="resources/css/ext-all.css">
   <link rel="stylesheet" type="text/css" href="layout.css">
+  <script>
+    if (location.href.indexOf("localhost") !== -1) {
+      window.path = "";
+    } else {
+      window.path = "http://jnh.www.webwei.cn/app/";
+    }
+  </script>
   <script type="text/javascript" src="extjs/ext-debug.js"></script>
   <script src="app.js"></script>
   <script src="init.js"></script>
