@@ -102,3 +102,24 @@ html.x-ux-grid-printer, .x-ux-grid-printer img,.x-ux-grid-printer body {
     font-size     : 14px;
 }
 
+.clear {
+  *zoom:1;
+}
+.clear:before,
+.clear:after {
+  content: " ";
+  display: table;
+}
+.clear:after {
+  clear: both;
+}  
+
+.x-ux-grid-printer-body .print-date {
+  float: left;
+  font-size: 12px;
+}
+.x-ux-grid-printer-body .name {
+  float: left;
+  margin: 0 0 30px 40%;
+  font-size: 12px;
+}
