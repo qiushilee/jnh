@@ -367,7 +367,6 @@ Ext.application({
                   form.url = env.services.web + env.api.product.changeTransitionLoss;
                   form.findField("periodicalId").setDisabled(true);
                   form.findField("type").setDisabled(true);
-                  form.findField("receiptCode").setDisabled(true);
 
                   addJHD.show();
                   Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(false);
@@ -386,7 +385,6 @@ Ext.application({
                 form.url = env.services.web + env.api.product.addTransitionLoss;
                 form.findField("periodicalId").setDisabled(false);
                 form.findField("type").setDisabled(false);
-                form.findField("receiptCode").setDisabled(false);
 
                 addJHD.getComponent("form").getForm().reset();
                 addJHD.show();
@@ -688,13 +686,7 @@ Ext.application({
             Ext.create('periodical'),
             Ext.create('jzsType', {
               itemId: "jhd-type"
-            }),
-            {
-              margin: "0 10",
-              fieldLabel: "编号",
-              labelAlign: "right",
-              name: "receiptCode"
-            }
+            })
           ]
         }, {
           xtype: "hiddenfield",
