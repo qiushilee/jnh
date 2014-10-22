@@ -5,7 +5,7 @@ Ext.application({
     // 会员列表
     var memberList = Ext.create('Ext.data.Store', {
       storeId: 'memberList',
-      fields: ['addrList', 'userCode', 'realName', 'source', "address1", "address2"],
+      fields: ['addrList', 'userCode', 'realName', 'memberType', "address1", "address2"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -81,7 +81,7 @@ Ext.application({
                 width: 100,
                 labelAlign: "right",
                 name: 'zipCode'
-              }, Ext.create('memberSource'), {
+              }, Ext.create('memberType'), {
                 xtype: "button",
                 text: "搜索",
                 margin: "0 0 0 20",
@@ -134,7 +134,7 @@ Ext.application({
                       {
                         text: '来源',
                         flex: 1,
-                        dataIndex: 'source'
+                        dataIndex: 'memberType'
                       }
                     ],
                     listeners: {
