@@ -2,7 +2,7 @@ Ext.onReady(function() {
   // 会员列表
   var memberList = Ext.create('Ext.data.Store', {
     storeId: 'memberList',
-    fields: ['addrList', 'userCode', 'realName', 'source', "address1", "address2", "memberId"],
+    fields: ['addrList', 'userCode', 'realName', 'memberType', "address1", "address2", "memberId"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -18,7 +18,7 @@ Ext.onReady(function() {
   // 目录寄送
   Ext.create('Ext.data.Store', {
     storeId: 'directoryList',
-    fields: ['addrList', 'userCode', 'realName', 'source'],
+    fields: ['addrList', 'userCode', 'realName', 'memberType'],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -34,7 +34,7 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "source", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
+    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "memberType", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -174,7 +174,7 @@ Ext.onReady(function() {
             width: 120,
             labelAlign: "right"
           },
-          Ext.create('memberSource'),
+          Ext.create('memberType'),
           {
             xtype: 'button',
             margin: "0 5 0 50",
@@ -302,7 +302,7 @@ Ext.onReady(function() {
               {
                 text: '来源',
                 flex: 1,
-                dataIndex: 'source'
+                dataIndex: 'memberType'
               }
             ],
             listeners: {
@@ -646,7 +646,7 @@ Ext.onReady(function() {
           },
           {
             text: '来源',
-            dataIndex: 'source'
+            dataIndex: 'memberType'
           }
         ],
         listeners: {
