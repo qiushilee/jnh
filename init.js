@@ -112,7 +112,8 @@
     telorderdelivercode: "/deliverorder/telorderdelivercode",
     view: "/deliverorder/vieworderdetail",
     saveorderproduct: "/deliverorder/saveorderproduct",
-    deleteorderproduct: "/deliverorder/deleteorderproduct"
+    deleteorderproduct: "/deliverorder/deleteorderproduct",
+    printlog:'/deliverorder/printlog'//记录出货单打印记录
   };
   
   env.api.package = {
@@ -122,7 +123,8 @@
     del: "/package/delete",
     sendlist:'/package/sendreplacement',//补寄列表
     sendadd:'/package/savesendreplacement',//补寄添加
-    sendchange:'/package/savesendreplacement'//补寄修改
+    sendchange:'/package/savesendreplacement',//补寄修改
+    printlog:'/package/printlog'//记录包裹打印记录
   };
 
   env.api.productrecord = {
@@ -140,7 +142,8 @@
     del: "/business/deletemember",
     printcartlist:"/printcart/index",//打印购物车列表
     addprintcart:"/printcart/create",//添加打印购物车
-    delprintcart:"/printcart/delete"//删除打印购物车
+    delprintcart:"/printcart/delete",//删除打印购物车
+    printlog:'/printcart/printlog'//记录业务打印记录
   };
 
   //电话订购
@@ -184,8 +187,6 @@
     estimatepurchase: "/search/estimatepurchase",
     member: "/search/member"
   };
-
-
 
 //管理员
   env.api.manager = {
