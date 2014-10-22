@@ -387,6 +387,7 @@ Ext.application({
                 form.findField("type").setDisabled(false);
 
                 addJHD.getComponent("form").getForm().reset();
+                Ext.data.StoreManager.lookup('jhdProduct').loadData({list: []});
                 addJHD.show();
                 Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(true);
               }
