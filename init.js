@@ -115,7 +115,8 @@
     deleteorderproduct: "/deliverorder/deleteorderproduct",
     printlog:'/deliverorder/printlog'//记录出货单打印记录
   };
-  
+
+  //包裹管理
   env.api.package = {
     list: "/package/index",
     change: "/package/update",
@@ -124,7 +125,8 @@
     sendlist:'/package/sendreplacement',//补寄列表
     sendadd:'/package/savesendreplacement',//补寄添加
     sendchange:'/package/savesendreplacement',//补寄修改
-    printlog:'/package/printlog'//记录包裹打印记录
+    printlog:'/package/printlog',//记录包裹打印记录
+    createserialcode:'/package/serialcode'//生成流水单号
   };
 
   env.api.productrecord = {
