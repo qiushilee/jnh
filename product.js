@@ -365,6 +365,10 @@ Ext.application({
                 itemdblclick: function (that, record, item, index, e, eOpts) {
                   var form = addJHD.getComponent("form").getForm();
                   form.url = env.services.web + env.api.product.changeTransitionLoss;
+                  form.findField("periodicalId").setDisabled(true);
+                  form.findField("type").setDisabled(true);
+                  form.findField("receiptCode").setDisabled(true);
+
                   addJHD.show();
                   Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(false);
                   window.updateForm(form, record.data);
@@ -380,6 +384,10 @@ Ext.application({
               handler: function () {
                 var form = addJHD.getComponent("form").getForm();
                 form.url = env.services.web + env.api.product.addTransitionLoss;
+                form.findField("periodicalId").setDisabled(false);
+                form.findField("type").setDisabled(false);
+                form.findField("receiptCode").setDisabled(false);
+
                 addJHD.getComponent("form").getForm().reset();
                 addJHD.show();
                 Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(true);
