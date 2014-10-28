@@ -47,7 +47,7 @@ Ext.application({
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.productrecord.list,
+        url: env.services.web + env.api.productrecord.viewProductRecord,
         reader: {
           type: 'json',
           root: 'list'
@@ -368,6 +368,11 @@ Ext.application({
                   form.findField("periodicalId").setDisabled(true);
                   form.findField("type").setDisabled(true);
 
+                  Ext.data.StoreManager.lookup('jhdProduct').load({
+                    params: {
+                      receiptId: record.data.id,
+                    }
+                  });
                   addJHD.show();
                   Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(false);
                   window.updateForm(form, record.data);
