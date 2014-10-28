@@ -133,7 +133,8 @@
     list: "/productrecord/index",
     change: "/productrecord/update",
     add: "/productrecord/create",
-    del: "/productrecord/delete"
+    del: "/productrecord/delete",
+    viewProductRecord:'/productrecord/viewproductrecord'//根据进转损查看产品
   };
 
   //业务管理
