@@ -86,6 +86,11 @@
           background-image: url(images/menu/search-hover.png); }
         .mod .hd .menu a.search.disable {
           background-image: url(images/menu/search-disable.png); }
+      .mod .hd .menu a.setting {
+        text-indent: 0;
+        text-align: center;
+        font-size: 24px;
+        line-height: 52px; }
 .mod .bd {
   padding: 10px; }
 
