@@ -266,7 +266,10 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">I</span> 导入",
               margin: "20 0 0 20",
-              scale: "medium"
+              scale: "medium",
+              handler: function() {
+                upload.show();
+              }
             },
             {
               xtype: "button",
@@ -859,5 +862,75 @@ Ext.application({
         }
       ]
     });
+
+
+
+    var upload = new Ext.create("Ext.window.Window", {
+      title: "库存导入",
+      layout: "column",
+      bodyStyle: {
+        background: "#fff"
+      },
+      bodyPadding: 50,
+      items: [
+        {
+          xtype: "form",
+          border: 0,
+          url: env.services.web + env.api.product.import,
+          items: [
+            {
+              xtype: 'filefield',
+              name: 'file',
+              fieldLabel: 'Excel文件',
+              labelWidth: 60,
+              msgTarget: 'side',
+              allowBlank: false,
+              anchor: '100%',
+              buttonText: "选择文件",
+              listeners: {
+                change: function() {
+                  var ext = window.getExt(this.getValue());
+                  if (/^(xls|xlsx)$/.test(ext)) {
+                    return true;
+                  } else {
+                    Ext.Msg.alert("选择文件", "您选择的文件不是Excel，请重新选择");
+                    return false;
+                  }
+                }
+              }
+            }
+          ],
+
+          buttons: [
+            {
+              text: "上传",
+              handler: function() {
+                var form = this.up('form').getForm();
+                var ext = window.getExt(form.findField("file").getValue());
+
+                if (/^(xls|xlsx)$/.test(ext)==false) {
+                  Ext.Msg.alert("选择文件", "您选择的文件不是Excel，请重新选择");
+                  return false;
+                }
+
+                form.submit({
+                  waitMsg: "正在上传，请耐心等待...",
+                  success: function(fp, o) {
+                    upload.hide();
+                    searchHandler.call(search.getForm(), "productList");
+                  },
+                  failure: function(fp, o) {
+                    Ext.Msg.alert("上传失败", o.result.msg);
+                  }
+                });
+              }
+            }
+          ]
+
+        }
+      ],
+      closeAction: "hide"
+    });
+
   }
 });
