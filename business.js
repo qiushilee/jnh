@@ -252,25 +252,13 @@ Ext.application({
                             },
                             Ext.create("deliveryMethod"),
                             {
-                              fieldLabel: "索取数1",
-                              labelWidth: 60,
-                              labelAlign: "right",
-                              name:"askNumber1"
-                            },
-                            Ext.create("periodical"),
-                            {
-                              fieldLabel: "索取数2",
-                              labelWidth: 60,
-                              labelAlign: "right",
-                              name:"askNumber2"
-                            },
-                            {
                               xtype: "datefield",
                               fieldLabel: "毕业时间",
                               labelWidth: 60,
                               labelAlign: "right",
                               name:"graduateDate"
-                            }
+                            },
+                            Ext.create("periodical")
                           ]
                           },
                         {
