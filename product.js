@@ -854,7 +854,7 @@ Ext.application({
               handler: function () {
                 var type = Ext.ComponentQuery.query("[itemId=jhd-type]")[0].rawValue;
 
-                Ext.ux.grid.Printer.stylesheetPath = "extjs/src/ux/grid/gridPrinterCss/product.css";
+                Ext.ux.grid.Printer.stylesheetPath = Ext.Loader.getConfig().paths["Ext.ux"] + "grid/gridPrinterCss/product.css";
                 Ext.ux.grid.Printer.printAutomatically = true;
                 Ext.ux.grid.Printer.opt = {
                   title: type + "明细",
