@@ -71,6 +71,7 @@
     addTransitionLoss:'/product/addtransitionloss',//添加进转损
     delTransitionLoss:'/product/deletetransitionloss',//删除进转损
     changeTransitionLoss:'/product/updatetransitionloss',//修改进转损
+    import: "/product/import"   //导入
   };
 
   env.api.receipt = {
