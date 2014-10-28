@@ -266,7 +266,6 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">I</span> 导入",
               margin: "20 0 0 20",
-              disabled: true,
               scale: "medium"
             },
             {
