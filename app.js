@@ -1,9 +1,20 @@
-Ext.Loader.setConfig({
-  enabled: true,
-  paths: {
+var paths = {};
+
+if (env.debug) {
+  paths = {
+    Ext: "extjs/src",
+    "Ext.ux": "extjs/src/ux/"
+  };  
+} else {
+  paths = {
     Ext: window.path + "extjs/src",
     "Ext.ux": window.path + "extjs/src/ux/"
-  }
+  };
+}
+
+Ext.Loader.setConfig({
+  enabled: true,
+  paths: paths
 });
 
 Ext.application({

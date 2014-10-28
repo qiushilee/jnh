@@ -6,15 +6,13 @@
 
   if (["localhost", "127.0.0.1", "localhost.com", "0.0.0.0"].indexOf(window.location.hostname) !== -1 || window.location.hostname.match(ValidIpAddressRegex)) { //enable debug mode
     env.debug = true;
-    env.services = {
-      web: "http://" + window.location.hostname + "/index.php"
-    };
   } else {
     env.debug = false;
-    env.services = {
-      web: "http://jnh.www.webwei.cn/index.php"
-    };
   }
+
+  env.services = {
+    web: "http://jnh.www.webwei.cn/index.php"
+  };
 
   env.api.uc = {
     login: "/site/login",
