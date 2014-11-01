@@ -322,6 +322,12 @@ Ext.application({
               ]
             }
           ]
+        },
+        {
+          title: '邮资配置',
+          padding: 15,
+          items:[
+          ]
         }
       ]
     });
