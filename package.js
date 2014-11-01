@@ -269,7 +269,17 @@ Ext.application({
         text: "导出",
         margin: "0 0 0 10",
         handler: function() {
-          //调用  url: env.services.web + env.api.deliverorder.export,
+          var form = search.getForm();
+          form.url = env.services.web + env.api.deliverorder.export;
+
+          form.submit({
+            success: function(form, action) {
+              console.log(action)
+            },
+            failure: function(form, action) {
+              Ext.Msg.alert("包裹管理 -> 导出", action.result.msg);
+            }
+          });
         }
       }]
     });
