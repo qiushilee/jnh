@@ -429,6 +429,11 @@ Ext.application({
                   }
                 }
               }
+            },
+            {
+              xtype: 'label',
+              html: '<a href="#" target="_blank">下载模板</a>',
+              labelWidth: 60
             }
           ],
 
