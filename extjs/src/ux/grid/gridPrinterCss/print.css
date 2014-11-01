@@ -35,6 +35,11 @@ html.x-ux-grid-printer, .x-ux-grid-printer img,.x-ux-grid-printer body {
     font-size: 100%;
 }
 
+.x-ux-grid-printer h1 {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
 .x-ux-grid-printer q:before,.x-ux-grid-printer q:after {
     content: '';
 }
@@ -104,3 +109,29 @@ html.x-ux-grid-printer, .x-ux-grid-printer img,.x-ux-grid-printer body {
     font-size     : 14px;
 }
 
+.clear {
+  *zoom:1;
+}
+.clear:before,
+.clear:after {
+  content: " ";
+  display: table;
+}
+.clear:after {
+  clear: both;
+}  
+
+.x-ux-grid-printer-body .print-date {
+  float: left;
+  font-size: 12px;
+}
+.x-ux-grid-printer-body .name {
+  float: left;
+  margin: 0 0 30px 40%;
+  font-size: 12px;
+}
+.x-ux-grid-printer-body .periodical {
+  margin-bottom: 35px;
+  text-align: center;
+  font-size: 12px;
+}
