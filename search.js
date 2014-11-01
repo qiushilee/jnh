@@ -87,13 +87,17 @@ Ext.application({
               border: 0,
               defaultType: 'datefield',
               items: [
-                Ext.create('periodical'),
+                Ext.create("periodical", {
+                  itemId: "purchase-periodical",
+                }),
                 {
+                  itemId: "purchase-start-date",
                   fieldLabel: "起始日期",
                   labelAlign: "right",
                   name:'startDate'
                 },
                 {
+                  itemId: "purchase-end-date",
                   fieldLabel: "终止日期",
                   labelAlign: "right",
                   name:'endDate'
@@ -105,10 +109,34 @@ Ext.application({
                   handler:function(){
                     searchHandler.call(this, "purchaseList");
                   }
+                },
+                {
+                  xtype: "button",
+                  text: "打印",
+                  margin: "0 0 0 20",
+                  handler: function() {
+                    var date = {
+                      start: Ext.ComponentQuery.query("[itemId=purchase-start-date]")[0].rawValue,
+                      end: Ext.ComponentQuery.query("[itemId=purchase-end-date]")[0].rawValue
+                    };
+
+                    Ext.ux.grid.Printer.opt = {
+                      title: "进货清单报表",
+                      name: document.body.dataset.user,
+                      periodical: Ext.ComponentQuery.query("[itemId=purchase-periodical]")[0].value
+                    };
+
+                    if (date.start || date.end) {
+                      Ext.ux.grid.Printer.opt.date = date;
+                    }
+
+                    Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=purchase-grid]")[0]);
+                  }
                 }
               ]
             },
             {
+              itemId: "purchase-grid",
               xtype: "grid",
               height: 455,
               margin: "20 0 0 0",
