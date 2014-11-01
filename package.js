@@ -270,7 +270,7 @@ Ext.application({
         margin: "0 0 0 10",
         handler: function() {
           var form = search.getForm();
-          form.url = env.services.web + env.api.deliverorder.export;
+          form.url = env.services.web + env.api.package.export;
 
           form.submit({
             success: function(form, action) {

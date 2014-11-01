@@ -113,7 +113,6 @@
     saveorderproduct: "/deliverorder/saveorderproduct",
     deleteorderproduct: "/deliverorder/deleteorderproduct",
     import: "/deliverorder/import",   //导入
-    export:"/deliverorder/export"
   };
 
   //包裹管理
@@ -126,7 +125,8 @@
     sendadd:'/package/savesendreplacement',//补寄添加
     sendchange:'/package/savesendreplacement',//补寄修改
     printlog:'/package/printlog',//记录包裹打印记录
-    createserialcode:'/package/serialcode'//生成流水单号
+    createserialcode:'/package/serialcode',//生成流水单号
+    export:"/package/export"
   };
 
   env.api.productrecord = {
