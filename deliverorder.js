@@ -984,7 +984,7 @@ Ext.application({
                   waitMsg: "正在上传，请耐心等待...",
                   success: function(fp, o) {
                     upload.hide();
-                    searchHandler.call(search.getForm(), "list");
+                    Ext.data.StoreManager.lookup('productData').load();
                   },
                   failure: function(fp, o) {
                     Ext.Msg.alert("上传失败", o.result.msg);
