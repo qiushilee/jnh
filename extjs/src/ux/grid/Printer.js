@@ -187,7 +187,6 @@ Ext.define("Ext.ux.grid.Printer", {
                 function (column) {
                     if ( column ) {
                         if ( !Ext.isEmpty(column.dataIndex) &&
-                             !column.hidden                 &&
                              !isGrouped )
                         {
                             clearColumns.push(column);
@@ -204,8 +203,7 @@ Ext.define("Ext.ux.grid.Printer", {
                     }
                 }
             );
-            //不需要过滤
-            //columns = clearColumns;
+            columns = clearColumns;
             
             //get Styles file relative location, if not supplied
             if (this.stylesheetPath === null) {

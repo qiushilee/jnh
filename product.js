@@ -104,7 +104,9 @@ Ext.application({
               layout: "column",
               url: env.services.web + env.api.product.list,
               items: [
-                Ext.create('periodical'),
+                Ext.create("periodical", {
+                  itemId: "product-periodical"
+                }),
                 {
                   xtype: "textfield",
                   labelWidth: 30,
@@ -287,6 +289,22 @@ Ext.application({
                 } catch (e) {
                   Ext.Msg.alert("查看进货单", "请单击库存表中的一项后再查看进货单");
                 }
+              }
+            },
+            {
+              xtype: "button",
+              text: "打印",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function () {
+                Ext.ux.grid.Printer.stylesheetPath = Ext.Loader.getConfig().paths["Ext.ux"] + "grid/gridPrinterCss/product.css";
+                Ext.ux.grid.Printer.printAutomatically = true;
+                Ext.ux.grid.Printer.opt = {
+                  title: "库存结存明细",
+                  name: document.body.dataset.user,
+                  periodical: Ext.ComponentQuery.query("[itemId=product-periodical]")[0].rawValue
+                };
+                Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=productList]")[0]);
               }
             }
           ]
