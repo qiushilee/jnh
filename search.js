@@ -880,9 +880,20 @@ Ext.application({
                       defaultType: "button",
                       items: [
                         {
+                          text: "汇总打印",
+                          margin: "0 0 0 50",
+                          handler: function() {
+                            Ext.ux.grid.Printer.opt = {
+                              title: "会员汇总打印",
+                              name: document.body.dataset.user
+                            };
+                            Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=member-grid]")[0]);
+                          }
+                        },
+                        {
                           text: "块状打印",
                           disabled: true,
-                          margin: "0 0 0 50"
+                          margin: "0 0 0 20"
                         },
                         {
                           text: "条状打印",
@@ -928,6 +939,7 @@ Ext.application({
               ]
             },
             {
+              itemId: "member-grid",
               xtype: "grid",
               height: 355,
               margin: "20 0 0 0",
