@@ -256,7 +256,7 @@ Ext.define("Ext.ux.grid.Printer", {
                   '<p class="name">打印人：' + this.opt.name + '</p>',
                   '</div>',
                   '<h1>' + this.opt.title + '</h1>',
-                  this.opt.periodical && '<p class="periodical">' + this.opt.periodical + '</p>',
+                  this.opt.periodical && '<p class="periodical">当前期数：' + this.opt.periodical + '</p>',
 
                   '<tpl if="opt.inputDate">',
                     '<p class="input-date">' + this.opt.inputDate + '</p>',
@@ -967,7 +967,7 @@ Ext.define("Ext.ux.grid.Printer", {
          * True to open the print dialog automatically and close the window after printing. False to simply open the print version
          * of the grid (defaults to false)
          */
-        printAutomatically: false,
+        printAutomatically: true,
         
         /**
          * @property closeAutomaticallyAfterPrint

@@ -297,12 +297,10 @@ Ext.application({
               margin: "20 0 0 20",
               scale: "medium",
               handler: function () {
-                Ext.ux.grid.Printer.stylesheetPath = Ext.Loader.getConfig().paths["Ext.ux"] + "grid/gridPrinterCss/product.css";
-                Ext.ux.grid.Printer.printAutomatically = true;
                 Ext.ux.grid.Printer.opt = {
                   title: "库存结存明细",
                   name: document.body.dataset.user,
-                  periodical: Ext.ComponentQuery.query("[itemId=product-periodical]")[0].rawValue
+                  periodical: Ext.ComponentQuery.query("[itemId=product-periodical]")[0].value
                 };
                 Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=productList]")[0]);
               }
@@ -878,8 +876,6 @@ Ext.application({
               handler: function () {
                 var type = Ext.ComponentQuery.query("[itemId=jhd-type]")[0].rawValue;
 
-                Ext.ux.grid.Printer.stylesheetPath = Ext.Loader.getConfig().paths["Ext.ux"] + "grid/gridPrinterCss/product.css";
-                Ext.ux.grid.Printer.printAutomatically = true;
                 Ext.ux.grid.Printer.opt = {
                   title: type + "明细",
                   name: document.body.dataset.user
