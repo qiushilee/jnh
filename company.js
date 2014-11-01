@@ -1,3 +1,8 @@
+Ext.require([
+  "Ext.data.*",
+  "Ext.ux.grid.Printer"
+]);
+
 Ext.application({
   name: "JNH",
   launch: function() {
@@ -167,8 +172,14 @@ Ext.application({
       }, {
         xtype: "button",
         text: "打印",
-        disabled: true,
-        margin: "0 0 0 10"
+        margin: "0 0 0 10",
+        handler: function () {
+          Ext.ux.grid.Printer.opt = {
+            title: "厂商资料一览表",
+            name: document.body.dataset.user
+          };
+          Ext.ux.grid.Printer.print(cs);
+        }
       }, {
         xtype: "button",
         text: "复制",
