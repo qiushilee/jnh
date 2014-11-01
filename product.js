@@ -901,7 +901,7 @@ Ext.application({
               listeners: {
                 change: function() {
                   var ext = window.getExt(this.getValue());
-                  if (/^(xls|xlsx)$/.test(ext)) {
+                  if (/^(xls|xlsx|csv)$/.test(ext)) {
                     return true;
                   } else {
                     Ext.Msg.alert("选择文件", "您选择的文件不是Excel，请重新选择");
@@ -919,7 +919,7 @@ Ext.application({
                 var form = this.up('form').getForm();
                 var ext = window.getExt(form.findField("file").getValue());
 
-                if (/^(xls|xlsx)$/.test(ext)==false) {
+                if (/^(xls|xlsx|csv)$/.test(ext)==false) {
                   Ext.Msg.alert("选择文件", "您选择的文件不是Excel，请重新选择");
                   return false;
                 }
