@@ -104,7 +104,7 @@ Ext.define("Ext.ux.grid.Printer", {
             {
             	// use the column manager to get the columns.
                //var columns = grid.columnManager.getColumns(); // Not supported in ExtJS-4.1.x
-            	var columns = grid.view.headerCt.getVisibleGridColumns();
+            	var columns = grid.view.headerCt.gridDataColumns;
 
             }
             else
@@ -204,7 +204,8 @@ Ext.define("Ext.ux.grid.Printer", {
                     }
                 }
             );
-            columns = clearColumns;
+            //不需要过滤
+            //columns = clearColumns;
             
             //get Styles file relative location, if not supplied
             if (this.stylesheetPath === null) {
