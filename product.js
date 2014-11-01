@@ -42,7 +42,7 @@ Ext.application({
     // 进货单——商品详情
     Ext.create('Ext.data.Store', {
       storeId: 'jhdProduct',
-      fields: ["key", 'bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type"],
+      fields: ["weight", "amount", "price", "key", 'bagShape', 'id', 'name', 'number', 'productCode', "remark", "receiptCode", "type"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -786,11 +786,11 @@ Ext.application({
             },
             {
               text: '单价',
-              dataIndex: ''
+              dataIndex: 'price'
             },
             {
               text: '金额',
-              dataIndex: ''
+              dataIndex: 'amount'
             },
             {
               text: '包装形式',
@@ -799,6 +799,12 @@ Ext.application({
             {
               text: '备注',
               dataIndex: 'remark',
+              flex: 1
+            },
+            {
+              text: '重量',
+              dataIndex: 'weight',
+              hidden: true,
               flex: 1
             }
           ],
