@@ -282,12 +282,14 @@ Ext.application({
                 {
                   fieldLabel: "厂商编号",
                   labelWidth: 60,
+                  width: 150,
                   labelAlign: "right",
                   name:'companyCode1'
                 },
                 {
                   fieldLabel: "~~~~",
                   labelWidth: 45,
+                  width: 150,
                   labelAlign: "right",
                   name:'companyCode2'
                 },
@@ -322,6 +324,22 @@ Ext.application({
                   labelAlign: "right",
                   name:'referenceEndDate'
                 },
+                {
+                  xtype: "button",
+                  text: "搜索",
+                  margin: "0 0 0 50",
+                  handler: function() {
+                    searchHandler.call(this, "estimatepurchase");
+                  }
+                }
+              ]
+            },
+            {
+              xtype: 'panel',
+              layout: "hbox",
+              border: 0,
+              margin: "10 0 0 25",
+              items: [
                 {
                   xtype: "label",
                   text: "本期单量：4561",
