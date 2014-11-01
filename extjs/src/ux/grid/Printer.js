@@ -251,12 +251,19 @@ Ext.define("Ext.ux.grid.Printer", {
                       '<a class="' + Ext.baseCSSPrefix + 'ux-grid-printer-linkprint" href="javascript:void(0);" onclick="window.print();">' + this.printLinkText + '</a>',
                       '<a class="' + Ext.baseCSSPrefix + 'ux-grid-printer-linkclose" href="javascript:void(0);" onclick="window.close();">' + this.closeLinkText + '</a>',
                   '</div>',
+
                   '<div class="clear">',
-                  '<p class="print-date">打印日期：' + date.getFullYear() + date.getMonth() + date.getDay() + '</p>',
-                  '<p class="name">打印人：' + this.opt.name + '</p>',
+                    '<p class="print-date">打印日期：' + date.getFullYear() + date.getMonth() + date.getDay() + '</p>',
+                    '<p class="name">打印人：' + this.opt.name + '</p>',
                   '</div>',
+
                   '<h1>' + this.opt.title + '</h1>',
-                  this.opt.periodical && '<p class="periodical">当前期数：' + this.opt.periodical + '</p>',
+
+                  '<div class="periodical-container">',
+                    this.opt.periodical && '<span class="periodical">当前期数：' + this.opt.periodical + '</span>',
+
+                    this.opt.date && '<span class="date">起止日期：' + this.opt.date.start + (this.opt.date.end && ' -- ' + this.opt.date.end) + '</span>',
+                  '</div>',
 
                   '<tpl if="opt.inputDate">',
                     '<p class="input-date">' + this.opt.inputDate + '</p>',

@@ -130,8 +130,11 @@ html.x-ux-grid-printer, .x-ux-grid-printer img,.x-ux-grid-printer body {
   margin: 0 0 30px 40%;
   font-size: 12px;
 }
-.x-ux-grid-printer-body .periodical {
+.x-ux-grid-printer-body .periodical-container {
   margin-bottom: 35px;
-  text-align: center;
   font-size: 12px;
+  text-align: center;
+}
+.x-ux-grid-printer-body .periodical-container .date {
+  padding-left: 20px;
 }

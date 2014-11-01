@@ -1,3 +1,8 @@
+Ext.require([
+  "Ext.data.*",
+  "Ext.ux.grid.Printer"
+]);
+
 Ext.application({
   name: "search",
   launch: function () {
@@ -166,13 +171,17 @@ Ext.application({
               border: 0,
               defaultType: 'datefield',
               items: [
-                Ext.create('periodical'),
+                Ext.create("periodical", {
+                  itemId: "shipment-periodical"
+                }),
                 {
+                  itemId: "shipment-start-date",
                   fieldLabel: "起始日期",
                   labelAlign: "right",
                   name:'startDate'
                 },
                 {
+                  itemId: "shipment-end-date",
                   fieldLabel: "终止日期",
                   labelAlign: "right",
                   name:'endDate'
@@ -189,14 +198,29 @@ Ext.application({
                   xtype: "button",
                   text: "打印",
                   margin: "0 0 0 20",
-                  disabled: true,
                   handler: function() {
-                    this.up("form").getForm().reset();
+                    var date = {
+                      start: Ext.ComponentQuery.query("[itemId=shipment-start-date]")[0].rawValue,
+                      end: Ext.ComponentQuery.query("[itemId=shipment-end-date]")[0].rawValue
+                    };
+
+                    Ext.ux.grid.Printer.opt = {
+                      title: "出货清单报表",
+                      name: document.body.dataset.user,
+                      periodical: Ext.ComponentQuery.query("[itemId=shipment-periodical]")[0].value
+                    };
+
+                    if (date.start || date.end) {
+                      Ext.ux.grid.Printer.opt.date = date;
+                    }
+
+                    Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=shipment-grid]")[0]);
                   }
                 }
               ]
             },
             {
+              itemId: "shipment-grid",
               xtype: "grid",
               height: 455,
               margin: "20 0 0 0",
