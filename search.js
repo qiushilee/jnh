@@ -306,7 +306,9 @@ Ext.application({
               border: 0,
               defaultType: 'textfield',
               items: [
-                Ext.create('periodical'),
+                Ext.create("periodical", {
+                  itemId: "estimatepurchase-periodical"
+                }),
                 {
                   fieldLabel: "厂商编号",
                   labelWidth: 60,
@@ -326,7 +328,7 @@ Ext.application({
                   labelWidth: 60,
                   width: 120,
                   labelAlign: "right",
-                  name:'estimateNumber'
+                  name:"estimateNumber"
 
                 },
                 {
@@ -334,7 +336,7 @@ Ext.application({
                   labelWidth: 60,
                   width: 120,
                   labelAlign: "right",
-                  name:'allPeriodNumber'
+                  name:"allPeriodNumber"
                 },
                 {
                   xtype:"datefield",
@@ -370,17 +372,28 @@ Ext.application({
               items: [
                 {
                   xtype: "label",
-                  text: "本期单量：4561",
-                  margin: "3 0 0 10"
+                  text: "本期单量：",
+                  margin: "0 0 0 10"
                 },
                 {
                   xtype: "label",
-                  text: "拆分单量：4561",
-                  margin: "3 0 0 10"
+                  text: "4561",
+                  name: "currentPeriodNumber"
+                },
+                {
+                  xtype: "label",
+                  text: "拆分单量：",
+                  margin: "0 0 0 10"
+                },
+                {
+                  xtype: "label",
+                  text: "4561",
+                  name: "splitNumber"
                 }
               ]
             },
             {
+              itemId: "estimatepurchase-grid",
               xtype: "grid",
               height: 455,
               margin: "20 0 0 0",
@@ -495,8 +508,28 @@ Ext.application({
                 {
                   xtype: "button",
                   text: "日报表",
-                  disabled: true,
-                  margin: "0 0 0 10"
+                  margin: "0 0 0 10",
+                  handler: function() {
+                    var date = {
+                      start: Ext.ComponentQuery.query("[name=referenceStartDate]")[0].rawValue,
+                      end: Ext.ComponentQuery.query("[name=referenceStartDate]")[0].rawValue
+                    };
+
+                    Ext.ux.grid.Printer.opt = {
+                      title: "预估采购日报表",
+                      name: document.body.dataset.user,
+                      periodical: Ext.ComponentQuery.query("[itemId=estimatepurchase-periodical]")[0].value,
+                      estimateNumber: Ext.ComponentQuery.query("[name=estimateNumber]")[0].value,
+                      allPeriodNumber: Ext.ComponentQuery.query("[name=allPeriodNumber]")[0].value,
+                      currentPeriodNumber: Ext.ComponentQuery.query("[name=currentPeriodNumber]")[0].text
+                    };
+
+                    if (date.start || date.end) {
+                      Ext.ux.grid.Printer.opt.date = date;
+                    }
+
+                    Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=estimatepurchase-grid]")[0]);
+                  }
                 },
                 {
                   xtype: "button",

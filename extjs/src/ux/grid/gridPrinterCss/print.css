@@ -135,6 +135,6 @@ html.x-ux-grid-printer, .x-ux-grid-printer img,.x-ux-grid-printer body {
   font-size: 12px;
   text-align: center;
 }
-.x-ux-grid-printer-body .periodical-container .date {
-  padding-left: 20px;
+.x-ux-grid-printer-body .periodical-container .item {
+  padding-right: 20px;
 }

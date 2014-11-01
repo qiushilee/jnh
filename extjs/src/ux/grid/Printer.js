@@ -260,9 +260,13 @@ Ext.define("Ext.ux.grid.Printer", {
                   '<h1>' + this.opt.title + '</h1>',
 
                   '<div class="periodical-container">',
-                    this.opt.periodical && '<span class="periodical">当前期数：' + this.opt.periodical + '</span>',
+                    this.opt.periodical && '<span class="item periodical">当前期数：' + this.opt.periodical + '</span>',
 
-                    this.opt.date && '<span class="date">起止日期：' + this.opt.date.start + (this.opt.date.end && ' -- ' + this.opt.date.end) + '</span>',
+                    this.opt.date && '<span class="item date">起止日期：' + this.opt.date.start + (this.opt.date.end && ' -- ' + this.opt.date.end) + '</span>',
+
+                    this.opt.currentPeriodNumber && '<span class="item currentPeriodNumber">本期单量：' + this.opt.currentPeriodNumber + '</span>',
+                    this.opt.estimateNumber && '<span class="item">预估单量：' + this.opt.estimateNumber + '</span>',
+                    this.opt.allPeriodNumber && '<span class="item">全期单数：' + this.opt.allPeriodNumber + '</span>',
                   '</div>',
 
                   '<tpl if="opt.inputDate">',
