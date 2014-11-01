@@ -112,7 +112,8 @@
     view: "/deliverorder/vieworderdetail",
     saveorderproduct: "/deliverorder/saveorderproduct",
     deleteorderproduct: "/deliverorder/deleteorderproduct",
-    import: "/deliverorder/import"   //导入
+    import: "/deliverorder/import",   //导入
+    export:"/deliverorder/export"
   };
 
   //包裹管理
