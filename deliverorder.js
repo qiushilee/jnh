@@ -99,6 +99,7 @@ Ext.application({
       list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("deliveryOrderId").setValue(orderId);
       Ext.ComponentQuery.query("label[name=code]")[0].setText(code);
       Ext.ComponentQuery.query("button[itemId=createCode]")[0].setDisabled(true);
+      Ext.ComponentQuery.query("[itemId=import-web-order]")[0].setDisabled(false);;
     }
 
     var list = Ext.create('Ext.Panel', {
@@ -319,6 +320,8 @@ Ext.application({
 
                   if (record.data.deliveryOrderCode) {
                     createCode(record.data.deliveryOrderCode, record.data.deliveryOrderId);
+                  } else {
+                    Ext.ComponentQuery.query("[itemId=import-web-order]")[0].setDisabled(true);;
                   }
                 }
               }
@@ -369,12 +372,15 @@ Ext.application({
                 float: "right"
               },
               {
+                itemId: "import-web-order",
                 xtype: "button",
+                disabled: true,
                 text: "导入网上订单",
                 margin: "0 0 0 10",
                 float: "right",
                 handler: function() {
                   upload.show();
+                  Ext.ComponentQuery.query("[itemId=upload-deliveryOrderId]")[0].setValue(window.deliveryOrderId);
                 }
               },
               {
@@ -954,6 +960,11 @@ Ext.application({
                   }
                 }
               }
+            },
+            {
+              itemId: "upload-deliveryOrderId",
+              xtype: "hidden",
+              name: "deliveryOrderId"
             }
           ],
 
