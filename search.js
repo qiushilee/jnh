@@ -353,14 +353,6 @@ Ext.application({
                   width: 120,
                   labelAlign: "right",
                   name:'referenceEndDate'
-                },
-                {
-                  xtype: "button",
-                  text: "搜索",
-                  margin: "0 0 0 50",
-                  handler: function() {
-                    searchHandler.call(this, "estimatepurchase");
-                  }
                 }
               ]
             },
