@@ -29,7 +29,7 @@ html.x-ux-grid-printer, .x-ux-grid-printer img,.x-ux-grid-printer body {
 }
 
 .x-ux-grid-printer h1 {
-  margin-bottom: 35px;
+  margin-bottom: 25px;
   text-align: center;
 }
 
@@ -121,5 +121,10 @@ html.x-ux-grid-printer, .x-ux-grid-printer img,.x-ux-grid-printer body {
 .x-ux-grid-printer-body .name {
   float: left;
   margin: 0 0 30px 40%;
+  font-size: 12px;
+}
+.x-ux-grid-printer-body .periodical {
+  margin-bottom: 35px;
+  text-align: center;
   font-size: 12px;
 }

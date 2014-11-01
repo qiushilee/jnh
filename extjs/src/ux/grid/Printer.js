@@ -258,6 +258,7 @@ Ext.define("Ext.ux.grid.Printer", {
                   '<p class="name">打印人：' + this.opt.name + '</p>',
                   '</div>',
                   '<h1>' + this.opt.title + '</h1>',
+                  this.opt.periodical && '<p class="periodical">' + this.opt.periodical + '</p>',
 
                   '<tpl if="opt.inputDate">',
                     '<p class="input-date">' + this.opt.inputDate + '</p>',
