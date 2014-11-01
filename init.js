@@ -112,7 +112,7 @@
     view: "/deliverorder/vieworderdetail",
     saveorderproduct: "/deliverorder/saveorderproduct",
     deleteorderproduct: "/deliverorder/deleteorderproduct",
-    printlog:'/deliverorder/printlog'//记录出货单打印记录
+    import: "/deliverorder/import"   //导入
   };
 
   //包裹管理
@@ -211,7 +211,10 @@
     list: "/privaction/index"
   };
 
-
+//打印记录
+  env.api.pringlog ={
+    save: "/pringlog/save" //记录打印记录
+  }
 
   window.env = env;
 

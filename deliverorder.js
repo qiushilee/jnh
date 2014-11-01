@@ -371,9 +371,11 @@ Ext.application({
               {
                 xtype: "button",
                 text: "导入网上订单",
-                disabled: true,
                 margin: "0 0 0 10",
-                float: "right"
+                float: "right",
+                handler: function() {
+                  upload.show();
+                }
               },
               {
                 xtype: "button",
@@ -916,6 +918,74 @@ Ext.application({
           }]
         }
       ]
+    });
+
+
+    var upload = new Ext.create("Ext.window.Window", {
+      title: "导入网络订单",
+      layout: "column",
+      bodyStyle: {
+        background: "#fff"
+      },
+      bodyPadding: 50,
+      items: [
+        {
+          xtype: "form",
+          border: 0,
+          url: env.services.web + env.api.deliverorder.import,
+          items: [
+            {
+              xtype: 'filefield',
+              name: 'file',
+              fieldLabel: 'Excel文件',
+              labelWidth: 60,
+              msgTarget: 'side',
+              allowBlank: false,
+              anchor: '100%',
+              buttonText: "选择文件",
+              listeners: {
+                change: function() {
+                  var ext = window.getExt(this.getValue());
+                  if (/^(xls|xlsx|csv)$/.test(ext)) {
+                    return true;
+                  } else {
+                    Ext.Msg.alert("选择文件", "您选择的文件不是Excel，请重新选择");
+                    return false;
+                  }
+                }
+              }
+            }
+          ],
+
+          buttons: [
+            {
+              text: "上传",
+              handler: function() {
+                var form = this.up('form').getForm();
+                var ext = window.getExt(form.findField("file").getValue());
+
+                if (/^(xls|xlsx|csv)$/.test(ext)==false) {
+                  Ext.Msg.alert("选择文件", "您选择的文件不是Excel，请重新选择");
+                  return false;
+                }
+
+                form.submit({
+                  waitMsg: "正在上传，请耐心等待...",
+                  success: function(fp, o) {
+                    upload.hide();
+                    searchHandler.call(search.getForm(), "list");
+                  },
+                  failure: function(fp, o) {
+                    Ext.Msg.alert("上传失败", o.result.msg);
+                  }
+                });
+              }
+            }
+          ]
+
+        }
+      ],
+      closeAction: "hide"
     });
 
     // search.hide();
