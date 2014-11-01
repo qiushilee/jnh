@@ -264,6 +264,14 @@ Ext.application({
         text: "扫描包裹单",
         disabled: true,
         margin: "0 0 0 10"
+      },{
+        xtype: "button",
+        text: "导出",
+        disabled: true,
+        margin: "0 0 0 10",
+        handler: function() {
+          //调用  url: env.services.web + env.api.deliverorder.export,
+        }
       }]
     });
 
