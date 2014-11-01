@@ -41,7 +41,7 @@ Ext.application({
     // 预估采购数据
     Ext.create('Ext.data.Store', {
       storeId: 'estimatepurchase',
-      fields: ['id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
+      fields: ["companyName", "mobile1", "linkMan", 'id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -532,8 +532,27 @@ Ext.application({
                 {
                   xtype: "button",
                   text: "预估缺货",
-                  disabled: true,
-                  margin: "0 0 0 10"
+                  margin: "0 0 0 10",
+                  handler: function() {
+                    var date = {
+                      start: Ext.ComponentQuery.query("[name=referenceStartDate]")[0].rawValue,
+                      end: Ext.ComponentQuery.query("[name=referenceStartDate]")[0].rawValue
+                    };
+
+                    Ext.ux.grid.Printer.opt = {
+                      title: "预估缺货报表",
+                      name: document.body.dataset.user,
+                      periodical: Ext.ComponentQuery.query("[itemId=estimatepurchase-periodical]")[0].value,
+                      estimateNumber: Ext.ComponentQuery.query("[name=estimateNumber]")[0].value,
+                      allPeriodNumber: Ext.ComponentQuery.query("[name=allPeriodNumber]")[0].value
+                    };
+
+                    if (date.start || date.end) {
+                      Ext.ux.grid.Printer.opt.date = date;
+                    }
+
+                    Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=estimatepurchase-grid]")[0]);
+                  }
                 },
                 {
                   xtype: "button",
@@ -861,9 +880,20 @@ Ext.application({
                       defaultType: "button",
                       items: [
                         {
+                          text: "汇总打印",
+                          margin: "0 0 0 50",
+                          handler: function() {
+                            Ext.ux.grid.Printer.opt = {
+                              title: "会员汇总打印",
+                              name: document.body.dataset.user
+                            };
+                            Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=member-grid]")[0]);
+                          }
+                        },
+                        {
                           text: "块状打印",
                           disabled: true,
-                          margin: "0 0 0 50"
+                          margin: "0 0 0 20"
                         },
                         {
                           text: "条状打印",
@@ -909,6 +939,7 @@ Ext.application({
               ]
             },
             {
+              itemId: "member-grid",
               xtype: "grid",
               height: 355,
               margin: "20 0 0 0",
