@@ -53,7 +53,7 @@
         float: left;
         width: 75px;
         height: 52px;
-        margin: 0 20px 0 20px;
+        margin: 0 15px;
         cursor: pointer;
         text-indent: -99999px;
 
@@ -70,8 +70,11 @@
         &.setting {
           text-indent: 0;
           text-align: center;
-          font-size: 24px;
+          font-size: 12px;
           line-height: 52px;
+          width: auto;
+          padding: 0;
+          margin: 0;
         }
       }
     }
