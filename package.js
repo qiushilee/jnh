@@ -270,7 +270,7 @@ Ext.application({
         margin: "0 0 0 10",
         handler: function() {
           var form = search.getForm();
-          location.href=env.services.web + env.api.package.export;
+          window.open(env.services.web + env.api.package.export);
 
         }
       }]
