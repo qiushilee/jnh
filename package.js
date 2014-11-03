@@ -270,7 +270,23 @@ Ext.application({
         margin: "0 0 0 10",
         handler: function() {
           var form = search.getForm();
-          window.open(env.services.web + env.api.package.export);
+          var periodicalId = 1,
+              userCode="",
+              userName = "",
+              deliveryOrderCode = "8001",
+              mailingDate="";
+          var params = "";
+          if(periodicalId>0)
+            params +='/periodicalId/'+periodicalId;
+          if(userCode!='')
+            params +='/userCode/'+userCode;
+          if(userName!='')
+            params +='/userName/'+userName;
+          if(deliveryOrderCode!='')
+            params +='/deliveryOrderCode/'+deliveryOrderCode;
+          if(mailingDate!='')
+            params +='/mailingDate/'+mailingDate;
+          window.open(env.services.web + env.api.package.export + params);
 
         }
       }]
