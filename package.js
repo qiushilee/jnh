@@ -270,16 +270,8 @@ Ext.application({
         margin: "0 0 0 10",
         handler: function() {
           var form = search.getForm();
-          form.url = env.services.web + env.api.package.export;
+          location.href=env.services.web + env.api.package.export;
 
-          form.submit({
-            success: function(form, action) {
-              console.log(action)
-            },
-            failure: function(form, action) {
-              Ext.Msg.alert("包裹管理 -> 导出", action.result.msg);
-            }
-          });
         }
       }]
     });
