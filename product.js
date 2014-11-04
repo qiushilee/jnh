@@ -923,6 +923,11 @@ Ext.application({
                   }
                 }
               }
+            },
+            {
+              xtype: 'label',
+              html: '<a href="/template/product.xls" target="_blank">下载模板</a>',
+              labelWidth: 60
             }
           ],
 
