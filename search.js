@@ -615,7 +615,9 @@ Ext.application({
                           border: 0,
                           defaultType: 'textfield',
                           items: [
-                            Ext.create('periodical'),
+                            Ext.create('periodical', {
+                              name: "periodicalId_1"
+                            }),
                             {
                               fieldLabel: "姓名",
                               labelWidth: 40,
@@ -642,7 +644,9 @@ Ext.application({
                           border: 0,
                           defaultType: 'textfield',
                           items: [
-                            Ext.create('periodical'),
+                            Ext.create('periodical', {
+                              name: "periodicalId_2"
+                            }),
                             {
                               fieldLabel: "地址",
                               labelWidth: 40,
@@ -679,7 +683,9 @@ Ext.application({
                           border: 0,
                           defaultType: 'datefield',
                           items: [
-                            Ext.create('periodical'),
+                            Ext.create('periodical', {
+                              name: "periodicalId_3"
+                            }),
                             {
                               fieldLabel: "加入时间",
                               labelWidth: 60,
@@ -753,7 +759,9 @@ Ext.application({
                           border: 0,
                           defaultType: 'datefield',
                           items: [
-                            Ext.create('periodical'),
+                            Ext.create('periodical', {
+                              name: "periodicalId_4"
+                            }),
                             {
                               fieldLabel: "参考时间",
                               labelWidth: 60,
@@ -916,28 +924,37 @@ Ext.application({
                           margin: "0 0 0 10",
                           handler: function() {
                             var params = "",
-
-                                periodicalId = 0,
+                                periodicalId_1 =Ext.ComponentQuery.query("[name=periodicalId_1]")[0].rawValue,
+                                periodicalId_2 =Ext.ComponentQuery.query("[name=periodicalId_2]")[0].rawValue,
+                                periodicalId_3 =Ext.ComponentQuery.query("[name=periodicalId_3]")[0].rawValue,
+                                periodicalId_4 =Ext.ComponentQuery.query("[name=periodicalId_4]")[0].rawValue,
                                 realName = Ext.ComponentQuery.query("[name=realName]")[0].rawValue,
                                 userCode = Ext.ComponentQuery.query("[name=userCode]")[0].rawValue,
-                                address = "",
-                                zipCode="",
-                                addDate1 = "",
-                                addDate2="",
-                                buyDate1 = "",
-                                buyDate2 = "",
-                                graduationDate ="",
-                                referenceDate1 = "",
-                                referenceDate2="",
-                                referencePeriodicalId1="",
-                                referencePeriodicalId2="",
-                                periodicalId1 = "",
-                                periodicalId2="",
-                                
+                                address =  Ext.ComponentQuery.query("[name=address]")[0].rawValue,
+                                zipCode = Ext.ComponentQuery.query("[name=zipCode]")[0].rawValue,
+                                addDate1 = Ext.ComponentQuery.query("[name=addDate1]")[0].rawValue,
+                                addDate2 = Ext.ComponentQuery.query("[name=addDate2]")[0].rawValue,
+                                buyDate1 = Ext.ComponentQuery.query("[name=buyDate1]")[0].rawValue,
+                                buyDate2 = Ext.ComponentQuery.query("[name=buyDate2]")[0].rawValue,
+                                graduationDate = Ext.ComponentQuery.query("[name=graduationDate]")[0].rawValue,
+                                referenceDate1 = Ext.ComponentQuery.query("[name=referenceDate1]")[0].rawValue,
+                                referenceDate2=Ext.ComponentQuery.query("[name=referenceDate2]")[0].rawValue,
+                                referencePeriodicalId1=Ext.ComponentQuery.query("[name=referencePeriodicalId1]")[0].rawValue,
+                                referencePeriodicalId2=Ext.ComponentQuery.query("[name=referencePeriodicalId2]")[0].rawValue,
+                                periodicalId1 = Ext.ComponentQuery.query("[name=periodicalId1]")[0].rawValue,
+                                periodicalId2=Ext.ComponentQuery.query("[name=periodicalId2]")[0].rawValue,
                                 type = memberType[Ext.ComponentQuery.query("[itemId=member-tab]")[0].getActiveTab().title];
-
-                            if(periodicalId>0) {
-                              params +='/periodicalId/'+periodicalId;
+                            if(periodicalId_1>0) {
+                              params +='/periodicalId_1/'+periodicalId_1;
+                            }
+                            if(periodicalId_2>0) {
+                              params +='/periodicalId_2/'+periodicalId_2;
+                            }
+                            if(periodicalId_3>0) {
+                              params +='/periodicalId_3/'+periodicalId_3;
+                            }
+                            if(periodicalId_4>0) {
+                              params +='/periodicalId_4/'+periodicalId_4;
                             }
                             if(realName!='') {
                               params +='/realName/'+realName;
@@ -957,10 +974,37 @@ Ext.application({
                             if(addDate2!='') {
                               params +='/addDate2/'+addDate2;
                             }
-
-                      
+                            if(buyDate1!='') {
+                              params +='/buyDate1/'+buyDate1;
+                            }
+                            if(buyDate2!='') {
+                              params +='/buyDate2/'+buyDate2;
+                            }
+                            if(graduationDate!='') {
+                              params +='/graduationDate/'+graduationDate;
+                            }
+                            if(referenceDate1!='') {
+                              params +='/referenceDate1/'+referenceDate1;
+                            }
+                            if(referenceDate2!='') {
+                              params +='/referenceDate2/'+referenceDate2;
+                            }
+                            if(referencePeriodicalId1!='') {
+                              params +='/referencePeriodicalId1/'+referencePeriodicalId1;
+                            }
+                            if(referencePeriodicalId2!='') {
+                              params +='/referencePeriodicalId2/'+referencePeriodicalId2;
+                            }
+                            if(periodicalId1!='') {
+                              params +='/periodicalId1/'+periodicalId1;
+                            }
+                            if(periodicalId2!='') {
+                              params +='/periodicalId2/'+periodicalId2;
+                            }
+                            if(type!='') {
+                              params +='/type/'+type;
+                            }
                             window.open(env.services.web + env.api.search.export + params);
-
                           }
                         }
                       ]
