@@ -23,6 +23,23 @@ Ext.application({
       }
     });
 
+    //寄送方式
+    var sendmethordList = Ext.create('Ext.data.Store', {
+      storeId: 'sendmethordList',
+      fields: ['id','name', 'key', 'state'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.sendmethord.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
       layout: "fit",
@@ -37,50 +54,30 @@ Ext.application({
               xtype: "grid",
               height: 455,
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('purchaseList'),
-              columns: [
-                {
-                  text: '序号',
-                  dataIndex: 'key',
-                  flex: 1
-                },
-                {
-                  text: '进货编号',
-                  dataIndex: 'receiptCode',
-                  flex: 1
-                },
-
-                {
-                  text: '货号',
-                  dataIndex: 'productCode',
-                  flex: 1
-                },
-                {
-                  text: '品名',
-                  dataIndex: 'name',
-                  flex: 1
-                },
-                {
-                  text: '数量',
-                  dataIndex: 'number',
-                  flex: 2
-                },
-                {
-                  text: '厂商',
-                  dataIndex: 'companyName',
-                  flex: 1
-                },
-                {
-                  text: '进货日期',
-                  dataIndex: 'receiptDate',
-                  flex: 1
-                },
-                {
-                  text: '备注',
-                  dataIndex: 'remark',
-                  flex: 1
-                }
-              ]
+              store: Ext.data.StoreManager.lookup('periodicalList'),
+              columns: [{
+                text: '编号',
+                dataIndex: 'code',
+                flex: 1
+              },  {
+                text: '名称',
+                dataIndex: 'title',
+                flex: 1
+              }, {
+                text: '开始日期',
+                dataIndex: 'startDate',
+                flex: 1
+              }, {
+                text: '结束日期',
+                dataIndex: 'endDate',
+                flex: 1
+              }],
+              listeners: {
+              itemdblclick: function( that, record, item, index, e, eOpts) {
+                periodicalEdit.show();
+                window.updateForm(periodicalEdit.getComponent("form").getForm(), record.data);
+              }
+            }
             }
           ]
         },
@@ -93,41 +90,21 @@ Ext.application({
               xtype: "grid",
               height: 455,
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup("shipmentList"),
+              store: Ext.data.StoreManager.lookup("sendmethordList"),
               columns: [
                 {
-                  text: '序号',
-                  dataIndex: 'key',
-                  flex: 1
-                },
-                {
-                  text: '货号',
-                  dataIndex: 'productCode',
-                  flex: 1
-                },
-                {
-                  text: '品名',
+                  text: '名称',
                   dataIndex: 'name',
                   flex: 1
                 },
                 {
-                  text: '出货量',
-                  dataIndex: 'number',
-                  flex: 2
-                },
-                {
-                  text: '售价',
-                  dataIndex: 'price',
+                  text: 'KEY',
+                  dataIndex: 'key',
                   flex: 1
                 },
                 {
-                  text: '金额',
-                  dataIndex: 'amount',
-                  flex: 1
-                },
-                {
-                  text: '备注',
-                  dataIndex: 'remark',
+                  text: '状态',
+                  dataIndex: 'state',
                   flex: 1
                 }
               ]
@@ -331,5 +308,85 @@ Ext.application({
         }
       ]
     });
+
+
+
+
+    var periodicalEdit = new Ext.create("Ext.window.Window", {
+      title: "编辑期数",
+      layout: "column",
+
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        columnWidth: 0.41,
+        layout: 'vbox',
+        width: 500,
+        bodyPadding: 5,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.periodical.add,
+        items: [ {
+          fieldLabel: "编号",
+          name: "code",
+          labelAlign: "right",
+        }, {
+          fieldLabel: "名称",
+          name: "title",
+
+          labelAlign: "right"
+        }, {
+          fieldLabel: '开始日期',
+          name: "startDate",
+          xtype: "datefield",
+          labelAlign: "right"
+        }, {
+          fieldLabel: '结束日期',
+          name: "endDate",
+          xtype: "datefield",
+          labelAlign: "right"
+        }, {
+          xtype: "hiddenfield",
+          name: "id",
+        }, {
+          xtype:'panel',
+          layout: "hbox",
+          border: 0,
+          margin: "0 0 0 53",
+          items: [{
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">A</span> 保存",
+            handler: function() {
+              var form = periodicalEdit.getComponent("form").getForm();
+              form.url = env.services.web + env.api.periodical.change;
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("修改期数", action.result.msg, function() {
+                      periodicalEdit.hide();
+                      periodicalList.load();
+                    });
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改期数", action.result.msg);
+                  }
+                });
+              }
+            }
+          }, {
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">E</span> 返回",
+            handler: function() {
+              periodicalAdd.hide();
+            }
+          }]
+        }]
+      }
+      ],
+      closeAction: 'hide',
+    });
+
+
   }
 });

@@ -95,12 +95,20 @@
     del: "/catalog/delete"
   };
 
+  //期数
   env.api.periodical = {
     list: "/periodical/index",
 	change: "/periodical/update",
     add: "/periodical/create",
     del: "/periodical/delete"
   };
+
+  //寄送方式
+  env.api.sendmethord={
+    list : "/sendmethord/index",
+    save : "/sendmethord/save",
+    del : "/sendmethord/delete"
+  }
 
   env.api.deliverorder = {
     list: "/deliverorder/index",
