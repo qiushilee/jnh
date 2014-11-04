@@ -6,6 +6,13 @@ Ext.require([
 Ext.application({
   name: "search",
   launch: function () {
+    var memberType = {
+      "会员定位": 1,
+      "地址定位": 2,
+      "时间定位": 3,
+      "金额定位": 4,
+      "其它定位": 5,
+    }
 
     // 进货清单数据
     var purchaseList = Ext.create('Ext.data.Store', {
@@ -584,21 +591,15 @@ Ext.application({
                   name: "type",
                   value: "1"
                 }, {
+                  itemId: "member-tab",
                   xtype: "tabpanel",
                   width: 500,
                   listeners: {
                     beforetabchange: function(tabs, newTab, oldTab) {
-                      var $type = this.ownerCt.getForm().findField("type"),
-                          type = {
-                            "会员定位": 1,
-                            "地址定位": 2,
-                            "时间定位": 3,
-                            "金额定位": 4,
-                            "其它定位": 5,
-                          };
+                      var $type = this.ownerCt.getForm().findField("type");
 
-                      if (type[newTab.title]) {
-                        $type.setValue(type[newTab.title]);
+                      if (memberType[newTab.title]) {
+                        $type.setValue(memberType[newTab.title]);
                       }
                     }
                   },
@@ -914,38 +915,50 @@ Ext.application({
                           text: "导出",
                           margin: "0 0 0 10",
                           handler: function() {
-                            var periodicalId = 0,
-                              realName="",
-                              userCode = "",
-                              address = "",
-                              zipCode="",
-                              addDate1 = "",
-                              addDate2="",
-                              buyDate1 = "",
-                              buyDate2 = "",
-                              graduationDate ="",
-                              referenceDate1 = "",
-                              referenceDate2="",
-                              referencePeriodicalId1="",
-                              referencePeriodicalId2="",
-                              periodicalId1 = "",
-                              periodicalId2="";
+                            var params = "",
 
-                            var params = "";
-                            if(periodicalId>0)
+                                periodicalId = 0,
+                                realName = Ext.ComponentQuery.query("[name=realName]")[0].rawValue,
+                                userCode = Ext.ComponentQuery.query("[name=userCode]")[0].rawValue,
+                                address = "",
+                                zipCode="",
+                                addDate1 = "",
+                                addDate2="",
+                                buyDate1 = "",
+                                buyDate2 = "",
+                                graduationDate ="",
+                                referenceDate1 = "",
+                                referenceDate2="",
+                                referencePeriodicalId1="",
+                                referencePeriodicalId2="",
+                                periodicalId1 = "",
+                                periodicalId2="",
+                                
+                                type = memberType[Ext.ComponentQuery.query("[itemId=member-tab]")[0].getActiveTab().title];
+
+                            if(periodicalId>0) {
                               params +='/periodicalId/'+periodicalId;
-                            if(realName!='')
+                            }
+                            if(realName!='') {
                               params +='/realName/'+realName;
-                            if(userCode!='')
+                            }
+                            if(userCode!='') {
                               params +='/userCode/'+userCode;
-                            if(address!='')
+                            }
+                            if(address!='') {
                               params +='/address/'+address;
-                            if(zipCode!='')
+                            }
+                            if(zipCode!='') {
                               params +='/zipCode/'+zipCode;
-                            if(addDate1!='')
+                            }
+                            if(addDate1!='') {
                               params +='/addDate1/'+addDate1;
-                            if(addDate2!='')
+                            }
+                            if(addDate2!='') {
                               params +='/addDate2/'+addDate2;
+                            }
+
+                      
                             window.open(env.services.web + env.api.search.export + params);
 
                           }
