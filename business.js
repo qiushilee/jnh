@@ -830,6 +830,34 @@ Ext.application({
                                         text: "条状打印",
                                         disabled: true,
                                         margin: "0 0 0 10"
+                                      } ,{
+                                        xtype: "button",
+                                        text: "导出",
+                                        margin: "0 0 0 10",
+                                        handler: function() {
+                                          var form = search.getForm();
+                                          var deliveryMethod = 0,
+                                            code="",
+                                            periodicalId1 = "",
+                                            periodicalId2 = "",
+                                            addDate1="",
+                                            addDate2="";
+                                          var params = "";
+                                          if(deliveryMethod>0)
+                                            params +='/deliveryMethod/'+deliveryMethod;
+                                          if(code!='')
+                                            params +='/code/'+code;
+                                          if(periodicalId1!='')
+                                            params +='/periodicalId1/'+periodicalId1;
+                                          if(periodicalId2!='')
+                                            params +='/periodicalId2/'+periodicalId2;
+                                          if(addDate1!='')
+                                            params +='/addDate1/'+addDate1;
+                                          if(addDate2!='')
+                                            params +='/addDate2/'+addDate2;
+                                          window.open(env.services.web + env.api.business.export + params);
+
+                                        }
                                       }
                                     ]
                                   }
