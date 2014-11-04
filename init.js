@@ -189,7 +189,8 @@
     searchpurchase: "/search/purchase",
     searchshipment: "/search/shipment",
     estimatepurchase: "/search/estimatepurchase",
-    member: "/search/member"
+    member: "/search/member",
+    export:'/search/export'//导出
   };
 
 //管理员

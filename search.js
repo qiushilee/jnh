@@ -909,6 +909,46 @@ Ext.application({
                           text: "批量修改",
                           disabled: true,
                           margin: "0 0 0 20"
+                        },{
+                          xtype: "button",
+                          text: "导出",
+                          margin: "0 0 0 10",
+                          handler: function() {
+                            var periodicalId = 0,
+                              realName="",
+                              userCode = "",
+                              address = "",
+                              zipCode="",
+                              addDate1 = "",
+                              addDate2="",
+                              buyDate1 = "",
+                              buyDate2 = "",
+                              graduationDate ="",
+                              referenceDate1 = "",
+                              referenceDate2="",
+                              referencePeriodicalId1="",
+                              referencePeriodicalId2="",
+                              periodicalId1 = "",
+                              periodicalId2="";
+
+                            var params = "";
+                            if(periodicalId>0)
+                              params +='/periodicalId/'+periodicalId;
+                            if(realName!='')
+                              params +='/realName/'+realName;
+                            if(userCode!='')
+                              params +='/userCode/'+userCode;
+                            if(address!='')
+                              params +='/address/'+address;
+                            if(zipCode!='')
+                              params +='/zipCode/'+zipCode;
+                            if(addDate1!='')
+                              params +='/addDate1/'+addDate1;
+                            if(addDate2!='')
+                              params +='/addDate2/'+addDate2;
+                            window.open(env.services.web + env.api.search.export + params);
+
+                          }
                         }
                       ]
                     },

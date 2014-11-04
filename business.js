@@ -835,7 +835,6 @@ Ext.application({
                                         text: "导出",
                                         margin: "0 0 0 10",
                                         handler: function() {
-                                          var form = search.getForm();
                                           var deliveryMethod = 0,
                                             code="",
                                             periodicalId1 = "",
