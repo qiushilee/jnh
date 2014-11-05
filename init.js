@@ -210,7 +210,7 @@
   };
 
   //管理员角色
-  env.api.manager = {
+  env.api.managerrole = {
     list: "/managerrole/index",
     change: "/managerrole/update",
     add: "/managerrole/create",
