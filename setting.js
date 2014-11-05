@@ -39,6 +39,37 @@ Ext.application({
       }
     });
 
+    //管理员列表
+    var managerList =  Ext.create('Ext.data.Store', {
+      storeId: 'managerList',
+      fields: ['id','roleId','roleName', 'username', 'realname','lastLoginDate','state','remark','permissions'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.manager.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    //角色列表
+    var roleList =  Ext.create('Ext.data.Store', {
+      storeId: 'roleList',
+      fields: ['id','rolename','remark','permissions','addDate'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.managerrole.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
 
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
@@ -112,7 +143,7 @@ Ext.application({
           ]
         },
         {
-          title: '系统角色管理',
+          title: '管理员管理',
           padding: 15,
           items: [
             {
@@ -120,7 +151,7 @@ Ext.application({
               xtype: "grid",
               height: 455,
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup('estimatepurchase'),
+              store: Ext.data.StoreManager.lookup('managerList'),
               columns: [
                 {
                   text: '序号',
@@ -128,103 +159,48 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '货号',
-                  dataIndex: 'productCode',
+                  text: '角色',
+                  dataIndex: 'roleName',
                   flex: 1
                 },
                 {
-                  text: '品名',
-                  dataIndex: 'name',
+                  text: '用户名',
+                  dataIndex: 'username',
                   flex: 1
                 },
                 {
-                  text: '调整前累进量',
-                  dataIndex: 'tzqProgressiveNumber',
+                  text: '真实姓名',
+                  dataIndex: 'realname',
                   flex: 2
                 },
                 {
-                  text: '调整后累进量',
-                  dataIndex: 'tzhProgressiveNumber',
+                  text: '最后登录',
+                  dataIndex: 'lastLoginDate',
                   flex: 2
                 },
                 {
-                  text: '调整前出货数',
-                  dataIndex: 'tzqShipmentNumber',
+                  text: '状态',
+                  dataIndex: 'state',
                   flex: 2
                 },
                 {
-                  text: '调整后出货数',
-                  dataIndex: 'tzhShipmentNumber',
+                  text: '备注',
+                  dataIndex: 'remark',
                   flex: 2
-                },
-                {
-                  text: '库存量',
-                  dataIndex: 'number',
-                  flex: 1
-                },
-                {
-                  text: '损坏数',
-                  dataIndex: 'corruptedNumber',
-                  flex: 1
-                },
-                {
-                  text: '供应单数',
-                  dataIndex: 'supplyNumber',
-                  flex: 1
-                },
-                {
-                  text: '进价',
-                  dataIndex: 'price',
-                  flex: 1
-                },
-                {
-                  text: '调整前预计出货数',
-                  dataIndex: 'tzqExpectedShipmentNumber',
-                  flex: 2
-                },
-                {
-                  text: '调整后预计出货数',
-                  dataIndex: 'tzhExpectedShipmentNumber',
-                  flex: 2
-                },
-                {
-                  text: '调整前补货数',
-                  dataIndex: 'tzqReplenishmentNumber',
-                  flex: 2
-                },
-                {
-                  text: '调整后补货数',
-                  dataIndex: 'tzhReplenishmentNumber',
-                  flex: 2
-                },
-                {
-                  text: '补货金额',
-                  dataIndex: 'replenishmentAmount',
-                  flex: 1
-                },
-                {
-                  text: '全期预估',
-                  dataIndex: 'allPeriodPrediction',
-                  flex: 1
-                },
-                {
-                  text: '全期补货数',
-                  dataIndex: 'allReplenishmentNumber',
-                  flex: 1
                 }
               ]
             },
           ]
         },
         {
-          title: '管理员管理',
+          title: '系统角色管理',
           padding: 15,
           items: [
             {
               xtype: "grid",
               height: 355,
               margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup("memberList"),
+              store: Ext.data.StoreManager.lookup("roleList"),
               columns: [
                 {
                   text: '序号',
@@ -232,68 +208,18 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '会员编号',
-                  dataIndex: 'userCode',
+                  text: '角色名称',
+                  dataIndex: 'rolename',
                   flex: 2
-                },
-                {
-                  text: '姓名',
-                  dataIndex: 'realName',
-                  flex: 1
-                },
-                {
-                  text: '电话',
-                  dataIndex: 'mobile',
-                  flex: 1
-                },
-                {
-                  text: '默认地址',
-                  dataIndex: 'address1',
-                  flex: 2
-                },
-                {
-                  text: '邮编',
-                  dataIndex: 'zipCode1',
-                  flex: 1
-                },
-                {
-                  text: '地址2',
-                  dataIndex: 'address2',
-                  flex: 1
-                },
-                {
-                  text: '邮编2',
-                  dataIndex: 'zipCode2',
-                  flex: 1
-                },
-                {
-                  text: '购买金额',
-                  dataIndex: 'buyAmount',
-                  flex: 1
-                },
-                {
-                  text: '抵价券',
-                  dataIndex: 'preferentialTicket',
-                  flex: 1
-                },
-                {
-                  text: '青春贴',
-                  dataIndex: 'youthStuck',
-                  flex: 1
-                },
-                {
-                  text: '不打折抵价券',
-                  dataIndex: 'unDiscountAmount',
-                  flex: 2
-                },
-                {
-                  text: '毕业时间',
-                  dataIndex: 'graduateDate',
-                  flex: 1
                 },
                 {
                   text: '备注',
                   dataIndex: 'remark',
+                  flex: 1
+                },
+                {
+                  text: '创建日期',
+                  dataIndex: 'addDate',
                   flex: 1
                 }
               ]
