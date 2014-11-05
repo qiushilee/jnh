@@ -31,7 +31,6 @@
   };
 
   env.api.paymentmethord = "/ajax/paymentmethord";//支付方式
-  env.api.sendmethord = "/ajax/sendmethord";//寄送方式
   env.api.addresstype = "/ajax/addresstype";//地址类型
   env.api.ordersource = "/ajax/ordersource";//订单来源
   env.api.companytype = "/ajax/companytype";//供货商类型
@@ -105,6 +104,7 @@
 
   //寄送方式
   env.api.sendmethord={
+    opetion :"/ajax/sendmethord",
     list : "/sendmethord/index",
     save : "/sendmethord/save",
     del : "/sendmethord/delete"
@@ -446,7 +446,7 @@
           autoLoad: true,
           proxy: {
             type: 'ajax',
-            url: env.services.web + env.api.sendmethord,
+            url: env.services.web + env.api.sendmethord.opetion,
             reader: {
               type: 'json',
               root: 'list'
