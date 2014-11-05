@@ -924,10 +924,10 @@ Ext.application({
                           margin: "0 0 0 10",
                           handler: function() {
                             var params = "",
-                                periodicalId_1 =Ext.ComponentQuery.query("[name=periodicalId_1]")[0].rawValue,
-                                periodicalId_2 =Ext.ComponentQuery.query("[name=periodicalId_2]")[0].rawValue,
-                                periodicalId_3 =Ext.ComponentQuery.query("[name=periodicalId_3]")[0].rawValue,
-                                periodicalId_4 =Ext.ComponentQuery.query("[name=periodicalId_4]")[0].rawValue,
+                                periodicalId_1 =Ext.ComponentQuery.query("[name=periodicalId_1]")[0].value,
+                                periodicalId_2 =Ext.ComponentQuery.query("[name=periodicalId_2]")[0].value,
+                                periodicalId_3 =Ext.ComponentQuery.query("[name=periodicalId_3]")[0].value,
+                                periodicalId_4 =Ext.ComponentQuery.query("[name=periodicalId_4]")[0].value,
                                 realName = Ext.ComponentQuery.query("[name=realName]")[0].rawValue,
                                 userCode = Ext.ComponentQuery.query("[name=userCode]")[0].rawValue,
                                 address =  Ext.ComponentQuery.query("[name=address]")[0].rawValue,
@@ -957,7 +957,7 @@ Ext.application({
                               params +='/periodicalId_4/'+periodicalId_4;
                             }
                             if(realName!='') {
-                              params +='/realName/'+realName;
+                              params +='/realName/'+encodeURI(realName);
                             }
                             if(userCode!='') {
                               params +='/userCode/'+userCode;

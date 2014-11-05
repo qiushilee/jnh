@@ -269,12 +269,11 @@ Ext.application({
         text: "导出",
         margin: "0 0 0 10",
         handler: function() {
-          var form = search.getForm();
-          var periodicalId = 1,
-              userCode="",
-              userName = "",
-              deliveryOrderCode = "8001",
-              mailingDate="";
+          var periodicalId = Ext.ComponentQuery.query("[name=periodicalId]")[0].value,
+              userCode=Ext.ComponentQuery.query("[name=userCode]")[0].rawValue,
+              userName = Ext.ComponentQuery.query("[name=userName]")[0].rawValue,
+              deliveryOrderCode =Ext.ComponentQuery.query("[name=deliveryOrderCode]")[0].rawValue,
+              mailingDate=Ext.ComponentQuery.query("[name=mailingDate]")[0].rawValue;
           var params = "";
           if(periodicalId>0)
             params +='/periodicalId/'+periodicalId;

@@ -835,12 +835,12 @@ Ext.application({
                                         text: "导出",
                                         margin: "0 0 0 10",
                                         handler: function() {
-                                          var deliveryMethod = 0,
-                                            code="",
-                                            periodicalId1 = "",
-                                            periodicalId2 = "",
-                                            addDate1="",
-                                            addDate2="";
+                                          var deliveryMethod =  Ext.ComponentQuery.query("[name=realName]")[0].value,
+                                            code= Ext.ComponentQuery.query("[name=realName]")[0].rawValue,
+                                            periodicalId1 =  Ext.ComponentQuery.query("[name=realName]")[0].value,
+                                            periodicalId2 =  Ext.ComponentQuery.query("[name=realName]")[0].value,
+                                            addDate1= Ext.ComponentQuery.query("[name=realName]")[0].rawValue,
+                                            addDate2= Ext.ComponentQuery.query("[name=realName]")[0].rawValue;
                                           var params = "";
                                           if(deliveryMethod>0)
                                             params +='/deliveryMethod/'+deliveryMethod;
