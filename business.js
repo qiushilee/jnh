@@ -5,7 +5,7 @@ Ext.application({
     // 会员列表
     var memberList = Ext.create('Ext.data.Store', {
       storeId: 'memberList',
-      fields: ['addrList', 'userCode', 'realName', 'memberType', "address1", "address2"],
+      fields: ["id", 'addrList', 'userCode', 'realName', 'memberType', "address1", "address2"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -113,7 +113,8 @@ Ext.application({
                       xtype: "grid",
                       height: 155,
                       store: Ext.data.StoreManager.lookup('memberList'),
-                      columns: [ {
+                      columns: [
+                      {
                         text: '会员号',
                         dataIndex: 'userCode'
                       },
@@ -242,6 +243,10 @@ Ext.application({
                           border: 0,
                           defaultType: 'textfield',
                           items: [
+                            {
+                              xtype: "hiddenfield",
+                              name: "id"
+                            },
                             Ext.create("memberType"),
                             {
                               fieldLabel: "姓名",
@@ -267,10 +272,7 @@ Ext.application({
                           border: 0,
                           defaultType: 'textfield',
                           margin: "10 0 0 0",
-                          items: [ {
-                            xtype: "hiddenfield",
-                            name: "addressDefault0"
-                          },
+                          items: [
                             Ext.create("addressType", {
                               name: "type0"
                             }),
@@ -470,17 +472,28 @@ Ext.application({
                             text: "删除",
                             margin: "0 0 0 20",
                             handler: function() {
-                              var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-                              form.url = env.services.web + env.api.business.del;
+                              var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                                .getSelectionModel()
+                                .getSelection()[0].data;
+
 
                               Ext.Msg.confirm("删除", "确认删除？", function(type) {
                                 if (type === "yes") {
-                                  form.submit({
-                                    success: function(form, action) {
-                                      console.log(action)
+                                  Ext.Ajax.request({
+                                    url: env.services.web + env.api.business.del,
+                                    params: {
+                                      id: record.id
                                     },
-                                    failure: function(form, action) {
-                                      Ext.Msg.alert("删除名单", action.result.msg);
+                                    success: function(resp) {
+                                      searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
+                                    },
+                                    failure: function(resp) {
+                                      try {
+                                        var data = Ext.JSON.decode(resp.responseText);
+                                          Ext.Msg.alert("删除名单", data.msg);
+                                      } catch(e) {
+                                        console.error(e.stack);
+                                      }
                                     }
                                   });
                                 }
