@@ -22,7 +22,6 @@ Ext.application({
       storeId: "printcart",
       fields: ["key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", 'sendNumber1','sendNumber2',"mailingDate", "weight", "postage", "amount", "remark"],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.business.printcartlist,
@@ -673,6 +672,9 @@ Ext.application({
                             padding: 15,
                             items: [
                               {
+                                itemId: "print-cart-searchbar",
+                                xtype: "form",
+                                url: env.services.web + env.api.business.printcartlist,
                                 layout: "hbox",
                                 bodyPadding: 10,
                                 border: 0,
@@ -715,13 +717,17 @@ Ext.application({
                                   }, {
                                     xtype: "button",
                                     text: "搜索",
-                                    disabled: true,
-                                    margin: "0 0 0 20"
+                                    margin: "0 0 0 20",
+                                    handler: function() {
+                                      searchHandler.call(Ext.ComponentQuery.query("[itemId=print-cart-searchbar]")[0], "printcart");
+                                    }
                                   }, {
                                     xtype: "button",
                                     text: "重置",
-                                    disabled: true,
-                                    margin: "0 0 0 10"
+                                    margin: "0 0 0 10",
+                                    handler: function() {
+                                      Ext.ComponentQuery.query("[itemId=print-cart-searchbar]")[0].getForm().reset();
+                                    }
                                   }
                                 ]
                                 }, {
