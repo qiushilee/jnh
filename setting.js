@@ -363,7 +363,7 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">A</span> 保存",
             handler: function() {
-              var form = periodicalEdit.getComponent("form").getForm();
+              var form = sendmethordEdit.getComponent("form").getForm();
               form.url = env.services.web + env.api.sendmethord.save;
               if (form.isValid()) {
                 form.submit({
