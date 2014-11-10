@@ -319,7 +319,7 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">E</span> 返回",
             handler: function() {
-              periodicalAdd.hide();
+              periodicalEdit.hide();
             }
           }]
         }]
@@ -369,8 +369,8 @@ Ext.application({
                 form.submit({
                   success: function(form, action) {
                     Ext.Msg.alert("修改配送方式", action.result.msg, function() {
-                      periodicalEdit.hide();
-                      periodicalList.load();
+                      sendmethordEdit.hide();
+                      sendmethordList.load();
                     });
                   },
                   failure: function(form, action) {
@@ -384,13 +384,13 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">E</span> 返回",
             handler: function() {
-              periodicalAdd.hide();
+              sendmethordEdit.hide();
             }
           }]
         }]
       }
       ],
-      closeAction: 'hide',
+      closeAction: 'hide'
     });
 
 
