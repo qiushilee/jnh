@@ -138,7 +138,12 @@ Ext.application({
                   dataIndex: 'state',
                   flex: 1
                 }
-              ]
+              ],
+              listeners: {
+                itemdblclick: function( that, record, item, index, e, eOpts) {
+                  sendmethordEdit.show();
+                  window.updateForm(sendmethordEdit.getComponent("form").getForm(), record.data);
+                } }
             }
           ]
         },
@@ -188,7 +193,12 @@ Ext.application({
                   dataIndex: 'remark',
                   flex: 2
                 }
-              ]
+              ],
+              listeners: {
+                itemdblclick: function( that, record, item, index, e, eOpts) {
+                  managerEdit.show();
+                  window.updateForm(managerEdit.getComponent("form").getForm(), record.data);
+                } }
             },
           ]
         },
@@ -222,7 +232,12 @@ Ext.application({
                   dataIndex: 'addDate',
                   flex: 1
                 }
-              ]
+              ],
+              listeners: {
+                itemdblclick: function( that, record, item, index, e, eOpts) {
+                  roleEdit.show();
+                  window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
+                } }
             }
           ]
         },
@@ -237,7 +252,7 @@ Ext.application({
 
 
 
-
+    //期数
     var periodicalEdit = new Ext.create("Ext.window.Window", {
       title: "编辑期数",
       layout: "column",
@@ -295,6 +310,71 @@ Ext.application({
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("修改期数", action.result.msg);
+                  }
+                });
+              }
+            }
+          }, {
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">E</span> 返回",
+            handler: function() {
+              periodicalAdd.hide();
+            }
+          }]
+        }]
+      }
+      ],
+      closeAction: 'hide',
+    });
+
+    //配送方式
+    var sendmethordEdit = new Ext.create("Ext.window.Window", {
+      title: "编辑配送方式",
+      layout: "column",
+
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        columnWidth: 0.41,
+        layout: 'vbox',
+        width: 500,
+        bodyPadding: 5,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.periodical.add,
+        items: [{
+          fieldLabel: "名称",
+          name: "name",
+          labelAlign: "right"
+        }, {
+          fieldLabel: "KEY",
+          name: "key",
+          labelAlign: "right"
+        }, {
+          xtype: "hiddenfield",
+          name: "id",
+        }, {
+          xtype:'panel',
+          layout: "hbox",
+          border: 0,
+          margin: "0 0 0 53",
+          items: [{
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">A</span> 保存",
+            handler: function() {
+              var form = periodicalEdit.getComponent("form").getForm();
+              form.url = env.services.web + env.api.sendmethord.save;
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("修改配送方式", action.result.msg, function() {
+                      periodicalEdit.hide();
+                      periodicalList.load();
+                    });
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改配送方式", action.result.msg);
                   }
                 });
               }

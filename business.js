@@ -5,7 +5,7 @@ Ext.application({
     // 会员列表
     var memberList = Ext.create('Ext.data.Store', {
       storeId: 'memberList',
-      fields: ["id", 'addrList', 'userCode', 'realName', 'memberType', "address1", "address2"],
+      fields: ["id", 'addrList', 'userCode', 'realName', 'memberType','memberTypeName', "address1", "address2"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -134,7 +134,7 @@ Ext.application({
                       {
                         text: '来源',
                         flex: 1,
-                        dataIndex: 'memberType'
+                        dataIndex: 'memberTypeName'
                       }
                     ],
                     listeners: {
