@@ -109,6 +109,19 @@ Ext.application({
                 window.updateForm(periodicalEdit.getComponent("form").getForm(), record.data);
               }
             }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 增加",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function () {
+                var form = periodicalEdit.getComponent("form").getForm();
+                periodicalEdit.setTitle("新增期数");
+                form.reset();
+                form.url = env.services.web + env.api.periodical.add;
+                periodicalEdit.show();
+              }
             }
           ]
         },
