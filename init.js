@@ -97,8 +97,7 @@
   //期数
   env.api.periodical = {
     list: "/periodical/index",
-	change: "/periodical/update",
-    add: "/periodical/create",
+    save: "/periodical/save",
     del: "/periodical/delete"
   };
 
