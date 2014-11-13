@@ -42,7 +42,7 @@ Ext.application({
     //管理员列表
     var managerList =  Ext.create('Ext.data.Store', {
       storeId: 'managerList',
-      fields: ['id','roleId','roleName', 'username', 'realname','lastLoginDate','state','remark','permissions'],
+      fields: ['key','id','roleId','roleName', 'username', 'realname','lastLoginDate','state','remark','permissions'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -376,6 +376,12 @@ Ext.application({
         }, {
           fieldLabel: "KEY",
           name: "key",
+          labelAlign: "right"
+        }, {
+          xtype : 'checkbox',
+          checked : true,
+          fieldLabel: "状态",
+          name: "status",
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
