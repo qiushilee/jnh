@@ -141,7 +141,9 @@
     change: "/productrecord/update",
     add: "/productrecord/create",
     del: "/productrecord/delete",
-    viewProductRecord:'/productrecord/viewproductrecord'//根据进转损查看产品
+    //根据进转损查看产品
+    viewProductRecord:'/productrecord/viewproductrecord',
+    print:'/productrecord/printproductrecord'
   };
 
   //业务管理
@@ -230,11 +232,8 @@
   env.api.print = {
     //保存打印设置
     save: "/printsetting/save",
-    //根据表名获取表所有字段
-    gettablecoloumns: "/printsetting/gettablecoloumns",
-    set: "http://jnh.www.webwei.cn/index.php/printsetting",
-    //根据模块和打印按钮类型获取设置
-    get: "/printsetting/getprintsetting"
+    set: "/printsetting",
+    get:"/printsetting/getprintbutton"
   };
 
   window.env = env;
@@ -347,7 +346,7 @@
   window.printHandle = {
     set: function(type) {
       if (type) {
-        window.open(env.api.print.set + "?module=" + type);
+        window.open(env.services.web + env.api.print.set + "?module=" + type);
       } else {
         throw "type 不能为空";
       }
