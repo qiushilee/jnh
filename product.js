@@ -686,7 +686,7 @@ Ext.application({
       ]
     });
 
-    //进转损详情
+    //进货单商品详情
     var addJHD = new Ext.create("Ext.window.Window", {
       title: "进货单商品详情",
       width: 800,
@@ -865,6 +865,16 @@ Ext.application({
                     });
                   }
                 });
+              }
+            },
+            {
+              name: "jhd-print",
+              xtype: "button",
+              text: "打印设置",
+              disabled: true,
+              margin: "0 0 0 10",
+              handler: function () {
+                window.open("http://jnh.www.webwei.cn/index.php/printsetting?module=purchase");
               }
             },
             {
