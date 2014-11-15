@@ -221,17 +221,22 @@
     list: "/privaction/index"
   };
 
-//打印记录
-  env.api.printlog ={
+  //打印记录
+  env.api.printlog = {
     save: "/printlog/save" //记录打印记录
-  }
+  };
 
-//打印设置
-  env.api.printsetting ={
-    save: "/printsetting/save", //保存打印设置
-    gettablecoloumns: "/printsetting/gettablecoloumns", //根据表名获取表所有字段
-    getprintsetting:"/printsetting/getprintsetting"//根据模块和打印按钮类型获取设置
-  }
+  //打印设置
+  env.api.print = {
+    //保存打印设置
+    save: "/printsetting/save",
+    //根据表名获取表所有字段
+    gettablecoloumns: "/printsetting/gettablecoloumns",
+    set: "http://jnh.www.webwei.cn/index.php/printsetting",
+    //根据模块和打印按钮类型获取设置
+    get: "/printsetting/getprintsetting"
+  };
+
   window.env = env;
 
   /**
@@ -334,6 +339,40 @@
         });
       }
     });
+  };
+
+  /**
+   * 打印
+   */
+  window.printHandle = {
+    set: function(type) {
+      if (type) {
+        window.open(env.api.print.set + "?module=" + type);
+      } else {
+        throw "type 不能为空";
+      }
+    },
+
+    get: function(type) {
+      if (type) {
+        Ext.Ajax.request({
+          url: env.services.web + env.api.print.get,
+          method: "POST",
+          params: {
+            module: type
+          },
+          success: function(response) {
+            var data = Ext.JSON.decode(response.responseText);
+            console.log(data)
+          },
+          failure: function(form, action) {
+            Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
+          }
+        });
+      } else {
+        throw "type 不能为空";
+      }
+    }
   }
 
   Ext.application({

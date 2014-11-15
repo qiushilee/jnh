@@ -874,7 +874,7 @@ Ext.application({
               disabled: true,
               margin: "0 0 0 10",
               handler: function () {
-                window.open("http://jnh.www.webwei.cn/index.php/printsetting?module=purchase");
+                window.printHandle.set("purchase");
               }
             },
             {
