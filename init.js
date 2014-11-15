@@ -97,8 +97,7 @@
   //期数
   env.api.periodical = {
     list: "/periodical/index",
-	change: "/periodical/update",
-    add: "/periodical/create",
+    save: "/periodical/save",
     del: "/periodical/delete"
   };
 
@@ -223,10 +222,16 @@
   };
 
 //打印记录
-  env.api.pringlog ={
-    save: "/pringlog/save" //记录打印记录
+  env.api.printlog ={
+    save: "/printlog/save" //记录打印记录
   }
 
+//打印设置
+  env.api.printsetting ={
+    save: "/printsetting/save", //保存打印设置
+    gettablecoloumns: "/printsetting/gettablecoloumns", //根据表名获取表所有字段
+    getprintsetting:"/printsetting/getprintsetting"//根据模块和打印按钮类型获取设置
+  }
   window.env = env;
 
   /**

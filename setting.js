@@ -42,7 +42,7 @@ Ext.application({
     //管理员列表
     var managerList =  Ext.create('Ext.data.Store', {
       storeId: 'managerList',
-      fields: ['id','roleId','roleName', 'username', 'realname','lastLoginDate','state','remark','permissions'],
+      fields: ['key','id','roleId','roleName', 'username', 'realname','lastLoginDate','state','remark','permissions'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -109,6 +109,19 @@ Ext.application({
                 window.updateForm(periodicalEdit.getComponent("form").getForm(), record.data);
               }
             }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 增加",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function () {
+                var form = periodicalEdit.getComponent("form").getForm();
+                periodicalEdit.setTitle("新增期数");
+                form.reset();
+                form.url = env.services.web + env.api.periodical.save;
+                periodicalEdit.show();
+              }
             }
           ]
         },
@@ -144,6 +157,19 @@ Ext.application({
                   sendmethordEdit.show();
                   window.updateForm(sendmethordEdit.getComponent("form").getForm(), record.data);
                 } }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 增加",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function () {
+                var form = sendmethordEdit.getComponent("form").getForm();
+                sendmethordEdit.setTitle("新增配送方式");
+                form.reset();
+                form.url = env.services.web + env.api.sendmethord.save;
+                sendmethordEdit.show();
+              }
             }
           ]
         },
@@ -265,11 +291,12 @@ Ext.application({
         width: 500,
         bodyPadding: 5,
         defaultType: 'textfield',
-        url: env.services.web + env.api.periodical.add,
+        url: env.services.web + env.api.periodical.save,
         items: [ {
           fieldLabel: "编号",
           name: "code",
           labelAlign: "right",
+          readOnly:true
         }, {
           fieldLabel: "名称",
           name: "title",
@@ -299,7 +326,7 @@ Ext.application({
             text: "<span class=\"key\">A</span> 保存",
             handler: function() {
               var form = periodicalEdit.getComponent("form").getForm();
-              form.url = env.services.web + env.api.periodical.change;
+              form.url = env.services.web + env.api.periodical.save;
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
@@ -341,7 +368,7 @@ Ext.application({
         width: 500,
         bodyPadding: 5,
         defaultType: 'textfield',
-        url: env.services.web + env.api.periodical.add,
+        url: env.services.web + env.api.sendmethord.save,
         items: [{
           fieldLabel: "名称",
           name: "name",
@@ -349,6 +376,12 @@ Ext.application({
         }, {
           fieldLabel: "KEY",
           name: "key",
+          labelAlign: "right"
+        }, {
+          xtype : 'checkbox',
+          checked : true,
+          fieldLabel: "状态",
+          name: "status",
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
