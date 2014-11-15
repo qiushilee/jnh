@@ -352,20 +352,32 @@
       }
     },
 
-    get: function(type) {
+    /**
+     * {ExtComponent} $el: 父级容器，用来放打印按钮
+     * {String} type: 类型
+     */
+    get: function(opt) {
       if (type) {
         Ext.Ajax.request({
           url: env.services.web + env.api.print.get,
           method: "POST",
           params: {
-            module: type
+            module: opt.type
           },
           success: function(response) {
             var data = Ext.JSON.decode(response.responseText);
-            console.log(data)
+            Ext.Array.each(data.list, function(item) {
+              var $btn = Ext.create("Ext.Button", {
+                text: item.printButton,
+                handler: function() {
+                  alert('You clicked the button!');
+                }
+              });
+              opt.$el.add($btn);
+            });
           },
           failure: function(form, action) {
-            Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
+            throw "打印列表查询失败, 服务器无响应，请稍后再试";
           }
         });
       } else {
