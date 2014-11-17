@@ -239,7 +239,16 @@ Ext.application({
           Ext.ux.grid.Printer.printAutomatically = false;
           Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid")[0]);
         }
-      }, {
+      },
+        {
+          name: "jhd-print",
+          xtype: "button",
+          text: "打印设置",
+          margin: "0 0 0 10",
+          handler: function () {
+            window.printHandle.set("package");
+          }
+        }, {
         xtype: "button",
         text: "<span class=\"key\">C</span> 预览",
         disabled: true,
