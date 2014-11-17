@@ -686,7 +686,7 @@ Ext.application({
       ]
     });
 
-    //进转损详情
+    //进货单商品详情
     var addJHD = new Ext.create("Ext.window.Window", {
       title: "进货单商品详情",
       width: 800,
@@ -832,6 +832,7 @@ Ext.application({
           }
         },
         {
+          itemId: "print-container",
           layout: "hbox",
           bodyPadding: 10,
           border: 0,
@@ -870,17 +871,11 @@ Ext.application({
             {
               name: "jhd-print",
               xtype: "button",
-              text: "打印",
+              text: "打印设置",
               disabled: true,
               margin: "0 0 0 10",
               handler: function () {
-                var type = Ext.ComponentQuery.query("[itemId=jhd-type]")[0].rawValue;
-
-                Ext.ux.grid.Printer.opt = {
-                  title: type + "明细",
-                  name: document.body.dataset.user
-                };
-                Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=list]")[0]);
+                window.printHandle.set("purchase");
               }
             }
           ]
@@ -888,7 +883,7 @@ Ext.application({
       ]
     });
 
-
+    window.printHandle.get(Ext.ComponentQuery.query("[itemId=print-container]")[0], "purchase");
 
     var upload = new Ext.create("Ext.window.Window", {
       title: "库存导入",
