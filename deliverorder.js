@@ -498,6 +498,15 @@ Ext.application({
                       }
                     },
                     {
+                      name: "jhd-print",
+                      xtype: "button",
+                      text: "打印设置",
+                      margin: "20 0 0 20",
+                      handler: function () {
+                        window.printHandle.set("deliverorder");
+                      }
+                    },
+                    {
                       xtype: "button",
                       text: "<span class=\"key\">A</span> 增加",
                       margin: "0 0 0 10",
