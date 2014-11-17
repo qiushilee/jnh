@@ -141,7 +141,9 @@
     change: "/productrecord/update",
     add: "/productrecord/create",
     del: "/productrecord/delete",
-    viewProductRecord:'/productrecord/viewproductrecord'//根据进转损查看产品
+    //根据进转损查看产品
+    viewProductRecord:'/productrecord/viewproductrecord',
+    print:'/productrecord/printproductrecord'
   };
 
   //业务管理
@@ -221,17 +223,19 @@
     list: "/privaction/index"
   };
 
-//打印记录
-  env.api.printlog ={
+  //打印记录
+  env.api.printlog = {
     save: "/printlog/save" //记录打印记录
-  }
+  };
 
-//打印设置
-  env.api.printsetting ={
-    save: "/printsetting/save", //保存打印设置
-    gettablecoloumns: "/printsetting/gettablecoloumns", //根据表名获取表所有字段
-    getprintsetting:"/printsetting/getprintsetting"//根据模块和打印按钮类型获取设置
-  }
+  //打印设置
+  env.api.print = {
+    //保存打印设置
+    save: "/printsetting/save",
+    set: "/printsetting",
+    get:"/printsetting/getprintbutton"
+  };
+
   window.env = env;
 
   /**
@@ -334,6 +338,52 @@
         });
       }
     });
+  };
+
+  /**
+   * 打印
+   */
+  window.printHandle = {
+    set: function(type) {
+      if (type) {
+        window.open(env.services.web + env.api.print.set + "?module=" + type);
+      } else {
+        throw "type 不能为空";
+      }
+    },
+
+    /**
+     * {ExtComponent} $el: 父级容器，用来放打印按钮
+     * {String} type: 类型
+     */
+    get: function(opt) {
+      if (type) {
+        Ext.Ajax.request({
+          url: env.services.web + env.api.print.get,
+          method: "POST",
+          params: {
+            module: opt.type
+          },
+          success: function(response) {
+            var data = Ext.JSON.decode(response.responseText);
+            Ext.Array.each(data.list, function(item) {
+              var $btn = Ext.create("Ext.Button", {
+                text: item.printButton,
+                handler: function() {
+                  alert('You clicked the button!');
+                }
+              });
+              opt.$el.add($btn);
+            });
+          },
+          failure: function(form, action) {
+            throw "打印列表查询失败, 服务器无响应，请稍后再试";
+          }
+        });
+      } else {
+        throw "type 不能为空";
+      }
+    }
   }
 
   Ext.application({

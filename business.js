@@ -512,7 +512,6 @@ Ext.application({
                 },
                 {
                   title: '管理打印',
-                  disabled: true,
                   padding: 15,
                   items: [
                     {

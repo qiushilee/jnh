@@ -426,6 +426,86 @@ Ext.application({
       closeAction: 'hide'
     });
 
+    //管理员编辑
+    var managerEdit= new Ext.create("Ext.window.Window", {
+      title: "编辑管理员",
+      layout: "column",
+
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        columnWidth: 0.41,
+        layout: 'vbox',
+        width: 500,
+        bodyPadding: 5,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.manager.save,
+        items: [
+        Ext.create("managerRoles"),
+        {
+          fieldLabel: "用户名",
+          name: "username",
+          labelAlign: "right"
+        }, {
+          fieldLabel: "真实姓名",
+          name: "realname",
+          labelAlign: "right"
+        }, {
+          fieldLabel: "密码",
+          name: "password",
+          labelAlign: "right"
+         }, {
+          fieldLabel: "备注",
+          name: "remark",
+          labelAlign: "right"
+        }, {
+          xtype : 'checkbox',
+          checked : true,
+          fieldLabel: "状态",
+          name: "status",
+          labelAlign: "right"
+        }, {
+          xtype: "hiddenfield",
+          name: "id",
+        }, {
+          xtype:'panel',
+          layout: "hbox",
+          border: 0,
+          margin: "0 0 0 53",
+          items: [{
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">A</span> 保存",
+            handler: function() {
+              var form = managerEdit.getComponent("form").getForm();
+              form.url = env.services.web + env.api.manager.save;
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("修改管理员", action.result.msg, function() {
+                      managerEdit.hide();
+                      managerList.load();
+                    });
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改管理员", action.result.msg);
+                  }
+                });
+              }
+            }
+          }, {
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">E</span> 返回",
+            handler: function() {
+              sendmethordEdit.hide();
+            }
+          }]
+        }]
+      }
+      ],
+      closeAction: 'hide'
+    });
 
   }
 });
