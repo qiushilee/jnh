@@ -95,7 +95,7 @@ Ext.application({
               defaultType: 'datefield',
               items: [
                 Ext.create("periodical", {
-                  itemId: "purchase-periodical",
+                  itemId: "purchase-periodical"
                 }),
                 {
                   itemId: "purchase-start-date",
@@ -936,7 +936,7 @@ Ext.application({
                           name: "jhd-print",
                           xtype: "button",
                           text: "打印设置",
-                          margin: "0 0 0 20"
+                          margin: "0 0 0 20",
                           handler: function () {
                             window.printHandle.set("searchmember");
                           }
