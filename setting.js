@@ -58,7 +58,23 @@ Ext.application({
     //角色列表
     var roleList =  Ext.create('Ext.data.Store', {
       storeId: 'roleList',
-      fields: ['id','rolename','remark','permissions','addDate'],
+      fields: ['id','key','rolename','remark','permissions','addDate'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.managerrole.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    //地区列表
+    var areaList =  Ext.create('Ext.data.Store', {
+      storeId: 'areaList',
+      fields: ['id','key','name','zipcode','addDate'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -226,6 +242,19 @@ Ext.application({
                   window.updateForm(managerEdit.getComponent("form").getForm(), record.data);
                 } }
             },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 增加",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function () {
+                var form = managerEdit.getComponent("form").getForm();
+                managerEdit.setTitle("新增管理员");
+                form.reset();
+                form.url = env.services.web + env.api.manager.save;
+                managerEdit.show();
+              }
+            }
           ]
         },
         {
@@ -264,13 +293,72 @@ Ext.application({
                   roleEdit.show();
                   window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
                 } }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 增加",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function () {
+                var form = roleEdit.getComponent("form").getForm();
+                roleEdit.setTitle("新增管理角色");
+                form.reset();
+                form.url = env.services.web + env.api.managerrole.save;
+                roleEdit.show();
+              }
             }
           ]
         },
         {
           title: '邮资配置',
           padding: 15,
-          items:[
+          items: [
+            {
+              xtype: "grid",
+              height: 355,
+              margin: "20 0 0 0",
+              store: Ext.data.StoreManager.lookup("areaList"),
+              columns: [
+                {
+                  text: '序号',
+                  dataIndex: 'key',
+                  flex: 1
+                },
+                {
+                  text: '地区名称',
+                  dataIndex: 'name',
+                  flex: 2
+                },
+                {
+                  text: '邮编',
+                  dataIndex: 'zipcode',
+                  flex: 1
+                },
+                {
+                  text: '创建日期',
+                  dataIndex: 'addDate',
+                  flex: 1
+                }
+              ],
+              listeners: {
+                itemdblclick: function( that, record, item, index, e, eOpts) {
+                  areaEdit.show();
+                  window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
+                } }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 增加",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function () {
+                var form = areaEdit.getComponent("form").getForm();
+                areaEdit.setTitle("新增地区");
+                form.reset();
+                form.url = env.services.web + env.api.area.save;
+                areaEdit.show();
+              }
+            }
           ]
         }
       ]
@@ -441,7 +529,7 @@ Ext.application({
         defaultType: 'textfield',
         url: env.services.web + env.api.manager.save,
         items: [
-        Ext.create("managerRoles"),
+          Ext.create('managerRoles'),
         {
           fieldLabel: "用户名",
           name: "username",
@@ -498,10 +586,77 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">E</span> 返回",
             handler: function() {
-              sendmethordEdit.hide();
+              managerEdit.hide();
             }
           }]
         }]
+      }
+      ],
+      closeAction: 'hide'
+    });
+
+
+    //管理角色编辑
+    var  roleEdit= new Ext.create("Ext.window.Window", {
+      title: "编辑管理角色",
+      layout: "column",
+
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        columnWidth: 0.41,
+        layout: 'vbox',
+        width: 500,
+        bodyPadding: 5,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.managerrole.save,
+        items: [
+          {
+            fieldLabel: "角色名称",
+            name: "rolename",
+            labelAlign: "right"
+          }, {
+            fieldLabel: "备注",
+            name: "remark",
+            labelAlign: "right"
+          }, {
+            xtype: "hiddenfield",
+            name: "id",
+          }, {
+            xtype:'panel',
+            layout: "hbox",
+            border: 0,
+            margin: "0 0 0 53",
+            items: [{
+              xtype:'button',
+              margin: "0 0 0 10",
+              text: "<span class=\"key\">A</span> 保存",
+              handler: function() {
+                var form = roleEdit.getComponent("form").getForm();
+                form.url = env.services.web + env.api.managerrole.save;
+                if (form.isValid()) {
+                  form.submit({
+                    success: function(form, action) {
+                      Ext.Msg.alert("修改管理角色", action.result.msg, function() {
+                        roleEdit.hide();
+                        roleList.load();
+                      });
+                    },
+                    failure: function(form, action) {
+                      Ext.Msg.alert("修改管理角色", action.result.msg);
+                    }
+                  });
+                }
+              }
+            }, {
+              xtype:'button',
+              margin: "0 0 0 10",
+              text: "<span class=\"key\">E</span> 返回",
+              handler: function() {
+                roleEdit.hide();
+              }
+            }]
+          }]
       }
       ],
       closeAction: 'hide'
