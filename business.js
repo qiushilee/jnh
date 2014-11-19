@@ -512,7 +512,6 @@ Ext.application({
                 },
                 {
                   title: '管理打印',
-                  disabled: true,
                   padding: 15,
                   items: [
                     {
@@ -827,11 +826,6 @@ Ext.application({
                                       }, {
                                         xtype: "button",
                                         text: "<span class=\"key\">N</span> 修改",
-                                        disabled: true,
-                                        margin: "0 0 0 10"
-                                      }, {
-                                        xtype: "button",
-                                        text: "<span class=\"key\">W</span> 保存",
                                         disabled: true,
                                         margin: "0 0 0 10"
                                       }, {
