@@ -365,7 +365,9 @@
      * {String} type: 类型
      */
     get: function(opt) {
-      if (type) {
+      opt.margin = opt.margin || "";
+
+      if (opt.type) {
         Ext.Ajax.request({
           url: env.services.web + env.api.print.get,
           method: "POST",
@@ -377,6 +379,7 @@
             Ext.Array.each(data.list, function(item) {
               var $btn = Ext.create("Ext.Button", {
                 text: item.printButton,
+                margin: opt.margin,
                 handler: function() {
                   alert('You clicked the button!');
                 }
