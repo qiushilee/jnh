@@ -304,6 +304,15 @@ Ext.application({
                 };
                 Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=productList]")[0]);
               }
+            },
+            {
+              name: "jhd-print",
+              xtype: "button",
+              text: "打印设置",
+              margin: "20 0 0 20",
+              handler: function () {
+                window.printHandle.set("productrecord");
+              }
             }
           ]
         },

@@ -95,7 +95,7 @@ Ext.application({
               defaultType: 'datefield',
               items: [
                 Ext.create("periodical", {
-                  itemId: "purchase-periodical",
+                  itemId: "purchase-periodical"
                 }),
                 {
                   itemId: "purchase-start-date",
@@ -138,6 +138,15 @@ Ext.application({
                     }
 
                     Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=purchase-grid]")[0]);
+                  }
+                },
+                {
+                  name: "jhd-print",
+                  xtype: "button",
+                  text: "打印设置",
+                  margin: "20 0 0 20",
+                  handler: function () {
+                    window.printHandle.set("searchpurchase");
                   }
                 }
               ]
@@ -250,6 +259,15 @@ Ext.application({
                     }
 
                     Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=shipment-grid]")[0]);
+                  }
+                },
+                {
+                  name: "jhd-print",
+                  xtype: "button",
+                  text: "打印设置",
+                  margin: "20 0 0 20",
+                  handler: function () {
+                    window.printHandle.set("searchshipment");
                   }
                 }
               ]
@@ -913,6 +931,15 @@ Ext.application({
                           text: "面单打印",
                           disabled: true,
                           margin: "0 0 0 20"
+                        },
+                        {
+                          name: "jhd-print",
+                          xtype: "button",
+                          text: "打印设置",
+                          margin: "0 0 0 20",
+                          handler: function () {
+                            window.printHandle.set("searchmember");
+                          }
                         },
                         {
                           text: "批量修改",

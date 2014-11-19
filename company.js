@@ -180,7 +180,16 @@ Ext.application({
           };
           Ext.ux.grid.Printer.print(cs);
         }
-      }, {
+      },
+        {
+          name: "jhd-print",
+          xtype: "button",
+          text: "打印设置",
+          margin: "0 0 0 10",
+          handler: function () {
+            window.printHandle.set("company");
+          }
+        }, {
         xtype: "button",
         text: "复制",
         margin: "0 0 0 10",

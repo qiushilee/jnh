@@ -37,6 +37,7 @@
   env.api.jzstype = "/ajax/jzstype";//进转损分类
   env.api.membertype = "/ajax/membertype";	  
   env.api.membersource = "/ajax/membersource";
+  env.api.managerRoles = "/ajax/managerrole";
 
   //汇款订购
   env.api.order = {
@@ -56,7 +57,8 @@
     change: "/company/update",
     copy: "/company/copy",   //厂商复制
     findByCompanyCode:"/company/findbycompanycode",//根据厂商编号获取企业信息
-    import: "/company/import"   //导入
+    import: "/company/import",   //导入
+    print: "/company/print" 
   };
 
   env.api.product = {
@@ -205,18 +207,24 @@
 //管理员
   env.api.manager = {
     list: "/manager/index",
-    change: "/manager/update",
-    add: "/manager/create",
+    save: "/manager/save",
     del: "/manager/delete"
   };
 
   //管理员角色
   env.api.managerrole = {
     list: "/managerrole/index",
-    change: "/managerrole/update",
-    add: "/managerrole/create",
+    save: "/managerrole/save",
     del: "/managerrole/delete"
   };
+
+  //地区
+  env.api.area = {
+    list: "/area/index",
+    save: "/area/save",
+    del: "/area/delete"
+  };
+
 
   //权限
   env.api.privaction = {
@@ -653,6 +661,32 @@
         labelAlign: "right",
         name: "source",
         width: 150,
+        listeners: {
+          setvalue: comboboxSetValue
+        }
+      });
+
+      Ext.define("managerRoles", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "角色",
+        queryMode: "local",
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: true,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.managerRoles,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "roleId",
         listeners: {
           setvalue: comboboxSetValue
         }
