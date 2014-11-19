@@ -226,7 +226,6 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">A</span> 增加",
               margin: "20 0 0 0",
-              scale: "medium",
               handler: function () {
                 var form = productEdit.getComponent("form").getForm();
                 productEdit.setTitle("新增库存");
@@ -242,7 +241,6 @@ Ext.application({
               xtype: "button",
               text: "删除",
               margin: "20 0 0 20",
-              scale: "medium",
               handler: function() {
                 var record = Ext.ComponentQuery.query("grid[itemId=productList]")[0].getSelectionModel()
                 .getSelection()[0].data;
@@ -268,7 +266,6 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">I</span> 导入",
               margin: "20 0 0 20",
-              scale: "medium",
               handler: function() {
                 upload.show();
               }
@@ -277,7 +274,6 @@ Ext.application({
               xtype: "button",
               text: "进货单",
               margin: "20 0 0 20",
-              scale: "medium",
               handler: function () {
                 try {
                   var data = productlist.getComponent("product").getComponent("productList").getSelectionModel().getSelection()[0].data;
@@ -289,20 +285,6 @@ Ext.application({
                 } catch (e) {
                   Ext.Msg.alert("查看进货单", "请单击库存表中的一项后再查看进货单");
                 }
-              }
-            },
-            {
-              xtype: "button",
-              text: "打印",
-              margin: "20 0 0 20",
-              scale: "medium",
-              handler: function () {
-                Ext.ux.grid.Printer.opt = {
-                  title: "库存结存明细",
-                  name: document.body.dataset.user,
-                  periodical: Ext.ComponentQuery.query("[itemId=product-periodical]")[0].value
-                };
-                Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=productList]")[0]);
               }
             },
             {
@@ -545,6 +527,18 @@ Ext.application({
           ]
         }
       ]
+    });
+
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=product]")[0],
+      type: "productrecord",
+      margin: "20 0 0 20"
+    });
+
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=jhdProduct-print-container]")[0],
+      type: "purchase",
+      margin: "0 0 0 10"
     });
 
     //编辑查看
@@ -841,7 +835,7 @@ Ext.application({
           }
         },
         {
-          itemId: "print-container",
+          itemId: "jhdProduct-print-container",
           layout: "hbox",
           bodyPadding: 10,
           border: 0,
@@ -881,7 +875,6 @@ Ext.application({
               name: "jhd-print",
               xtype: "button",
               text: "打印设置",
-              disabled: true,
               margin: "0 0 0 10",
               handler: function () {
                 window.printHandle.set("purchase");
@@ -891,8 +884,6 @@ Ext.application({
         }
       ]
     });
-
-    window.printHandle.get(Ext.ComponentQuery.query("[itemId=print-container]")[0], "purchase");
 
     var upload = new Ext.create("Ext.window.Window", {
       title: "库存导入",
