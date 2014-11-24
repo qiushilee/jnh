@@ -400,7 +400,10 @@ Ext.application({
                 text: "查看抵价券",
                 margin: "0 0 0 10",
                 disabled: true,
-                float: "right"
+                float: "right",
+                handler: function() {
+                  addDjq.show();
+                }
               }
             ]
             },
