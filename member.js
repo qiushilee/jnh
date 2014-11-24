@@ -1036,17 +1036,24 @@ Ext.onReady(function() {
           border: 0,
           defaultType: 'textfield',
           items: [
-            Ext.create("periodical"),
-            Ext.create("paymentMethord"),
+            Ext.create("periodical", {
+              labelWidth: 40
+            }),
+            Ext.create("paymentMethord", {
+              labelWidth: 145,
+              width: 260
+            }),
             {
               fieldLabel: '汇票号码',
               name:"billNumber",
               labelAlign: "right",
+              labelWidth: 90
             },
             {
               fieldLabel: '收汇局',
               labelAlign: "right",
-              name: 'receiptProceedsOffice'
+              name: 'receiptProceedsOffice',
+              labelWidth: 90
             }
           ]
         },
@@ -1068,6 +1075,7 @@ Ext.onReady(function() {
             {
               fieldLabel: "汇款金额",
               labelAlign: "right",
+              labelWidth: 60,
               name: 'remittanceAmount'
             },
             {
@@ -1075,7 +1083,7 @@ Ext.onReady(function() {
               fieldLabel: '汇款日期',
               labelAlign: "right",
               name: 'remittanceDate',
-              width: 200
+              width: 220
             },
             {
               xtype: "checkboxfield",
@@ -1090,29 +1098,34 @@ Ext.onReady(function() {
               fieldLabel: '收款日期',
               labelAlign: "right",
               name: 'remittanceReceivedDate',
-              width: 200
+              labelWidth: 220
             }
           ]
         },
         {
           xtype: 'panel',
           layout: "hbox",
-          margin: "10 0 0 0",
+          margin: "30 0 0 0",
           border: 0,
           defaultType: 'textfield',
           items: [
-            Ext.create('deliveryMethod'),
+            Ext.create('deliveryMethod', {
+              labelWidth: 60,
+              width: 160
+            }),
             {
               xtype: "datefield",
               fieldLabel: '收订单日期',
               labelAlign: "right",
               name: 'orderReceivedDate',
-              width: 200
+              labelWidth: 145,
+              width: 250
             },
             {
               fieldLabel: "邮资",
               labelAlign: "right",
               name: 'postage',
+              labelWidth: 65,
               width:180
             }
           ]
@@ -1127,7 +1140,7 @@ Ext.onReady(function() {
             {
               xtype: "checkboxfield",
               boxLabel: "收到订单",
-              margin: "0 0 0 37",
+              margin: "0 0 0 10",
               inputValue: 1,
               labelAlign: "right",
               name: 'isOrderReceived'
@@ -1135,39 +1148,43 @@ Ext.onReady(function() {
               fieldLabel: "不打折金额",
               labelAlign: "right",
               name: 'unDiscountAmount',
-              width:180
+              labelWidth: 230,
+              width: 330
             },
             {
               fieldLabel: "抵价券",
               labelAlign: "right",
               name: 'preferentialTicket',
-              width:180
+              labelWidth: 80,
+              width:185
             },
             {
               fieldLabel: "使用青春贴",
               labelAlign: "right",
               name: 'youthStuck',
-              width:180
+              labelWidth: 160
             }
           ]
         },
         {
           xtype: 'panel',
           layout: "hbox",
-          margin: "10 0 0 0",
+          margin: "30 0 0 0",
           border: 0,
           defaultType: 'textfield',
           items: [
             {
-              labelWidth: 60,
+              labelWidth: 40,
               fieldLabel: "姓名",
               labelAlign: "right",
               name: 'realName',
               width:180
-            },{labelWidth: 60,
+            },{
+              labelWidth: 60,
               fieldLabel: "会员编号",
               labelAlign: "right",
               name: 'userCode',
+              margin: "0 0 0 10",
               width:220
             },
             {labelWidth: 60,
@@ -1201,7 +1218,8 @@ Ext.onReady(function() {
               labelAlign: "right",
               disabled:true,
               name:'orderDiscount',
-              readOnly:true
+              readOnly:true,
+              labelWidth: 40
             },
             {labelWidth: 80,
               fieldLabel: "邮寄",
@@ -1215,6 +1233,7 @@ Ext.onReady(function() {
               labelAlign: "right",
               disabled:true,
               name: 'orderYouthStuck',
+              margin: "0 0 0 30",
               width: 180
             },
             {
