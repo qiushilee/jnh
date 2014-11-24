@@ -345,9 +345,10 @@ Ext.application({
           },
           items: [
             {
-              xtype: 'panel',
+              xtype: 'form',
               layout: "hbox",
               border: 0,
+              url: env.services.web + env.api.deliverorder.view,
               items: [
               {
                 xtype: "textfield",
@@ -355,14 +356,25 @@ Ext.application({
                 labelWidth: 30,
                 width: 100,
                 labelAlign: "right",
-                margin: "0 10 0 20"
+                margin: "0 10 0 20",
+                name: "productCode"
               },
               {
                 xtype: "button",
                 text: "搜索",
                 margin: "0 0 0 40",
-                disabled: true,
-                float: "right"
+                float: "right",
+                handler: function() {
+                  var form = this.up("form");
+                  form.submit({
+                    params: {
+                      deliveryOrderId: window.deliveryOrderId
+                    },
+                    failure: function(form, action) {
+                      Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
+                    }
+                  });
+                }
               },
               {
                 xtype: "button",
