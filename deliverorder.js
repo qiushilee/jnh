@@ -4,7 +4,7 @@ Ext.application({
     // 出货单列表
     Ext.create('Ext.data.Store', {
       storeId: 'list',
-      fields: ["deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
+      fields: ["memberId", "deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -31,6 +31,24 @@ Ext.application({
         pageParam: "",
         startParam: "",
         limitParam: "",
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 查看抵价券
+    Ext.create('Ext.data.Store', {
+      storeId: 'ticket',
+      fields: ["key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.deliverorder.viewticket,
+        actionMethods: {
+          create: 'POST', read: 'POST', update: 'POST', destroy: 'POST'
+        },
         reader: {
           type: 'json',
           root: 'list'
@@ -336,7 +354,7 @@ Ext.application({
           ]
         },
         {
-		  itemId:"orderproductform",
+		      itemId:"orderproductform",
           xtype: "panel",
           border: 0,
           columnWidth: 0.49,
@@ -399,9 +417,15 @@ Ext.application({
                 xtype: "button",
                 text: "查看抵价券",
                 margin: "0 0 0 10",
-                disabled: true,
                 float: "right",
                 handler: function() {
+                  var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
+                  Ext.data.StoreManager.lookup("ticket").load({
+                    params: {
+                      deliveryOrderId: window.deliveryOrderId,
+                      memberId: record.memberId
+                    }
+                  });
                   addDjq.show();
                 }
               }
@@ -762,7 +786,7 @@ Ext.application({
         {
           xtype: "grid",
           height: 155,
-          store: Ext.data.StoreManager.lookup('simpsonsStore'),
+          store: Ext.data.StoreManager.lookup('ticket'),
           margin: "10 0 0 0",
           columns: [
             {
