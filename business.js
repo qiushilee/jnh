@@ -171,7 +171,7 @@ Ext.application({
                           defaultType: 'textfield',
                           items: [
                             {
-                              xtype: "button",
+                              xtype: "label",
                               text: "目录寄送"
                             }
                           ]
