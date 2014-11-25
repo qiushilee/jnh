@@ -654,7 +654,7 @@ Ext.onReady(function() {
             var form = addOrder.getComponent("orderForm").getForm();
             updateForm(form, record.data);
             addOrder.show();
-            addOrder.setTitle("修改添加汇款订购");
+            addOrder.setTitle("修改汇款订购");
           }
         }
       },
@@ -675,7 +675,7 @@ Ext.onReady(function() {
                   updateForm(form, data);
                   form.findField("id").setValue("");
                   addOrder.show();
-                  addOrder.setTitle("增加添加汇款订购");
+                  addOrder.setTitle("增加汇款订购");
                 },
                 fail: function() {
                   Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
