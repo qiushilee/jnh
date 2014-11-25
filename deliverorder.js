@@ -821,7 +821,8 @@ Ext.application({
           ]
         },
         {
-          xtype: "panel",
+          xtype: "form",
+          itemId: "ticket-form"
           layout: "hbox",
           bodyPadding: 10,
           border: 0,
@@ -870,7 +871,17 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">X</span> 生成抵价券",
               disabled: true,
-              margin: "0 0 0 10"
+              margin: "0 0 0 10",
+              handler: function() {
+                Ext.ComponentQuery.query("[itemId=ticket-form]")[0].getForm().submit({
+                  success: function (form, action) {
+                    Ext.data.StoreManager.lookup('ticket').load();
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("生成抵价券", action.result.msg);
+                  }
+                });
+              }
             },
             {
               xtype: "button",
