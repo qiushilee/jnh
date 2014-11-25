@@ -1,4 +1,4 @@
-(function() {
+c(function() {
   var env = {},
       ValidIpAddressRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
 
@@ -35,7 +35,7 @@
   env.api.ordersource = "/ajax/ordersource";//订单来源
   env.api.companytype = "/ajax/companytype";//供货商类型
   env.api.jzstype = "/ajax/jzstype";//进转损分类
-  env.api.membertype = "/ajax/membertype";	  
+  env.api.membertype = "/ajax/membertype";    
   env.api.membersource = "/ajax/membersource";
   env.api.managerRoles = "/ajax/managerrole";
 
@@ -111,6 +111,7 @@
     del : "/sendmethord/delete"
   }
 
+  //出货单
   env.api.deliverorder = {
     list: "/deliverorder/index",
     change: "/deliverorder/update",
@@ -119,9 +120,10 @@
     remorderdelivercode: "/deliverorder/remorderdelivercode",
     telorderdelivercode: "/deliverorder/telorderdelivercode",
     view: "/deliverorder/vieworderdetail",
-    saveorderproduct: "/deliverorder/saveorderproduct",
-    deleteorderproduct: "/deliverorder/deleteorderproduct",
+    saveorderproduct: "/deliverorder/saveorderproduct",//右侧保存产品
+    deleteorderproduct: "/deliverorder/deleteorderproduct",//右侧删除产品
     import: "/deliverorder/import",   //导入
+    viewticket:"/deliverorder/viewticket",//查看抵价券，参数deliveryOrderId
   };
 
   //包裹管理
@@ -442,9 +444,9 @@
           setvalue: comboboxSetValue
         }
       });
-	  
-	  //学校类型
-	   Ext.define("addressType", {
+    
+    //学校类型
+     Ext.define("addressType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "类型",
         queryMode: "local",
@@ -470,9 +472,9 @@
           setvalue: comboboxSetValue
         }
       });
-	  
-	   //会员分类
-	   Ext.define("memberType", {
+    
+     //会员分类
+     Ext.define("memberType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "会员类型",
         queryMode: "local",
@@ -498,9 +500,9 @@
           setvalue: comboboxSetValue
         }
       });
-	  
-	  //寄送方式
-	   Ext.define("deliveryMethod", {
+    
+    //寄送方式
+     Ext.define("deliveryMethod", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "寄送方式",
         queryMode: "local",
@@ -525,9 +527,9 @@
           setvalue: comboboxSetValue
         }
       });
-	  
-	   //支付方式
-	   Ext.define("paymentMethord", {
+    
+     //支付方式
+     Ext.define("paymentMethord", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
@@ -553,10 +555,10 @@
           setvalue: comboboxSetValue
         }
       });
-	  
-	  
-	  //供货商分类
-	   Ext.define("companyType", {
+    
+    
+    //供货商分类
+     Ext.define("companyType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
@@ -582,9 +584,9 @@
           setvalue: comboboxSetValue
         }
       });
-	  
-	 //订单来源分类
-	   Ext.define("orderSource", {
+    
+   //订单来源分类
+     Ext.define("orderSource", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
@@ -610,8 +612,8 @@
           setvalue: comboboxSetValue
         }
       });
-	   //进转损分类
-	   Ext.define("jzsType", {
+     //进转损分类
+     Ext.define("jzsType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "类型",
         queryMode: "local",
@@ -637,9 +639,9 @@
           setvalue: comboboxSetValue
         }
       });
-	  
-	   //会员来源
-	   Ext.define("memberSource", {
+    
+     //会员来源
+     Ext.define("memberSource", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "来源",
         queryMode: "local",
