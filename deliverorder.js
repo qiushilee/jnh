@@ -345,9 +345,10 @@ Ext.application({
           },
           items: [
             {
-              xtype: 'panel',
+              xtype: 'form',
               layout: "hbox",
               border: 0,
+              url: env.services.web + env.api.deliverorder.view,
               items: [
               {
                 xtype: "textfield",
@@ -355,14 +356,25 @@ Ext.application({
                 labelWidth: 30,
                 width: 100,
                 labelAlign: "right",
-                margin: "0 10 0 20"
+                margin: "0 10 0 20",
+                name: "productCode"
               },
               {
                 xtype: "button",
                 text: "搜索",
                 margin: "0 0 0 40",
-                disabled: true,
-                float: "right"
+                float: "right",
+                handler: function() {
+                  var form = this.up("form");
+                  form.submit({
+                    params: {
+                      deliveryOrderId: window.deliveryOrderId
+                    },
+                    failure: function(form, action) {
+                      Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
+                    }
+                  });
+                }
               },
               {
                 xtype: "button",
@@ -388,7 +400,10 @@ Ext.application({
                 text: "查看抵价券",
                 margin: "0 0 0 10",
                 disabled: true,
-                float: "right"
+                float: "right",
+                handler: function() {
+                  addDjq.show();
+                }
               }
             ]
             },
@@ -501,7 +516,7 @@ Ext.application({
                       name: "jhd-print",
                       xtype: "button",
                       text: "打印设置",
-                      margin: "10 0 0 0",
+                      margin: "0 0 0 10",
                       handler: function () {
                         window.printHandle.set("deliverorder");
                       }
@@ -527,8 +542,32 @@ Ext.application({
                     {
                       xtype: "button",
                       text: "<span class=\"key\">D</span> 删除",
-                      disabled: true,
-                      margin: "0 0 0 10"
+                      margin: "0 0 0 10",
+                      handler: function() {
+                        var record = Ext.ComponentQuery.query("grid[itemId=orderproductlist]")[0].getSelectionModel().getSelection()[0].data;
+                        Ext.Msg.confirm("删除", "确认删除“货号：" + record.productCode + " " + record.name + "”吗？", function(type) {
+                          if (type === "yes") {
+                            Ext.Ajax.request({
+                              url: env.services.web + env.api.deliverorder.deleteorderproduct,
+                              params: {
+                                id: record.id
+                              },
+                              success: function(resp) {
+                                var data = Ext.JSON.decode(resp.responseText);
+                                if (data.success) {
+                                  Ext.data.StoreManager.lookup("productData").load({
+                                    params: {
+                                      deliveryOrderId: window.deliveryOrderId
+                                    }
+                                  });
+                                } else {
+                                  console.log(data)
+                                }
+                              }
+                            });
+                          }
+                        });
+                      }
                     },
                     {
                       xtype: "button",

@@ -1,4 +1,4 @@
-c(function() {
+(function() {
   var env = {},
       ValidIpAddressRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
 
@@ -368,7 +368,9 @@ c(function() {
      * {String} type: 类型
      */
     get: function(opt) {
-      if (type) {
+      opt.margin = opt.margin || "";
+
+      if (opt.type) {
         Ext.Ajax.request({
           url: env.services.web + env.api.print.get,
           method: "POST",
@@ -380,6 +382,7 @@ c(function() {
             Ext.Array.each(data.list, function(item) {
               var $btn = Ext.create("Ext.Button", {
                 text: item.printButton,
+                margin: opt.margin,
                 handler: function() {
                   alert('You clicked the button!');
                 }

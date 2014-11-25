@@ -119,13 +119,14 @@ Ext.application({
       renderTo: window.$bd
     });
 
-    Ext.create("Ext.Panel", {
+    var $btnContainer = Ext.create("Ext.Panel", {
       layout: "hbox",
       border: 0,
       defaultType: 'textfield',
       margin: "10 0 0 0",
       renderTo: window.$bd,
-      items: [{
+      items: [
+      {
         xtype: "button",
         text: "<span class=\"key\">A</span> 增加",
         handler: function() {
@@ -134,7 +135,8 @@ Ext.application({
           form.reset();
           win.show();
         }
-      }, {
+      },
+      {
         xtype: "button",
         text: "删除",
         margin: "0 0 0 10",
@@ -162,34 +164,16 @@ Ext.application({
             }
           });
         }
-      }, {
+      },
+      {
         xtype: "button",
         text: "导入",
         margin: "0 0 0 10",
         handler: function() {
           upload.show();
         }
-      }, {
-        xtype: "button",
-        text: "打印",
-        margin: "0 0 0 10",
-        handler: function () {
-          Ext.ux.grid.Printer.opt = {
-            title: "厂商资料一览表",
-            name: document.body.dataset.user
-          };
-          Ext.ux.grid.Printer.print(cs);
-        }
       },
-        {
-          name: "jhd-print",
-          xtype: "button",
-          text: "打印设置",
-          margin: "0 0 0 10",
-          handler: function () {
-            window.printHandle.set("company");
-          }
-        }, {
+      {
         xtype: "button",
         text: "复制",
         margin: "0 0 0 10",
@@ -211,7 +195,23 @@ Ext.application({
             }
           });
         }
-      }]
+      },
+      {
+        name: "jhd-print",
+        xtype: "button",
+        text: "打印设置",
+        margin: "0 0 0 10",
+        handler: function () {
+          window.printHandle.set("company");
+        }
+      }
+      ]
+    });
+
+    window.printHandle.get({
+      $el: $btnContainer,
+      type: "company",
+      margin: "0 0 0 10"
     });
 
     var win = new Ext.create("Ext.window.Window", {
