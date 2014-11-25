@@ -822,7 +822,7 @@ Ext.application({
         },
         {
           xtype: "form",
-          itemId: "ticket-form"
+          itemId: "ticket-form",
           layout: "hbox",
           bodyPadding: 10,
           border: 0,
