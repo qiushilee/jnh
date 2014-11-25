@@ -123,7 +123,8 @@ c(function() {
     saveorderproduct: "/deliverorder/saveorderproduct",//右侧保存产品
     deleteorderproduct: "/deliverorder/deleteorderproduct",//右侧删除产品
     import: "/deliverorder/import",   //导入
-    viewticket:"/deliverorder/viewticket",//查看抵价券，参数deliveryOrderId
+    viewticket:"/deliverorder/viewticket",//查看抵价券，参数deliveryOrderId,memberId
+    addticket:"/deliverorder/createticket",//生成抵价券
   };
 
   //包裹管理
