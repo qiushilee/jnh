@@ -278,6 +278,8 @@
         //期数选择
         if (item.xtype === "combobox" && item.getName() === name) {
           item.fireEvent("setvalue", item, value);
+        } else if (item.xtype === "checkboxfield" && item.getName() === name) {
+          value === "y" ? item.setValue(true) : item.setValue(false);
         } else if (item.getName() === name) {
           item.setValue(value);
         }
