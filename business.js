@@ -2,10 +2,25 @@
 Ext.application({
   name: "JNH",
   launch: function() {
-    // 会员列表
+    // 名单管理-会员列表
     var memberList = Ext.create('Ext.data.Store', {
       storeId: 'memberList',
-      fields: ["id", 'addrList', 'userCode', 'realName', 'memberType','memberTypeName', "address1", "address2"],
+      fields: ["zipCode", "deliveryMethodName", "mobile", "key", "id", 'addrList', 'userCode', 'realName', 'memberType','memberTypeName', "address1", "address2"],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.business.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 管理打印-会员列表
+    var memberList = Ext.create('Ext.data.Store', {
+      storeId: "manager-memberList",
+      fields: ["memberId", "zipCode", "deliveryMethodName", "mobile", "key", "id", 'addrList', 'userCode', 'realName', 'memberType','memberTypeName', "address1", "address2"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -33,7 +48,7 @@ Ext.application({
     });
 
     var sm = Ext.create('Ext.selection.CheckboxModel',{
-      checkOnly:true  
+      checkOnly:true
     });
 
     var panel = Ext.create('Ext.tab.Panel', {
@@ -551,152 +566,163 @@ Ext.application({
         padding: 15,
         items: [
         {
-          layout: "hbox",
-          bodyPadding: 10,
+          itemId: "manager-print-search",
+          xtype: "form",
           border: 0,
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
+          url: env.services.web + env.api.business.list,
           items: [
           {
-            xtype: "combobox",
-            fieldLabel: "来源",
-            labelWidth: 40,
-            width: 100,
-            labelAlign: "right"
+            layout: "hbox",
+            bodyPadding: 10,
+            border: 0,
+            defaultType: 'textfield',
+            bodyStyle: {
+              "background-color": "transparent"
+            },
+            items: [
+            Ext.create("memberType", {
+              fieldLabel: "来源"
+            }),
+            {
+              xtype: "combobox",
+              fieldLabel: "类型",
+              labelWidth: 40,
+              width: 100,
+              labelAlign: "right"
+            },
+            {
+              xtype: "datefield",
+              fieldLabel: "毕业时间",
+              labelWidth: 60,
+              width: 180,
+              format: "Y-m-d",
+              labelAlign: "right",
+              name:'startDate'
+            },
+            {
+              fieldLabel: "期数",
+              labelWidth: 40,
+              width: 110,
+              labelAlign: "right",
+              name:'startPeriodical'
+            },
+            {
+              fieldLabel: "到",
+              labelWidth: 20,
+              width: 90,
+              labelAlign: "right",
+              name:'endPeriodical'
+            }
+            ]
           },
           {
-            xtype: "combobox",
-            fieldLabel: "类型",
-            labelWidth: 40,
-            width: 100,
-            labelAlign: "right"
+            layout: "hbox",
+            bodyPadding: 10,
+            border: 0,
+            defaultType: 'textfield',
+            bodyStyle: {
+              "background-color": "transparent"
+            },
+            items: [
+            {
+              fieldLabel: "姓名",
+              labelWidth: 40,
+              width: 120,
+              labelAlign: "right",
+              name:'realName'
+            },
+            {
+              fieldLabel: "会员编号",
+              labelWidth: 60,
+              width: 140,
+              labelAlign: "right",
+              name:'userCode'
+            },
+            {
+              xtype: "datefield",
+              fieldLabel: "加入时间",
+              labelWidth: 60,
+              width: 180,
+              format: "Y-m-d H",
+              labelAlign: "right",
+              name:'startDate'
+            },
+            {
+              xtype: "datefield",
+              fieldLabel: "~",
+              labelWidth: 20,
+              width: 140,
+              format: "Y-m-d H",
+              labelAlign: "right",
+              name:'endDate'
+            }
+            ]
           },
           {
-            xtype: "combobox",
-            fieldLabel: "状态",
-            labelWidth: 40,
-            width: 100,
-            labelAlign: "right"
-          },
-          {
-            fieldLabel: "期数",
-            labelWidth: 40,
-            width: 110,
-            labelAlign: "right",
-            name:'startPeriodical'
-          },
-          {
-            fieldLabel: "到",
-            labelWidth: 20,
-            width: 90,
-            labelAlign: "right",
-            name:'endPeriodical'
+            layout: "hbox",
+            bodyPadding: 10,
+            border: 0,
+            defaultType: 'textfield',
+            bodyStyle: {
+              "background-color": "transparent"
+            },
+            items: [
+            {
+              xtype: "button",
+              text: "搜索",
+              margin: "0 0 0 20",
+              handler: function() {
+                searchHandler.call(Ext.ComponentQuery.query("[itemId=manager-print-search]")[0], "manager-memberList");
+              }
+            },
+            {
+              xtype: "button",
+              text: "重置",
+              margin: "0 0 0 10",
+              handler: function() {
+                Ext.ComponentQuery.query("[itemId=manager-print-search]")[0].getForm().reset();
+              }
+            }
+            ]
           }
           ]
         },
         {
-          layout: "hbox",
-          bodyPadding: 10,
-          border: 0,
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-          {
-            fieldLabel: "姓名",
-            labelWidth: 40,
-            width: 120,
-            labelAlign: "right",
-            name:'realName'
-          },
-          {
-            fieldLabel: "会员编号",
-            labelWidth: 60,
-            width: 140,
-            labelAlign: "right",
-            name:'userCode'
-          },
-          {
-            xtype: "datefield",
-            fieldLabel: "加入时间",
-            labelWidth: 60,
-            width: 180,
-            format: "Y-m-d H",
-            labelAlign: "right",
-            name:'startDate'
-          },
-          {
-            xtype: "datefield",
-            fieldLabel: "~",
-            labelWidth: 20,
-            width: 140,
-            format: "Y-m-d H",
-            labelAlign: "right",
-            name:'endDate'
-          }
-          ]
-        },
-        {
-          layout: "hbox",
-          bodyPadding: 10,
-          border: 0,
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-          {
-            xtype: "button",
-            text: "搜索",
-            disabled: true,
-            margin: "0 0 0 20"
-          },
-          {
-            xtype: "button",
-            text: "重置",
-            disabled: true,
-            margin: "0 0 0 10"
-          }
-          ]
-        },
-        {
+          itemId: "manager-memberList",
           xtype: "grid",
           height: 155,
-          store: Ext.data.StoreManager.lookup('simpsonsStore'),
+          store: Ext.data.StoreManager.lookup("manager-memberList"),
           margin: "10 0 0 0",
           selModel: sm,
           columns: [
           {
             text: '序号',
-            dataIndex: 'id1',
+            dataIndex: 'key',
             flex: 1
           },
           {
             text: '姓名',
-            dataIndex: 'id1',
+            dataIndex: 'realName',
             flex: 1
           },
           {
             text: '地址',
-            dataIndex: 'id1',
+            dataIndex: 'address1',
             flex: 2
           },
           {
             text: '邮编',
-            dataIndex: 'id1',
+            dataIndex: 'zipCode',
             flex: 1
           },
           {
             text: '电话',
-            dataIndex: 'id1',
+            dataIndex: 'mobile',
             flex: 1
           },
           {
             text: '寄送方式',
-            dataIndex: 'id1',
+            dataIndex: 'deliveryMethodName',
             flex: 1
           }
           ]
@@ -713,8 +739,40 @@ Ext.application({
           {
             xtype: "button",
             text: "<span class=\"key\">Q</span> 添加打印",
-            disabled: true,
-            margin: "0 0 0 10"
+            margin: "0 0 0 10",
+            handler: function() {
+              try {
+                var list = Ext.ComponentQuery.query("grid[itemId=manager-memberList]")[0].getSelectionModel().getSelection(),
+                    memberIds = [];
+
+                Ext.Array.each(list, function(item, index) {
+                  var record = item.data;
+                  memberIds.push(record.memberId);
+                });
+
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.business.addprintcart,
+                  params: {
+                    memberId: memberIds.join(",")
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    console.log(data);
+                  },
+                  failure: function(resp) {
+                    try {
+                      var data = Ext.JSON.decode(resp.responseText);
+                      Ext.Msg.alert("添加到打印购物车", data.msg);
+                    } catch(e) {
+                      console.error(e.stack);
+                    }
+                  }
+                });
+              } catch (e) {
+                console.log(e.stack)
+                Ext.Msg.alert("添加打印购物车", "请选中列表中的一项后再操作");
+              }
+            }
           }
           ]
         }
