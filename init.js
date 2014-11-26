@@ -244,7 +244,8 @@
     //保存打印设置
     save: "/printsetting/save",
     set: "/printsetting",
-    get:"/printsetting/getprintbutton"
+    get: "/printsetting/getprintbutton",
+    list: "/printsetting/getprintbutton/module"
   };
 
   window.env = env;
@@ -383,16 +384,25 @@
             var data = Ext.JSON.decode(response.responseText);
             Ext.Array.each(data.list, function(item) {
               var $btn = Ext.create("Ext.Button", {
-                text: item.printButton,
+                text: item.printButtonName,
                 margin: opt.margin,
                 handler: function() {
-                  alert('You clicked the button!');
+                  Ext.Ajax.request({
+                    url: env.services.web + env.api.print.list + "/" + opt.type,
+                    success: function(resp) {
+                      var data = Ext.JSON.decode(resp.responseText);
+                      console.log(data)
+                    },
+                    failure: function(resp) {
+                      throw "打印列表查询失败, 服务器无响应，请稍后再试";
+                    }
+                  });
                 }
               });
               opt.$el.add($btn);
             });
           },
-          failure: function(form, action) {
+          failure: function(response) {
             throw "打印列表查询失败, 服务器无响应，请稍后再试";
           }
         });
