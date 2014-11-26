@@ -20,7 +20,7 @@ Ext.application({
     // 右侧商品列表
     Ext.create('Ext.data.Store', {
       storeId: 'productData',
-      fields: ["key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
+      fields: ["productId", "deliveryorderId", "memberId", "key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -627,7 +627,18 @@ Ext.application({
                       text: "加入抵价券",
                       margin: "0 0 0 10",
                       handler: function() {
-                        addDjq.show();
+                        var record = Ext.ComponentQuery.query("grid[itemId=orderproductlist]")[0].getSelectionModel().getSelection()[0].data;
+                        Ext.Ajax.request({
+                          url: env.services.web + env.api.deliverorder.addticket,
+                          params: {
+                            productId: record.productId,
+                            deliveryOrderId: record.deliveryorderId
+                          },
+                          success: function (resp) {
+                            var data = Ext.JSON.decode(resp.responseText);
+                            console.log(data)
+                          }
+                        });
                       }
                     }
                   ]
@@ -783,43 +794,75 @@ Ext.application({
       bodyPadding: 10,
       closeAction: "hide",
       items: [
-        {
-          xtype: "grid",
-          height: 155,
-          store: Ext.data.StoreManager.lookup('ticket'),
-          margin: "10 0 0 0",
-          columns: [
-            {
-              text: '序号',
-              dataIndex: 'id1'
-            },
-            {
-              text: '编号',
-              dataIndex: 'id1'
-            },
-            {
-              text: '货号',
-              dataIndex: 'adder1',
-              flex: 1
-            },
-            {
-              text: '数量',
-              dataIndex: 'man1'
-            },
-            {
-              text: '单价',
-              dataIndex: 'man1'
-            },
-            {
-              text: '金额',
-              dataIndex: 'man1'
-            },
-            {
-              text: '删除',
-              dataIndex: 'man1'
-            }
-          ]
-        },
+      {
+        layout: "column",
+        border: 0,
+        margin: "10 0 0 0",
+        items: [
+          {
+            xtype: "panel",
+            border: 0,
+            columnWidth: 0.4,
+            items: [
+              {
+                xtype: "grid",
+                height: 155,
+                store: Ext.data.StoreManager.lookup('ticket'),
+                columns: [
+                  {
+                    text: '编号',
+                    dataIndex: 'id1'
+                  },
+                  {
+                    text: '日期',
+                    dataIndex: 'adder1',
+                    flex: 1
+                  },
+                  {
+                    text: '金额',
+                    dataIndex: 'man1'
+                  }
+                ]
+              }
+            ]
+          }, {
+            xtype: "panel",
+            border: 0,
+            columnWidth: 0.59,
+            items: [
+              {
+                xtype: "grid",
+                height: 155,
+                store: Ext.data.StoreManager.lookup('ticket'),
+                margin: "0 0 0 30",
+                columns: [
+                {
+                  text: '序号',
+                  dataIndex: 'id1'
+                },
+                {
+                  text: '货号',
+                  dataIndex: 'adder1',
+                  flex: 1
+                },
+                {
+                  text: '数量',
+                  dataIndex: 'man1'
+                },
+                {
+                  text: '单价',
+                  dataIndex: 'man1'
+                },
+                {
+                  text: '金额',
+                  dataIndex: 'man1'
+                }
+                ]
+              }
+            ]
+          }
+        ]
+      },
         {
           xtype: "form",
           itemId: "ticket-form",
