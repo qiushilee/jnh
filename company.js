@@ -211,7 +211,9 @@ Ext.application({
     window.printHandle.get({
       $el: $btnContainer,
       type: "company",
-      margin: "0 0 0 10"
+      margin: "0 0 0 10",
+      url: env.services.web + env.api.company.print,
+      form: search.getForm()
     });
 
     var win = new Ext.create("Ext.window.Window", {

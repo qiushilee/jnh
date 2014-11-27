@@ -389,8 +389,11 @@
                 text: item.printButtonName,
                 margin: opt.margin,
                 handler: function() {
+                  var val = opt.form.getValues();
+                  val["btId"] = item.id;
                   Ext.Ajax.request({
-                    url: env.services.web + env.api.print.list + "/" + opt.type,
+                    url: opt.url,
+                    params: val,
                     success: function(resp) {
                       var data = Ext.JSON.decode(resp.responseText);
                       console.log(data)
