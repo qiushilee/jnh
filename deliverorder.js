@@ -38,7 +38,7 @@ Ext.application({
       }
     });
 
-    // 查看抵价券
+    // 查看加入抵价券
     Ext.create('Ext.data.Store', {
       storeId: 'ticket',
       fields: ["key", "id", "productCode", "name", "number", "price", "amount"],
@@ -46,6 +46,24 @@ Ext.application({
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.deliverorder.viewticket,
+        actionMethods: {
+          create: 'POST', read: 'POST', update: 'POST', destroy: 'POST'
+        },
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 查看生成抵价券
+    Ext.create('Ext.data.Store', {
+      storeId: 'create-ticket',
+      fields: ["key", "id", "productCode", "name", "number", "price", "amount"],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.deliverorder.viewticketproduct,
         actionMethods: {
           create: 'POST', read: 'POST', update: 'POST', destroy: 'POST'
         },
@@ -421,6 +439,12 @@ Ext.application({
                 handler: function() {
                   var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
                   Ext.data.StoreManager.lookup("ticket").load({
+                    params: {
+                      deliveryOrderId: window.deliveryOrderId,
+                      memberId: record.memberId
+                    }
+                  });
+                  Ext.data.StoreManager.lookup("create-ticket").load({
                     params: {
                       deliveryOrderId: window.deliveryOrderId,
                       memberId: record.memberId
@@ -812,7 +836,7 @@ Ext.application({
               {
                 xtype: "grid",
                 height: 155,
-                store: Ext.data.StoreManager.lookup('ticket'),
+                store: Ext.data.StoreManager.lookup("create-ticket"),
                 columns: [
                   {
                     text: '编号',
@@ -932,7 +956,12 @@ Ext.application({
                     deliveryOrderId: record.deliveryOrderId
                   },
                   success: function (form, action) {
-                    Ext.data.StoreManager.lookup('ticket').load();
+                    Ext.data.StoreManager.lookup("create-ticket").load({
+                      params: {
+                        memberId: record.memberId,
+                        deliveryOrderId: record.deliveryOrderId
+                      }
+                    });
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("生成抵价券", action.result.msg);
