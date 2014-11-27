@@ -45,7 +45,7 @@ Ext.application({
       layout: "fit",
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.deliverorder.viewticket,
+        url: env.services.web + env.api.deliverorder.viewticketproduct,
         actionMethods: {
           create: 'POST', read: 'POST', update: 'POST', destroy: 'POST'
         },
@@ -59,11 +59,11 @@ Ext.application({
     // 查看生成抵价券
     Ext.create('Ext.data.Store', {
       storeId: 'create-ticket',
-      fields: ["key", "id", "productCode", "name", "number", "price", "amount"],
+      fields: ["ticketCode", "totalAmount", "addDate", "id"],
       layout: "fit",
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.deliverorder.viewticketproduct,
+        url: env.services.web + env.api.deliverorder.viewticket,
         actionMethods: {
           create: 'POST', read: 'POST', update: 'POST', destroy: 'POST'
         },
@@ -429,6 +429,11 @@ Ext.application({
                 handler: function() {
                   upload.show();
                   Ext.ComponentQuery.query("[itemId=upload-deliveryOrderId]")[0].setValue(window.deliveryOrderId);
+                  Ext.data.StoreManager.lookup('productData').load({
+                    params: {
+                      deliveryOrderId: window.deliveryOrderId
+                    }
+                  });
                 }
               },
               {
@@ -850,7 +855,7 @@ Ext.application({
                   },
                   {
                     text: '金额',
-                    dataIndex: 'amount'
+                    dataIndex: 'totalAmount'
                   }
                 ]
               }
