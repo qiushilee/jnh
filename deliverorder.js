@@ -877,22 +877,26 @@ Ext.application({
             {
               fieldLabel: "包装员",
               labelAlign: "right",
-              labelWidth: 50
+              labelWidth: 50,
+              name:"packaging"
             },
             {
               fieldLabel: "备注",
               labelAlign: "right",
-              labelWidth: 50
+              labelWidth: 50,
+              name:"remark"
             },
             {
               fieldLabel: "抵价券总金额",
               labelAlign: "right",
-              labelWidth: 80
+              labelWidth: 80,
+              name:"totalAmount"
             },
             {
               fieldLabel: "多付款",
               labelAlign: "right",
-              labelWidth: 50
+              labelWidth: 50,
+              name:"overpaidAmount"
             }
           ]
         },
