@@ -124,7 +124,8 @@
     deleteorderproduct: "/deliverorder/deleteorderproduct",//右侧删除产品
     import: "/deliverorder/import",   //导入
     viewticket:"/deliverorder/viewticket",//查看抵价券，参数deliveryOrderId,memberId
-    addticket:"/deliverorder/createticket",//生成抵价券
+    addticket:"/deliverorder/createticket",//加入抵价券
+    generateticket:"/deliverorder/generateticket",//生成抵价券
   };
 
   //包裹管理
