@@ -631,8 +631,14 @@ Ext.application({
                         Ext.Ajax.request({
                           url: env.services.web + env.api.deliverorder.addticket,
                           params: {
+                            memberId: record.memberId,
+                            productCode: record.productCode,
                             productId: record.productId,
-                            deliveryOrderId: record.deliveryorderId
+                            price: record.price,
+                            deliveryOrderId: record.deliveryorderId,
+                            number: record.number,
+                            amount: record.amount,
+                            weight: record.weight
                           },
                           success: function (resp) {
                             var data = Ext.JSON.decode(resp.responseText);
