@@ -631,8 +631,13 @@ Ext.application({
                         Ext.Ajax.request({
                           url: env.services.web + env.api.deliverorder.addticket,
                           params: {
+                            memberId: record.memberId,
+                            productCode: record.productCode,
                             productId: record.productId,
-                            deliveryOrderId: record.deliveryorderId
+                            deliveryOrderId: record.deliveryorderId,
+                            number: record.number,
+                            amount: record.amount,
+                            weight: record.weight
                           },
                           success: function (resp) {
                             var data = Ext.JSON.decode(resp.responseText);
@@ -870,6 +875,7 @@ Ext.application({
           bodyPadding: 10,
           border: 0,
           defaultType: 'textfield',
+          url: env.services.web + env.api.deliverorder.generateticket,
           bodyStyle: {
             "background-color": "transparent"
           },
@@ -917,10 +923,14 @@ Ext.application({
             {
               xtype: "button",
               text: "<span class=\"key\">X</span> 生成抵价券",
-              disabled: true,
               margin: "0 0 0 10",
               handler: function() {
+                var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
                 Ext.ComponentQuery.query("[itemId=ticket-form]")[0].getForm().submit({
+                  params: {
+                    memberId: record.memberId,
+                    deliveryOrderId: record.deliveryOrderId
+                  },
                   success: function (form, action) {
                     Ext.data.StoreManager.lookup('ticket').load();
                   },
