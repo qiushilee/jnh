@@ -123,6 +123,7 @@
     saveorderproduct: "/deliverorder/saveorderproduct",//右侧保存产品
     deleteorderproduct: "/deliverorder/deleteorderproduct",//右侧删除产品
     import: "/deliverorder/import",   //导入
+    viewticketproduct:"/deliverorder/viewticketproduct",//查看抵价券产品，参数deliveryOrderId,memberId
     viewticket:"/deliverorder/viewticket",//查看抵价券，参数deliveryOrderId,memberId
     addticket:"/deliverorder/createticket",//加入抵价券
     generateticket:"/deliverorder/generateticket",//生成抵价券

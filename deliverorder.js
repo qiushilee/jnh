@@ -658,6 +658,7 @@ Ext.application({
                             memberId: record.memberId,
                             productCode: record.productCode,
                             productId: record.productId,
+                            price: record.price,
                             deliveryOrderId: record.deliveryorderId,
                             number: record.number,
                             amount: record.amount,
