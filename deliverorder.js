@@ -41,7 +41,7 @@ Ext.application({
     // 查看抵价券
     Ext.create('Ext.data.Store', {
       storeId: 'ticket',
-      fields: ["key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
+      fields: ["key", "id", "productCode", "name", "number", "price", "amount"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -811,16 +811,16 @@ Ext.application({
                 columns: [
                   {
                     text: '编号',
-                    dataIndex: 'id1'
+                    dataIndex: 'ticketCode'
                   },
                   {
                     text: '日期',
-                    dataIndex: 'adder1',
+                    dataIndex: 'addDate',
                     flex: 1
                   },
                   {
                     text: '金额',
-                    dataIndex: 'man1'
+                    dataIndex: 'amount'
                   }
                 ]
               }
@@ -838,24 +838,24 @@ Ext.application({
                 columns: [
                 {
                   text: '序号',
-                  dataIndex: 'id1'
+                  dataIndex: 'key'
                 },
                 {
                   text: '货号',
-                  dataIndex: 'adder1',
+                  dataIndex: 'productCode',
                   flex: 1
                 },
                 {
                   text: '数量',
-                  dataIndex: 'man1'
+                  dataIndex: 'number'
                 },
                 {
                   text: '单价',
-                  dataIndex: 'man1'
+                  dataIndex: 'price'
                 },
                 {
                   text: '金额',
-                  dataIndex: 'man1'
+                  dataIndex: 'amount'
                 }
                 ]
               }
