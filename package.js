@@ -6,9 +6,13 @@ Ext.require([
 Ext.application({
   name: "JNH",
   launch: function () {
+    var sm = Ext.create('Ext.selection.CheckboxModel',{
+      checkOnly:true
+    });
+
      var dataList = Ext.create('Ext.data.Store', {
       storeId: 'dataList',
-      fields: ['key', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','bjtimes','packaging','userName','address','packageRemark'],
+      fields: ["id", 'key', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','bjtimes','packaging','userName','address','packageRemark'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -123,55 +127,69 @@ Ext.application({
           store: Ext.data.StoreManager.lookup('dataList'),
           border: 0,
           columnWidth: 0.5,
-          columns: [{
+          selModel: sm,
+          columns: [
+          {
             text: '序号',
             dataIndex: 'key',
             flex: 1
-          }, {
+          },
+          {
             text: '出货单号',
             dataIndex: 'deliveryOrderCode',
             flex: 1
-          }, {
+          },
+          {
             text: '包裹单号',
             dataIndex: 'packageCode',
             flex: 1
-          }, {
+          },
+          {
             text: '流水号',
             dataIndex: 'serialNumber',
             flex: 1
-          }, {
+          },
+          {
             text: '邮寄日期',
             dataIndex: 'mailingDate',
             flex: 1
-          }, {
+          },
+          {
             text: '重量',
             dataIndex: 'weight',
             flex: 1
-          }, {
+          },
+          {
             text: '邮资',
             dataIndex: 'postage',
             flex: 1
-          },{
+          },
+          {
             text: '补寄',
             dataIndex: 'bjtimes',
             flex: 1
-          }, {
+          },
+          {
             text: '包装员',
             dataIndex: 'packaging',
             flex: 1
-          }, {
+          },
+          {
             text: '姓名',
             dataIndex: 'userName',
             flex: 1
-          }, {
+          },
+          {
             text: '地址',
             dataIndex: 'address',
             flex: 1
-          },  {
+          },
+          {
             text: '备注',
             dataIndex: 'packageRemark',
             flex: 1
-          }],
+          }
+          ],
           listeners: {
             itemdblclick: function( that, record, item, index, e, eOpts) {
               var form = add.getComponent("form").getForm(),
@@ -192,7 +210,8 @@ Ext.application({
       margin: "10 0 0 0",
       border: 0,
       layout: "column",
-      items: [{
+      items: [
+      {
         // 添加到打印购物车
         xtype: "button",
         text: "<span class=\"key\">W</span> 添加",
@@ -209,7 +228,8 @@ Ext.application({
           }
         },
         margin: "0 0 0 10"
-      }, {
+      },
+      {
         xtype: "button",
         text: "补寄",
         handler: function() {
@@ -230,7 +250,8 @@ Ext.application({
           }
         },
         margin: "0 0 0 10"
-      }, {
+      },
+      {
         xtype: "button",
         text: "<span class=\"key\">D</span> 打印",
         margin: "0 0 0 10",
@@ -240,20 +261,22 @@ Ext.application({
           Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid")[0]);
         }
       },
-        {
-          name: "jhd-print",
-          xtype: "button",
-          text: "打印设置",
-          margin: "0 0 0 10",
-          handler: function () {
-            window.printHandle.set("package");
-          }
-        }, {
+      {
+        name: "jhd-print",
+        xtype: "button",
+        text: "打印设置",
+        margin: "0 0 0 10",
+        handler: function () {
+          window.printHandle.set("package");
+        }
+      },
+      {
         xtype: "button",
         text: "<span class=\"key\">C</span> 预览",
         disabled: true,
         margin: "0 0 0 10"
-      }, {
+      },
+      {
         xtype: "button",
         text: "<span class=\"key\">B</span> 连续打印",
         margin: "0 0 0 10",
@@ -263,17 +286,30 @@ Ext.application({
           //printStore.loadData(data);
           print.show();
         }
-      }, {
+      },
+      {
         xtype: "button",
         text: "批量修改",
-        disabled: true,
-        margin: "0 0 0 10"
-      }, {
+        margin: "0 0 0 10",
+        handler: function() {
+          var packageList = list.getComponent("grid").getSelectionModel().getSelection();
+              ids = [];
+
+          Ext.Array.each(packageList, function(item, index) {
+            var record = item.data;
+            ids.push(record.id);
+          });
+          Ext.ComponentQuery.query("[name=package-ids]")[0].setValue(ids);
+          add.show();
+        }
+      },
+      {
         xtype: "button",
         text: "扫描包裹单",
         disabled: true,
         margin: "0 0 0 10"
-      },{
+      },
+      {
         xtype: "button",
         text: "导出",
         margin: "0 0 0 10",
@@ -297,7 +333,8 @@ Ext.application({
           window.open(env.services.web + env.api.package.export + params);
 
         }
-      }]
+      }
+      ]
     });
 
     var add = Ext.create("Ext.window.Window", {
@@ -320,21 +357,28 @@ Ext.application({
               bodyStyle: {
                 "background-color": "transparent"
               },
-              items: [{
+              items: [
+              {
+                xtype: "hidden",
+                name: "package-ids"
+              },
+              {
                 disabled: true,
                 fieldLabel: "出货单号",
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
                 name:'deliveryOrderCode'
-              }, {
+              },
+              {
                 disabled: true,
                 fieldLabel: "会员编号",
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
                 name:'userCode'
-              }]
+              }
+              ]
             },
             {
               xtype: "panel",
