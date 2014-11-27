@@ -4,7 +4,7 @@ Ext.application({
     // 出货单列表
     Ext.create('Ext.data.Store', {
       storeId: 'list',
-      fields: ["deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
+      fields: ["memberId", "deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -20,7 +20,7 @@ Ext.application({
     // 右侧商品列表
     Ext.create('Ext.data.Store', {
       storeId: 'productData',
-      fields: ["key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
+      fields: ["productId", "deliveryorderId", "memberId", "key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -31,6 +31,24 @@ Ext.application({
         pageParam: "",
         startParam: "",
         limitParam: "",
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 查看抵价券
+    Ext.create('Ext.data.Store', {
+      storeId: 'ticket',
+      fields: ["key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.deliverorder.viewticket,
+        actionMethods: {
+          create: 'POST', read: 'POST', update: 'POST', destroy: 'POST'
+        },
         reader: {
           type: 'json',
           root: 'list'
@@ -336,7 +354,7 @@ Ext.application({
           ]
         },
         {
-		  itemId:"orderproductform",
+		      itemId:"orderproductform",
           xtype: "panel",
           border: 0,
           columnWidth: 0.49,
@@ -399,9 +417,15 @@ Ext.application({
                 xtype: "button",
                 text: "查看抵价券",
                 margin: "0 0 0 10",
-                disabled: true,
                 float: "right",
                 handler: function() {
+                  var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
+                  Ext.data.StoreManager.lookup("ticket").load({
+                    params: {
+                      deliveryOrderId: window.deliveryOrderId,
+                      memberId: record.memberId
+                    }
+                  });
                   addDjq.show();
                 }
               }
@@ -603,7 +627,18 @@ Ext.application({
                       text: "加入抵价券",
                       margin: "0 0 0 10",
                       handler: function() {
-                        addDjq.show();
+                        var record = Ext.ComponentQuery.query("grid[itemId=orderproductlist]")[0].getSelectionModel().getSelection()[0].data;
+                        Ext.Ajax.request({
+                          url: env.services.web + env.api.deliverorder.addticket,
+                          params: {
+                            productId: record.productId,
+                            deliveryOrderId: record.deliveryorderId
+                          },
+                          success: function (resp) {
+                            var data = Ext.JSON.decode(resp.responseText);
+                            console.log(data)
+                          }
+                        });
                       }
                     }
                   ]
@@ -759,45 +794,78 @@ Ext.application({
       bodyPadding: 10,
       closeAction: "hide",
       items: [
+      {
+        layout: "column",
+        border: 0,
+        margin: "10 0 0 0",
+        items: [
+          {
+            xtype: "panel",
+            border: 0,
+            columnWidth: 0.4,
+            items: [
+              {
+                xtype: "grid",
+                height: 155,
+                store: Ext.data.StoreManager.lookup('ticket'),
+                columns: [
+                  {
+                    text: '编号',
+                    dataIndex: 'id1'
+                  },
+                  {
+                    text: '日期',
+                    dataIndex: 'adder1',
+                    flex: 1
+                  },
+                  {
+                    text: '金额',
+                    dataIndex: 'man1'
+                  }
+                ]
+              }
+            ]
+          }, {
+            xtype: "panel",
+            border: 0,
+            columnWidth: 0.59,
+            items: [
+              {
+                xtype: "grid",
+                height: 155,
+                store: Ext.data.StoreManager.lookup('ticket'),
+                margin: "0 0 0 30",
+                columns: [
+                {
+                  text: '序号',
+                  dataIndex: 'id1'
+                },
+                {
+                  text: '货号',
+                  dataIndex: 'adder1',
+                  flex: 1
+                },
+                {
+                  text: '数量',
+                  dataIndex: 'man1'
+                },
+                {
+                  text: '单价',
+                  dataIndex: 'man1'
+                },
+                {
+                  text: '金额',
+                  dataIndex: 'man1'
+                }
+                ]
+              }
+            ]
+          }
+        ]
+      },
         {
-          xtype: "grid",
-          height: 155,
-          store: Ext.data.StoreManager.lookup('simpsonsStore'),
-          margin: "10 0 0 0",
-          columns: [
-            {
-              text: '序号',
-              dataIndex: 'id1'
-            },
-            {
-              text: '编号',
-              dataIndex: 'id1'
-            },
-            {
-              text: '货号',
-              dataIndex: 'adder1',
-              flex: 1
-            },
-            {
-              text: '数量',
-              dataIndex: 'man1'
-            },
-            {
-              text: '单价',
-              dataIndex: 'man1'
-            },
-            {
-              text: '金额',
-              dataIndex: 'man1'
-            },
-            {
-              text: '删除',
-              dataIndex: 'man1'
-            }
-          ]
-        },
-        {
-          xtype: "panel",
+          xtype: "form",
+          itemId: "ticket-form",
           layout: "hbox",
           bodyPadding: 10,
           border: 0,
@@ -846,7 +914,17 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">X</span> 生成抵价券",
               disabled: true,
-              margin: "0 0 0 10"
+              margin: "0 0 0 10",
+              handler: function() {
+                Ext.ComponentQuery.query("[itemId=ticket-form]")[0].getForm().submit({
+                  success: function (form, action) {
+                    Ext.data.StoreManager.lookup('ticket').load();
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("生成抵价券", action.result.msg);
+                  }
+                });
+              }
             },
             {
               xtype: "button",
