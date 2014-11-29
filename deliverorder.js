@@ -41,7 +41,7 @@ Ext.application({
     // 查看加入抵价券
     Ext.create('Ext.data.Store', {
       storeId: 'ticket',
-      fields: ["key", "id", "productCode", "name", "number", "price", "amount"],
+      fields: ["productId", "key", "id", "productCode", "name", "number", "price", "amount"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -834,6 +834,58 @@ Ext.application({
       closeAction: "hide",
       items: [
       {
+        xtype: "form",
+        itemId: "ticket-change-form",
+        layout: "hbox",
+        border: 0,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.deliverorder.changenumber,
+        bodyStyle: {
+          "background-color": "transparent"
+        },
+        items: [
+        {
+          xtype:'fieldset',
+          title: "加入抵价券",
+          defaultType: 'textfield',
+          layout: 'hbox',
+          items :[
+          {
+            fieldLabel: "数量",
+            labelAlign: "right",
+            labelWidth: 50,
+            name:"number"
+          },
+          {
+            xtype: "button",
+            text: "修改",
+            margin: "0 0 10 10",
+            handler: function() {
+              var record = Ext.ComponentQuery.query("grid[itemId=ticket-list]")[0].getSelectionModel().getSelection()[0].data;
+              console.log(record)
+              Ext.ComponentQuery.query("[itemId=ticket-change-form]")[0].getForm().submit({
+                params: {
+                  id: record.productId
+                },
+                success: function (form, action) {
+                  Ext.data.StoreManager.lookup("create-ticket").load({
+                    params: {
+                      memberId: record.memberId,
+                      deliveryOrderId: record.deliveryOrderId
+                    }
+                  });
+                },
+                failure: function (form, action) {
+                  Ext.Msg.alert("修改抵价券", action.result.msg);
+                }
+              });
+            }
+          }
+          ]
+        }
+        ]
+      },
+      {
         layout: "column",
         border: 0,
         margin: "10 0 0 0",
@@ -870,6 +922,7 @@ Ext.application({
             columnWidth: 0.59,
             items: [
               {
+                itemId: "ticket-list",
                 xtype: "grid",
                 height: 155,
                 store: Ext.data.StoreManager.lookup('ticket'),
@@ -896,24 +949,46 @@ Ext.application({
                   text: '金额',
                   dataIndex: 'amount'
                 }
-                ]
+                ],
+                listeners: {
+                  itemdblclick: function( that, record, item, index, e, eOpts) {
+                    var form = Ext.ComponentQuery.query("[itemId=ticket-change-form]")[0].getForm(),
+                        currentProduct = record.data;
+                    form.reset();
+                    console.log(currentProduct)
+                    window.updateForm(form, currentProduct);
+                  }
+                }
               }
             ]
           }
         ]
       },
+      {
+        xtype: "form",
+        itemId: "ticket-form",
+        layout: "hbox",
+        bodyPadding: 10,
+        border: 0,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.deliverorder.generateticket,
+        bodyStyle: {
+          "background-color": "transparent"
+        },
+        items: [
         {
-          xtype: "form",
-          itemId: "ticket-form",
-          layout: "hbox",
-          bodyPadding: 10,
-          border: 0,
-          defaultType: 'textfield',
-          url: env.services.web + env.api.deliverorder.generateticket,
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
+          xtype:'fieldset',
+          title: "生成抵价券",
+          items :[
+          {
+            xtype: "panel",
+            layout: "hbox",
+            defaultType: 'textfield',
+            bodyStyle: {
+              "background-color": "transparent"
+            },
+            border: 0,
+            items :[
             {
               fieldLabel: "包装员",
               labelAlign: "right",
@@ -923,7 +998,7 @@ Ext.application({
             {
               fieldLabel: "备注",
               labelAlign: "right",
-              labelWidth: 50,
+              labelWidth: 40,
               name:"remark"
             },
             {
@@ -938,22 +1013,22 @@ Ext.application({
               labelWidth: 50,
               name:"overpaidAmount"
             }
-          ]
-        },
-        {
-          xtype: "panel",
-          layout: "hbox",
-          bodyPadding: 10,
-          border: 0,
-          defaultType: 'textfield',
-          width: 230,
-          style: {
-            float: "right"
+            ]
           },
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
+          {
+            xtype: "panel",
+            layout: "hbox",
+            bodyPadding: 10,
+            border: 0,
+            defaultType: 'textfield',
+            width: 230,
+            style: {
+              float: "right"
+            },
+            bodyStyle: {
+              "background-color": "transparent"
+            },
+            items: [
             {
               xtype: "button",
               text: "<span class=\"key\">X</span> 生成抵价券",
@@ -985,7 +1060,11 @@ Ext.application({
               disabled: true,
               margin: "0 0 0 10"
             }
-          ]
+            ]
+          }
+        ]
+      }
+      ]
         }
       ]
     });
