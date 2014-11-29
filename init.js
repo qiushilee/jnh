@@ -58,7 +58,7 @@
     copy: "/company/copy",   //厂商复制
     findByCompanyCode:"/company/findbycompanycode",//根据厂商编号获取企业信息
     import: "/company/import",   //导入
-    print: "/company/print" //打印，参数 module，printButton
+    print: "/company/print" //打印，参数 btId
   };
 
   env.api.product = {
@@ -72,7 +72,8 @@
     addTransitionLoss:'/product/addtransitionloss',//添加进转损
     delTransitionLoss:'/product/deletetransitionloss',//删除进转损
     changeTransitionLoss:'/product/updatetransitionloss',//修改进转损
-    import: "/product/import"   //导入
+    import: "/product/import" ,  //导入
+    print: "/product/print" //打印，参数 btId
   };
 
   env.api.receipt = {
