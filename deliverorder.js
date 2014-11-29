@@ -446,7 +446,8 @@ Ext.application({
                   Ext.data.StoreManager.lookup("ticket").load({
                     params: {
                       deliveryOrderId: window.deliveryOrderId,
-                      memberId: record.memberId
+                      memberId: record.memberId,
+                      ticketId: 0
                     }
                   });
                   Ext.data.StoreManager.lookup("create-ticket").load({
