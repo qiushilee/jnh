@@ -59,7 +59,7 @@ Ext.application({
     // 查看生成抵价券
     Ext.create('Ext.data.Store', {
       storeId: 'create-ticket',
-      fields: ["ticketCode", "totalAmount", "addDate", "id"],
+      fields: ["deliveryOrderId", "key", "memberId", "overpaidAmount", "packaging", "remark", "ticketCode", "totalAmount", "addDate", "id"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -862,7 +862,6 @@ Ext.application({
             margin: "0 0 10 10",
             handler: function() {
               var record = Ext.ComponentQuery.query("grid[itemId=ticket-list]")[0].getSelectionModel().getSelection()[0].data;
-              console.log(record)
               Ext.ComponentQuery.query("[itemId=ticket-change-form]")[0].getForm().submit({
                 params: {
                   id: record.productId
@@ -896,6 +895,7 @@ Ext.application({
             columnWidth: 0.4,
             items: [
               {
+                itemId: "create-ticket-list",
                 xtype: "grid",
                 height: 155,
                 store: Ext.data.StoreManager.lookup("create-ticket"),
@@ -916,7 +916,8 @@ Ext.application({
                 ]
               }
             ]
-          }, {
+          },
+          {
             xtype: "panel",
             border: 0,
             columnWidth: 0.59,
@@ -955,7 +956,6 @@ Ext.application({
                     var form = Ext.ComponentQuery.query("[itemId=ticket-change-form]")[0].getForm(),
                         currentProduct = record.data;
                     form.reset();
-                    console.log(currentProduct)
                     window.updateForm(form, currentProduct);
                   }
                 }
@@ -1050,6 +1050,31 @@ Ext.application({
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("生成抵价券", action.result.msg);
+                  }
+                });
+              }
+            },
+            {
+              xtype: "button",
+              text: "删除",
+              margin: "0 0 0 10",
+              handler: function() {
+                console.log(Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0].getSelectionModel().getSelection()[0])
+                var record = Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0].getSelectionModel().getSelection()[0].data;
+
+                Ext.Ajax.request({
+                  url: env.services.web + env.api.deliverorder.delticket,
+                  method: "POST",
+                  params: {
+                    id: record.id
+                  },
+                  success: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    searchHandler.call(search.getForm(), "companyList");
+                  },
+                  failure: function(resp) {
+                    var data = Ext.JSON.decode(resp.responseText);
+                    Ext.Msg.alert("删除", data.msg);
                   }
                 });
               }
