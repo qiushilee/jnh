@@ -986,7 +986,7 @@ Ext.application({
             text: "打印设置",
             margin: "0 0 0 10",
             handler: function () {
-              window.printHandle.set("printcar");
+              window.printHandle.set("printcart");
             }
           },
           {
