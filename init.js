@@ -164,7 +164,9 @@
     addprintcart:"/printcart/create",//添加打印购物车
     delprintcart:"/printcart/delete",//删除打印购物车
     printlog:'/printcart/printlog',//记录业务打印记录
-    export:'/printcart/export'//导出
+    export:'/printcart/export',//导出
+    printmember: "/business/printmember", //会员名单打印，参数 btId
+    printcart:'/printcart/printcart',//打印购物车打印，参数 btId
   };
 
   //电话订购
