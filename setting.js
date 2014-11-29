@@ -74,12 +74,12 @@ Ext.application({
     //地区列表
     var areaList =  Ext.create('Ext.data.Store', {
       storeId: 'areaList',
-      fields: ['id','key','name','zipcode','addDate'],
+      fields: ['id','key','regionName','zipcode','addDate'],
       layout: "fit",
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.managerrole.list,
+        url: env.services.web + env.api.areaList.list,
         reader: {
           type: 'json',
           root: 'list'

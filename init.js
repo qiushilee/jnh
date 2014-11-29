@@ -227,7 +227,7 @@
   };
 
   //地区
-  env.api.area = {
+  env.api.areaList = {
     list: "/area/index",
     save: "/area/save",
     del: "/area/delete"
