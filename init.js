@@ -228,8 +228,11 @@
 
   //地区
   env.api.areaList = {
-    list: "/area/index",
+    province: "/area/province",//省
+    city: "/area/city",//市
+    district: "/area/district",//区
     save: "/area/save",
+    setting: "/area/setting", //邮资批量设置
     del: "/area/delete"
   };
 
