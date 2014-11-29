@@ -669,9 +669,13 @@ Ext.application({
                             amount: record.amount,
                             weight: record.weight
                           },
-                          success: function (resp) {
+                          success: function(resp) {
                             var data = Ext.JSON.decode(resp.responseText);
-                            console.log(data)
+                            Ext.Msg.alert("保存", data.msg);
+                          },
+                          failure: function(resp) {
+                            var data = Ext.JSON.decode(resp.responseText);
+                            Ext.Msg.alert("保存", data.msg);
                           }
                         });
                       }
