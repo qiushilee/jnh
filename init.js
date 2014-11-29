@@ -128,6 +128,8 @@
     viewticket:"/deliverorder/viewticket",//查看抵价券，参数deliveryOrderId,memberId
     addticket:"/deliverorder/createticket",//加入抵价券
     generateticket:"/deliverorder/generateticket",//生成抵价券
+    changenumber:"/deliverorder/changenumber",//修改抵价券中商品数量
+    delticket:"/deliverorder/delticket",//删除抵价券
   };
 
   //包裹管理
