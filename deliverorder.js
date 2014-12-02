@@ -672,7 +672,6 @@ Ext.application({
                           },
                           success: function(resp) {
                             var data = Ext.JSON.decode(resp.responseText);
-                            Ext.Msg.alert("保存", data.msg);
                           },
                           failure: function(resp) {
                             var data = Ext.JSON.decode(resp.responseText);
@@ -934,6 +933,14 @@ Ext.application({
                   }
                 ],
                 listeners: {
+                  itemclick: function( that, record, item, index, e, eOpts) {
+                    var $btn = Ext.ComponentQuery.query("[itemId=create-ticket-button]")[0];
+                    if (record.data.id === 0) {
+                      $btn.setDisabled(false);
+                    } else {
+                      $btn.setDisabled(true);
+                    }
+                  },
                 /**
                  * 双击后，刷新右侧列表，ticketId参数用create-ticket的id
                  */
@@ -1064,9 +1071,11 @@ Ext.application({
             },
             items: [
             {
+              itemId: "create-ticket-button",
               xtype: "button",
               text: "<span class=\"key\">X</span> 生成抵价券",
               margin: "0 0 0 10",
+              disabled: true,
               handler: function() {
                 var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
                 Ext.ComponentQuery.query("[itemId=ticket-form]")[0].getForm().submit({
