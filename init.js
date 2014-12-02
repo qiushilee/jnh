@@ -143,7 +143,8 @@
     sendchange:'/package/savesendreplacement',//补寄修改
     printlog:'/package/printlog',//记录包裹打印记录
     createserialcode:'/package/serialcode',//生成流水单号
-    export:"/package/export"
+    export:"/package/export",
+    print:'/package/print'
   };
 
   env.api.productrecord = {
@@ -195,7 +196,8 @@
       member: "/telorder/deletemember",
       //右侧删除出货单产品
       order: "/telorder/deleteorderproduct",
-    }
+    },
+    print:'/telorder/print'
   };
   
   env.api.actionlog = {
@@ -211,7 +213,8 @@
     searchshipment: "/search/shipment",
     estimatepurchase: "/search/estimatepurchase",
     member: "/search/member",
-    export:'/search/export'//导出
+    export:'/search/export',//导出
+    print:'/search/print'
   };
 
 //管理员
