@@ -310,7 +310,7 @@ Ext.application({
           ]
         },
         {
-          title: '邮资配置',
+          title: '区域邮资配置',
           padding: 15,
           items: [
             {
@@ -662,5 +662,22 @@ Ext.application({
       closeAction: 'hide'
     });
 
+
+
+    //区域邮资配置
+    var areaList = Ext.create('Ext.data.Store', {
+      storeId: 'areaList',
+      fields: ['id','name', 'key', 'state'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.area.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
   }
 });
