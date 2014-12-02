@@ -312,13 +312,25 @@ Ext.application({
         {
           title: '邮资配置',
           padding: 15,
+          border: 0,
           items: [
+          {
+            xtype: "panel",
+            layout: "column",
+            border: 0,
+            items: [
             {
-              xtype: "grid",
-              height: 355,
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup("areaList"),
-              columns: [
+              xtype: "panel",
+              columnWidth: 0.3,
+              border: 0,
+              height: 300,
+              items: [
+              {
+                xtype: "grid",
+                height: 355,
+                margin: "20 0 0 0",
+                store: Ext.data.StoreManager.lookup("areaList"),
+                columns: [
                 {
                   text: '序号',
                   dataIndex: 'key',
@@ -339,26 +351,114 @@ Ext.application({
                   dataIndex: 'addDate',
                   flex: 1
                 }
-              ],
-              listeners: {
-                itemdblclick: function( that, record, item, index, e, eOpts) {
-                  areaEdit.show();
-                  window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
-                } }
+                ],
+                listeners: {
+                  itemdblclick: function( that, record, item, index, e, eOpts) {
+                    areaEdit.show();
+                    window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
+                  } }
+                }
+              ]
             },
             {
-              xtype: "button",
-              text: "<span class=\"key\">A</span> 增加",
-              margin: "20 0 0 0",
-              scale: "medium",
-              handler: function () {
-                var form = areaEdit.getComponent("form").getForm();
-                areaEdit.setTitle("新增地区");
-                form.reset();
-                form.url = env.services.web + env.api.area.save;
-                areaEdit.show();
+              xtype: "panel",
+              columnWidth: 0.35,
+              border: 0,
+              height: 300,
+              margin: "0 10",
+              items: [
+              {
+                xtype: "grid",
+                height: 205,
+                margin: "20 0 0 0",
+                store: Ext.data.StoreManager.lookup("areaList"),
+                columns: [
+                {
+                  text: '序号',
+                  dataIndex: 'key',
+                  flex: 1
+                },
+                {
+                  text: '地区名称',
+                  dataIndex: 'name',
+                  flex: 2
+                },
+                {
+                  text: '邮编',
+                  dataIndex: 'zipcode',
+                  flex: 1
+                },
+                {
+                  text: '创建日期',
+                  dataIndex: 'addDate',
+                  flex: 1
+                }
+                ],
+                listeners: {
+                  itemdblclick: function( that, record, item, index, e, eOpts) {
+                    areaEdit.show();
+                    window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
+                  }
+                }
+              },
+              {
+                xtype: "button",
+                text: "<span class=\"key\">A</span> 增加",
+                margin: "20 0 0 0",
+                scale: "medium",
+                handler: function () {
+                  var form = areaEdit.getComponent("form").getForm();
+                  areaEdit.setTitle("新增地区");
+                  form.reset();
+                  form.url = env.services.web + env.api.area.save;
+                  areaEdit.show();
+                }
               }
-            }
+              ]
+            },
+            {
+              xtype: "panel",
+              columnWidth: 0.35,
+              border: 0,
+              height: 300,
+              items: [
+              {
+                xtype: "grid",
+                height: 355,
+                margin: "20 0 0 0",
+                store: Ext.data.StoreManager.lookup("areaList"),
+                columns: [
+                {
+                  text: '序号',
+                  dataIndex: 'key',
+                  flex: 1
+                },
+                {
+                  text: '地区名称',
+                  dataIndex: 'name',
+                  flex: 2
+                },
+                {
+                  text: '邮编',
+                  dataIndex: 'zipcode',
+                  flex: 1
+                },
+                {
+                  text: '创建日期',
+                  dataIndex: 'addDate',
+                  flex: 1
+                }
+                ],
+                listeners: {
+                  itemdblclick: function( that, record, item, index, e, eOpts) {
+                    areaEdit.show();
+                    window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
+                  } }
+                }
+              ]
+            },
+            ]
+          }
           ]
         }
       ]
