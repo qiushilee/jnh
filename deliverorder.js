@@ -1096,20 +1096,26 @@ Ext.application({
                 try {
                   var record = Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0].getSelectionModel().getSelection()[0].data;
 
-                  Ext.Ajax.request({
-                    url: env.services.web + env.api.deliverorder.delticket,
-                    method: "POST",
-                    params: {
-                      id: record.id
-                    },
-                    success: function(resp) {
-                      var data = Ext.JSON.decode(resp.responseText);
-                      searchHandler.call(search.getForm(), "companyList");
-                    },
-                    failure: function(resp) {
-                      var data = Ext.JSON.decode(resp.responseText);
-                      Ext.Msg.alert("删除", data.msg);
-                    }
+                  if (record.id === 0) {
+                    return false;
+                  }
+
+                  Ext.Msg.confirm("删除", "确认删除" + record.ticketCode + "吗？", function(type) {
+                    Ext.Ajax.request({
+                      url: env.services.web + env.api.deliverorder.delticket,
+                      method: "POST",
+                      params: {
+                        id: record.id
+                      },
+                      success: function(resp) {
+                        var data = Ext.JSON.decode(resp.responseText);
+                        searchHandler.call(search.getForm(), "companyList");
+                      },
+                      failure: function(resp) {
+                        var data = Ext.JSON.decode(resp.responseText);
+                        Ext.Msg.alert("删除", data.msg);
+                      }
+                    });
                   });
                 } catch (e) {
                   Ext.Msg.alert("修改", "请选中列表中的一项后再操作");
