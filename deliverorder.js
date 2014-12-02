@@ -1052,7 +1052,16 @@ Ext.application({
               fieldLabel: "多付款",
               labelAlign: "right",
               labelWidth: 50,
-              name:"overpaidAmount"
+              name:"overpaidAmount",
+              listeners: {
+                blur: function() {
+                  var ticket = Ext.data.StoreManager.lookup('ticket').data.items,
+                      amount = 0;
+
+                  amount = ticket[ticket.length - 1].data.amount;
+                  Ext.ComponentQuery.query("[name=totalAmount]")[0].setValue(amount + parseInt(this.getValue(), 10));
+                }
+              }
             }
             ]
           },
