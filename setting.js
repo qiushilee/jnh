@@ -375,7 +375,9 @@ Ext.application({
                 listeners: {
                   itemclick: function( that, record, item, index, e, eOpts) {
                     showAreas(record.data.id,2,cityList);
-                  } }
+                    Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
+                  }
+                }
                 }
               ]
             },
@@ -387,6 +389,7 @@ Ext.application({
               margin: "0 10",
               items: [
               {
+                itemId: "city-list",
                 xtype: "grid",
                 height: 215,
                 margin: "20 0 0 0",
@@ -409,13 +412,18 @@ Ext.application({
                 listeners: {
                   itemclick: function( that, record, item, index, e, eOpts) {
                     showAreas(record.data.id,3,districtList);
+                    Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
+                    Ext.ComponentQuery.query("[name=name2]")[0].setValue(record.data.name);
+                    Ext.ComponentQuery.query("[name=id2]")[0].setValue(record.data.id);
                   }
                 }
               },
               {
+                itemId: "setting-post",
                 xtype: "button",
                 text: "<span class=\"key\">A</span> 设置邮费",
                 margin: "20 0 0 0",
+                disabled: true,
                 scale: "medium",
                 handler: function() {
                   postageSetting.show();
@@ -812,13 +820,14 @@ Ext.application({
             text: "<span class=\"key\">A</span> 保存",
             handler: function() {
               var form = areaEdit.getComponent("form").getForm();
+              var record = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0].data;
               form.url = env.services.web + env.api.areaList.save;
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
                     Ext.Msg.alert("修改", action.result.msg, function() {
                       areaEdit.hide();
-                       districtList.load();
+                       showAreas(record.id,3,districtList);
                     });
                   },
                   failure: function(form, action) {
@@ -856,7 +865,7 @@ Ext.application({
         url: env.services.web + env.api.areaList.setting,
         items: [{
           fieldLabel: "地区名称",
-          name: "name",
+          name: "name2",
           labelAlign: "right",
           readOnly:true
         },{
@@ -865,7 +874,7 @@ Ext.application({
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
-          name: "id",
+          name: "id2",
         }, {
           xtype:'panel',
           layout: "hbox",
