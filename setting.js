@@ -102,7 +102,7 @@ Ext.application({
     });
     var districtList =  Ext.create('Ext.data.Store', {
       storeId: 'districtList',
-      fields: ['id','key','name','parentId','type','zipCode','addDate'],
+      fields: ['id','key','name','parentId','type','zipCode','cost'],
       layout: "fit",
       autoLoad: true,
       proxy: {

@@ -672,7 +672,6 @@ Ext.application({
                           },
                           success: function(resp) {
                             var data = Ext.JSON.decode(resp.responseText);
-                            Ext.Msg.alert("保存", data.msg);
                           },
                           failure: function(resp) {
                             var data = Ext.JSON.decode(resp.responseText);
@@ -862,23 +861,41 @@ Ext.application({
             text: "修改",
             margin: "0 0 10 10",
             handler: function() {
-              var record = Ext.ComponentQuery.query("grid[itemId=ticket-list]")[0].getSelectionModel().getSelection()[0].data;
-              Ext.ComponentQuery.query("[itemId=ticket-change-form]")[0].getForm().submit({
-                params: {
-                  id: record.productId
-                },
-                success: function (form, action) {
-                  Ext.data.StoreManager.lookup("create-ticket").load({
-                    params: {
-                      memberId: record.memberId,
-                      deliveryOrderId: record.deliveryOrderId
-                    }
-                  });
-                },
-                failure: function (form, action) {
-                  Ext.Msg.alert("修改抵价券", action.result.msg);
+              try {
+                var ticketId = 0,
+                    record = Ext.ComponentQuery.query("grid[itemId=ticket-list]")[0].getSelectionModel().getSelection()[0].data,
+                    orderRecord = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data,
+                    createRecord = Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0].getSelectionModel().getSelection()[0];
+
+                if (createRecord) {
+                  ticketId = createRecord.data.id;
                 }
-              });
+
+                Ext.ComponentQuery.query("[itemId=ticket-change-form]")[0].getForm().submit({
+                  params: {
+                    id: record.id,
+                    productId: record.productId
+                  },
+                  success: function (form, action) {
+                    /**
+                     * 修改完成后，刷新右侧列表
+                     * ticketId需要判断左侧列表是否有选中，选中则取左侧的id，没选中就取0
+                     */
+                    Ext.data.StoreManager.lookup("ticket").load({
+                      params: {
+                        deliveryOrderId: window.deliveryOrderId,
+                        memberId: orderRecord.memberId,
+                        ticketId: ticketId
+                      }
+                    });
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("修改抵价券", action.result.msg);
+                  }
+                });
+              } catch (e) {
+                Ext.Msg.alert("修改", "请选中列表中的一项后再操作");
+              }
             }
           }
           ]
@@ -914,7 +931,30 @@ Ext.application({
                     text: '金额',
                     dataIndex: 'totalAmount'
                   }
-                ]
+                ],
+                listeners: {
+                  itemclick: function( that, record, item, index, e, eOpts) {
+                    var $btn = Ext.ComponentQuery.query("[itemId=create-ticket-button]")[0];
+                    if (record.data.id === 0) {
+                      $btn.setDisabled(false);
+                    } else {
+                      $btn.setDisabled(true);
+                    }
+                  },
+                /**
+                 * 双击后，刷新右侧列表，ticketId参数用create-ticket的id
+                 */
+                  itemdblclick: function( that, record, item, index, e, eOpts) {
+                    var orderListRecord = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
+                    Ext.data.StoreManager.lookup("ticket").load({
+                      params: {
+                        deliveryOrderId: window.deliveryOrderId,
+                        memberId: orderListRecord.memberId,
+                        ticketId: record.data.id
+                      }
+                    });
+                  }
+                }
               }
             ]
           },
@@ -1012,7 +1052,16 @@ Ext.application({
               fieldLabel: "多付款",
               labelAlign: "right",
               labelWidth: 50,
-              name:"overpaidAmount"
+              name:"overpaidAmount",
+              listeners: {
+                blur: function() {
+                  var ticket = Ext.data.StoreManager.lookup('ticket').data.items,
+                      amount = 0;
+
+                  amount = ticket[ticket.length - 1].data.amount;
+                  Ext.ComponentQuery.query("[name=totalAmount]")[0].setValue(amount + parseInt(this.getValue(), 10));
+                }
+              }
             }
             ]
           },
@@ -1031,9 +1080,11 @@ Ext.application({
             },
             items: [
             {
+              itemId: "create-ticket-button",
               xtype: "button",
               text: "<span class=\"key\">X</span> 生成抵价券",
               margin: "0 0 0 10",
+              disabled: true,
               handler: function() {
                 var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
                 Ext.ComponentQuery.query("[itemId=ticket-form]")[0].getForm().submit({
@@ -1060,24 +1111,33 @@ Ext.application({
               text: "删除",
               margin: "0 0 0 10",
               handler: function() {
-                console.log(Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0].getSelectionModel().getSelection()[0])
-                var record = Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0].getSelectionModel().getSelection()[0].data;
+                try {
+                  var record = Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0].getSelectionModel().getSelection()[0].data;
 
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.deliverorder.delticket,
-                  method: "POST",
-                  params: {
-                    id: record.id
-                  },
-                  success: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    searchHandler.call(search.getForm(), "companyList");
-                  },
-                  failure: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.Msg.alert("删除", data.msg);
+                  if (record.id === 0) {
+                    return false;
                   }
-                });
+
+                  Ext.Msg.confirm("删除", "确认删除" + record.ticketCode + "吗？", function(type) {
+                    Ext.Ajax.request({
+                      url: env.services.web + env.api.deliverorder.delticket,
+                      method: "POST",
+                      params: {
+                        id: record.id
+                      },
+                      success: function(resp) {
+                        var data = Ext.JSON.decode(resp.responseText);
+                        searchHandler.call(search.getForm(), "companyList");
+                      },
+                      failure: function(resp) {
+                        var data = Ext.JSON.decode(resp.responseText);
+                        Ext.Msg.alert("删除", data.msg);
+                      }
+                    });
+                  });
+                } catch (e) {
+                  Ext.Msg.alert("修改", "请选中列表中的一项后再操作");
+                }
               }
             },
             {
