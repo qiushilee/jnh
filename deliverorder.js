@@ -334,6 +334,14 @@ Ext.application({
                 }
               ],
               listeners: {
+                itemclick: function( that, record, item, index, e, eOpts) {
+                  var $btn = Ext.ComponentQuery.query("[itemId=import-tel-order]")[0];
+                  if (record.data.deliveryOrderCode === "") {
+                    $btn.setDisabled(true);
+                  } else {
+                    $btn.setDisabled(false);
+                  }
+                },
                 itemdblclick: function( that, record, item, index, e, eOpts) {
                   var detail = this.ownerCt.ownerCt.getComponent("detail"),
                       productStore = Ext.data.StoreManager.lookup("productData"),
@@ -413,11 +421,20 @@ Ext.application({
                 }
               },
               {
+                itemId: "import-tel-order",
                 xtype: "button",
                 text: "导入电话订单",
                 margin: "0 0 0 10",
                 disabled: true,
-                float: "right"
+                float: "right",
+                handler: function() {
+                  var data = Ext.ComponentQuery.query("[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
+                  window.switchView({
+                    key: "deliveryOrderId",
+                    val: data.deliveryOrderId,
+                    view: "telorder"
+                  });
+                }
               },
               {
                 itemId: "import-web-order",
