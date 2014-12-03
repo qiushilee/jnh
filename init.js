@@ -197,7 +197,8 @@
       //右侧删除出货单产品
       order: "/telorder/deleteorderproduct",
     },
-    print:'/telorder/print'
+    print:'/telorder/print',
+    exportToDeliverorder:"/telorder/exporttodeliverorder"
   };
   
   env.api.actionlog = {
