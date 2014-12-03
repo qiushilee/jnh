@@ -426,7 +426,17 @@
         throw "type 不能为空";
       }
     }
-  }
+  };
+
+  /**
+   * 切换视图
+   */
+  window.switchView = function(opt) {
+    if (opt.key && opt.val) {
+      localStorage.setItem(opt.key, opt.val);
+    }
+    window.location.href = window.location.origin + window.location.pathname + "#" + opt.view;
+  };
 
   Ext.application({
     name: "JNH",

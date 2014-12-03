@@ -260,6 +260,14 @@ Ext.application({
             }
           ],
           listeners: {
+            itemclick: function( that, record, item, index, e, eOpts) {
+              var $btn = Ext.ComponentQuery.query("[itemId=export]")[0];
+              if (record.data.id === "") {
+                $btn.setDisabled(true);
+              } else if (localStorage.getItem("deliveryOrderId")) {
+                $btn.setDisabled(false);
+              }
+            },
             itemdblclick: function( that, record, item, index, e, eOpts) {
               var $container = this.ownerCt,
                   $sidebar = $container.ownerCt.getComponent("sidebar"),
@@ -286,7 +294,8 @@ Ext.application({
           border: 0,
           defaultType: 'textfield',
           margin: "20 0 0 0",
-          items: [{
+          items: [
+          {
             xtype: "button",
             text: "<span class=\"key\">W</span>删除记录",
             handler: function() {
@@ -296,7 +305,32 @@ Ext.application({
               });
             },
             margin: "0 0 0 20"
-          }]
+          },
+          {
+            itemId: "export",
+            xtype: "button",
+            disabled: true,
+            text: "导出电话订单",
+            handler: function() {
+              var data = Ext.ComponentQuery.query("[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
+              Ext.Ajax.request({
+                url: env.services.web + env.api.telorder.exportToDeliverorder,
+                params: {
+                  deliveryOrderId: localStorage.getItem("deliveryOrderId"),
+                  telorderId: data.id
+                },
+                success: function(resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  console.log(data)
+                },
+                failure: function(resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                }
+              });
+            },
+            margin: "0 0 0 20"
+          }
+          ]
         }]
       }, {
         itemId: "sidebar",
