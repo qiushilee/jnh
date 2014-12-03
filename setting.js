@@ -72,21 +72,48 @@ Ext.application({
     });
 
     //地区列表
-    var areaList =  Ext.create('Ext.data.Store', {
-      storeId: 'areaList',
-      fields: ['id','key','regionName','zipcode','addDate'],
+    var provinceList =  Ext.create('Ext.data.Store', {
+      storeId: 'provinceList',
+      fields: ['id','key','name','parentId','type','zipCode','addDate'],
       layout: "fit",
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.areaList.list,
+        url: env.services.web + env.api.areaList.province,
         reader: {
           type: 'json',
           root: 'list'
         }
       }
     });
-
+    var cityList =  Ext.create('Ext.data.Store', {
+      storeId: 'cityList',
+      fields: ['id','key','name','parentId','type','zipCode','addDate'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.areaList.city,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+    var districtList =  Ext.create('Ext.data.Store', {
+      storeId: 'districtList',
+      fields: ['id','key','name','parentId','type','zipCode','addDate'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.areaList.district,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
       layout: "fit",
@@ -323,13 +350,13 @@ Ext.application({
               xtype: "panel",
               columnWidth: 0.3,
               border: 0,
-              height: 300,
+              height: 290,
               items: [
               {
                 xtype: "grid",
-                height: 355,
+                height: 300,
                 margin: "20 0 0 0",
-                store: Ext.data.StoreManager.lookup("areaList"),
+                store: Ext.data.StoreManager.lookup("provinceList"),
                 columns: [
                 {
                   text: '序号',
@@ -337,25 +364,17 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '地区名称',
+                  text: '省份名称',
                   dataIndex: 'name',
                   flex: 2
-                },
-                {
-                  text: '邮编',
-                  dataIndex: 'zipcode',
-                  flex: 1
-                },
-                {
-                  text: '创建日期',
-                  dataIndex: 'addDate',
-                  flex: 1
-                }
+                },{
+                    xtype: "hiddenfield",
+                    name: "id",
+                  }
                 ],
                 listeners: {
-                  itemdblclick: function( that, record, item, index, e, eOpts) {
-                    areaEdit.show();
-                    window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
+                  itemclick: function( that, record, item, index, e, eOpts) {
+                    showAreas(record.data.id,2,cityList);
                   } }
                 }
               ]
@@ -364,14 +383,14 @@ Ext.application({
               xtype: "panel",
               columnWidth: 0.35,
               border: 0,
-              height: 300,
+              height: 290,
               margin: "0 10",
               items: [
               {
                 xtype: "grid",
-                height: 205,
+                height: 215,
                 margin: "20 0 0 0",
-                store: Ext.data.StoreManager.lookup("areaList"),
+                store: Ext.data.StoreManager.lookup("cityList"),
                 columns: [
                 {
                   text: '序号',
@@ -379,31 +398,23 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '地区名称',
+                  text: '城市名称',
                   dataIndex: 'name',
                   flex: 2
-                },
-                {
-                  text: '邮编',
-                  dataIndex: 'zipcode',
-                  flex: 1
-                },
-                {
-                  text: '创建日期',
-                  dataIndex: 'addDate',
-                  flex: 1
-                }
+                },{
+                    xtype: "hiddenfield",
+                    name: "id",
+                  }
                 ],
                 listeners: {
-                  itemdblclick: function( that, record, item, index, e, eOpts) {
-                    areaEdit.show();
-                    window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
+                  itemclick: function( that, record, item, index, e, eOpts) {
+                    showAreas(record.data.id,3,districtList);
                   }
                 }
               },
               {
                 xtype: "button",
-                text: "<span class=\"key\">A</span> 增加",
+                text: "<span class=\"key\">A</span> 设置邮费",
                 margin: "20 0 0 0",
                 scale: "medium",
                 handler: function () {
@@ -420,13 +431,13 @@ Ext.application({
               xtype: "panel",
               columnWidth: 0.35,
               border: 0,
-              height: 300,
+              height: 290,
               items: [
               {
                 xtype: "grid",
-                height: 355,
+                height: 300,
                 margin: "20 0 0 0",
-                store: Ext.data.StoreManager.lookup("areaList"),
+                store: Ext.data.StoreManager.lookup("districtList"),
                 columns: [
                 {
                   text: '序号',
@@ -434,25 +445,28 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '地区名称',
+                  text: '区域名称',
                   dataIndex: 'name',
                   flex: 2
                 },
                 {
                   text: '邮编',
-                  dataIndex: 'zipcode',
+                  dataIndex: 'zipCode',
                   flex: 1
                 },
                 {
-                  text: '创建日期',
-                  dataIndex: 'addDate',
+                  text: '邮费',
+                  dataIndex: 'cost',
                   flex: 1
-                }
+                },{
+                    xtype: "hiddenfield",
+                    name: "id",
+                  }
                 ],
                 listeners: {
                   itemdblclick: function( that, record, item, index, e, eOpts) {
                     areaEdit.show();
-                    window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
+                    window.updateForm(areaEdit.getComponent("form").getForm(), record.data);
                   } }
                 }
               ]
@@ -761,6 +775,92 @@ Ext.application({
       ],
       closeAction: 'hide'
     });
+
+    //编辑地区
+    var areaEdit = new Ext.create("Ext.window.Window", {
+      title: "编辑地区",
+      layout: "column",
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        columnWidth: 0.41,
+        layout: 'vbox',
+        width: 500,
+        bodyPadding: 5,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.areaList.save,
+        items: [{
+          fieldLabel: "地区名称",
+          name: "name",
+          labelAlign: "right"
+        }, {
+          fieldLabel: "邮编",
+          name: "zipCode",
+          labelAlign: "right"
+        }, {
+          fieldLabel: "邮费",
+          name: "cost",
+          labelAlign: "right"
+        }, {
+          xtype: "hiddenfield",
+          name: "id",
+        }, {
+          xtype:'panel',
+          layout: "hbox",
+          border: 0,
+          margin: "0 0 0 53",
+          items: [{
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">A</span> 保存",
+            handler: function() {
+              var form = areaEdit.getComponent("form").getForm();
+              form.url = env.services.web + env.api.areaList.save;
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("修改", action.result.msg, function() {
+                      areaEdit.hide();
+                       districtList.load();
+                    });
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改", action.result.msg);
+                  }
+                });
+              }
+            }
+          }, {
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">E</span> 返回",
+            handler: function() {
+              sendmethordEdit.hide();
+            }
+          }]
+        }]
+      }
+      ],
+      closeAction: 'hide'
+    });
+
+
+
+    function showAreas(id,type,domList) {
+      var _url = env.services.web + env.api.areaList.city +'/parentId/'+id;
+       if(type==3){
+          _url = env.services.web + env.api.areaList.district +'/parentId/'+id;
+      }
+      Ext.Ajax.request({
+        url: _url,
+        success: function(response) {
+          domList.loadData(Ext.JSON.decode(response.responseText).list);
+        },
+        failure: function(form, action) {
+          Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
+        }
+      });
+    }
 
   }
 });
