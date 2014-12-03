@@ -417,12 +417,9 @@ Ext.application({
                 text: "<span class=\"key\">A</span> 设置邮费",
                 margin: "20 0 0 0",
                 scale: "medium",
-                handler: function () {
-                  var form = areaEdit.getComponent("form").getForm();
-                  areaEdit.setTitle("新增地区");
-                  form.reset();
-                  form.url = env.services.web + env.api.area.save;
-                  areaEdit.show();
+                handler: function() {
+                  postageSetting.show();
+                  window.updateForm(postageSetting.getComponent("form").getForm(), record.data);
                 }
               }
               ]
@@ -835,7 +832,7 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">E</span> 返回",
             handler: function() {
-              sendmethordEdit.hide();
+              areaEdit.hide();
             }
           }]
         }]
@@ -844,6 +841,70 @@ Ext.application({
       closeAction: 'hide'
     });
 
+    //批量设置邮资
+    var postageSetting = new Ext.create("Ext.window.Window", {
+      title: "批量设置邮资",
+      layout: "column",
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        columnWidth: 0.41,
+        layout: 'vbox',
+        width: 500,
+        bodyPadding: 5,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.areaList.setting,
+        items: [{
+          fieldLabel: "地区名称",
+          name: "name",
+          labelAlign: "right",
+          readOnly:true
+        },{
+          fieldLabel: "邮费",
+          name: "cost",
+          labelAlign: "right"
+        }, {
+          xtype: "hiddenfield",
+          name: "id",
+        }, {
+          xtype:'panel',
+          layout: "hbox",
+          border: 0,
+          margin: "0 0 0 53",
+          items: [{
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">A</span> 保存",
+            handler: function() {
+              var form = postageSetting.getComponent("form").getForm();
+              form.url = env.services.web + env.api.areaList.setting;
+              if (form.isValid()) {
+                form.submit({
+                  success: function(form, action) {
+                    Ext.Msg.alert("修改", action.result.msg, function() {
+                      postageSetting.hide();
+                      districtList.load();
+                    });
+                  },
+                  failure: function(form, action) {
+                    Ext.Msg.alert("修改", action.result.msg);
+                  }
+                });
+              }
+            }
+          }, {
+            xtype:'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">E</span> 返回",
+            handler: function() {
+              postageSetting.hide();
+            }
+          }]
+        }]
+      }
+      ],
+      closeAction: 'hide'
+    });
 
 
     function showAreas(id,type,domList) {
