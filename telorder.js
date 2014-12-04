@@ -3,6 +3,9 @@ Ext.application({
   name: "JNH",
   launch: function() {
     window.telorderCurrent = {};
+    if (location.search.replace(/.*=/, "")) {
+      telorderCurrent.memberId = location.search.replace(/.*=/, "");
+    }
 
     //电话订购列表
     Ext.create('Ext.data.Store', {
