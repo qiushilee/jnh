@@ -426,8 +426,8 @@ Ext.application({
                 disabled: true,
                 scale: "medium",
                 handler: function() {
-                  postageSetting.show();
-                  window.updateForm(postageSetting.getComponent("form").getForm(), record.data);
+                  costSetting.show();
+                  window.updateForm(costSetting.getComponent("form").getForm(), record.data);
                 }
               }
               ]
@@ -851,7 +851,7 @@ Ext.application({
     });
 
     //批量设置邮资
-    var postageSetting = new Ext.create("Ext.window.Window", {
+    var costSetting = new Ext.create("Ext.window.Window", {
       title: "批量设置邮资",
       layout: "column",
       items: [{
@@ -885,14 +885,15 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">A</span> 保存",
             handler: function() {
-              var form = postageSetting.getComponent("form").getForm();
+              var form = costSetting.getComponent("form").getForm();
+              var record = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0].data;
               form.url = env.services.web + env.api.areaList.setting;
               if (form.isValid()) {
                 form.submit({
                   success: function(form, action) {
                     Ext.Msg.alert("修改", action.result.msg, function() {
-                      postageSetting.hide();
-                      districtList.load();
+                      costSetting.hide();
+                      showAreas(record.id,3,districtList);
                     });
                   },
                   failure: function(form, action) {
@@ -906,7 +907,7 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">E</span> 返回",
             handler: function() {
-              postageSetting.hide();
+              costSetting.hide();
             }
           }]
         }]
