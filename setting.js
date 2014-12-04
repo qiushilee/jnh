@@ -427,7 +427,6 @@ Ext.application({
                 scale: "medium",
                 handler: function() {
                   costSetting.show();
-                  window.updateForm(costSetting.getComponent("form").getForm(), record.data);
                 }
               }
               ]
