@@ -48,7 +48,7 @@ Ext.application({
     // 预估采购数据
     Ext.create('Ext.data.Store', {
       storeId: 'estimatepurchase',
-      fields: ["companyName", "mobile1", "linkMan", 'id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
+      fields: ["periodicalCount", "splitCount", "companyName", "mobile1", "linkMan", 'id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -326,19 +326,26 @@ Ext.application({
               itemId: "estimatepurchaseForm",
               xtype: "form",
               url: env.services.web + env.api.search.estimatepurchase,
-              layout: 'hbox',
+              layout: 'vbox',
               bodyPadding: 5,
               border: 0,
-              defaultType: 'textfield',
               items: [
+              {
+                xtype: "panel",
+                layout: "hbox",
+                border: 0,
+                defaultType: 'textfield',
+                items: [
                 Ext.create("periodical", {
-                  itemId: "estimatepurchase-periodical"
+                  itemId: "estimatepurchase-periodical",
+                  labelWidth: 40
                 }),
                 {
                   fieldLabel: "厂商编号",
                   labelWidth: 60,
                   width: 150,
                   labelAlign: "right",
+                  margin: "0 0 0 20",
                   name:'companyCode1'
                 },
                 {
@@ -353,9 +360,19 @@ Ext.application({
                   labelWidth: 60,
                   width: 120,
                   labelAlign: "right",
+                  margin: "0 0 0 20",
                   name:"estimateNumber"
 
-                },
+                }
+                ]
+              },
+              {
+                xtype: "panel",
+                layout: "hbox",
+                border: 0,
+                defaultType: 'textfield',
+                margin: "20 0 0 0",
+                items: [
                 {
                   fieldLabel: "全期单数",
                   labelWidth: 60,
@@ -369,6 +386,7 @@ Ext.application({
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right",
+                  margin: "0 0 0 50",
                   name:'referenceStartDate'
                 },
                 {
@@ -378,14 +396,36 @@ Ext.application({
                   width: 120,
                   labelAlign: "right",
                   name:'referenceEndDate'
+                },
+                {
+                  xtype: "button",
+                  text: "查询",
+                  margin: "0 0 0 50",
+                  handler: function() {
+                    var $form = Ext.ComponentQuery.query("[itemId=estimatepurchaseForm]")[0].getForm(),
+                        $periodNum = Ext.ComponentQuery.query("[name=currentPeriodNumber]")[0],
+                        $splitNum = Ext.ComponentQuery.query("[name=splitNumber]")[0];
+
+                    searchHandler.call($form, "estimatepurchase", function(store) {
+                      var data = store.data.items[0].data;
+                      if (data.periodicalCount) {
+                        $periodNum.setText(data.periodicalCount);
+                      }
+                      if (data.splitCount) {
+                        $splitNum.setText(data.splitCount);
+                      }
+                    });
+                  }
                 }
+                ]
+              }
               ]
             },
             {
               xtype: 'panel',
               layout: "hbox",
               border: 0,
-              margin: "10 0 0 25",
+              margin: "35 0 0 0",
               items: [
                 {
                   xtype: "label",
@@ -394,17 +434,17 @@ Ext.application({
                 },
                 {
                   xtype: "label",
-                  text: "4561",
+                  text: "0",
                   name: "currentPeriodNumber"
                 },
                 {
                   xtype: "label",
                   text: "拆分单量：",
-                  margin: "0 0 0 10"
+                  margin: "0 0 0 20"
                 },
                 {
                   xtype: "label",
-                  text: "4561",
+                  text: "0",
                   name: "splitNumber"
                 }
               ]
@@ -515,13 +555,6 @@ Ext.application({
               border: 0,
               margin: "10 0 0 0",
               items: [
-                {
-                  xtype: "button",
-                  text: "查询",
-                  handler: function() {
-                    searchHandler.call(this.ownerCt.ownerCt.getComponent("estimatepurchaseForm").getForm(), "estimatepurchase");
-                  }
-                },
                 {
                   xtype: "button",
                   text: "日报表",

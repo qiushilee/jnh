@@ -309,13 +309,14 @@
    *    情景一：this.up("form") 直接获取到form；
    *    情景二：直接传入form；
    */
-  window.searchHandler = function(store) {
+  window.searchHandler = function(store, success) {
     var form = this.up && this.up("form") ? this.up("form").getForm() : this;
     if (form.isValid()) {
       form.submit({
         success: function(form, action) {
           try {
             Ext.data.StoreManager.lookup(store).loadData(action.result.list);
+            success(Ext.data.StoreManager.lookup(store));
           } catch(e) {
             console.error(e.stack);
           }
