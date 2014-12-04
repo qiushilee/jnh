@@ -1272,6 +1272,7 @@ Ext.onReady(function() {
                   success: function(data) {
                     updateForm(form, data);
                     form.findField("id").setValue("");
+                    folwChartsList.load();
                   },
                   fail: function() {
                     Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
@@ -1295,6 +1296,7 @@ Ext.onReady(function() {
             form.submit({
               success: function(form, action) {
                 addOrder.hide();
+                folwChartsList.load();
               },
               failure: function(form, action) {
                 Ext.Msg.alert("修改汇款订购", action.result.msg);
