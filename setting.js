@@ -414,7 +414,7 @@ Ext.application({
                     showAreas(record.data.id,3,districtList);
                     Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                     Ext.ComponentQuery.query("[name=name2]")[0].setValue(record.data.name);
-                    Ext.ComponentQuery.query("[name=id2]")[0].setValue(record.data.id);
+                    Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
                   }
                 }
               },
@@ -874,7 +874,7 @@ Ext.application({
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
-          name: "id2",
+          name: "cityId",
         }, {
           xtype:'panel',
           layout: "hbox",
