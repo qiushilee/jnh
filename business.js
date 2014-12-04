@@ -5,7 +5,7 @@ Ext.application({
     // 名单管理-会员列表
     var memberList = Ext.create('Ext.data.Store', {
       storeId: 'memberList',
-      fields: ["zipCode", "deliveryMethodName", "mobile", "key", "id", 'addrList', 'userCode', 'realName', 'memberType','memberTypeName', "address1", "address2"],
+      fields: ["askNumber1", "zipCode", "deliveryMethodName", "mobile", "key", "id", 'addrList', 'userCode', 'realName', 'memberType','memberTypeName', "address1", "address2"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -298,7 +298,13 @@ Ext.application({
                 labelAlign: "right",
                 name:"graduateDate"
               },
-              Ext.create("periodical")
+              Ext.create("periodical"),
+              {
+                fieldLabel: "索取数",
+                labelWidth: 50,
+                labelAlign: "right",
+                name:"askNumber1"
+              }
               ]
             },
             {
@@ -410,6 +416,15 @@ Ext.application({
                 inputValue:'1'
               }
               ]
+            },
+            {
+              xtype: "textfield",
+              margin: "20 0 0 0",
+              width: 1000,
+              fieldLabel: "备注",
+              labelAlign: "right",
+              name: "remark",
+              labelWidth: 40
             }
             ]
           }, {
