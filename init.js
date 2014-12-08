@@ -246,8 +246,7 @@
 
   //权限
   env.api.privaction = {
-    list: "/privaction/index",
-    save: "/privaction/save"
+    list: "/privaction/index"
   };
 
   //打印记录
