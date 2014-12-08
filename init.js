@@ -229,7 +229,8 @@
   env.api.managerrole = {
     list: "/managerrole/index",
     save: "/managerrole/save",
-    del: "/managerrole/delete"
+    del: "/managerrole/delete",
+    setting: "/managerrole/setting",//设置权限
   };
 
   //地区
@@ -245,7 +246,8 @@
 
   //权限
   env.api.privaction = {
-    list: "/privaction/index"
+    list: "/privaction/index",
+    save: "/privaction/save"
   };
 
   //打印记录
