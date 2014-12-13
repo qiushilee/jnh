@@ -756,10 +756,11 @@ Ext.application({
           });
 
           Ext.Array.each(item.actions, function (actionItem) {
+            console.log(actionItem)
             var checkbox = Ext.create('Ext.form.field.Checkbox', {
               margin: '0 15 0 0',
               boxLabel: actionItem.name,
-              name: actionItem.action,
+              name: 'action-' + actionItem.id,
               inputValue: actionItem.action
             });
             text.add(checkbox);
