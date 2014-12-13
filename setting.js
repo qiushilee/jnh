@@ -720,6 +720,11 @@ Ext.application({
      * 载入角色权限菜单
      */
     function showRoleEdit(id) {
+      var $panel = Ext.ComponentQuery.query("[itemId=role-edit-panel]");
+      if ($panel[0]) {
+        roleEdit.getComponent("form").remove($panel[0]);
+      }
+
       Ext.Ajax.request({
         url: env.services.web + env.api.privaction.list,
         params: {
@@ -728,6 +733,7 @@ Ext.application({
         success: function (resp) {
           var data = Ext.JSON.decode(resp.responseText);
           var panel = Ext.create('Ext.panel.Panel', {
+            itemId: 'role-edit-panel',
             margin: '25 0 0 0',
             bodyPadding: 5,
             border: 0,
