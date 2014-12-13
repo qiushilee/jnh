@@ -94,7 +94,8 @@
     list: "/catalog/index",
     change: "/catalog/update",
     add: "/catalog/create",
-    del: "/catalog/delete"
+    del: "/catalog/delete",
+    record:"/catalog/catalogissuerecord"
   };
 
   //期数
