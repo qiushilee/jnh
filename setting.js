@@ -319,7 +319,7 @@ Ext.application({
               ],
               listeners: {
                 itemdblclick: function (that, record, item, index, e, eOpts) {
-                  roleEdit.show();
+                  showRoleEdit(record.data.id);
                   window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
                 }
               }
@@ -719,65 +719,77 @@ Ext.application({
     /**
      * 载入角色权限菜单
      */
-    Ext.Ajax.request({
-      url: env.services.web + env.api.privaction.list,
-      success: function (resp) {
-        var data = Ext.JSON.decode(resp.responseText);
-        var panel = Ext.create('Ext.panel.Panel', {
-          margin: '25 0 0 0',
-          bodyPadding: 5,
-          border: 0,
-          defaultType: 'textfield'
-        });
+    function showRoleEdit(id) {
+      Ext.Ajax.request({
+        url: env.services.web + env.api.privaction.list,
+        params: {
+          id: id
+        },
+        success: function (resp) {
+          var data = Ext.JSON.decode(resp.responseText);
+          var panel = Ext.create('Ext.panel.Panel', {
+            margin: '25 0 0 0',
+            bodyPadding: 5,
+            border: 0,
+            defaultType: 'textfield'
+          });
 
-        roleEdit.getComponent("form").add(panel);
+          roleEdit.getComponent("form").add(panel);
 
-        Ext.Array.each(data.list, function (item) {
-          var text = Ext.create('Ext.form.FieldSet', {
-            padding: '5 5 15 15',
-            defaultType: 'checkboxfield',
-            layout: 'hbox',
-            title: item.name,
-            name: item.action,
-            items: [
-              {
-                itemId: 'rol-edit-select-all',
-                margin: '0 15 0 0',
-                boxLabel: '全选',
-                listeners: {
-                  change: function(that, status) {
-                    Ext.Array.each(Ext.ComponentQuery.query("[xtype=checkbox]", text), function(item) {
-                      item.setValue(status);
-                    });
+          Ext.Array.each(data.list, function (item) {
+            var text = Ext.create('Ext.form.FieldSet', {
+              padding: '5 5 15 15',
+              defaultType: 'checkboxfield',
+              layout: 'hbox',
+              title: item.name,
+              name: item.action,
+              items: [
+                {
+                  itemId: 'rol-edit-select-all',
+                  margin: '0 15 0 0',
+                  boxLabel: '全选',
+                  listeners: {
+                    change: function (that, status) {
+                      Ext.Array.each(Ext.ComponentQuery.query("[xtype=checkbox]", text), function (item) {
+                        item.setValue(status);
+                      });
+                    }
                   }
                 }
-              }
-            ]
-          });
-
-          Ext.Array.each(item.actions, function (actionItem) {
-            var checkbox = Ext.create('Ext.form.field.Checkbox', {
-              margin: '0 15 0 0',
-              boxLabel: actionItem.name,
-              name: 'action-' + actionItem.id,
-              inputValue: actionItem.action
+              ]
             });
-            text.add(checkbox);
+
+            Ext.Array.each(item.actions, function (actionItem) {
+              var checkbox = Ext.create('Ext.form.field.Checkbox', {
+                margin: '0 15 0 0',
+                boxLabel: actionItem.name,
+                name: 'action-' + actionItem.id,
+                inputValue: actionItem.action,
+                checked: actionItem.checked
+              });
+              text.add(checkbox);
+            });
+
+            panel.add(text);
           });
 
-          panel.add(text);
-        });
-      },
-      failure: function (resp) {
-        Ext.Msg.alert("系统角色权限菜单载入失败", resp.statusText);
-        console.error(resp.statusText);
-      }
-    });
+          if (data.list) {
+            roleEdit.height = 550;
+          } else {
+            roleEdit.height = 140;
+          }
+          roleEdit.show();
+        },
+        failure: function (resp) {
+          Ext.Msg.alert("系统角色权限菜单载入失败", resp.statusText);
+          console.error(resp.statusText);
+        }
+      });
+    }
 
     //管理角色编辑
     var roleEdit = new Ext.create("Ext.window.Window", {
       title: "编辑管理角色",
-      height: 550,
       autoScroll: true,
       items: [{
         itemId: "form",
