@@ -58,7 +58,8 @@
     copy: "/company/copy",   //厂商复制
     findByCompanyCode: "/company/findbycompanycode",//根据厂商编号获取企业信息
     import: "/company/import",   //导入
-    print: "/company/print" //打印，参数 btId
+    print: "/company/print", //打印，参数 btId
+    receipt: '/company/receipt'
   };
 
   env.api.product = {
