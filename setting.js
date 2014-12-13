@@ -337,7 +337,7 @@ Ext.application({
           ]
         },
         {
-          title: '邮资配置',
+          title: '地区邮资设置',
           padding: 15,
           border: 0,
           items: [
@@ -779,6 +779,10 @@ Ext.application({
       ],
       closeAction: 'hide'
     });
+
+
+
+
 
     //编辑地区
     var areaEdit = new Ext.create("Ext.window.Window", {
