@@ -162,26 +162,11 @@ Ext.application({
         text: "删除",
         margin: "0 0 0 10",
         handler: function() {
-          var record = cs.getSelectionModel()
-          .getSelection()[0].data;
-
-          Ext.Msg.confirm("删除", "确认删除" + record.title + "吗？", function(type) {
-            if (type === "yes") {
-              Ext.Ajax.request({
-                url: env.services.web + env.api.company.del,
-                params: {
-                  id: record.id
-                },
-                success: function(resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  console.log(data);
-                  searchHandler.call(search.getForm(), "companyList");
-                },
-                failure: function(resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  Ext.Msg.alert("删除", data.msg);
-                }
-              });
+          window.removeGridRow({
+            grid: cs,
+            api: env.services.web + env.api.company.del,
+            success: function() {
+              searchHandler.call(search.getForm(), "companyList");
             }
           });
         }
