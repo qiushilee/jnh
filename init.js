@@ -345,31 +345,38 @@
    * @param {String} api 删除接口
    */
   window.removeGridRow = function (opt) {
-    var current = opt.grid.getSelectionModel().getSelection()[0],
-      index = opt.index || current.index;
+    try {
+      var current = opt.grid.getSelectionModel().getSelection()[0],
+        index = opt.index || current.index;
 
-    Ext.Msg.confirm("删除", "确认删除？", function (type) {
-      if (type === "yes") {
-        Ext.Ajax.request({
-          url: opt.api,
-          params: {
-            id: current.data.id
-          },
-          success: function (resp) {
-            resp = Ext.decode(resp.responseText);
+      Ext.Msg.confirm("删除" + opt.grid.title, "确认删除？", function (type) {
+        if (type === "yes") {
+          Ext.Ajax.request({
+            url: opt.api,
+            params: {
+              id: current.data.id
+            },
+            success: function (resp) {
+              resp = Ext.decode(resp.responseText);
 
-            if (resp.success === false) {
-              Ext.Msg.alert("删除操作", resp.msg);
+              if (resp.success === false) {
+                Ext.Msg.alert("删除操作", resp.msg);
+              } else {
+                opt.callback();
+              }
+            },
+            failure: function (resp) {
+              resp = Ext.decode(resp.responseText);
+
+              Ext.Msg.alert("删除操作", action.result.msg);
             }
-          },
-          failure: function (resp) {
-            resp = Ext.decode(resp.responseText);
-
-            Ext.Msg.alert("删除操作", action.result.msg);
-          }
-        });
-      }
-    });
+          });
+        }
+      });
+    } catch(e) {
+      Ext.Msg.alert("删除" + opt.grid.title, "请选中列表中的一项后再操作");
+      console.error(e.stack);
+    }
   };
 
   /**
