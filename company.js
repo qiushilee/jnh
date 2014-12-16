@@ -46,7 +46,7 @@ Ext.application({
       border: 0,
       items: [
         Ext.create("periodical", {
-          labelWidth: 60,
+          labelWidth: 60
         }),
       {
         fieldLabel: "厂商编号",
@@ -269,7 +269,7 @@ Ext.application({
           name: "address",
           labelWidth: 60,
           width: 300,
-          labelAlign: "right",
+          labelAlign: "right"
         }, {
           fieldLabel: '联系人',
           name: "linkMan",
@@ -299,13 +299,13 @@ Ext.application({
           name: "productClass",
           labelWidth: 60,
           width: 300,
-          labelAlign: "right",
+          labelAlign: "right"
         }, {
           fieldLabel: '邮编',
           name: "zipCode",
           labelWidth: 60,
           width: 300,
-          labelAlign: "right",
+          labelAlign: "right"
         }, {
           fieldLabel: "qq",
           name: "qq",
@@ -433,9 +433,9 @@ Ext.application({
               }]
             }
           ]
-        },
+        }
       ],
-      closeAction: 'hide',
+      closeAction: 'hide'
     });
 
     var upload = new Ext.create("Ext.window.Window", {
