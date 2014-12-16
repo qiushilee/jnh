@@ -95,6 +95,7 @@
     change: "/catalog/update",
     add: "/catalog/create",
     del: "/catalog/delete",
+
     record:"/catalog/catalogissuerecord"
   };
 
