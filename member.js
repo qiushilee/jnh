@@ -1274,9 +1274,12 @@ Ext.onReady(function() {
                 form.reset();
                 orderModelHandler({
                   success: function(data) {
+                    var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                      .getSelectionModel()
+                      .getSelection()[0].data;
                     updateForm(form, data);
                     form.findField("id").setValue("");
-                    folwChartsList.load();
+                    showFolwCharts(record.memberId);
                   },
                   fail: function() {
                     Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
