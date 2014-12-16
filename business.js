@@ -17,6 +17,21 @@ Ext.application({
       }
     });
 
+    // 名单管理-目录寄送
+    Ext.create('Ext.data.Store', {
+      storeId: 'directoryList',
+      fields: ['periodicalName', 'deliveryMethodName', 'number', 'source'],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.catalog.record,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     // 管理打印-会员列表
     var memberList = Ext.create('Ext.data.Store', {
       storeId: "manager-memberList",
@@ -166,6 +181,12 @@ Ext.application({
                 itemdblclick: function (that, record) {
                   var form = this.ownerCt.ownerCt.ownerCt.getComponent("memberContainer").getComponent("member").getForm();
 
+                  Ext.data.StoreManager.lookup('directoryList').load({
+                    params: {
+                      id: record.data.id
+                    }
+                  });
+
                   Ext.Ajax.request({
                     url: env.services.web + env.api.member.info + record.data.id,
                     success: function(resp) {
@@ -216,7 +237,7 @@ Ext.application({
               {
                 xtype: "grid",
                 height: 155,
-                store: Ext.data.StoreManager.lookup('simpsonsStore'),
+                store: Ext.data.StoreManager.lookup('directoryList'),
                 margin: "10 0 0 0",
                 columns: [
                 {
@@ -225,12 +246,12 @@ Ext.application({
                 },
                 {
                   text: '寄送方式',
-                  dataIndex: 'mailingDate',
+                  dataIndex: 'deliveryMethodName',
                   flex: 1
                 },
                 {
                   text: '期数',
-                  dataIndex: 'periodicalId',
+                  dataIndex: 'periodicalName',
                   flex: 1
                 },
                 {
@@ -240,7 +261,7 @@ Ext.application({
                 },
                 {
                   text: '数量1',
-                  dataIndex: 'sendNumber1',
+                  dataIndex: 'number',
                   flex: 1
                 },
                 {
