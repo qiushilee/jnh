@@ -68,7 +68,7 @@
     add: "/product/create",
     del: "/product/delete",
     shipmentDetails: '/product/shipmentdetails',//出货明细
-    delShipmentDetails: '',//删除出货明细
+    delShipmentDetails: '/product/delshipmentdetail',//删除出货明细
     transitionLoss: '/product/transitionLoss',//进转损
     addTransitionLoss: '/product/addtransitionloss',//添加进转损
     delTransitionLoss: '/product/deletetransitionloss',//删除进转损
