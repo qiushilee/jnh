@@ -163,10 +163,20 @@ Ext.application({
               }
               ],
               listeners: {
-                itemdblclick: function (that, record, item, index, e, eOpts) {
+                itemdblclick: function (that, record) {
                   var form = this.ownerCt.ownerCt.ownerCt.getComponent("memberContainer").getComponent("member").getForm();
 
-                  window.updateForm(form, record.data);
+                  Ext.Ajax.request({
+                    url: env.services.web + env.api.member.info + record.data.id,
+                    success: function(resp) {
+                      var data = Ext.JSON.decode(resp.responseText);
+                      window.updateForm(form, data.info);
+                      window.updateForm(form, data.addressList);
+                    },
+                    failure: function(resp) {
+                      console.error(resp.statusText);
+                    }
+                  });
                 }
               }
             }
@@ -458,9 +468,8 @@ Ext.application({
                 var form = this.ownerCt.ownerCt.getComponent("member").getForm();
                 form.url = env.services.web + env.api.business.change;
                 form.submit({
-                  success: function(form, action) {
-                    Ext.data.StoreManager.lookup("memberList").load();
-                    form.reset();
+                  success: function() {
+                    searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0].getForm(), "memberList");
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("修改名单", action.result.msg);
