@@ -343,6 +343,7 @@
    * @param {Object} grid 需要删除的列表
    * @param {Number} index 可选参数，删除指定的行数，默认删除选中的行数
    * @param {String} api 删除接口
+   * @param {Function} success 删除成功后的回调函数，一般可以用来刷新grid数据
    */
   window.removeGridRow = function (opt) {
     try {
@@ -362,7 +363,7 @@
               if (resp.success === false) {
                 Ext.Msg.alert("删除操作", resp.msg);
               } else {
-                opt.callback();
+                opt.success();
               }
             },
             failure: function (resp) {

@@ -246,7 +246,7 @@ Ext.application({
                 window.removeGridRow({
                   grid: Ext.ComponentQuery.query("grid[itemId=productList]")[0],
                   api: env.services.web + env.api.product.del,
-                  callback: function() {
+                  success: function() {
                     var form = Ext.ComponentQuery.query("[itemId=search-bar]")[0].getForm();
                     searchHandler.call(form, "product");
                   }
