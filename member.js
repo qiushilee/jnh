@@ -18,12 +18,11 @@ Ext.onReady(function() {
   // 目录寄送
   Ext.create('Ext.data.Store', {
     storeId: 'directoryList',
-    fields: ['addrList', 'userCode', 'realName', 'memberType'],
+    fields: ['periodicalName', 'deliveryMethodName', 'number', 'source'],
     layout: "fit",
-    autoLoad: true,
     proxy: {
       type: 'ajax',
-      url: env.services.web + env.api.member.list,
+      url: env.services.web + env.api.catalog.record,
       reader: {
         type: 'json',
         root: 'list'
@@ -327,6 +326,11 @@ Ext.onReady(function() {
               itemdblclick: function( that, record, item, index, e, eOpts) {
                 showMemberInfo(record.data.id);
                 showFolwCharts(record.data.id);
+                Ext.data.StoreManager.lookup('directoryList').load({
+                  params: {
+                    id: record.data.id
+                  }
+                });
               }
             }
           },
@@ -337,25 +341,25 @@ Ext.onReady(function() {
             margin: "0 0 0 100",
             height: 155,
             title: "目录寄送",
-            store: Ext.data.StoreManager.lookup('directory'),
+            store: Ext.data.StoreManager.lookup('directoryList'),
             columns: [
               {
                 text: '期数',
-                dataIndex: 'id'
+                dataIndex: 'periodicalName'
               },
               {
                 text: '寄送方式',
                 flex: 1,
-                dataIndex: 'adder'
+                dataIndex: 'deliveryMethodName'
               },
               {
                 text: '数量',
-                dataIndex: 'id'
+                dataIndex: 'number'
               },
               {
                 text: '来源',
                 flex: 1,
-                dataIndex: '1'
+                dataIndex: 'source'
               }
             ]
           },

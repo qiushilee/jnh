@@ -1,6 +1,6 @@
-(function() {
+(function () {
   var env = {},
-      ValidIpAddressRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+    ValidIpAddressRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
 
   env.api = {};
 
@@ -35,7 +35,7 @@
   env.api.ordersource = "/ajax/ordersource";//订单来源
   env.api.companytype = "/ajax/companytype";//供货商类型
   env.api.jzstype = "/ajax/jzstype";//进转损分类
-  env.api.membertype = "/ajax/membertype";    
+  env.api.membertype = "/ajax/membertype";
   env.api.membersource = "/ajax/membersource";
   env.api.managerRoles = "/ajax/managerrole";
 
@@ -56,23 +56,24 @@
     add: "/company/create",
     change: "/company/update",
     copy: "/company/copy",   //厂商复制
-    findByCompanyCode:"/company/findbycompanycode",//根据厂商编号获取企业信息
+    findByCompanyCode: "/company/findbycompanycode",//根据厂商编号获取企业信息
     import: "/company/import",   //导入
-    print: "/company/print" //打印，参数 btId
+    print: "/company/print", //打印，参数 btId
+    receipt: '/company/receipt'
   };
 
   env.api.product = {
     list: "/product/index",
     change: "/product/update",
     add: "/product/create",
-    del:"/product/delete",
-    shipmentDetails:'/product/shipmentdetails',//出货明细
-    delShipmentDetails:'',//删除出货明细
-    transitionLoss:'/product/transitionLoss',//进转损
-    addTransitionLoss:'/product/addtransitionloss',//添加进转损
-    delTransitionLoss:'/product/deletetransitionloss',//删除进转损
-    changeTransitionLoss:'/product/updatetransitionloss',//修改进转损
-    import: "/product/import" ,  //导入
+    del: "/product/delete",
+    shipmentDetails: '/product/shipmentdetails',//出货明细
+    delShipmentDetails: '',//删除出货明细
+    transitionLoss: '/product/transitionLoss',//进转损
+    addTransitionLoss: '/product/addtransitionloss',//添加进转损
+    delTransitionLoss: '/product/deletetransitionloss',//删除进转损
+    changeTransitionLoss: '/product/updatetransitionloss',//修改进转损
+    import: "/product/import",  //导入
     print: "/product/print" //打印，参数 btId
   };
 
@@ -107,11 +108,11 @@
   };
 
   //寄送方式
-  env.api.sendmethord={
-    opetion :"/ajax/sendmethord",
-    list : "/sendmethord/index",
-    save : "/sendmethord/save",
-    del : "/sendmethord/delete"
+  env.api.sendmethord = {
+    opetion: "/ajax/sendmethord",
+    list: "/sendmethord/index",
+    save: "/sendmethord/save",
+    del: "/sendmethord/delete"
   }
 
   //出货单
@@ -126,12 +127,12 @@
     saveorderproduct: "/deliverorder/saveorderproduct",//右侧保存产品
     deleteorderproduct: "/deliverorder/deleteorderproduct",//右侧删除产品
     import: "/deliverorder/import",   //导入
-    viewticketproduct:"/deliverorder/viewticketproduct",//查看抵价券产品，参数deliveryOrderId,memberId
-    viewticket:"/deliverorder/viewticket",//查看抵价券，参数deliveryOrderId,memberId
-    addticket:"/deliverorder/createticket",//加入抵价券
-    generateticket:"/deliverorder/generateticket",//生成抵价券
-    changenumber:"/deliverorder/changenumber",//修改抵价券中商品数量
-    delticket:"/deliverorder/delticket",//删除抵价券
+    viewticketproduct: "/deliverorder/viewticketproduct",//查看抵价券产品，参数deliveryOrderId,memberId
+    viewticket: "/deliverorder/viewticket",//查看抵价券，参数deliveryOrderId,memberId
+    addticket: "/deliverorder/createticket",//加入抵价券
+    generateticket: "/deliverorder/generateticket",//生成抵价券
+    changenumber: "/deliverorder/changenumber",//修改抵价券中商品数量
+    delticket: "/deliverorder/delticket",//删除抵价券
   };
 
   //包裹管理
@@ -140,13 +141,13 @@
     change: "/package/update",
     add: "/package/create",
     del: "/package/delete",
-    sendlist:'/package/sendreplacement',//补寄列表
-    sendadd:'/package/savesendreplacement',//补寄添加
-    sendchange:'/package/savesendreplacement',//补寄修改
-    printlog:'/package/printlog',//记录包裹打印记录
-    createserialcode:'/package/serialcode',//生成流水单号
-    export:"/package/export",
-    print:'/package/print'
+    sendlist: '/package/sendreplacement',//补寄列表
+    sendadd: '/package/savesendreplacement',//补寄添加
+    sendchange: '/package/savesendreplacement',//补寄修改
+    printlog: '/package/printlog',//记录包裹打印记录
+    createserialcode: '/package/serialcode',//生成流水单号
+    export: "/package/export",
+    print: '/package/print'
   };
 
   env.api.productrecord = {
@@ -155,8 +156,8 @@
     add: "/productrecord/create",
     del: "/productrecord/delete",
     //根据进转损查看产品
-    viewProductRecord:'/productrecord/viewproductrecord',
-    print:'/productrecord/printproductrecord'
+    viewProductRecord: '/productrecord/viewproductrecord',
+    print: '/productrecord/printproductrecord'
   };
 
   //业务管理
@@ -165,13 +166,13 @@
     change: "/business/savemember",
     add: "/business/savemember",
     del: "/business/deletemember",
-    printcartlist:"/printcart/index",//打印购物车列表
-    addprintcart:"/printcart/create",//添加打印购物车
-    delprintcart:"/printcart/delete",//删除打印购物车
-    printlog:'/printcart/printlog',//记录业务打印记录
-    export:'/printcart/export',//导出
+    printcartlist: "/printcart/index",//打印购物车列表
+    addprintcart: "/printcart/create",//添加打印购物车
+    delprintcart: "/printcart/delete",//删除打印购物车
+    printlog: '/printcart/printlog',//记录业务打印记录
+    export: '/printcart/export',//导出
     printmember: "/business/printmember", //会员名单打印，参数 btId
-    printcart:'/printcart/printcart',//打印购物车打印，参数 btId
+    printcart: '/printcart/printcart',//打印购物车打印，参数 btId
   };
 
   //电话订购
@@ -179,7 +180,7 @@
     list: {
       member: "/telorder/memberlist",
       order: "/telorder/orderlist",//出货单
-      orderproduct:"/deliverorder/vieworderdetail",//出货单产品搜索
+      orderproduct: "/deliverorder/vieworderdetail",//出货单产品搜索
     },
     change: {
       member: "/telorder/savemember",
@@ -199,8 +200,8 @@
       //右侧删除出货单产品
       order: "/telorder/deleteorderproduct",
     },
-    print:'/telorder/print',
-    exportToDeliverorder:"/telorder/exporttodeliverorder"
+    print: '/telorder/print',
+    exportToDeliverorder: "/telorder/exporttodeliverorder"
   };
   
   env.api.actionlog = {
@@ -216,8 +217,8 @@
     searchshipment: "/search/shipment",
     estimatepurchase: "/search/estimatepurchase",
     member: "/search/member",
-    export:'/search/export',//导出
-    print:'/search/print'
+    export: '/search/export',//导出
+    print: '/search/print'
   };
 
 //管理员
@@ -273,16 +274,16 @@
    * @param {Object} data 表单数据
    * TODO datefield 不能写入
    */
-  window.updateForm = function(form, data) {
+  window.updateForm = function (form, data) {
     var fields = [];
 
     function eachField(form) {
       if (form.items) {
-        form.items.each(function(item, index, length) { 
+        form.items.each(function (item, index, length) {
           try {
             item.getName();
             fields.push(item);
-          } catch(e) {
+          } catch (e) {
             eachField(item);
           }
         });
@@ -291,8 +292,8 @@
     
     eachField(form.owner);
 
-    Ext.Object.each(data, function(name, value) {
-      Ext.Array.each(fields, function(item, index) {
+    Ext.Object.each(data, function (name, value) {
+      Ext.Array.each(fields, function (item, index) {
         //期数选择
         if (item.xtype === "combobox" && item.getName() === name) {
           item.fireEvent("setvalue", item, value);
@@ -308,29 +309,29 @@
   /**
    * 通用的搜索功能
    * Usage: search.call(this, "store");
-   * @param {Object|Form} this 
+   * @param {Object|Form} this
    *    情景一：this.up("form") 直接获取到form；
    *    情景二：直接传入form；
    */
-  window.searchHandler = function(store, success) {
+  window.searchHandler = function (store, success) {
     var form = this.up && this.up("form") ? this.up("form").getForm() : this;
     if (form.isValid()) {
       form.submit({
-        success: function(form, action) {
+        success: function (form, action) {
           try {
             Ext.data.StoreManager.lookup(store).loadData(action.result.list);
             success(Ext.data.StoreManager.lookup(store));
-          } catch(e) {
+          } catch (e) {
             console.error(e.stack);
           }
         },
-        failure: function(form, action) {
+        failure: function (form, action) {
           try {
             Ext.data.StoreManager.lookup(store).loadData(action.result.list);
             if (action.result.msg) {
               Ext.Msg.alert("搜索", action.result.msg);
             }
-          } catch(e) {
+          } catch (e) {
             console.error(e.stack);
           }
         }
@@ -343,40 +344,55 @@
    * @param {Object} grid 需要删除的列表
    * @param {Number} index 可选参数，删除指定的行数，默认删除选中的行数
    * @param {String} api 删除接口
+   * @param {Function} success 删除成功后的回调函数，一般可以用来刷新grid数据
    */
-  window.removeGridRow = function(opt) {
-    var current = opt.grid.getSelectionModel().getSelection()[0],
+  window.removeGridRow = function (opt) {
+    try {
+      var current = opt.grid.getSelectionModel().getSelection()[0],
+        title = "删除" + (opt.grid.title || ""),
         index = opt.index || current.index;
 
-    Ext.Msg.confirm("删除", "确认删除？", function(type) {
-      if (type === "yes") {
-        Ext.Ajax.request({
-          url: opt.api,
-          params: {
-            id: current.data.id
-          },
-          success: function(resp) {
-            resp = Ext.decode(resp.responseText);
+      Ext.Msg.confirm(title, "确认删除？", function (type) {
+        if (type === "yes") {
+          Ext.Ajax.request({
+            url: opt.api,
+            params: {
+              id: current.data.id
+            },
+            success: function (resp) {
+              resp = Ext.decode(resp.responseText);
 
-            if (resp.success === false) {
-              Ext.Msg.alert("删除操作", resp.msg);
+              if (resp.success === false) {
+                Ext.Msg.alert(title, resp.msg);
+              } else {
+                opt.success();
+              }
+            },
+            failure: function (resp) {
+              var msg = "";
+              try {
+                msg = Ext.decode(resp.responseText).result.msg;
+              } catch(e) {
+                msg = "服务器故障，删除失败！！！"
+                console.error(e.stack);
+              }
+
+              Ext.Msg.alert(title, msg);
             }
-          },
-          failure: function(resp) {
-            resp = Ext.decode(resp.responseText);
-
-            Ext.Msg.alert("删除操作", action.result.msg);
-          }
-        });
-      }
-    });
+          });
+        }
+      });
+    } catch(e) {
+      Ext.Msg.alert("删除" + opt.grid.title, "请选中列表中的一项后再操作");
+      console.error(e.stack);
+    }
   };
 
   /**
    * 打印
    */
   window.printHandle = {
-    set: function(type) {
+    set: function (type) {
       if (type) {
         window.open(env.services.web + env.api.print.set + "?module=" + type);
       } else {
@@ -388,7 +404,7 @@
      * {ExtComponent} $el: 父级容器，用来放打印按钮
      * {String} type: 类型
      */
-    get: function(opt) {
+    get: function (opt) {
       opt.margin = opt.margin || "";
 
       if (opt.type) {
@@ -398,23 +414,23 @@
           params: {
             module: opt.type
           },
-          success: function(response) {
+          success: function (response) {
             var data = Ext.JSON.decode(response.responseText);
-            Ext.Array.each(data.list, function(item) {
+            Ext.Array.each(data.list, function (item) {
               var $btn = Ext.create("Ext.Button", {
                 text: item.printButtonName,
                 margin: opt.margin,
-                handler: function() {
+                handler: function () {
                   var val = opt.form.getValues();
                   val["btId"] = item.id;
                   Ext.Ajax.request({
                     url: opt.url,
                     params: val,
-                    success: function(resp) {
+                    success: function (resp) {
                       var data = Ext.JSON.decode(resp.responseText);
                       console.log(data)
                     },
-                    failure: function(resp) {
+                    failure: function (resp) {
                       throw "打印列表查询失败, 服务器无响应，请稍后再试";
                     }
                   });
@@ -423,7 +439,7 @@
               opt.$el.add($btn);
             });
           },
-          failure: function(response) {
+          failure: function (response) {
             throw "打印列表查询失败, 服务器无响应，请稍后再试";
           }
         });
@@ -436,7 +452,7 @@
   /**
    * 切换视图
    */
-  window.switchView = function(opt) {
+  window.switchView = function (opt) {
     if (opt.key && opt.val) {
       localStorage.setItem(opt.key, opt.val);
     }
@@ -445,11 +461,11 @@
 
   Ext.application({
     name: "JNH",
-    launch: function() {
+    launch: function () {
 
 
       function comboboxSetValue(combobox, value) {
-        combobox.store.data.each(function(item, i) {
+        combobox.store.data.each(function (item, i) {
           if (item.data.value == value) {
             combobox.setValue(item.data.value);
           }
@@ -481,19 +497,19 @@
         valueField: "value",
         labelAlign: "right",
         name: "periodicalId",
-        width:150,
+        width: 150,
         listeners: {
-          render: function(combobox) {
-            setTimeout(function() {
+          render: function (combobox) {
+            setTimeout(function () {
               combobox.setValue(combobox.store.data.getAt(0));
             });
           },
           setvalue: comboboxSetValue
         }
       });
-    
-    //学校类型
-     Ext.define("addressType", {
+
+      //学校类型
+      Ext.define("addressType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "类型",
         queryMode: "local",
@@ -519,9 +535,9 @@
           setvalue: comboboxSetValue
         }
       });
-    
-     //会员分类
-     Ext.define("memberType", {
+
+      //会员分类
+      Ext.define("memberType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "会员类型",
         queryMode: "local",
@@ -547,9 +563,9 @@
           setvalue: comboboxSetValue
         }
       });
-    
-    //寄送方式
-     Ext.define("deliveryMethod", {
+
+      //寄送方式
+      Ext.define("deliveryMethod", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "寄送方式",
         queryMode: "local",
@@ -574,9 +590,9 @@
           setvalue: comboboxSetValue
         }
       });
-    
-     //支付方式
-     Ext.define("paymentMethord", {
+
+      //支付方式
+      Ext.define("paymentMethord", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
@@ -602,10 +618,10 @@
           setvalue: comboboxSetValue
         }
       });
-    
-    
-    //供货商分类
-     Ext.define("companyType", {
+
+
+      //供货商分类
+      Ext.define("companyType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
@@ -631,9 +647,9 @@
           setvalue: comboboxSetValue
         }
       });
-    
-   //订单来源分类
-     Ext.define("orderSource", {
+
+      //订单来源分类
+      Ext.define("orderSource", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
@@ -659,8 +675,8 @@
           setvalue: comboboxSetValue
         }
       });
-     //进转损分类
-     Ext.define("jzsType", {
+      //进转损分类
+      Ext.define("jzsType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "类型",
         queryMode: "local",
@@ -686,9 +702,9 @@
           setvalue: comboboxSetValue
         }
       });
-    
-     //会员来源
-     Ext.define("memberSource", {
+
+      //会员来源
+      Ext.define("memberSource", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "来源",
         queryMode: "local",
@@ -744,9 +760,9 @@
       /**
        * 获取文件后缀
        */
-      window.getExt = function(file) {
+      window.getExt = function (file) {
         return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
-      }      
+      }
 
     }
   });

@@ -99,6 +99,7 @@ Ext.application({
           padding: 15,
           items: [
             {
+              itemId: "search-bar",
               xtype: "form",
               border: 0,
               layout: "column",
@@ -242,22 +243,12 @@ Ext.application({
               text: "删除",
               margin: "20 0 0 20",
               handler: function() {
-                var record = Ext.ComponentQuery.query("grid[itemId=productList]")[0].getSelectionModel()
-                .getSelection()[0].data;
-
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.product.del,
-                  params: {
-                    id: record.id
-                  },
-                  success: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    console.log(data);
-                    Ext.data.StoreManager.lookup("product").load();
-                  },
-                  failure: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.Msg.alert("删除", data.msg);
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("grid[itemId=productList]")[0],
+                  api: env.services.web + env.api.product.del,
+                  success: function() {
+                    var form = Ext.ComponentQuery.query("[itemId=search-bar]")[0].getForm();
+                    searchHandler.call(form, "product");
                   }
                 });
               }
@@ -412,22 +403,11 @@ Ext.application({
               margin: "20 0 0 20",
               scale: "medium",
               handler: function() {
-                var record = Ext.ComponentQuery.query("grid[title=进转损]")[0].getSelectionModel()
-                .getSelection()[0].data;
-
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.product.delTransitionLoss,
-                  params: {
-                    id: record.id
-                  },
-                  success: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    console.log(data);
-                    Ext.data.StoreManager.lookup("transitionLoss").load();
-                  },
-                  failure: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.Msg.alert("删除", data.msg);
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("grid[title=进转损]")[0],
+                  api: env.services.web + env.api.product.delTransitionLoss,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('transitionLoss').load();
                   }
                 });
               }
@@ -504,22 +484,11 @@ Ext.application({
               margin: "20 0 0 0",
               scale: "medium",
               handler: function() {
-                var record = Ext.ComponentQuery.query("grid[title=进转损]")[0].getSelectionModel()
-                .getSelection()[0].data;
-
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.product.delTransitionLoss,
-                  params: {
-                    id: record.id
-                  },
-                  success: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    console.log(data);
-                    Ext.data.StoreManager.lookup("transitionLoss").load();
-                  },
-                  failure: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.Msg.alert("删除", data.msg);
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("grid[title=出货明细]")[0],
+                  api: env.services.web + env.api.product.delShipmentDetails,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('shipmentDetails').load();
                   }
                 });
               }
@@ -665,9 +634,10 @@ Ext.application({
                 handler: function () {
                   var form = this.up("form").getForm();
                   form.submit({
-                    success: function (form, action) {
+                    success: function () {
+                      var form = Ext.ComponentQuery.query("[itemId=search-bar]")[0].getForm();
                       productEdit.hide();
-                      Ext.data.StoreManager.lookup("product").load();
+                      searchHandler.call(form, "product");
                     },
                     failure: function (form, action) {
                       Ext.Msg.alert("修改库存", action.result.msg);

@@ -21,6 +21,21 @@ Ext.application({
       }
     });
 
+    // 进转损列表
+    Ext.create('Ext.data.Store', {
+      storeId: 'jzsList',
+      fields: ["id",'key', "typeName", "receiptCode", "receiptDate", "purchaseAmount"],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.company.receipt,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
       url: env.services.web + env.api.company.list,
@@ -31,7 +46,7 @@ Ext.application({
       border: 0,
       items: [
         Ext.create("periodical", {
-          labelWidth: 60,
+          labelWidth: 60
         }),
       {
         fieldLabel: "厂商编号",
@@ -113,6 +128,12 @@ Ext.application({
           form.url = env.services.web + env.api.company.change;
           form.reset();
           window.updateForm(form, currentProduct);
+          Ext.data.StoreManager.lookup('jzsList').load({
+            params: {
+              companyId: record.data.id,
+              type: record.data.type
+            }
+          });
           win.show();
         }
       },
@@ -248,7 +269,7 @@ Ext.application({
           name: "address",
           labelWidth: 60,
           width: 300,
-          labelAlign: "right",
+          labelAlign: "right"
         }, {
           fieldLabel: '联系人',
           name: "linkMan",
@@ -278,13 +299,13 @@ Ext.application({
           name: "productClass",
           labelWidth: 60,
           width: 300,
-          labelAlign: "right",
+          labelAlign: "right"
         }, {
           fieldLabel: '邮编',
           name: "zipCode",
           labelWidth: 60,
           width: 300,
-          labelAlign: "right",
+          labelAlign: "right"
         }, {
           fieldLabel: "qq",
           name: "qq",
@@ -378,37 +399,47 @@ Ext.application({
           bodyPadding: 10,
           border: 0,
           // +TODO: 类型可下拉选择
-          items: [{
-            xtype: "combobox",
-            fieldLabel: "类型",
-            labelWidth: 40,
-            margin: "10"
-          }, {
-            xtype: "grid",
-            title: '进转损',
-            store: Ext.data.StoreManager.lookup('jhStore'),
-            columns: [{
-              text: '类型',
-              dataIndex: 'name'
-            }, {
-              text: '流水号',
-              dataIndex: 'id'
-            }, {
-              text: '日期',
-              dataIndex: 'adder'
-            }, {
-              text: '金额',
-              dataIndex: 'man',
-              flex: 1
-            }]
-          }]
-        },
+          items: [
+            Ext.create("jzsType", {
+              listeners: {
+                change: function(that) {
+                  var record = cs.getSelectionModel().getSelection()[0];
+                  Ext.data.StoreManager.lookup('jzsList').load({
+                    params: {
+                      companyId: record.data.id,
+                      type: that.value
+                    }
+                  });
+                }
+              }
+            }),
+            {
+              xtype: "grid",
+              title: '进转损',
+              store: Ext.data.StoreManager.lookup('jzsList'),
+              columns: [{
+                text: '类型',
+                dataIndex: 'typeName'
+              }, {
+                text: '流水号',
+                dataIndex: 'receiptCode'
+              }, {
+                text: '日期',
+                dataIndex: 'receiptDate'
+              }, {
+                text: '金额',
+                dataIndex: 'purchaseAmount',
+                flex: 1
+              }]
+            }
+          ]
+        }
       ],
-      closeAction: 'hide',
+      closeAction: 'hide'
     });
 
     var upload = new Ext.create("Ext.window.Window", {
-      title: "厂商详情",
+      title: "厂商导入",
       layout: "column",
       bodyStyle: {
         background: "#fff"
