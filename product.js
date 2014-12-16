@@ -106,7 +106,8 @@ Ext.application({
               url: env.services.web + env.api.product.list,
               items: [
                 Ext.create("periodical", {
-                  itemId: "product-periodical"
+                  itemId: "product-periodical",
+                  title: '库存表期数'
                 }),
                 {
                   xtype: "textfield",
@@ -143,7 +144,7 @@ Ext.application({
                 },
                 {
                   text: '品名',
-                  dataIndex: 'name',
+                  dataIndex: 'name'
                 },
                 {
                   text: '进价',
@@ -270,11 +271,13 @@ Ext.application({
                   var data = productlist.getComponent("product").getComponent("productList").getSelectionModel().getSelection()[0].data;
                   var form = productlist.getComponent("transitionLoss").getComponent("form").getForm();
 
+                  Ext.ComponentQuery.query("[title=进转损期数]")[0].setValue(Ext.ComponentQuery.query("[title=库存表期数]")[0].value);
                   window.updateForm(form, data);
                   productlist.setActiveTab(1);
                   searchHandler.call(form, "transitionLoss");
                 } catch (e) {
                   Ext.Msg.alert("查看进货单", "请单击库存表中的一项后再查看进货单");
+                  console.error(e.stack);
                 }
               }
             },
@@ -300,7 +303,10 @@ Ext.application({
               border: 0,
               url: env.services.web + env.api.product.transitionLoss,
               layout: "column",
-              items: [Ext.create('periodical'),
+              items: [
+                Ext.create('periodical', {
+                  title: '进转损期数'
+                }),
                 {
                   xtype: "textfield",
                   labelWidth: 30,
