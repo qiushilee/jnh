@@ -348,9 +348,10 @@
   window.removeGridRow = function (opt) {
     try {
       var current = opt.grid.getSelectionModel().getSelection()[0],
+        title = "删除" + (opt.grid.title || ""),
         index = opt.index || current.index;
 
-      Ext.Msg.confirm("删除" + opt.grid.title, "确认删除？", function (type) {
+      Ext.Msg.confirm(title, "确认删除？", function (type) {
         if (type === "yes") {
           Ext.Ajax.request({
             url: opt.api,
@@ -361,15 +362,21 @@
               resp = Ext.decode(resp.responseText);
 
               if (resp.success === false) {
-                Ext.Msg.alert("删除操作", resp.msg);
+                Ext.Msg.alert(title, resp.msg);
               } else {
                 opt.success();
               }
             },
             failure: function (resp) {
-              resp = Ext.decode(resp.responseText);
+              var msg = "";
+              try {
+                msg = Ext.decode(resp.responseText).result.msg;
+              } catch(e) {
+                msg = "服务器故障，删除失败！！！"
+                console.error(e.stack);
+              }
 
-              Ext.Msg.alert("删除操作", action.result.msg);
+              Ext.Msg.alert(title, msg);
             }
           });
         }
