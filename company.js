@@ -439,7 +439,7 @@ Ext.application({
     });
 
     var upload = new Ext.create("Ext.window.Window", {
-      title: "厂商详情",
+      title: "厂商导入",
       layout: "column",
       bodyStyle: {
         background: "#fff"
