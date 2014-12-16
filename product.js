@@ -728,9 +728,12 @@ Ext.application({
             margin: "0 0 30 20",
             handler: function () {
               var form = addJHD.getComponent("form").getForm();
+              form.url = env.services.web + env.api.productrecord.change;
+
               form.submit({
-                success: function(form, action) {
+                success: function(form) {
                   form.reset();
+                  addJHD.hide();
                 },
                 failure: function (form, action) {
                   Ext.Msg.alert("保存", action.result.msg);
@@ -744,7 +747,16 @@ Ext.application({
             margin: "0 0 30 20",
             handler: function () {
               var form = addJHD.getComponent("form").getForm();
-              form.reset();
+              form.url = env.services.web + env.api.productrecord.add;
+
+              form.submit({
+                success: function(form) {
+                  form.reset();
+                },
+                failure: function (form, action) {
+                  Ext.Msg.alert("保存", action.result.msg);
+                }
+              });
             }
           }
         ]
