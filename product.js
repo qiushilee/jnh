@@ -243,22 +243,12 @@ Ext.application({
               text: "删除",
               margin: "20 0 0 20",
               handler: function() {
-                var record = Ext.ComponentQuery.query("grid[itemId=productList]")[0].getSelectionModel()
-                .getSelection()[0].data;
-
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.product.del,
-                  params: {
-                    id: record.id
-                  },
-                  success: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    console.log(data);
-                    Ext.data.StoreManager.lookup("product").load();
-                  },
-                  failure: function(resp) {
-                    var data = Ext.JSON.decode(resp.responseText);
-                    Ext.Msg.alert("删除", data.msg);
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("grid[itemId=productList]")[0],
+                  api: env.services.web + env.api.product.del,
+                  callback: function() {
+                    var form = Ext.ComponentQuery.query("[itemId=search-bar]")[0].getForm();
+                    searchHandler.call(form, "product");
                   }
                 });
               }
