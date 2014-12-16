@@ -280,14 +280,14 @@ Ext.application({
 
               window.telorderCurrent = currentData;
               searchHandler.call($sidebarForm, "orderproduct");
-              $sidebarForm.findField("deliveryorderId").setValue(currentData.id);
+              $sidebarForm.findField("deliveryOrderId").setValue(currentData.id);
               if (currentData.deliveryOrderCode) {
                 Ext.ComponentQuery.query("label[name=deliveryOrderCode]")[0].setText(currentData.deliveryOrderCode);
                 $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(true);
               } else {
                 $sidebar.getComponent("searchbar").getComponent("deliveryOrderCode").setDisabled(false);
               }
-              $sidebar.getComponent("detail").getForm().findField("deliveryorderId").setValue(currentData.id);
+              $sidebar.getComponent("detail").getForm().findField("deliveryOrderId").setValue(currentData.id);
               updateForm(form, currentData);
             }
           }
@@ -368,8 +368,8 @@ Ext.application({
                   success: function(resp) {
                     var data = Ext.JSON.decode(resp.responseText);
                     if (data.success) {
-                      form.findField("deliveryorderId").setValue(data.id);
-                      detailForm.findField("deliveryorderId").setValue(data.id);
+                      form.findField("deliveryOrderId").setValue(data.id);
+                      detailForm.findField("deliveryOrderId").setValue(data.id);
                       Ext.ComponentQuery.query("label[name=deliveryOrderCode]")[0].setText(data.code);
                       self.setDisabled(true);
                     } else {
@@ -381,7 +381,7 @@ Ext.application({
             }
           },{
             xtype: "hiddenfield",
-            name: "deliveryorderId"
+            name: "deliveryOrderId"
           },{
             xtype: "label",
             width: 70,
@@ -427,7 +427,7 @@ Ext.application({
               name: "id"
             }, {
               xtype: "hiddenfield",
-              name: "deliveryorderId"
+              name: "deliveryOrderId"
             }, {
               fieldLabel: "数量",
               labelWidth : 50,
