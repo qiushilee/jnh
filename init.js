@@ -320,7 +320,9 @@
         success: function (form, action) {
           try {
             Ext.data.StoreManager.lookup(store).loadData(action.result.list);
-            success(Ext.data.StoreManager.lookup(store));
+            if (Ext.isFunction(success)) {
+              success(Ext.data.StoreManager.lookup(store));
+            }
           } catch (e) {
             console.error(e.stack);
           }
