@@ -507,7 +507,9 @@ Ext.application({
     window.printHandle.get({
       $el: Ext.ComponentQuery.query("[itemId=product]")[0],
       type: "productrecord",
-      margin: "20 0 0 20"
+      margin: "20 0 0 20",
+      form: Ext.ComponentQuery.query("[itemId=search-bar]")[0].getForm(),
+      title: Ext.ComponentQuery.query("[itemId=productList]")[0].title
     });
 
     window.printHandle.get({
