@@ -439,6 +439,7 @@ Ext.application({
                     }
                   ]
                 }, {
+                  itemId: 'list-btn-panel',
                   xtype: 'panel',
                   layout: "hbox",
                   border: 0,
@@ -545,12 +546,6 @@ Ext.application({
                           }
                         });
                       }
-                    },
-                    {
-                      xtype: "button",
-                      text: "打印",
-                      disabled: true,
-                      margin: "0 0 0 20"
                     },
                     {
                       name: "jhd-print",
@@ -1028,6 +1023,13 @@ Ext.application({
           ]
         }
       ]
+    });
+
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=list-btn-panel]")[0],
+      type: "businessmember",
+      margin: "0 0 0 10",
+      title: panel.items.items[0].title
     });
   }
 });
