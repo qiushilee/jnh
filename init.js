@@ -452,8 +452,11 @@
           text: opt.printButtonName,
           margin: opt.margin,
           handler: function () {
-            var val = opt.form.getValues();
-            val["btId"] = opt.id;
+            var val = "";
+            if (opt.form) {
+              val = opt.form.getValues();
+              val["btId"] = opt.id;
+            }
             Ext.Ajax.request({
               url: env.services.web + opt.url,
               params: val,
