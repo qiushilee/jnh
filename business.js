@@ -20,7 +20,7 @@ Ext.application({
     // 名单管理-目录寄送
     Ext.create('Ext.data.Store', {
       storeId: 'directoryList',
-      fields: ['periodicalName', 'deliveryMethodName', 'number', 'source'],
+      fields: ['issueDate','periodicalName', 'deliveryMethodName', 'issueNum','recyclingNum', 'source','issueCode','remark'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -227,7 +227,7 @@ Ext.application({
                 columns: [
                 {
                   text: '寄送日期',
-                  dataIndex: 'id1'
+                  dataIndex: 'issueDate'
                 },
                 {
                   text: '寄送方式',
@@ -241,22 +241,17 @@ Ext.application({
                 },
                 {
                   text: '索取数',
-                  dataIndex: 'askNumber',
+                  dataIndex: 'recyclingNum',
                   flex: 1
                 },
                 {
                   text: '数量1',
-                  dataIndex: 'number',
-                  flex: 1
-                },
-                {
-                  text: '数量2',
-                  dataIndex: 'sendNumber2',
+                  dataIndex: 'issueNum',
                   flex: 1
                 },
                 {
                   text: '单号',
-                  dataIndex: 'printcartCode',
+                  dataIndex: 'issueCode',
                   flex: 1
                 },
                 {
