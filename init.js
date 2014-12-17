@@ -455,7 +455,7 @@
             var val = opt.form.getValues();
             val["btId"] = opt.id;
             Ext.Ajax.request({
-              url: opt.url,
+              url: env.services.web + opt.url,
               params: val,
               success: function (resp) {
                 var data = Ext.JSON.decode(resp.responseText);
