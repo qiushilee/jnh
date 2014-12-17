@@ -244,19 +244,12 @@ Ext.onReady(function() {
             margin: "0 5",
             text: "删除",
             handler: function() {
-              var member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
-
-              Ext.Msg.alert("删除会员", "确认删除会员：" + member.realName, function() {
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.member.del +'id/'+ member.id,
-                  success: function(response) {
-                    var data = Ext.JSON.decode(response.responseText);
-                    Ext.data.StoreManager.lookup("memberList").load();
-                  },
-                  failure: function(form, action) {
-                    Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
-                  }
-                });
+              window.removeGridRow({
+                grid: panel.getComponent("grid").getComponent("memberList"),
+                api: env.services.web + env.api.member.del,
+                success: function() {
+                  Ext.data.StoreManager.lookup("memberList").load();
+                }
               });
             }
           }
@@ -274,6 +267,7 @@ Ext.onReady(function() {
           {
             // +TODO: 参照 module9.js 地址，索取数量不要
             itemId: "memberList",
+            title: "会员列表",
             xtype: "grid",
             height: 155,
             columnWidth: 0.5,
@@ -586,7 +580,7 @@ Ext.onReady(function() {
       // 第八行
       // +TODO: 增加补寄详情
       {
-     itemId: "orderlist",
+        itemId: "orderlist",
         xtype: "grid",
         height: 155,
         title: "流程表",
@@ -691,20 +685,15 @@ Ext.onReady(function() {
             text: "<span class=\"key\">D</span> 删除",
             margin: "0 0 0 10",
             handler: function() {
-              var order = Ext.ComponentQuery.query("grid[itemId=orderlist]")[0].getSelectionModel().getSelection()[0].data;
-
-              Ext.Msg.confirm("删除汇款订购", "确认删除汇款订：" + order.id, function() {
-                Ext.Ajax.request({
-                  url: env.services.web + env.api.orderremittance.del,
-                  params: {
-                    id: order.id
-                  },
-                  success: function(response) {
-                  },
-                  failure: function(form, action) {
-                    Ext.Msg.alert("删除失败", "服务器无响应，请稍后再试");
-                  }
-                });
+              window.removeGridRow({
+                grid: Ext.ComponentQuery.query("grid[itemId=orderlist]")[0],
+                api: env.services.web + env.api.orderremittance.del,
+                success: function() {
+                  var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                    .getSelectionModel()
+                    .getSelection()[0].data;
+                  showFolwCharts(record.memberId);
+                }
               });
             }
           },
