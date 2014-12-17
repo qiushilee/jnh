@@ -448,7 +448,6 @@
     create: {
       button: function(opt) {
         var that = this;
-        console.log(opt )
         var $btn = Ext.create("Ext.Button", {
           text: opt.printButtonName,
           margin: opt.margin,
