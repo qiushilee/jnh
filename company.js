@@ -218,8 +218,8 @@ Ext.application({
       $el: $btnContainer,
       type: "company",
       margin: "0 0 0 10",
-      url: env.services.web + env.api.company.print,
-      form: search.getForm()
+      form: search.getForm(),
+      title: cs.title
     });
 
     var win = new Ext.create("Ext.window.Window", {

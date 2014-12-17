@@ -394,6 +394,18 @@
    * 打印
    */
   window.printHandle = {
+    _extend: function(obja, objb) {
+      var config = {};
+      for (var i in obja) {
+        config[i] = obja[i];
+      }
+      for (var n in objb) {
+        config[n] = objb[n];
+      }
+
+      return config;
+    },
+
     set: function (type) {
       if (type) {
         window.open(env.services.web + env.api.print.set + "?module=" + type);
@@ -403,10 +415,14 @@
     },
 
     /**
-     * {ExtComponent} $el: 父级容器，用来放打印按钮
-     * {String} type: 类型
+     * @param {ExtComponent} $el: 父级容器，用来放打印按钮，必选
+     * @param {String} type: 类型，必选
+     * @param {String} margin: 按钮边距，可选
+     * @param {ExtComponent} form: 某些页面有搜索框，在获取打印数据时需要带上form中的搜索项，可选
+     * @param {String} title： 打印页标题，必选
      */
     get: function (opt) {
+      var that = this;
       opt.margin = opt.margin || "";
 
       if (opt.type) {
@@ -419,26 +435,8 @@
           success: function (response) {
             var data = Ext.JSON.decode(response.responseText);
             Ext.Array.each(data.list, function (item) {
-              var $btn = Ext.create("Ext.Button", {
-                text: item.printButtonName,
-                margin: opt.margin,
-                handler: function () {
-                  var val = opt.form.getValues();
-                  val["btId"] = item.id;
-                  Ext.Ajax.request({
-                    url: opt.url,
-                    params: val,
-                    success: function (resp) {
-                      var data = Ext.JSON.decode(resp.responseText);
-                      console.log(data)
-                    },
-                    failure: function (resp) {
-                      throw "打印列表查询失败, 服务器无响应，请稍后再试";
-                    }
-                  });
-                }
-              });
-              opt.$el.add($btn);
+              var button = that.create.button(that._extend(opt, item));
+              opt.$el.add(button);
             });
           },
           failure: function (response) {
@@ -447,6 +445,69 @@
         });
       } else {
         throw "type 不能为空";
+      }
+    },
+
+    create: {
+      button: function(opt) {
+        var that = this;
+        var $btn = Ext.create("Ext.Button", {
+          text: opt.printButtonName,
+          margin: opt.margin,
+          handler: function () {
+            var val = "";
+            if (opt.form) {
+              val = opt.form.getValues();
+              val["btId"] = opt.id;
+            }
+            Ext.Ajax.request({
+              url: env.services.web + opt.url,
+              params: val,
+              success: function (resp) {
+                var data = Ext.JSON.decode(resp.responseText);
+                Ext.ux.grid.Printer.opt = {
+                  title: opt.title,
+                  name: document.body.dataset.user
+                };
+                Ext.ux.grid.Printer.print(that.grid(data));
+              },
+              failure: function () {
+                throw "打印列表查询失败, 服务器无响应，请稍后再试";
+              }
+            });
+          }
+        });
+
+        return $btn;
+      },
+
+      grid: function(data) {
+        var fields = [];
+        Ext.Object.each(data.list[0], function(item, i) {
+          fields.push(item);
+        });
+        Ext.create('Ext.data.Store', {
+          storeId:'print',
+          fields: fields,
+          data: data.list,
+          proxy: {
+            type: 'memory',
+            reader: {
+              type: 'json',
+              rootProperty: 'list'
+            }
+          }
+        });
+
+        var grid = Ext.create('Ext.grid.Panel', {
+          title: ' ',
+          store: Ext.data.StoreManager.lookup('print'),
+          columns: data.columns,
+          height: 200,
+          width: 400
+        });
+
+        return grid;
       }
     }
   };
