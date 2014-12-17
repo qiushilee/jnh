@@ -145,10 +145,11 @@ Ext.application({
             xtype: "panel",
             border: 0,
             columnWidth: 0.5,
-            margin: "47 0 0 0",
+            margin: "25 0 0 0",
             items: [
             {
               itemId: "memberList",
+              title: "会员列表",
               xtype: "grid",
               height: 155,
               store: Ext.data.StoreManager.lookup('memberList'),
@@ -213,29 +214,13 @@ Ext.application({
             items: [
             {
               xtype:'panel',
-              layout: "hbox",
-              border: 0,
-            },
-            {
-              xtype:'panel',
               bodyPadding: 5,
               margin: "10 0 0 0",
               border: 0,
               items: [
               {
-                xtype:'panel',
-                layout: "hbox",
-                border: 0,
-                defaultType: 'textfield',
-                items: [
-                {
-                  xtype: "label",
-                  text: "目录寄送"
-                }
-                ]
-              },
-              {
                 xtype: "grid",
+                title: "目录寄送",
                 height: 155,
                 store: Ext.data.StoreManager.lookup('directoryList'),
                 margin: "10 0 0 0",
@@ -557,30 +542,11 @@ Ext.application({
               text: "删除",
               margin: "0 0 0 20",
               handler: function() {
-                var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
-                .getSelectionModel()
-                .getSelection()[0].data;
-
-
-                Ext.Msg.confirm("删除", "确认删除？", function(type) {
-                  if (type === "yes") {
-                    Ext.Ajax.request({
-                      url: env.services.web + env.api.business.del,
-                      params: {
-                        id: record.id
-                      },
-                      success: function(resp) {
-                        searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
-                      },
-                      failure: function(resp) {
-                        try {
-                          var data = Ext.JSON.decode(resp.responseText);
-                          Ext.Msg.alert("删除名单", data.msg);
-                        } catch(e) {
-                          console.error(e.stack);
-                        }
-                      }
-                    });
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("grid[itemId=memberList]")[0],
+                  api: env.services.web + env.api.business.del,
+                  success: function() {
+                    searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
                   }
                 });
               }
