@@ -385,7 +385,7 @@
         }
       });
     } catch(e) {
-      Ext.Msg.alert("删除" + opt.grid.title, "请选中列表中的一项后再操作");
+      Ext.Msg.alert("删除" + (opt.grid.title || ""), "请选中列表中的一项后再操作");
       console.error(e.stack);
     }
   };
