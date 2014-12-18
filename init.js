@@ -144,7 +144,6 @@
     sendlist: '/package/sendreplacement',//补寄列表
     sendadd: '/package/savesendreplacement',//补寄添加
     sendchange: '/package/savesendreplacement',//补寄修改
-    printlog: '/package/printlog',//记录包裹打印记录
     createserialcode: '/package/serialcode',//生成流水单号
     export: "/package/export",
     print: '/package/print'
@@ -169,7 +168,6 @@
     printcartlist: "/printcart/index",//打印购物车列表
     addprintcart: "/printcart/create",//添加打印购物车
     delprintcart: "/printcart/delete",//删除打印购物车
-    printlog: '/printcart/printlog',//记录业务打印记录
     export: '/printcart/export',//导出
     printmember: "/business/printmember", //会员名单打印，参数 btId
     printcart: '/printcart/printcart',//打印购物车打印，参数 btId
@@ -208,6 +206,7 @@
     list: "/actionlog/index",
     del: "/actionlog/delete"
   };
+
 
   //查询模块
   env.api.search = {
