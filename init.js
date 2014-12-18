@@ -483,6 +483,11 @@
 
       grid: function(data) {
         var fields = [];
+
+        if (typeof data.colums === 'undefined') {
+          throw '缺少 data.colums';
+        }
+
         Ext.Object.each(data.list[0], function(item, i) {
           fields.push(item);
         });
