@@ -465,11 +465,16 @@
               params: val,
               success: function (resp) {
                 var data = Ext.JSON.decode(resp.responseText);
-                Ext.ux.grid.Printer.opt = {
-                  title: opt.title,
-                  name: document.body.dataset.user
-                };
-                Ext.ux.grid.Printer.print(that.grid(data));
+
+                if (data.list.length > 0) {
+                  Ext.ux.grid.Printer.opt = {
+                    title: opt.title,
+                    name: document.body.dataset.user
+                  };
+                  Ext.ux.grid.Printer.print(that.grid(data));
+                } else {
+                  Ext.Msg.alert("打印-" + opt.title, "没有数据可供打印，请先搜索、筛选数据！");
+                }
               },
               failure: function () {
                 throw "打印列表查询失败, 服务器无响应，请稍后再试";
@@ -484,8 +489,8 @@
       grid: function(data) {
         var fields = [];
 
-        if (typeof data.colums === 'undefined') {
-          throw '缺少 data.colums';
+        if (typeof data.columns === 'undefined') {
+          throw '缺少 data.columns';
         }
 
         Ext.Object.each(data.list[0], function(item, i) {
