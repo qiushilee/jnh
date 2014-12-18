@@ -1027,6 +1027,7 @@ Ext.application({
 
     window.printHandle.get({
       $el: Ext.ComponentQuery.query("[itemId=list-btn-panel]")[0],
+      form: Ext.ComponentQuery.query("[itemId=member]")[0].getForm(),
       type: "businessmember",
       margin: "0 0 0 10",
       title: panel.items.items[0].title

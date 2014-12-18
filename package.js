@@ -922,6 +922,7 @@ Ext.application({
 
     window.printHandle.get({
       $el: button,
+      form: search.getForm(),
       type: "package",
       margin: "0 0 0 20",
       title: Ext.ComponentQuery.query("[itemId=grid]")[0].title

@@ -1135,6 +1135,7 @@ Ext.application({
 
     window.printHandle.get({
       $el: Ext.ComponentQuery.query("[itemId=purchase-btn-panel]")[0],
+      form: Ext.ComponentQuery.query("[itemId=purchase-btn-panel]")[0].getForm(),
       type: "searchpurchase",
       margin: "0 0 0 20",
       title: panel.items.items[0].title
@@ -1142,6 +1143,7 @@ Ext.application({
 
     window.printHandle.get({
       $el: Ext.ComponentQuery.query("[itemId=shipment-btn-panel]")[0],
+      form: Ext.ComponentQuery.query("[itemId=shipment-btn-panel]")[0].getForm(),
       type: "searchshipment",
       margin: "0 0 0 20",
       title: panel.items.items[0].title
