@@ -469,7 +469,20 @@
                 if (data.list.length > 0) {
                   Ext.ux.grid.Printer.opt = {
                     title: opt.title,
-                    name: document.body.dataset.user
+                    name: document.body.dataset.user,
+                    api: env.services.web + env.api.printlog.save,
+                    type: opt.type,
+                    callback: function () {
+                      var xhr = new XMLHttpRequest();
+                      xhr.open("POST", opt.api, true);
+                      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                      xhr.send("module=" + opt.type);
+                      xhr.onreadystatechange = function (a) {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                          console.log(xhr, a);
+                        }
+                      }
+                    }
                   };
                   Ext.ux.grid.Printer.print(that.grid(data));
                 } else {
