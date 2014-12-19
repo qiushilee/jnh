@@ -292,6 +292,11 @@ Ext.define("Ext.ux.grid.Printer", {
                         	'</tr>',
                         '</tpl>',
                     '</table>',
+                    '<script>',
+                      'var mediaQueryList = window.matchMedia("print");',
+                      'var opt = ' + JSON.stringify(this.opt) + ';',
+                      'mediaQueryList.addListener(' + this.opt.callback + ');',
+                    '</script>',
                   '</body>',
                 '</html>',
                 {
