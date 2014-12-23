@@ -538,100 +538,117 @@ Ext.application({
       width: 700,
       bodyPadding: 10,
       closeAction: 'hide',
-      items: [{
-        layout: "hbox",
-        bodyPadding: 10,
-        border: 0,
-        defaultType: 'textfield',
-        bodyStyle: {
-          "background-color": "transparent"
+      items: [
+        {
+          xtype: "form",
+          url: env.services.web + env.api.package.list,
+          layout: "hbox",
+          bodyPadding: 10,
+          border: 0,
+          defaultType: 'textfield',
+          bodyStyle: {
+            "background-color": "transparent"
+          },
+          items: [
+            {
+              fieldLabel: "出货单号",
+              labelAlign: "right",
+              labelWidth: 60,
+              width: 150,
+              name: "deliveryOrderCode"
+            },
+            {
+              fieldLabel: "",
+              width: 90,
+              name: "deliveryOrderCode2"
+            },
+            Ext.create("deliveryMethod"),
+            {
+              xtype: "button",
+              text: "搜索",
+              margin: "0 0 0 20",
+              handler: function() {
+                var form = this.up("form").getForm();
+                form.submit({
+                  success: function (form, action) {
+                    Ext.data.StoreManager.lookup('printStore').loadData(action.list);
+                    form.reset();
+                  }
+                });
+              }
+            },
+            {
+              xtype: "button",
+              text: "重置",
+              margin: "0 0 0 10",
+              handler: function() {
+                var form = this.up("form").getForm();
+                form.reset();
+              }
+            }
+          ]
         },
-        items: [{
-          fieldLabel: "出货单号",
-          labelAlign: "right",
-          labelWidth: 60,
-          width: 150,
-        }, {
-          fieldLabel: "",
-          width: 90
-        }, {
-          xtype: "combobox",
-          fieldLabel: "寄送方式",
-          labelAlign: "right",
-          labelWidth: 60,
-          width: 140
-        }, {
-          xtype: "button",
-          text: "搜索",
-          disabled: true,
-          margin: "0 0 0 20"
-        }, {
-          xtype: "button",
-          text: "重置",
-          disabled: true,
-          margin: "0 0 0 10"
-        }]
-      }, {
-        itemId: "list",
-        xtype: "grid",
-        height: 155,
-        store: Ext.data.StoreManager.lookup('printStore'),
-        margin: "10 0 0 0",
-        columns: [{
-          text: '序号',
-          dataIndex: 'key'
-        }, {
-          text: '出货单号',
-          dataIndex: 'deliveryOrderCode'
-        }, {
-          text: '流水号',
-          dataIndex: 'packageCode'
-        }, {
-          text: '地址',
-          dataIndex: 'address',
-          flex: 1
-        }, {
-          text: '姓名',
-          dataIndex: 'userName'
-        }, {
-          text: '寄送方式',
-          dataIndex: 'deliveryMethod'
-        }, {
-          text: '备注',
-          dataIndex: 'packageRemark',
-        }]
-      }, {
-        layout: "hbox",
-        bodyPadding: 10,
-        border: 0,
-        defaultType: 'textfield',
-        width: 190,
-        style: {
-          float: "right"
+        {
+          itemId: "list",
+          xtype: "grid",
+          height: 155,
+          store: Ext.data.StoreManager.lookup('printStore'),
+          margin: "10 0 0 0",
+          columns: [{
+            text: '序号',
+            dataIndex: 'key'
+          }, {
+            text: '出货单号',
+            dataIndex: 'deliveryOrderCode'
+          }, {
+            text: '流水号',
+            dataIndex: 'packageCode'
+          }, {
+            text: '地址',
+            dataIndex: 'address',
+            flex: 1
+          }, {
+            text: '姓名',
+            dataIndex: 'userName'
+          }, {
+            text: '寄送方式',
+            dataIndex: 'deliveryMethod'
+          }, {
+            text: '备注',
+            dataIndex: 'packageRemark',
+          }]
         },
-        bodyStyle: {
-          "background-color": "transparent"
-        },
-        items: [{
-          xtype: "button",
-          text: "查询",
-          disabled: true,
-          margin: "0 0 0 20"
-        }, {
-          xtype: "button",
-          text: "打印",
-          margin: "0 0 0 10",
-          disabled: true,
-          handler: function() {
-            ;
-          }
-        }, {
-          xtype: "button",
-          text: "重打",
-          disabled: true,
-          margin: "0 0 0 10"
-        }]
-      }]
+        {
+          layout: "hbox",
+          bodyPadding: 10,
+          border: 0,
+          defaultType: 'textfield',
+          width: 190,
+          style: {
+            float: "right"
+          },
+          bodyStyle: {
+            "background-color": "transparent"
+          },
+          items: [
+            {
+              xtype: "button",
+              text: "打印",
+              margin: "0 0 0 10",
+              disabled: true,
+              handler: function () {
+                ;
+              }
+            },
+            {
+              xtype: "button",
+              text: "重打",
+              disabled: true,
+              margin: "0 0 0 10"
+            }
+          ]
+        }
+      ]
     });
 
     var printCart = new Ext.create("Ext.window.Window", {
