@@ -252,16 +252,6 @@ Ext.application({
         margin: "0 0 0 10"
       },
       {
-        xtype: "button",
-        text: "<span class=\"key\">D</span> 打印",
-        margin: "0 0 0 10",
-        handler: function() {
-          Ext.ux.grid.Printer.stylesheetPath = "extjs/src/ux/grid/gridPrinterCss/package.css";
-          Ext.ux.grid.Printer.printAutomatically = false;
-          Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid")[0]);
-        }
-      },
-      {
         name: "jhd-print",
         xtype: "button",
         text: "打印设置",
@@ -928,6 +918,14 @@ Ext.application({
           }
         }
       ]
+    });
+
+    window.printHandle.get({
+      $el: button,
+      form: search.getForm(),
+      type: "package",
+      margin: "0 0 0 20",
+      title: Ext.ComponentQuery.query("[itemId=grid]")[0].title
     });
   }
 });

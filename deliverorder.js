@@ -615,27 +615,20 @@ Ext.application({
                       text: "<span class=\"key\">D</span> 删除",
                       margin: "0 0 0 10",
                       handler: function() {
-                        var record = Ext.ComponentQuery.query("grid[itemId=orderproductlist]")[0].getSelectionModel().getSelection()[0].data;
-                        Ext.Msg.confirm("删除", "确认删除“货号：" + record.productCode + " " + record.name + "”吗？", function(type) {
-                          if (type === "yes") {
-                            Ext.Ajax.request({
-                              url: env.services.web + env.api.deliverorder.deleteorderproduct,
-                              params: {
-                                id: record.id
-                              },
-                              success: function(resp) {
-                                var data = Ext.JSON.decode(resp.responseText);
-                                if (data.success) {
-                                  Ext.data.StoreManager.lookup("productData").load({
-                                    params: {
-                                      deliveryOrderId: window.deliveryOrderId
-                                    }
-                                  });
-                                } else {
-                                  console.log(data)
+                        window.removeGridRow({
+                          grid: Ext.ComponentQuery.query("grid[itemId=orderproductlist]")[0],
+                          api: env.services.web + env.api.deliverorder.deleteorderproduct,
+                          success: function(resp) {
+                            var data = Ext.JSON.decode(resp.responseText);
+                            if (data.success) {
+                              Ext.data.StoreManager.lookup("productData").load({
+                                params: {
+                                  deliveryOrderId: window.deliveryOrderId
                                 }
-                              }
-                            });
+                              });
+                            } else {
+                              console.log(data)
+                            }
                           }
                         });
                       }
@@ -1128,33 +1121,13 @@ Ext.application({
               text: "删除",
               margin: "0 0 0 10",
               handler: function() {
-                try {
-                  var record = Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0].getSelectionModel().getSelection()[0].data;
-
-                  if (record.id === 0) {
-                    return false;
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("grid[itemId=create-ticket-list]")[0],
+                  api: env.services.web + env.api.deliverorder.delticket,
+                  success: function() {
+                    searchHandler.call(search.getForm(), "companyList");
                   }
-
-                  Ext.Msg.confirm("删除", "确认删除" + record.ticketCode + "吗？", function(type) {
-                    Ext.Ajax.request({
-                      url: env.services.web + env.api.deliverorder.delticket,
-                      method: "POST",
-                      params: {
-                        id: record.id
-                      },
-                      success: function(resp) {
-                        var data = Ext.JSON.decode(resp.responseText);
-                        searchHandler.call(search.getForm(), "companyList");
-                      },
-                      failure: function(resp) {
-                        var data = Ext.JSON.decode(resp.responseText);
-                        Ext.Msg.alert("删除", data.msg);
-                      }
-                    });
-                  });
-                } catch (e) {
-                  Ext.Msg.alert("修改", "请选中列表中的一项后再操作");
-                }
+                });
               }
             },
             {

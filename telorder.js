@@ -508,21 +508,14 @@ Ext.application({
               xtype: "button",
               text: "<span class=\"key\">D</span> 删除",
               handler: function() {
-                try {
-                  var $container = this.ownerCt.ownerCt.ownerCt,
-                      id = this.ownerCt.ownerCt.getComponent("grid").getSelectionModel().getSelection()[0].data.id;
-                  Ext.Ajax.request({
-                    url: env.services.web + env.api.telorder.del.order,
-                    params: {
-                      id: id
-                    },
-                    success: function(resp) {
-                      searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
-                    }
-                  });
-                } catch(e) {
-                  Ext.Msg.alert("删除操作", "请单击表中的一项后再删除");
-                }
+                var $container = this.ownerCt.ownerCt.ownerCt;
+                window.removeGridRow({
+                  grid: this.ownerCt.ownerCt.getComponent("grid"),
+                  api: env.services.web + env.api.telorder.del.order,
+                  success: function() {
+                    searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
+                  }
+                });
               },
               margin: "0 0 0 10"
             }, {

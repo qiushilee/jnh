@@ -384,7 +384,7 @@
         }
       });
     } catch(e) {
-      Ext.Msg.alert("删除" + opt.grid.title, "请选中列表中的一项后再操作");
+      Ext.Msg.alert("删除" + (opt.grid.title || ""), "请选中列表中的一项后再操作");
       console.error(e.stack);
     }
   };
@@ -454,21 +454,39 @@
           text: opt.printButtonName,
           margin: opt.margin,
           handler: function () {
-            var val = "";
+            var val = {};
             if (opt.form) {
               val = opt.form.getValues();
-              val["btId"] = opt.id;
             }
+            val["btId"] = opt.id;
             Ext.Ajax.request({
               url: env.services.web + opt.url,
               params: val,
               success: function (resp) {
                 var data = Ext.JSON.decode(resp.responseText);
-                Ext.ux.grid.Printer.opt = {
-                  title: opt.title,
-                  name: document.body.dataset.user
-                };
-                Ext.ux.grid.Printer.print(that.grid(data));
+
+                if (data.list.length > 0) {
+                  Ext.ux.grid.Printer.opt = {
+                    title: opt.title,
+                    name: document.body.dataset.user,
+                    api: env.services.web + env.api.printlog.save,
+                    type: opt.type,
+                    callback: function () {
+                      var xhr = new XMLHttpRequest();
+                      xhr.open("POST", opt.api, true);
+                      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                      xhr.send("module=" + opt.type);
+                      xhr.onreadystatechange = function (a) {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                          console.log(xhr, a);
+                        }
+                      }
+                    }
+                  };
+                  Ext.ux.grid.Printer.print(that.grid(data));
+                } else {
+                  Ext.Msg.alert("打印-" + opt.title, "没有数据可供打印，请先搜索、筛选数据！");
+                }
               },
               failure: function () {
                 throw "打印列表查询失败, 服务器无响应，请稍后再试";
@@ -482,6 +500,11 @@
 
       grid: function(data) {
         var fields = [];
+
+        if (typeof data.columns === 'undefined') {
+          throw '缺少 data.columns';
+        }
+
         Ext.Object.each(data.list[0], function(item, i) {
           fields.push(item);
         });

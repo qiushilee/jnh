@@ -11,7 +11,7 @@ Ext.application({
       "地址定位": 2,
       "时间定位": 3,
       "金额定位": 4,
-      "其它定位": 5,
+      "其它定位": 5
     }
 
     // 进货清单数据
@@ -75,8 +75,6 @@ Ext.application({
       }
     });
 
-
-
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
       layout: "fit",
@@ -87,6 +85,7 @@ Ext.application({
           padding: 15,
           items: [
             {
+              itemId: 'purchase-btn-panel',
               xtype: "form",
               url: env.services.web + env.api.search.searchpurchase,
               layout: 'hbox',
@@ -118,33 +117,10 @@ Ext.application({
                   }
                 },
                 {
-                  xtype: "button",
-                  text: "打印",
-                  margin: "0 0 0 20",
-                  handler: function() {
-                    var date = {
-                      start: Ext.ComponentQuery.query("[itemId=purchase-start-date]")[0].rawValue,
-                      end: Ext.ComponentQuery.query("[itemId=purchase-end-date]")[0].rawValue
-                    };
-
-                    Ext.ux.grid.Printer.opt = {
-                      title: "进货清单报表",
-                      name: document.body.dataset.user,
-                      periodical: Ext.ComponentQuery.query("[itemId=purchase-periodical]")[0].value
-                    };
-
-                    if (date.start || date.end) {
-                      Ext.ux.grid.Printer.opt.date = date;
-                    }
-
-                    Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=purchase-grid]")[0]);
-                  }
-                },
-                {
                   name: "jhd-print",
                   xtype: "button",
                   text: "打印设置",
-                  margin: "20 0 0 20",
+                  margin: "0 0 0 20",
                   handler: function () {
                     window.printHandle.set("searchpurchase");
                   }
@@ -208,6 +184,7 @@ Ext.application({
           padding: 15,
           items: [
             {
+              itemId: 'shipment-btn-panel',
               xtype: "form",
               url: env.services.web + env.api.search.searchshipment,
               layout: 'hbox',
@@ -239,33 +216,10 @@ Ext.application({
                   }
                 },
                 {
-                  xtype: "button",
-                  text: "打印",
-                  margin: "0 0 0 20",
-                  handler: function() {
-                    var date = {
-                      start: Ext.ComponentQuery.query("[itemId=shipment-start-date]")[0].rawValue,
-                      end: Ext.ComponentQuery.query("[itemId=shipment-end-date]")[0].rawValue
-                    };
-
-                    Ext.ux.grid.Printer.opt = {
-                      title: "出货清单报表",
-                      name: document.body.dataset.user,
-                      periodical: Ext.ComponentQuery.query("[itemId=shipment-periodical]")[0].value
-                    };
-
-                    if (date.start || date.end) {
-                      Ext.ux.grid.Printer.opt.date = date;
-                    }
-
-                    Ext.ux.grid.Printer.print(Ext.ComponentQuery.query("grid[itemId=shipment-grid]")[0]);
-                  }
-                },
-                {
                   name: "jhd-print",
                   xtype: "button",
                   text: "打印设置",
-                  margin: "20 0 0 20",
+                  margin: "0 0 0 20",
                   handler: function () {
                     window.printHandle.set("searchshipment");
                   }
@@ -1177,6 +1131,22 @@ Ext.application({
           ]
         }
       ]
+    });
+
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=purchase-btn-panel]")[0],
+      form: Ext.ComponentQuery.query("[itemId=purchase-btn-panel]")[0].getForm(),
+      type: "searchpurchase",
+      margin: "0 0 0 20",
+      title: panel.items.items[0].title
+    });
+
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=shipment-btn-panel]")[0],
+      form: Ext.ComponentQuery.query("[itemId=shipment-btn-panel]")[0].getForm(),
+      type: "searchshipment",
+      margin: "0 0 0 20",
+      title: panel.items.items[0].title
     });
   }
 });

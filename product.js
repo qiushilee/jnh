@@ -943,8 +943,10 @@ Ext.application({
 
     window.printHandle.get({
       $el: Ext.ComponentQuery.query("[itemId=jhdProduct-print-container]")[0],
+      form: Ext.ComponentQuery.query("[itemId=form]")[0].getForm(),
       type: "purchase",
-      margin: "0 0 0 10"
+      margin: "0 0 0 10",
+      title: addJHD.title
     });
   }
 });
