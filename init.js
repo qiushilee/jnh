@@ -146,7 +146,8 @@
     sendchange: '/package/savesendreplacement',//补寄修改
     createserialcode: '/package/serialcode',//生成流水单号
     export: "/package/export",
-    print: '/package/print'
+    print: '/package/print',
+    batchprint: '/package/batchprint'
   };
 
   env.api.productrecord = {
