@@ -852,7 +852,7 @@ Ext.application({
             },
             {
               xtype: "grid",
-              height: 155,
+              height: 205,
               store: Ext.data.StoreManager.lookup("printcart"),
               margin: "10 0 0 0",
               columns: [
@@ -926,11 +926,7 @@ Ext.application({
                   dataIndex: 'amount',
                   flex: 1
                 }
-              ],
-              bbar: Ext.create('Ext.PagingToolbar', {
-                displayMsg: 'Displaying topics {0} - {1} of {2}',
-                items: ['-', {pressed: false}]
-              })
+              ]
             },
             {
               layout: "hbox",
