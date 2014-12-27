@@ -468,7 +468,7 @@
 
                 if (data.list.length > 0) {
                   Ext.ux.grid.Printer.opt = {
-                    title: opt.title,
+                    title: opt.printPageTitle,
                     name: document.body.dataset.user,
                     api: env.services.web + env.api.printlog.save,
                     type: opt.type,
