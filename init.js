@@ -147,7 +147,8 @@
     createserialcode: '/package/serialcode',//生成流水单号
     export: "/package/export",
     print: '/package/print',
-    batchprint: '/package/batchprint'
+    batchprint: '/package/batchprint',//批量打印
+    scanningparcel:'package/Scanningparcel'//扫描单号
   };
 
   env.api.productrecord = {
