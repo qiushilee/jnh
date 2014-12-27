@@ -659,102 +659,108 @@ Ext.application({
       width: 800,
       bodyPadding: 10,
       closeAction: 'hide',
-      items: [{
-        itemId: "form",
-        xtype: "form",
-        bodyPadding: 0,
-        border: 0,
-        url: env.services.web + env.api.productrecord.change,
-        items: [{
-          layout: "hbox",
-          bodyPadding: 10,
+      items: [
+        {
+          itemId: "form",
+          xtype: "form",
+          bodyPadding: 0,
           border: 0,
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
-          items: [
-            Ext.create('periodical'),
-            Ext.create('jzsType', {
-              itemId: "jhd-type"
-            })
-          ]
-        }, {
-          xtype: "hiddenfield",
-          name: "id"
-        }, {
-          xtype: "hiddenfield",
-          name: "receiptId"
-        }, {
-          layout: "hbox",
-          bodyPadding: 10,
-          border: 0,
-          defaultType: 'textfield',
-          bodyStyle: {
-            "background-color": "transparent"
-          },
+          url: env.services.web + env.api.productrecord.change,
           items: [
             {
-              fieldLabel: "货号",
-              name: "productCode",
-              labelWidth: 40,
-              width: 200,
-              labelAlign: "right"
+              layout: "hbox",
+              bodyPadding: 10,
+              border: 0,
+              defaultType: 'textfield',
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [
+                Ext.create('periodical'),
+                Ext.create('jzsType', {
+                  itemId: "jhd-type"
+                })
+              ]
             },
             {
-              fieldLabel: "数量",
-              name: "number",
-              labelWidth: 40,
-              width: 100,
-              labelAlign: "right"
+              xtype: "hiddenfield",
+              name: "id"
             },
             {
-              fieldLabel: "备注",
-              name: "remark",
-              labelWidth: 40,
-              labelAlign: "right"
+              xtype: "hiddenfield",
+              name: "receiptId"
+            },
+            {
+              layout: "hbox",
+              bodyPadding: 10,
+              border: 0,
+              defaultType: 'textfield',
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [
+                {
+                  fieldLabel: "货号",
+                  name: "productCode",
+                  labelWidth: 40,
+                  width: 200,
+                  labelAlign: "right"
+                },
+                {
+                  fieldLabel: "数量",
+                  name: "number",
+                  labelWidth: 40,
+                  width: 100,
+                  labelAlign: "right"
+                },
+                {
+                  fieldLabel: "备注",
+                  name: "remark",
+                  labelWidth: 40,
+                  labelAlign: "right"
+                }
+              ]
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">M</span> 保存",
+              margin: "0 0 30 20",
+              handler: function () {
+                var form = addJHD.getComponent("form").getForm();
+                form.url = env.services.web + env.api.productrecord.change;
+
+                form.submit({
+                  success: function (form) {
+                    form.reset();
+                    addJHD.hide();
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("保存", action.result.msg);
+                  }
+                });
+              }
+            },
+            {
+              xtype: "button",
+              text: "新增",
+              margin: "0 0 30 20",
+              handler: function () {
+                var form = addJHD.getComponent("form").getForm();
+                form.url = env.services.web + env.api.productrecord.add;
+
+                form.submit({
+                  success: function (form) {
+                    form.reset();
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("保存", action.result.msg);
+                  }
+                });
+              }
             }
           ]
-          },
-          {
-            xtype: "button",
-            text: "<span class=\"key\">M</span> 保存",
-            margin: "0 0 30 20",
-            handler: function () {
-              var form = addJHD.getComponent("form").getForm();
-              form.url = env.services.web + env.api.productrecord.change;
-
-              form.submit({
-                success: function(form) {
-                  form.reset();
-                  addJHD.hide();
-                },
-                failure: function (form, action) {
-                  Ext.Msg.alert("保存", action.result.msg);
-                }
-              });
-            }
-          },
-          {
-            xtype: "button",
-            text: "新增",
-            margin: "0 0 30 20",
-            handler: function () {
-              var form = addJHD.getComponent("form").getForm();
-              form.url = env.services.web + env.api.productrecord.add;
-
-              form.submit({
-                success: function(form) {
-                  form.reset();
-                },
-                failure: function (form, action) {
-                  Ext.Msg.alert("保存", action.result.msg);
-                }
-              });
-            }
-          }
-        ]
-      }, {
+        },
+        {
           itemId: "list",
           xtype: "grid",
           height: 155,
@@ -831,7 +837,7 @@ Ext.application({
               handler: function () {
                 var record = addJHD.getComponent("list").getSelectionModel().getSelection()[0].data;
 
-                Ext.Msg.confirm("删除", "确认删除“" + record.name + "”吗？", function(type) {
+                Ext.Msg.confirm("删除", "确认删除“" + record.name + "”吗？", function (type) {
                   if (type === "yes") {
                     Ext.Ajax.request({
                       url: env.services.web + env.api.productrecord.del,
