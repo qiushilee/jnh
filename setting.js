@@ -586,15 +586,7 @@ Ext.application({
           fieldLabel: "KEY",
           name: "key",
           labelAlign: "right"
-        }, {
-          xtype: 'filefield',
-          name: 'file',
-          fieldLabel: '面单图片',
-          msgTarget: 'side',
-          allowBlank: false,
-          anchor: '100%',
-          buttonText: "选择文件"
-        }, {
+        },  {
           xtype: 'checkbox',
           checked: true,
           fieldLabel: "状态",
