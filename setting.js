@@ -26,7 +26,7 @@ Ext.application({
     //寄送方式
     var sendmethordList = Ext.create('Ext.data.Store', {
       storeId: 'sendmethordList',
-      fields: ['id', 'name', 'key', 'state'],
+      fields: ['id', 'name', 'key', 'state','image'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -58,7 +58,7 @@ Ext.application({
     //角色列表
     var roleList = Ext.create('Ext.data.Store', {
       storeId: 'roleList',
-      fields: ['id', 'key', 'rolename', 'remark', 'permissions', 'addDate'],
+      fields: ['id','roleId', 'key', 'rolename', 'remark', 'permissions', 'addDate'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -609,6 +609,9 @@ Ext.application({
           {
             xtype: "hiddenfield",
             name: "id",
+          }, {
+            xtype: "hiddenfield",
+            name: "image",
           },
           {
             xtype: 'panel',
