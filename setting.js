@@ -573,63 +573,80 @@ Ext.application({
         itemId: "form",
         xtype: "form",
         columnWidth: 0.41,
-        layout: 'vbox',
+        //layout: 'vbox',
         width: 500,
         bodyPadding: 5,
         defaultType: 'textfield',
         url: env.services.web + env.api.sendmethord.save,
-        items: [{
-          fieldLabel: "名称",
-          name: "name",
-          labelAlign: "right"
-        }, {
-          fieldLabel: "KEY",
-          name: "key",
-          labelAlign: "right"
-        },  {
-          xtype: 'checkbox',
-          checked: true,
-          fieldLabel: "状态",
-          name: "status",
-          labelAlign: "right"
-        }, {
-          xtype: "hiddenfield",
-          name: "id",
-        }, {
-          xtype: 'panel',
-          layout: "hbox",
-          border: 0,
-          margin: "0 0 0 53",
-          items: [{
-            xtype: 'button',
-            margin: "0 0 0 10",
-            text: "<span class=\"key\">A</span> 保存",
-            handler: function () {
-              var form = sendmethordEdit.getComponent("form").getForm();
-              form.url = env.services.web + env.api.sendmethord.save;
-              if (form.isValid()) {
-                form.submit({
-                  success: function (form, action) {
-                    Ext.Msg.alert("修改配送方式", action.result.msg, function () {
-                      sendmethordEdit.hide();
-                      sendmethordList.load();
-                    });
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("修改配送方式", action.result.msg);
-                  }
-                });
+        items: [
+          {
+            fieldLabel: "名称",
+            name: "name",
+            labelAlign: "right"
+          },
+          {
+            fieldLabel: "KEY",
+            name: "key",
+            labelAlign: "right"
+          },
+          {
+            xtype: 'filefield',
+            name: 'file',
+            fieldLabel: '面单图片',
+            msgTarget: 'side',
+            allowBlank: false,
+            anchor: '70%',
+            buttonText: "选择文件",
+            labelAlign: "right"
+          },
+          {
+            xtype: 'checkbox',
+            checked: true,
+            fieldLabel: "状态",
+            name: "status",
+            labelAlign: "right"
+          },
+          {
+            xtype: "hiddenfield",
+            name: "id",
+          },
+          {
+            xtype: 'panel',
+            layout: "hbox",
+            border: 0,
+            margin: "0 0 0 53",
+            items: [{
+              xtype: 'button',
+              margin: "0 0 0 10",
+              text: "<span class=\"key\">A</span> 保存",
+              handler: function () {
+                var form = sendmethordEdit.getComponent("form").getForm();
+                form.url = env.services.web + env.api.sendmethord.save;
+                if (form.isValid()) {
+                  form.submit({
+                    success: function (form, action) {
+                      Ext.Msg.alert("修改配送方式", action.result.msg, function () {
+                        sendmethordEdit.hide();
+                        sendmethordList.load();
+                      });
+                    },
+                    failure: function (form, action) {
+                      Ext.Msg.alert("修改配送方式", action.result.msg);
+                    }
+                  });
+                }
               }
-            }
-          }, {
-            xtype: 'button',
-            margin: "0 0 0 10",
-            text: "<span class=\"key\">E</span> 返回",
-            handler: function () {
-              sendmethordEdit.hide();
-            }
+            },
+              {
+                xtype: 'button',
+                margin: "0 0 0 10",
+                text: "<span class=\"key\">E</span> 返回",
+                handler: function () {
+                  sendmethordEdit.hide();
+                }
+              }
+            ]
           }]
-        }]
       }
       ],
       closeAction: 'hide'
