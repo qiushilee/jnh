@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>设置面单打印</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .setting {
+      height: 30px;
+      padding-left: 30px;
+      background-color: #a9cbf5;
+      line-height: 28px;
+    }
+    .setting button {
+      margin-left: 10px;
+      padding: 4px 10px;
+    }
+    .bg {
+      height: 1548px;
+      padding-top: 30px;
+      background-repeat: no-repeat;
+    }
+    .bg input[type=radio] {
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+<form action="">
+  <div class="setting">
+    <label for="x">X：<input type="text" id="x" data-margin="0" value="0"></label>
+    <label for="y">Y：<input type="text" id="y" data-margin="30" value="0"></label>
+    <button>设置</button>
+  </div>
+
+  <div class="bg" data-bg="images/express.jpg">
+    <label for="name">
+      收件人：<input type="radio" name="name">
+    </label>
+  </div>
+</form>
+
+<script>
+  var $form = document.querySelector('.bg'),
+      $x = document.querySelector('#x'),
+      $y = document.querySelector('#y'),
+      $button = document.querySelector('button'),
+      $img = document.createElement('img');
+
+  function getPosition() {
+    return {
+      x: parseInt($x.value) + parseInt($x.dataset.margin),
+      y: parseInt($y.value) + parseInt($y.dataset.margin)
+    }
+  }
+
+  $img.src = $form.dataset.bg;
+  $img.addEventListener('load', function() {
+    $form.style.backgroundImage = 'url(' + $img.src + ')';
+    $form.style.width = $img.width + 'px';
+    $form.style.height = $img.height + 'px';
+  }, false);
+
+  $x.addEventListener('focus', function() {
+    this.select();
+  }, false);
+
+  $y.addEventListener('focus', function() {
+    this.select();
+  }, false);
+
+  $button.addEventListener('click', function() {
+    var $input = $form.querySelector('input'),
+        pos = getPosition();
+
+    if ($form.querySelector('input').checked) {
+      $input.value = pos.x + ';' + pos.y;
+      $input.style.top = pos.y + 'px';
+      $input.style.left = pos.x + 'px';
+    }
+  }, false);
+</script>
+</body>
+</html>
