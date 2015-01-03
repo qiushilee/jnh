@@ -25,68 +25,68 @@
   .mod .hd .menu {
     float: left;
     margin: 8px 0 0 58px; }
-    .mod .hd .menu a {
+    .mod .hd .menu .btn {
       float: left;
       width: 75px;
       height: 52px;
       margin: 0 15px;
       cursor: pointer;
       text-indent: -99999px; }
-      .mod .hd .menu a.company {
+      .mod .hd .menu .btn.company {
         background-image: url(images/menu/company.png); }
-        .mod .hd .menu a.company.active, .mod .hd .menu a.company:hover {
+        .mod .hd .menu .btn.company.active, .mod .hd .menu .btn.company:hover {
           background-image: url(images/menu/company-hover.png); }
-        .mod .hd .menu a.company.disable {
+        .mod .hd .menu .btn.company.disable {
           background-image: url(images/menu/company-disable.png); }
-      .mod .hd .menu a.product {
+      .mod .hd .menu .btn.product {
         background-image: url(images/menu/product.png); }
-        .mod .hd .menu a.product.active, .mod .hd .menu a.product:hover {
+        .mod .hd .menu .btn.product.active, .mod .hd .menu .btn.product:hover {
           background-image: url(images/menu/product-hover.png); }
-        .mod .hd .menu a.product.disable {
+        .mod .hd .menu .btn.product.disable {
           background-image: url(images/menu/product-disable.png); }
-      .mod .hd .menu a.business {
+      .mod .hd .menu .btn.business {
         background-image: url(images/menu/business.png); }
-        .mod .hd .menu a.business.active, .mod .hd .menu a.business:hover {
+        .mod .hd .menu .btn.business.active, .mod .hd .menu .btn.business:hover {
           background-image: url(images/menu/business-hover.png); }
-        .mod .hd .menu a.business.disable {
+        .mod .hd .menu .btn.business.disable {
           background-image: url(images/menu/business-disable.png); }
-      .mod .hd .menu a.member {
+      .mod .hd .menu .btn.member {
         background-image: url(images/menu/member.png); }
-        .mod .hd .menu a.member.active, .mod .hd .menu a.member:hover {
+        .mod .hd .menu .btn.member.active, .mod .hd .menu .btn.member:hover {
           background-image: url(images/menu/member-hover.png); }
-        .mod .hd .menu a.member.disable {
+        .mod .hd .menu .btn.member.disable {
           background-image: url(images/menu/member-disable.png); }
-      .mod .hd .menu a.remorder {
+      .mod .hd .menu .btn.remorder {
         background-image: url(images/menu/remorder.png); }
-        .mod .hd .menu a.remorder.active, .mod .hd .menu a.remorder:hover {
+        .mod .hd .menu .btn.remorder.active, .mod .hd .menu .btn.remorder:hover {
           background-image: url(images/menu/remorder-hover.png); }
-        .mod .hd .menu a.remorder.disable {
+        .mod .hd .menu .btn.remorder.disable {
           background-image: url(images/menu/remorder-disable.png); }
-      .mod .hd .menu a.telorder {
+      .mod .hd .menu .btn.telorder {
         background-image: url(images/menu/telorder.png); }
-        .mod .hd .menu a.telorder.active, .mod .hd .menu a.telorder:hover {
+        .mod .hd .menu .btn.telorder.active, .mod .hd .menu .btn.telorder:hover {
           background-image: url(images/menu/telorder-hover.png); }
-        .mod .hd .menu a.telorder.disable {
+        .mod .hd .menu .btn.telorder.disable {
           background-image: url(images/menu/telorder-disable.png); }
-      .mod .hd .menu a.deliverorder {
+      .mod .hd .menu .btn.deliverorder {
         background-image: url(images/menu/deliverorder.png); }
-        .mod .hd .menu a.deliverorder.active, .mod .hd .menu a.deliverorder:hover {
+        .mod .hd .menu .btn.deliverorder.active, .mod .hd .menu .btn.deliverorder:hover {
           background-image: url(images/menu/deliverorder-hover.png); }
-        .mod .hd .menu a.deliverorder.disable {
+        .mod .hd .menu .btn.deliverorder.disable {
           background-image: url(images/menu/deliverorder-disable.png); }
-      .mod .hd .menu a.package {
+      .mod .hd .menu .btn.package {
         background-image: url(images/menu/package.png); }
-        .mod .hd .menu a.package.active, .mod .hd .menu a.package:hover {
+        .mod .hd .menu .btn.package.active, .mod .hd .menu .btn.package:hover {
           background-image: url(images/menu/package-hover.png); }
-        .mod .hd .menu a.package.disable {
+        .mod .hd .menu .btn.package.disable {
           background-image: url(images/menu/package-disable.png); }
-      .mod .hd .menu a.search {
+      .mod .hd .menu .btn.search {
         background-image: url(images/menu/search.png); }
-        .mod .hd .menu a.search.active, .mod .hd .menu a.search:hover {
+        .mod .hd .menu .btn.search.active, .mod .hd .menu .btn.search:hover {
           background-image: url(images/menu/search-hover.png); }
-        .mod .hd .menu a.search.disable {
+        .mod .hd .menu .btn.search.disable {
           background-image: url(images/menu/search-disable.png); }
-      .mod .hd .menu a.setting {
+      .mod .hd .menu .btn.setting {
         text-indent: 0;
         text-align: center;
         font-size: 12px;

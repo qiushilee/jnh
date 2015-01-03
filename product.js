@@ -58,7 +58,7 @@ Ext.application({
     // 进转损
     Ext.create('Ext.data.Store', {
       storeId: 'transitionLoss',
-      fields: ["key", 'id', 'typeName', 'receiptCode', 'receiptDate', "number", "remark", "type"],
+      fields: ["receiptId", "key", 'id', 'typeName', 'receiptCode', 'receiptDate', "number", "remark", "type"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -369,14 +369,10 @@ Ext.application({
               ],
               listeners: {
                 itemdblclick: function (that, record, item, index, e, eOpts) {
-                  var form = addJHD.getComponent("form").getForm();
-                  form.url = env.services.web + env.api.product.changeTransitionLoss;
-                  form.findField("periodicalId").setDisabled(true);
-                  form.findField("type").setDisabled(true);
-
+                  var form = addJHD.getComponent("change-form").getForm();
                   Ext.data.StoreManager.lookup('jhdProduct').load({
                     params: {
-                      receiptId: record.data.id,
+                      receiptId: record.data.id
                     }
                   });
                   addJHD.show();
@@ -392,12 +388,11 @@ Ext.application({
               margin: "20 0 0 0",
               scale: "medium",
               handler: function () {
-                var form = addJHD.getComponent("form").getForm();
-                form.url = env.services.web + env.api.product.addTransitionLoss;
+                var form = addJHD.getComponent("add-form").getForm();
                 form.findField("periodicalId").setDisabled(false);
                 form.findField("type").setDisabled(false);
 
-                addJHD.getComponent("form").getForm().reset();
+                form.reset();
                 Ext.data.StoreManager.lookup('jhdProduct').loadData({list: []});
                 addJHD.show();
                 Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(true);
@@ -661,140 +656,210 @@ Ext.application({
       closeAction: 'hide',
       items: [
         {
-          itemId: "form",
+          itemId: "add-form",
+          xtype: "form",
+          bodyPadding: 0,
+          border: 0,
+          url: env.services.web + env.api.product.addTransitionLoss,
+          items: [
+            {
+              xtype: 'fieldset',
+              layout: 'vbox',
+              title: '新增商品',
+              items: [
+                {
+                  xtype: "panel",
+                  layout: "hbox",
+                  border: 0,
+                  defaultType: 'textfield',
+                  items: [
+                    Ext.create('periodical'),
+                    Ext.create('jzsType', {
+                      itemId: "jhd-type"
+                    }),
+                    {
+                      disabled: true,
+                      name: "receiptCode",
+                      margin: "3 0 0 20"
+                    },
+                    {
+                      xtype: "hiddenfield",
+                      name: "receiptId"
+                    }
+                  ]
+                },
+                {
+                  xtype: "panel",
+                  layout: "hbox",
+                  margin: "10 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  items: [
+                    {
+                      fieldLabel: "货号",
+                      name: "productCode",
+                      labelWidth: 40,
+                      width: 200,
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: "数量",
+                      name: "number",
+                      labelWidth: 40,
+                      width: 100,
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: "备注",
+                      name: "remark",
+                      labelWidth: 40,
+                      labelAlign: "right"
+                    }
+                  ]
+                },
+                {
+                  xtype: "panel",
+                  layout: "hbox",
+                  margin: "10 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  items: [
+                    {
+                      xtype: "button",
+                      text: "新增",
+                      margin: "0 0 30 20",
+                      handler: function () {
+                        var form = addJHD.getComponent("add-form").getForm();
+                        form.url = env.services.web + env.api.productrecord.add;
+
+                        form.submit({
+                          success: function (form) {
+                            form.reset();
+                            Ext.data.StoreManager.lookup('jhdProduct').load();
+                          },
+                          failure: function (form, action) {
+                            Ext.Msg.alert("保存", action.result.msg);
+                          }
+                        });
+                      }
+                    },
+                    {
+                      xtype: "button",
+                      text: "创建进转损编号",
+                      margin: "0 0 30 20",
+                      handler: function () {
+                        var form = addJHD.getComponent("add-form").getForm();
+                        form.url = env.services.web + env.api.receipt.add;
+
+                        form.submit({
+                          success: function (form, action) {
+                            var form = productlist.getComponent("transitionLoss").getComponent("form").getForm();
+                            Ext.ComponentQuery.query("[name=receiptCode]")[1].setValue(action.result.receiptCode);
+                            Ext.ComponentQuery.query("[name=receiptId]")[0].setValue(action.result.receiptId);
+
+                            searchHandler.call(form, "transitionLoss");
+                          },
+                          failure: function (form, action) {
+                            Ext.Msg.alert("创建进转损编号", action.result.msg);
+                          }
+                        });
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          itemId: "change-form",
           xtype: "form",
           bodyPadding: 0,
           border: 0,
           url: env.services.web + env.api.productrecord.change,
           items: [
             {
-              layout: "hbox",
-              bodyPadding: 10,
-              border: 0,
+              xtype: 'fieldset',
+              //padding: '10',
+              title: '修改商品',
               defaultType: 'textfield',
-              bodyStyle: {
-                "background-color": "transparent"
-              },
               items: [
-                Ext.create('periodical'),
-                Ext.create('jzsType', {
-                  itemId: "jhd-type"
-                }),
                 {
                   disabled: true,
+                  fieldLabel: "进转损编号",
                   name: "receiptCode",
-                  margin: "3 0 0 20"
-                }
-              ]
-            },
-            {
-              xtype: "hiddenfield",
-              name: "id"
-            },
-            {
-              xtype: "hiddenfield",
-              name: "receiptId"
-            },
-            {
-              layout: "hbox",
-              bodyPadding: 10,
-              border: 0,
-              defaultType: 'textfield',
-              bodyStyle: {
-                "background-color": "transparent"
-              },
-              items: [
-                {
-                  fieldLabel: "货号",
-                  name: "productCode",
-                  labelWidth: 40,
-                  width: 200,
-                  labelAlign: "right"
+                  margin: "3 0 0 13",
+                  labelWidth: 65
                 },
                 {
-                  fieldLabel: "数量",
-                  name: "number",
-                  labelWidth: 40,
-                  width: 100,
-                  labelAlign: "right"
+                  xtype: "panel",
+                  layout: "hbox",
+                  margin: "10 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  items: [
+                    Ext.create('periodical', {
+                      hidden: true
+                    }),
+                    Ext.create('jzsType', {
+                      hidden: true
+                    }),
+                    {
+                      xtype: "hiddenfield",
+                      name: "id"
+                    },
+                    {
+                      fieldLabel: "货号",
+                      name: "productCode",
+                      labelWidth: 40,
+                      width: 200,
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: "数量",
+                      name: "number",
+                      labelWidth: 40,
+                      width: 100,
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: "备注",
+                      name: "remark",
+                      labelWidth: 40,
+                      labelAlign: "right"
+                    }
+                  ]
                 },
                 {
-                  fieldLabel: "备注",
-                  name: "remark",
-                  labelWidth: 40,
-                  labelAlign: "right"
+                  xtype: "panel",
+                  layout: "hbox",
+                  margin: "10 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  items: [
+                    {
+                      xtype: "button",
+                      text: "<span class=\"key\">M</span> 保存",
+                      margin: "0 0 30 20",
+                      handler: function () {
+                        var form = addJHD.getComponent("change-form").getForm();
+                        form.url = env.services.web + env.api.productrecord.change;
+
+                        form.submit({
+                          success: function (form) {
+                            form.reset();
+                            addJHD.hide();
+                            Ext.data.StoreManager.lookup('jhdProduct').load();
+                          },
+                          failure: function (form, action) {
+                            Ext.Msg.alert("保存", action.result.msg);
+                          }
+                        });
+                      }
+                    }
+                  ]
                 }
               ]
-            },
-            {
-              xtype: "button",
-              text: "<span class=\"key\">M</span> 保存",
-              margin: "0 0 30 20",
-              handler: function () {
-                var form = addJHD.getComponent("form").getForm();
-                form.url = env.services.web + env.api.productrecord.change;
-
-                form.submit({
-                  success: function (form) {
-                    form.reset();
-                    addJHD.hide();
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("保存", action.result.msg);
-                  }
-                });
-              }
-            },
-            {
-              xtype: "button",
-              text: "重置",
-              margin: "0 0 30 20",
-              handler: function () {
-                var form = addJHD.getComponent("form").getForm();
-                form.reset();
-                form.findField("periodicalId").setDisabled(false);
-                form.findField("type").setDisabled(false);
-              }
-            },
-            {
-              xtype: "button",
-              text: "新增",
-              margin: "0 0 30 20",
-              handler: function () {
-                var form = addJHD.getComponent("form").getForm();
-                form.url = env.services.web + env.api.productrecord.add;
-
-                form.submit({
-                  success: function (form) {
-                    form.reset();
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("保存", action.result.msg);
-                  }
-                });
-              }
-            },
-            {
-              xtype: "button",
-              text: "创建进转损编号",
-              margin: "0 0 30 20",
-              handler: function () {
-                var form = addJHD.getComponent("form").getForm();
-                form.url = env.services.web + env.api.receipt.add;
-
-                form.submit({
-                  success: function (form, action) {
-                    var form = productlist.getComponent("transitionLoss").getComponent("form").getForm();
-                    Ext.ComponentQuery.query("[name=receiptCode]")[1].setValue(action.result.receiptCode);
-                    Ext.ComponentQuery.query("[name=receiptId]")[0].setValue(action.result.receiptId);
-
-                    searchHandler.call(form, "transitionLoss");
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("创建进转损编号", action.result.msg);
-                  }
-                });
-              }
             }
           ]
         },
@@ -849,7 +914,7 @@ Ext.application({
           ],
           listeners: {
             itemdblclick: function (that, record, item, index, e, eOpts) {
-              var form = addJHD.getComponent("form").getForm();
+              var form = addJHD.getComponent("change-form").getForm();
               window.updateForm(form, record.data);
             }
           }
