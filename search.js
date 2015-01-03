@@ -649,9 +649,6 @@ Ext.application({
                           border: 0,
                           defaultType: 'textfield',
                           items: [
-                            Ext.create('periodical', {
-                              name: "periodicalId_2"
-                            }),
                             {
                               fieldLabel: "地址",
                               labelWidth: 40,
@@ -688,9 +685,6 @@ Ext.application({
                           border: 0,
                           defaultType: 'datefield',
                           items: [
-                            Ext.create('periodical', {
-                              name: "periodicalId_3"
-                            }),
                             {
                               fieldLabel: "加入时间",
                               labelWidth: 60,
@@ -764,9 +758,6 @@ Ext.application({
                           border: 0,
                           defaultType: 'datefield',
                           items: [
-                            Ext.create('periodical', {
-                              name: "periodicalId_4"
-                            }),
                             {
                               fieldLabel: "参考时间",
                               labelWidth: 60,
@@ -832,14 +823,7 @@ Ext.application({
                               labelAlign: "right",
                               name:'periodicalId2'
                             },
-                            {
-                              xtype: "combobox",
-                              fieldLabel: "来源",
-                              labelWidth: 40,
-                              width: 120,
-                              labelAlign: "right",
-                              name:'source'
-                            },
+                            Ext.create('searchMemberType'),
                             {
                               xtype: "radiofield",
                               fieldLabel: "代理会员",
@@ -939,9 +923,6 @@ Ext.application({
                           handler: function() {
                             var params = "",
                                 periodicalId_1 =Ext.ComponentQuery.query("[name=periodicalId_1]")[0].value,
-                                periodicalId_2 =Ext.ComponentQuery.query("[name=periodicalId_2]")[0].value,
-                                periodicalId_3 =Ext.ComponentQuery.query("[name=periodicalId_3]")[0].value,
-                                periodicalId_4 =Ext.ComponentQuery.query("[name=periodicalId_4]")[0].value,
                                 realName = Ext.ComponentQuery.query("[name=realName]")[0].rawValue,
                                 userCode = Ext.ComponentQuery.query("[name=userCode]")[0].rawValue,
                                 address =  Ext.ComponentQuery.query("[name=address]")[0].rawValue,
@@ -961,15 +942,7 @@ Ext.application({
                             if(periodicalId_1>0) {
                               params +='/periodicalId_1/'+periodicalId_1;
                             }
-                            if(periodicalId_2>0) {
-                              params +='/periodicalId_2/'+periodicalId_2;
-                            }
-                            if(periodicalId_3>0) {
-                              params +='/periodicalId_3/'+periodicalId_3;
-                            }
-                            if(periodicalId_4>0) {
-                              params +='/periodicalId_4/'+periodicalId_4;
-                            }
+                           
                             if(realName!='') {
                               params +='/realName/'+encodeURI(realName);
                             }
