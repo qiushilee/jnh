@@ -308,30 +308,6 @@ Ext.application({
               });
             },
             margin: "0 0 0 20"
-          },
-          {
-            itemId: "export",
-            xtype: "button",
-            disabled: true,
-            text: "导出电话订单",
-            handler: function() {
-              var data = Ext.ComponentQuery.query("[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
-              Ext.Ajax.request({
-                url: env.services.web + env.api.telorder.exportToDeliverorder,
-                params: {
-                  deliveryOrderId: localStorage.getItem("deliveryOrderId"),
-                  telorderId: data.id
-                },
-                success: function(resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  console.log(data)
-                },
-                failure: function(resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                }
-              });
-            },
-            margin: "0 0 0 20"
           }
           ]
         }]

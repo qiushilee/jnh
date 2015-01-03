@@ -678,6 +678,28 @@ Ext.application({
                       itemId: "jhd-type"
                     }),
                     {
+                      xtype: "button",
+                      text: "生成进转损编号",
+                      margin: "0 0 30 20",
+                      handler: function () {
+                        var form = addJHD.getComponent("add-form").getForm();
+                        form.url = env.services.web + env.api.receipt.add;
+
+                        form.submit({
+                          success: function (form, action) {
+                            var form = productlist.getComponent("transitionLoss").getComponent("form").getForm();
+                            Ext.ComponentQuery.query("[name=receiptCode]")[1].setValue(action.result.receiptCode);
+                            Ext.ComponentQuery.query("[name=receiptId]")[0].setValue(action.result.receiptId);
+
+                            searchHandler.call(form, "transitionLoss");
+                          },
+                          failure: function (form, action) {
+                            Ext.Msg.alert("创建进转损编号", action.result.msg);
+                          }
+                        });
+                      }
+                    },
+                    {
                       disabled: true,
                       name: "receiptCode",
                       margin: "3 0 0 20"
@@ -739,28 +761,6 @@ Ext.application({
                           },
                           failure: function (form, action) {
                             Ext.Msg.alert("保存", action.result.msg);
-                          }
-                        });
-                      }
-                    },
-                    {
-                      xtype: "button",
-                      text: "创建进转损编号",
-                      margin: "0 0 30 20",
-                      handler: function () {
-                        var form = addJHD.getComponent("add-form").getForm();
-                        form.url = env.services.web + env.api.receipt.add;
-
-                        form.submit({
-                          success: function (form, action) {
-                            var form = productlist.getComponent("transitionLoss").getComponent("form").getForm();
-                            Ext.ComponentQuery.query("[name=receiptCode]")[1].setValue(action.result.receiptCode);
-                            Ext.ComponentQuery.query("[name=receiptId]")[0].setValue(action.result.receiptId);
-
-                            searchHandler.call(form, "transitionLoss");
-                          },
-                          failure: function (form, action) {
-                            Ext.Msg.alert("创建进转损编号", action.result.msg);
                           }
                         });
                       }
