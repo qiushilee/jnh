@@ -942,10 +942,6 @@ Ext.application({
                             if(periodicalId_1>0) {
                               params +='/periodicalId_1/'+periodicalId_1;
                             }
-<<<<<<< HEAD
-=======
-                           
->>>>>>> origin/master
                             if(realName!='') {
                               params +='/realName/'+encodeURI(realName);
                             }
