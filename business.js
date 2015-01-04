@@ -118,7 +118,15 @@ Ext.application({
                   labelAlign: "right",
                   name: 'zipCode'
                 },
-                Ext.create('memberType'),
+                Ext.create('memberType', {
+                  listeners: {
+                    render: function (combobox) {
+                      combobox.store.load(function(data) {
+                        combobox.setValue(data[2]);
+                      });
+                    }
+                  }
+                }),
                 {
                   xtype: "button",
                   text: "搜索",
