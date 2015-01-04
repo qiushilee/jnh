@@ -823,9 +823,14 @@ Ext.application({
                               labelAlign: "right",
                               name:'periodicalId2'
                             },
-                            Ext.create('memberType', {
-                              name: 'source'
-                            })
+                            Ext.create('searchMemberType'),
+                            {
+                              xtype: "radiofield",
+                              fieldLabel: "代理会员",
+                              labelWidth: 60,
+                              labelAlign: "right",
+                              name:'agent'
+                            }
                           ]
                         },
                         // +TODO: 位置排序调整
@@ -937,6 +942,10 @@ Ext.application({
                             if(periodicalId_1>0) {
                               params +='/periodicalId_1/'+periodicalId_1;
                             }
+<<<<<<< HEAD
+=======
+                           
+>>>>>>> origin/master
                             if(realName!='') {
                               params +='/realName/'+encodeURI(realName);
                             }

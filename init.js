@@ -36,7 +36,7 @@
   env.api.companytype = "/ajax/companytype";//供货商类型
   env.api.jzstype = "/ajax/jzstype";//进转损分类
   env.api.membertype = "/ajax/membertype";
-  env.api.membersource = "/ajax/membersource";
+  env.api.searchmembertype = "/ajax/searchmembertype";
   env.api.managerRoles = "/ajax/managerrole";
 
   //汇款订购
@@ -626,7 +626,7 @@
         }
       });
 
-      //会员分类
+      //会员类型
       Ext.define("memberType", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "会员类型",
@@ -794,17 +794,17 @@
         }
       });
 
-      //会员来源
-      Ext.define("memberSource", {
+      //搜索模块会员类型
+      Ext.define("searchMemberType", {
         extend: "Ext.form.ComboBox",
-        fieldLabel: "来源",
+        fieldLabel: "会员类型",
         queryMode: "local",
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
           proxy: {
             type: 'ajax',
-            url: env.services.web + env.api.membersource,
+            url: env.services.web + env.api.searchmembertype,
             reader: {
               type: 'json',
               root: 'list'
@@ -815,7 +815,7 @@
         displayField: "name",
         valueField: "value",
         labelAlign: "right",
-        name: "source",
+        name: "memberType",
         width: 150,
         listeners: {
           setvalue: comboboxSetValue

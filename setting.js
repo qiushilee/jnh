@@ -267,6 +267,7 @@ Ext.application({
               listeners: {
                 itemdblclick: function (that, record, item, index, e, eOpts) {
                   managerEdit.show();
+                  console.log(record.data);
                   window.updateForm(managerEdit.getComponent("form").getForm(), record.data);
                 }
               }
@@ -594,7 +595,6 @@ Ext.application({
             name: 'file',
             fieldLabel: '面单图片',
             msgTarget: 'side',
-            allowBlank: false,
             anchor: '70%',
             buttonText: "选择文件",
             labelAlign: "right"
@@ -816,6 +816,8 @@ Ext.application({
     //管理角色编辑
     var roleEdit = new Ext.create("Ext.window.Window", {
       title: "编辑管理角色",
+      width: 600,
+      height: 550,
       autoScroll: true,
       items: [{
         itemId: "form",
