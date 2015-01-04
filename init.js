@@ -590,8 +590,8 @@
         width: 150,
         listeners: {
           render: function (combobox) {
-            setTimeout(function () {
-              combobox.setValue(combobox.store.data.getAt(0));
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
             });
           },
           setvalue: comboboxSetValue
