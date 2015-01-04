@@ -298,7 +298,15 @@ Ext.application({
                           xtype: "hiddenfield",
                           name: "id"
                         },
-                        Ext.create("memberType"),
+                        Ext.create("memberType", {
+                          listeners: {
+                            render: function (combobox) {
+                              combobox.store.load(function(data) {
+                                combobox.setValue(data[1]);
+                              });
+                            }
+                          }
+                        }),
                         {
                           fieldLabel: "姓名",
                           labelWidth: 60,
