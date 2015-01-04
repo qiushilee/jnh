@@ -308,7 +308,18 @@
         }
       });
     });
-  }
+  };
+
+  /**
+   * 重置指定的表单项
+   * @param opt.list 表单项name
+   * @param opt.root selector 父级
+   */
+  window.resetForm = function(opt) {
+    Ext.Array.each(opt.list, function (item) {
+      Ext.ComponentQuery.query("[name=" + item + "]", opt.root)[0].setValue();
+    });
+  };
 
   /**
    * 通用的搜索功能
@@ -562,19 +573,6 @@
         });
       }
 
-      var periodicalStore = Ext.create("Ext.data.Store", {
-        fields: ["name", "value"],
-        autoLoad: true,
-        proxy: {
-          type: 'ajax',
-          url: env.services.web + env.api.periodical.list,
-          reader: {
-            type: 'json',
-            root: 'list'
-          }
-        }
-      });
-
       //期数
       Ext.define("periodical", {
         itemId: "periodical",
@@ -582,7 +580,18 @@
         fieldLabel: "期数",
         queryMode: "local",
         editable: false,
-        store: periodicalStore,
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: true,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.periodical.list,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
         labelWidth: 60,
         displayField: "name",
         valueField: "value",
