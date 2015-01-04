@@ -581,6 +581,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "期数",
         queryMode: "local",
+        editable: false,
         store: periodicalStore,
         labelWidth: 60,
         displayField: "name",
@@ -603,6 +604,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "类型",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
@@ -622,6 +624,11 @@
         name: "type",
         width: 120,
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
@@ -651,6 +658,11 @@
         name: "memberType",
         width: 120,
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
@@ -660,6 +672,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "寄送方式",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
@@ -678,6 +691,11 @@
         name: "deliveryMethod",
         width: 185,
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
@@ -687,6 +705,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
@@ -706,6 +725,11 @@
         name: "paymentMethord",
         width: 155,
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
@@ -716,6 +740,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
@@ -735,6 +760,11 @@
         name: "companyType",
         width: 185,
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
@@ -744,6 +774,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "支付方式",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
@@ -763,6 +794,11 @@
         name: "orderSource",
         width: 185,
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
@@ -771,6 +807,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "类型",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
@@ -790,6 +827,11 @@
         name: "type",
         width: 150,
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
@@ -799,6 +841,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "会员类型",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
@@ -818,6 +861,11 @@
         name: "memberType",
         width: 150,
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
@@ -826,6 +874,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "角色",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
@@ -844,6 +893,11 @@
         labelAlign: "right",
         name: "roleId",
         listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
           setvalue: comboboxSetValue
         }
       });
