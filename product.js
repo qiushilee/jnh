@@ -58,7 +58,7 @@ Ext.application({
     // 进转损
     Ext.create('Ext.data.Store', {
       storeId: 'transitionLoss',
-      fields: ["receiptId", "key", 'id', 'typeName', 'receiptCode', 'receiptDate', "number", "remark", "type"],
+      fields: ["periodicalId", "receiptId", "key", 'id', 'typeName', 'receiptCode', 'receiptDate', "number", "remark", "type"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -368,17 +368,23 @@ Ext.application({
                 }
               ],
               listeners: {
-                itemdblclick: function (that, record, item, index, e, eOpts) {
-                  var form = addJHD.getComponent("change-form").getForm();
+                itemdblclick: function (that, record) {
+                  var form = addJHD.getComponent("form").getForm();
                   Ext.data.StoreManager.lookup('jhdProduct').load({
                     params: {
                       receiptId: record.data.id
                     }
                   });
-                  addJHD.show();
                   Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(false);
+                  form.reset();
                   window.updateForm(form, record.data);
-                  form.url = env.services.web + env.api.product.changeTransitionLoss;
+                  window.resetForm({
+                    list: ['number'],
+                    root: addJHD
+                  });
+                  Ext.ComponentQuery.query("[itemId=create-receipt-code]")[0].setDisabled(true);
+
+                  addJHD.show();
                 }
               }
             },
@@ -388,14 +394,18 @@ Ext.application({
               margin: "20 0 0 0",
               scale: "medium",
               handler: function () {
-                var form = addJHD.getComponent("add-form").getForm();
+                var form = addJHD.getComponent("form").getForm();
                 form.findField("periodicalId").setDisabled(false);
                 form.findField("type").setDisabled(false);
 
-                form.reset();
+                window.resetForm({
+                  list: ['productCode', 'number', 'remark', 'receiptCode'],
+                  root: addJHD
+                });
                 Ext.data.StoreManager.lookup('jhdProduct').loadData({list: []});
-                addJHD.show();
+                Ext.ComponentQuery.query("[itemId=create-receipt-code]")[0].setDisabled(false);
                 Ext.ComponentQuery.query("button[name=jhd-print]")[0].setDisabled(true);
+                addJHD.show();
               }
             },
             {
@@ -656,11 +666,11 @@ Ext.application({
       closeAction: 'hide',
       items: [
         {
-          itemId: "add-form",
+          itemId: "form",
           xtype: "form",
           bodyPadding: 0,
           border: 0,
-          url: env.services.web + env.api.product.addTransitionLoss,
+          url: env.services.web + env.api.productrecord.save,
           items: [
             {
               xtype: 'fieldset',
@@ -678,12 +688,12 @@ Ext.application({
                       itemId: "jhd-type"
                     }),
                     {
+                      itemId: "create-receipt-code",
                       xtype: "button",
                       text: "生成进转损编号",
                       margin: "0 0 30 20",
                       handler: function () {
-                        var form = addJHD.getComponent("add-form").getForm();
-                        form.url = env.services.web + env.api.receipt.add;
+                        var form = addJHD.getComponent("form").getForm();
 
                         form.submit({
                           success: function (form, action) {
@@ -707,107 +717,20 @@ Ext.application({
                     {
                       xtype: "hiddenfield",
                       name: "receiptId"
-                    }
-                  ]
-                },
-                {
-                  xtype: "panel",
-                  layout: "hbox",
-                  margin: "10 0 0 0",
-                  border: 0,
-                  defaultType: 'textfield',
-                  items: [
-                    {
-                      fieldLabel: "货号",
-                      name: "productCode",
-                      labelWidth: 40,
-                      width: 200,
-                      labelAlign: "right"
                     },
-                    {
-                      fieldLabel: "数量",
-                      name: "number",
-                      labelWidth: 40,
-                      width: 100,
-                      labelAlign: "right"
-                    },
-                    {
-                      fieldLabel: "备注",
-                      name: "remark",
-                      labelWidth: 40,
-                      labelAlign: "right"
-                    }
-                  ]
-                },
-                {
-                  xtype: "panel",
-                  layout: "hbox",
-                  margin: "10 0 0 0",
-                  border: 0,
-                  defaultType: 'textfield',
-                  items: [
-                    {
-                      xtype: "button",
-                      text: "新增",
-                      margin: "0 0 30 20",
-                      handler: function () {
-                        var form = addJHD.getComponent("add-form").getForm();
-                        form.url = env.services.web + env.api.productrecord.add;
-
-                        form.submit({
-                          success: function (form) {
-                            form.reset();
-                            Ext.data.StoreManager.lookup('jhdProduct').load();
-                          },
-                          failure: function (form, action) {
-                            Ext.Msg.alert("保存", action.result.msg);
-                          }
-                        });
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          itemId: "change-form",
-          xtype: "form",
-          bodyPadding: 0,
-          border: 0,
-          url: env.services.web + env.api.productrecord.change,
-          items: [
-            {
-              xtype: 'fieldset',
-              //padding: '10',
-              title: '修改商品',
-              defaultType: 'textfield',
-              items: [
-                {
-                  disabled: true,
-                  fieldLabel: "进转损编号",
-                  name: "receiptCode",
-                  margin: "3 0 0 13",
-                  labelWidth: 65
-                },
-                {
-                  xtype: "panel",
-                  layout: "hbox",
-                  margin: "10 0 0 0",
-                  border: 0,
-                  defaultType: 'textfield',
-                  items: [
-                    Ext.create('periodical', {
-                      hidden: true
-                    }),
-                    Ext.create('jzsType', {
-                      hidden: true
-                    }),
                     {
                       xtype: "hiddenfield",
                       name: "id"
-                    },
+                    }
+                  ]
+                },
+                {
+                  xtype: "panel",
+                  layout: "hbox",
+                  margin: "10 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  items: [
                     {
                       fieldLabel: "货号",
                       name: "productCode",
@@ -839,17 +762,23 @@ Ext.application({
                   items: [
                     {
                       xtype: "button",
-                      text: "<span class=\"key\">M</span> 保存",
+                      text: "保存",
                       margin: "0 0 30 20",
                       handler: function () {
-                        var form = addJHD.getComponent("change-form").getForm();
-                        form.url = env.services.web + env.api.productrecord.change;
+                        var form = addJHD.getComponent("form").getForm();
 
                         form.submit({
-                          success: function (form) {
-                            form.reset();
-                            addJHD.hide();
-                            Ext.data.StoreManager.lookup('jhdProduct').load();
+                          success: function () {
+                            Ext.data.StoreManager.lookup('jhdProduct').load({
+                              params: {
+                                receiptId: Ext.ComponentQuery.query("[name=receiptId]", addJHD)[0].value
+                              }
+                            });
+
+                            window.resetForm({
+                              list: ['productCode', 'number', 'remark', 'receiptCode'],
+                              root: addJHD
+                            });
                           },
                           failure: function (form, action) {
                             Ext.Msg.alert("保存", action.result.msg);
@@ -913,8 +842,8 @@ Ext.application({
             }
           ],
           listeners: {
-            itemdblclick: function (that, record, item, index, e, eOpts) {
-              var form = addJHD.getComponent("change-form").getForm();
+            itemdblclick: function (that, record) {
+              var form = addJHD.getComponent("form").getForm();
               window.updateForm(form, record.data);
             }
           }
@@ -938,18 +867,13 @@ Ext.application({
               text: "<span class=\"key\">D</span> 删除",
               margin: "0 0 0 10",
               handler: function () {
-                var record = addJHD.getComponent("list").getSelectionModel().getSelection()[0].data;
-
-                Ext.Msg.confirm("删除", "确认删除“" + record.name + "”吗？", function (type) {
-                  if (type === "yes") {
-                    Ext.Ajax.request({
-                      url: env.services.web + env.api.productrecord.del,
+                removeGridRow({
+                  grid: addJHD.getComponent("list"),
+                  api: env.services.web + env.api.productrecord.del,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('jhdProduct').load({
                       params: {
-                        id: record.id
-                      },
-                      success: function (resp) {
-                        var data = Ext.JSON.decode(resp.responseText);
-                        Ext.data.StoreManager.lookup('jhdProduct').remove(record);
+                        receiptId: Ext.ComponentQuery.query("[name=receiptId]", addJHD)[0].value
                       }
                     });
                   }

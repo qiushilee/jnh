@@ -153,8 +153,7 @@
 
   env.api.productrecord = {
     list: "/productrecord/index",
-    change: "/productrecord/update",
-    add: "/productrecord/create",
+    save: "/productrecord/save",
     del: "/productrecord/delete",
     //根据进转损查看产品
     viewProductRecord: '/productrecord/viewproductrecord',
