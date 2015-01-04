@@ -902,6 +902,41 @@
         }
       });
 
+      Ext.define("zipCode", {
+        extend: "Ext.form.field.Text",
+        fieldLabel: "邮编",
+        name: "zipCode",
+        labelWidth: 40,
+        width: 100,
+        labelAlign: "right",
+        value: "",
+        beforeVal: "",
+        listeners: {
+          blur: function(that) {
+            var val = that.value;
+
+            if (val === that.beforeVal) {
+              return;
+            }
+
+            that.beforeVal = val;
+
+            Ext.Ajax.request({
+              url: env.services.web + env.api.areaList.get,
+              params: {
+                code: val
+              },
+              success: function (resp) {
+                var data = Ext.JSON.decode(resp.responseText);
+                if (data.success) {
+                  Ext.ComponentQuery.query("[name=" + that.input + "]")[0].setValue(data.area);
+                }
+              }
+            });
+          }
+        }
+      });
+
       /**
        * 获取文件后缀
        */

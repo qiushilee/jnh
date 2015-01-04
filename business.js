@@ -302,7 +302,7 @@ Ext.application({
                           listeners: {
                             render: function (combobox) {
                               combobox.store.load(function(data) {
-                                combobox.setValue(data[1]);
+                                combobox.setValue(data[2]);
                               });
                             }
                           }
@@ -341,14 +341,10 @@ Ext.application({
                         Ext.create("addressType", {
                           name: "type0"
                         }),
-                        {
-                          xtype: 'textfield',
-                          fieldLabel: "邮编",
+                        Ext.create("zipCode", {
                           name: "zipCode0",
-                          labelWidth: 40,
-                          width: 100,
-                          labelAlign: "right"
-                        },
+                          input: "address0"
+                        }),
                         {
                           xtype: 'textfield',
                           fieldLabel: "地址",
@@ -399,14 +395,10 @@ Ext.application({
                         Ext.create("addressType", {
                           name: "type1"
                         }),
-                        {
-                          xtype: 'textfield',
-                          fieldLabel: "邮编",
+                        Ext.create("zipCode", {
                           name: "zipCode1",
-                          labelWidth: 40,
-                          width: 100,
-                          labelAlign: "right"
-                        },
+                          input: "address1"
+                        }),
                         {
                           xtype: 'textfield',
                           fieldLabel: "地址",

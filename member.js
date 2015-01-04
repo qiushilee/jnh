@@ -414,14 +414,10 @@ Ext.onReady(function() {
               Ext.create("addressType", {
                 name: "type0"
               }),
-              {
-                xtype: 'textfield',
-                fieldLabel: "邮编",
+              Ext.create("zipCode", {
                 name: "zipCode0",
-                labelWidth: 40,
-                width: 100,
-                labelAlign: "right"
-              },
+                input: "address0"
+              }),
               {
                 xtype: 'textfield',
                 fieldLabel: "地址",
@@ -472,14 +468,10 @@ Ext.onReady(function() {
               Ext.create("addressType", {
                 name: "type1"
               }),
-              {
-                xtype: 'textfield',
-                fieldLabel: "邮编",
+              Ext.create("zipCode", {
                 name: "zipCode1",
-                labelWidth: 40,
-                width: 100,
-                labelAlign: "right"
-              },
+                input: "address1"
+              }),
               {
                 xtype: 'textfield',
                 fieldLabel: "地址",
