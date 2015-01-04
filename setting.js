@@ -10,7 +10,7 @@ Ext.application({
     // 期数管理
     var periodicalList = Ext.create('Ext.data.Store', {
       storeId: 'periodicalList',
-      fields: ['id', 'code', 'title', 'startDate', 'endDate'],
+      fields: ['id', 'code', 'title', 'startDate', 'endDate','status','state'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -144,6 +144,10 @@ Ext.application({
               }, {
                 text: '结束日期',
                 dataIndex: 'endDate',
+                flex: 1
+              }, {
+                text: '状态',
+                dataIndex: 'state',
                 flex: 1
               }],
               listeners: {
@@ -522,6 +526,12 @@ Ext.application({
           name: "endDate",
           xtype: "datefield",
           labelAlign: "right"
+        }, {
+            xtype: 'checkbox',
+            checked: true,
+            fieldLabel: "状态",
+            name: "status",
+            labelAlign: "right"
         }, {
           xtype: "hiddenfield",
           name: "id",
