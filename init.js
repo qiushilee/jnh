@@ -234,7 +234,8 @@
     list: "/managerrole/index",
     save: "/managerrole/save",
     del: "/managerrole/delete",
-    setting: "/managerrole/setting",//设置权限
+    //设置权限
+    setting: "/managerrole/setting"
   };
 
   //地区
@@ -244,7 +245,9 @@
     district: "/area/district",//区
     save: "/area/save",
     setting: "/area/setting", //邮资批量设置
-    del: "/area/delete"
+    del: "/area/delete",
+    //通过邮编获得地区
+    get: "/area/getareabyzipcode"
   };
 
 
@@ -628,6 +631,7 @@
         extend: "Ext.form.ComboBox",
         fieldLabel: "会员类型",
         queryMode: "local",
+        editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
           autoLoad: true,
