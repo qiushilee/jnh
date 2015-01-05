@@ -4,7 +4,7 @@ Ext.onReady(function() {
     storeId: 'memberList',
     fields: ['addrList', 'userCode', 'realName', 'memberType', "address1", "address2", "memberId"],
     layout: "fit",
-    autoLoad: true,
+    autoLoad: false,
     proxy: {
       type: 'ajax',
       url: env.services.web + env.api.member.list,
@@ -18,7 +18,7 @@ Ext.onReady(function() {
   // 目录寄送
   Ext.create('Ext.data.Store', {
     storeId: 'directoryList',
-    fields: ['periodicalName', 'deliveryMethodName', 'number', 'source'],
+    fields: ['periodicalName', 'deliveryMethodName', 'number', 'state'],
     layout: "fit",
     proxy: {
       type: 'ajax',
@@ -351,9 +351,9 @@ Ext.onReady(function() {
                 dataIndex: 'number'
               },
               {
-                text: '来源',
+                text: '状态',
                 flex: 1,
-                dataIndex: 'source'
+                dataIndex: 'state'
               }
             ]
           },
