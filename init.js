@@ -38,6 +38,7 @@
   env.api.membertype = "/ajax/membertype";
   env.api.searchmembertype = "/ajax/searchmembertype";
   env.api.managerRoles = "/ajax/managerrole";
+  env.api.orderStatus = "/ajax/orderstatus";
 
   //汇款订购
   env.api.order = {
@@ -878,6 +879,8 @@
         }
       });
 
+
+      //管理员角色
       Ext.define("managerRoles", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "角色",
@@ -910,6 +913,41 @@
         }
       });
 
+      //订单状态
+      Ext.define("orderStatus", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "会员类型",
+        queryMode: "local",
+        editable: false,
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: true,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.orderStatus,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "status",
+        width: 120,
+        listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
+          setvalue: comboboxSetValue
+        }
+      });
+
+      //邮编
       Ext.define("zipCode", {
         extend: "Ext.form.field.Text",
         fieldLabel: "邮编",
