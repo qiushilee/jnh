@@ -74,7 +74,7 @@ Ext.application({
     //出货明细
     Ext.create('Ext.data.Store', {
       storeId: 'shipmentDetails',
-      fields: ["key", 'id', 'deliveryOrderCode', 'tzqnumber', 'tzhnumber', 'status'],
+      fields: ["key", 'id', 'deliveryOrderCode', 'tzqnumber', 'tzhnumber', 'status','orderStatus'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -484,7 +484,7 @@ Ext.application({
                 },
                 {
                   text: '状态',
-                  dataIndex: 'status',
+                  dataIndex: 'orderStatus',
                   flex: 1
                 }
               ]
