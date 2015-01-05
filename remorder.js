@@ -86,7 +86,7 @@ Ext.application({
       renderTo: window.$bd,
       items: [
         {
-          itemId: "grid",
+           itemId: "orderForm",
           xtype: "grid",
           height: 155,
           title: "汇款订购列表",
@@ -159,7 +159,16 @@ Ext.application({
               dataIndex: 'unDiscountAmount',
               flex: 2
             }
-          ]
+          ],
+          listeners: {
+          itemdblclick: function (that, record, item, index, e, eOpts) {
+            var form = addOrder.getComponent("orderForm").getForm();
+            updateForm(form, record.data);
+            addOrder.show();
+            addOrder.setTitle("汇款订购详情");
+          }
+        }
+
         }
       ]
     });
@@ -442,6 +451,8 @@ Ext.application({
         ]
       }]
     });
+
+
 
     // search.hide();
     // list.hide();
