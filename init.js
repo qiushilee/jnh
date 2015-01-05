@@ -916,7 +916,7 @@
       //订单状态
       Ext.define("orderStatus", {
         extend: "Ext.form.ComboBox",
-        fieldLabel: "会员类型",
+        fieldLabel: "订单状态",
         queryMode: "local",
         editable: false,
         store: Ext.create("Ext.data.Store", {

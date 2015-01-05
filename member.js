@@ -33,7 +33,7 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "memberType", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
+    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "memberType", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "mailTimes","orderStatus"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -632,11 +632,11 @@ Ext.onReady(function() {
           // 点击后跳转到补寄界面
           {
             text: '补寄',
-            dataIndex: ''
+            dataIndex: 'mailTimes'
           },
           {
-            text: '来源',
-            dataIndex: 'memberType'
+            text: '状态',
+            dataIndex: 'orderStatus'
           }
         ],
         listeners: {
@@ -1228,7 +1228,8 @@ Ext.onReady(function() {
               disabled:true,
               name: 'orderMoreAmount',
               width: 180
-            }
+            },
+            Ext.create("orderStatus"),
           ]
         }
       ]
