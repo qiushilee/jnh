@@ -45,8 +45,7 @@
     list: "/orderremittance/index",
     info: "/orderremittance/view/id/",
     del: "/orderremittance/delete/id/",
-    add: "/orderremittance/create",
-    change: "/orderremittance/update"
+    save: "/orderremittance/save",
   };
 
 

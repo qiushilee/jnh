@@ -1249,7 +1249,7 @@ Ext.onReady(function() {
           text: "新增",
           handler: function() {
             var form = this.ownerCt.ownerCt.getForm();
-            form.url = env.services.web + env.api.order.add;
+            form.url = env.services.web + env.api.order.save;
             form.submit({
               success: function(form, action) {
                 var form = addOrder.getComponent("orderForm").getForm();
@@ -1281,7 +1281,7 @@ Ext.onReady(function() {
           text: "保存",
           handler: function() {
             var form = this.ownerCt.ownerCt.getForm();
-            form.url = env.services.web + env.api.order.change;
+            form.url = env.services.web + env.api.order.save;
             form.submit({
               success: function(form, action) {
                 addOrder.hide();
