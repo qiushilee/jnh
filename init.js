@@ -610,7 +610,7 @@
       //学校类型
       Ext.define("addressType", {
         extend: "Ext.form.ComboBox",
-        fieldLabel: "类型",
+        fieldLabel: "类别",
         queryMode: "local",
         editable: false,
         store: Ext.create("Ext.data.Store", {

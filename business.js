@@ -531,13 +531,8 @@ Ext.application({
                               var data = Ext.JSON.decode(resp.responseText);
                               console.log(data);
                             },
-                            failure: function (resp) {
-                              try {
-                                var data = Ext.JSON.decode(resp.responseText);
-                                Ext.Msg.alert("添加到打印购物车", data.msg);
-                              } catch (e) {
-                                console.error(e.stack);
-                              }
+                            failure: function(form, action) {
+                              Ext.Msg.alert("增加", action.result.msg);
                             }
                           });
                         } catch (e) {
