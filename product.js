@@ -699,8 +699,8 @@ Ext.application({
                             var form = productlist.getComponent("transitionLoss").getComponent("form").getForm();
                             Ext.ComponentQuery.query("[name=receiptCode]")[1].setValue(action.result.receiptCode);
                             Ext.ComponentQuery.query("[name=receiptId]")[0].setValue(action.result.receiptId);
-
                             searchHandler.call(form, "transitionLoss");
+                             Ext.ComponentQuery.query("[itemId=create-receipt-code]")[0].setDisabled(true);
                           },
                           failure: function (form, action) {
                             Ext.Msg.alert("创建进转损编号", action.result.msg);
@@ -768,9 +768,16 @@ Ext.application({
                          form.url=env.services.web + env.api.productrecord.save,
                         form.submit({
                           success: function () {
+                            //加载产品列表
                             Ext.data.StoreManager.lookup('jhdProduct').load({
                               params: {
                                 receiptId: Ext.ComponentQuery.query("[name=receiptId]", addJHD)[0].value
+                              }
+                            });
+                            //加载进转损列表
+                             Ext.data.StoreManager.lookup('transitionLoss').load({
+                              params: {
+                                periodicalId: Ext.ComponentQuery.query("[name=periodicalId]", addJHD)[0].value
                               }
                             });
 
