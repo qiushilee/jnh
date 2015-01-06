@@ -192,7 +192,7 @@ Ext.onReady(function() {
               .getSelectionModel()
               .getSelection()[0].data;
 
-              location.href = location.origin + location.pathname + "?id=" + record.memberId + "#telorder";
+              location.href = location.origin + location.pathname + "?userCode=" + record.userCode + "#telorder";
             }
           },
           {
