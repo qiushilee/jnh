@@ -379,7 +379,7 @@ Ext.application({
                   form.reset();
                   window.updateForm(form, record.data);
                   window.resetForm({
-                    list: ['number'],
+                    list: ['number','id'],
                     root: addJHD
                   });
                   Ext.ComponentQuery.query("[itemId=create-receipt-code]")[0].setDisabled(true);
@@ -670,7 +670,6 @@ Ext.application({
           xtype: "form",
           bodyPadding: 0,
           border: 0,
-          url: env.services.web + env.api.productrecord.save,
           items: [
             {
               xtype: 'fieldset',
@@ -694,7 +693,7 @@ Ext.application({
                       margin: "0 0 30 20",
                       handler: function () {
                         var form = addJHD.getComponent("form").getForm();
-
+                            form.url = env.services.web + env.api.receipt.add;
                         form.submit({
                           success: function (form, action) {
                             var form = productlist.getComponent("transitionLoss").getComponent("form").getForm();
@@ -766,7 +765,7 @@ Ext.application({
                       margin: "0 0 30 20",
                       handler: function () {
                         var form = addJHD.getComponent("form").getForm();
-
+                         form.url=env.services.web + env.api.productrecord.save,
                         form.submit({
                           success: function () {
                             Ext.data.StoreManager.lookup('jhdProduct').load({
@@ -776,7 +775,7 @@ Ext.application({
                             });
 
                             window.resetForm({
-                              list: ['productCode', 'number', 'remark', 'receiptCode'],
+                              list: ['productCode', 'number', 'remark'],
                               root: addJHD
                             });
                           },
