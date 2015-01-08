@@ -27,7 +27,8 @@
     folwCharts: "/member/orderremittance/memberId/",
     add: "/member/create",
     change: "/member/update",
-    counttelorder: "/member/counttelorder" //会员电话订购数量
+    counttelorder: "/member/counttelorder", //会员电话订购数量
+    getDefaultAddr: "/member/getdefaultaddr" //获取会员默认地址
   };
 
   env.api.paymentmethord = "/ajax/paymentmethord";//支付方式
@@ -39,6 +40,7 @@
   env.api.searchmembertype = "/ajax/searchmembertype";
   env.api.managerRoles = "/ajax/managerrole";
   env.api.orderStatus = "/ajax/orderstatus";
+  env.api.periodicals = "/ajax/periodicals";
 
   //汇款订购
   env.api.order = {
@@ -584,19 +586,19 @@
           autoLoad: true,
           proxy: {
             type: 'ajax',
-            url: env.services.web + env.api.periodical.list,
+            url: env.services.web + env.api.periodicals,
             reader: {
               type: 'json',
               root: 'list'
             }
           }
         }),
-        labelWidth: 60,
+        labelWidth: 40,
         displayField: "name",
         valueField: "value",
         labelAlign: "right",
         name: "periodicalId",
-        width: 150,
+        width: 80,
         listeners: {
           render: function (combobox) {
             combobox.store.load(function(data) {

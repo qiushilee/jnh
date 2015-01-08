@@ -33,7 +33,7 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "memberType", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "mailTimes","orderStatus"],
+    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "memberType", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "mailTimes","status","orderStatus"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -121,6 +121,9 @@ Ext.onReady(function() {
           labelAlign: 'top'
         },
         items: [
+         Ext.create("periodical", {
+          labelWidth: 40
+        }),
           {
             fieldLabel: "会员编号",
             labelAlign: "right",
@@ -140,11 +143,6 @@ Ext.onReady(function() {
             fieldLabel: "电话",
             labelAlign: "right",
             name: 'mobile'
-          },
-          {
-            fieldLabel: "邮编",
-            labelAlign: "right",
-            name: 'zipCode'
           }
         ]
       }, {
@@ -157,6 +155,11 @@ Ext.onReady(function() {
         },
         margin: "10 0 0 0",
         items: [
+          {
+            fieldLabel: "邮编",
+            labelAlign: "right",
+            name: 'zipCode'
+          },
           {
             itemId: "hi",
             xtype:"datefield",
@@ -174,6 +177,7 @@ Ext.onReady(function() {
             labelAlign: "right"
           },
           Ext.create('memberType'),
+          Ext.create("addressType"),
           {
             xtype: 'button',
             margin: "0 5 0 50",
@@ -192,7 +196,7 @@ Ext.onReady(function() {
               .getSelectionModel()
               .getSelection()[0].data;
 
-              location.href = location.origin + location.pathname + "?userCode=" + record.userCode + "#telorder";
+              location.href = location.origin + location.pathname + "?memberId=" + record.id + "#telorder";
             }
           },
           {
@@ -293,7 +297,7 @@ Ext.onReady(function() {
                 dataIndex: "address2"
               },
               {
-                text: '来源',
+                text: '会员类型',
                 flex: 1,
                 dataIndex: 'memberType'
               }
@@ -1236,7 +1240,7 @@ Ext.onReady(function() {
     }, {
       xtype: 'panel',
       layout: "hbox",
-      width: 110,
+      width: 410,
       margin: "30 0 30 100",
       border: 0,
       bodyStyle: {
@@ -1303,6 +1307,16 @@ Ext.onReady(function() {
                 Ext.Msg.alert("修改汇款订购", action.result.msg);
               }
             });
+          }
+        },
+        {
+          xtype: 'button',
+          scale: "medium",
+          margin: "0 0 0 30",
+          text: "修改",
+          handler: function() {
+            //请求会员默认地址  env.api.member.getDefaultAddr 参数memberId get方式
+
           }
         },
         {
