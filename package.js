@@ -6,28 +6,28 @@ Ext.require([
 Ext.application({
   name: "JNH",
   launch: function () {
-    var sm = Ext.create('Ext.selection.CheckboxModel',{
-      checkOnly:true
+    var sm = Ext.create('Ext.selection.CheckboxModel', {
+      checkOnly: true
     });
 
-     var dataList = Ext.create('Ext.data.Store', {
+    var dataList = Ext.create('Ext.data.Store', {
       storeId: 'dataList',
-      fields: ["id", 'key', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','bjtimes','packaging','userName','address','packageRemark'],
+      fields: ["id", 'key', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'bjtimes', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
       autoLoad: true,
       proxy: {
-          type: 'ajax',
-          url: env.services.web + env.api.package.list,
-          reader: {
-            type: 'json',
-            root: 'list'
-          }
+        type: 'ajax',
+        url: env.services.web + env.api.package.list,
+        reader: {
+          type: 'json',
+          root: 'list'
         }
+      }
     });
 
     Ext.create('Ext.data.Store', {
       storeId: "bujiList",
-      fields: ['id','key','packageCode','deliveryOrderCode','deliveryMethodName','sendDate','postage','weight','remark'],
+      fields: ['id', 'key', 'packageCode', 'deliveryOrderCode', 'deliveryMethodName', 'sendDate', 'postage', 'weight', 'remark'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -42,65 +42,77 @@ Ext.application({
 
     var printStore = Ext.create('Ext.data.Store', {
       storeId: 'printStore',
-      fields: ['key','id', 'deliveryOrderCode', 'packageCode','serialNumber','mailingDate','weight','postage','packaging','userName','address','packageRemark'],
+      fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
       data: {
-        "id":"8","key":5,"deliveryOrderCode":"DO20140722103818","packageCode":null,"serialNumber":null,"mailingDate":"","weight":"0","postage":"0.00","packaging":null,"userName":"","address":"","packageRemark":null
+        "id": "8",
+        "key": 5,
+        "deliveryOrderCode": "DO20140722103818",
+        "packageCode": null,
+        "serialNumber": null,
+        "mailingDate": "",
+        "weight": "0",
+        "postage": "0.00",
+        "packaging": null,
+        "userName": "",
+        "address": "",
+        "packageRemark": null
       }
     });
 
-     var search = Ext.create("Ext.form.Panel", {
-       layout: "hbox",
-       url: env.services.web + env.api.package.list,
-       bodyPadding: 10,
-       defaultType: 'textfield',
-       margin: "10 0",
-       renderTo: window.$bd,
-       items: [
+    var search = Ext.create("Ext.form.Panel", {
+      layout: "hbox",
+      url: env.services.web + env.api.package.list,
+      bodyPadding: 10,
+      defaultType: 'textfield',
+      margin: "10 0",
+      renderTo: window.$bd,
+      items: [
         Ext.create('periodical'),
         {
           fieldLabel: "出货单号",
-          name:'deliveryOrderCode',
+          name: 'deliveryOrderCode',
           labelWidth: 60,
           width: 150,
           labelAlign: "right"
         },
         {
           fieldLabel: "会员编号",
-          name:'userCode',
+          name: 'userCode',
           labelWidth: 60,
           width: 150,
           labelAlign: "right"
         },
         {
           fieldLabel: "姓名",
-          name:'userName',
+          name: 'userName',
           labelWidth: 40,
           width: 150,
           labelAlign: "right"
         },
         {
           xtype: "datefield",
+          format: 'Y-m-d',
           fieldLabel: "邮寄日期",
-          name:'mailingDate',
+          name: 'mailingDate',
           labelWidth: 60,
           width: 160,
           labelAlign: "right"
         },
-       
+
         {
           xtype: "button",
           text: "搜索",
           margin: "0 0 0 20",
-          handler: function() {
+          handler: function () {
             var form = this.up("form").getForm();
             if (form.isValid()) {
               // TODO 接口需要加上 success: true
               form.submit({
-                success: function(form, action) {
+                success: function (form, action) {
                   console.log(action)
                 },
-                failure: function(form, action) {
+                failure: function (form, action) {
                   dataList.loadData(action.result.list);
                 }
               });
@@ -129,71 +141,71 @@ Ext.application({
           columnWidth: 0.5,
           selModel: sm,
           columns: [
-          {
-            text: '序号',
-            dataIndex: 'key',
-            flex: 1
-          },
-          {
-            text: '出货单号',
-            dataIndex: 'deliveryOrderCode',
-            flex: 1
-          },
-          {
-            text: '包裹单号',
-            dataIndex: 'packageCode',
-            flex: 1
-          },
-          {
-            text: '流水号',
-            dataIndex: 'serialNumber',
-            flex: 1
-          },
-          {
-            text: '邮寄日期',
-            dataIndex: 'mailingDate',
-            flex: 1
-          },
-          {
-            text: '重量',
-            dataIndex: 'weight',
-            flex: 1
-          },
-          {
-            text: '邮资',
-            dataIndex: 'postage',
-            flex: 1
-          },
-          {
-            text: '补寄',
-            dataIndex: 'bjtimes',
-            flex: 1
-          },
-          {
-            text: '包装员',
-            dataIndex: 'packaging',
-            flex: 1
-          },
-          {
-            text: '姓名',
-            dataIndex: 'userName',
-            flex: 1
-          },
-          {
-            text: '地址',
-            dataIndex: 'address',
-            flex: 1
-          },
-          {
-            text: '备注',
-            dataIndex: 'packageRemark',
-            flex: 1
-          }
+            {
+              text: '序号',
+              dataIndex: 'key',
+              flex: 1
+            },
+            {
+              text: '出货单号',
+              dataIndex: 'deliveryOrderCode',
+              flex: 1
+            },
+            {
+              text: '包裹单号',
+              dataIndex: 'packageCode',
+              flex: 1
+            },
+            {
+              text: '流水号',
+              dataIndex: 'serialNumber',
+              flex: 1
+            },
+            {
+              text: '邮寄日期',
+              dataIndex: 'mailingDate',
+              flex: 1
+            },
+            {
+              text: '重量',
+              dataIndex: 'weight',
+              flex: 1
+            },
+            {
+              text: '邮资',
+              dataIndex: 'postage',
+              flex: 1
+            },
+            {
+              text: '补寄',
+              dataIndex: 'bjtimes',
+              flex: 1
+            },
+            {
+              text: '包装员',
+              dataIndex: 'packaging',
+              flex: 1
+            },
+            {
+              text: '姓名',
+              dataIndex: 'userName',
+              flex: 1
+            },
+            {
+              text: '地址',
+              dataIndex: 'address',
+              flex: 1
+            },
+            {
+              text: '备注',
+              dataIndex: 'packageRemark',
+              flex: 1
+            }
           ],
           listeners: {
-            itemdblclick: function( that, record, item, index, e, eOpts) {
+            itemdblclick: function (that, record, item, index, e, eOpts) {
               var form = add.getComponent("form").getForm(),
-                  data = record.data;
+                data = record.data;
 
               add.show();
               window.create = false;
@@ -211,119 +223,119 @@ Ext.application({
       border: 0,
       layout: "column",
       items: [
-      {
-        // 添加到打印购物车
-        xtype: "button",
-        text: "<span class=\"key\">W</span> 添加",
-        handler: function() {
-          try {
-            var record = Ext.ComponentQuery.query("grid")[0]
-            .getSelectionModel()
-            .getSelection()[0].data;
+        {
+          // 添加到打印购物车
+          xtype: "button",
+          text: "<span class=\"key\">W</span> 添加",
+          handler: function () {
+            try {
+              var record = Ext.ComponentQuery.query("grid")[0]
+                .getSelectionModel()
+                .getSelection()[0].data;
 
-            printCart.show();
-            window.create = true;
-          } catch (e) {
-            Ext.Msg.alert("添加", "请选中列表中的一项后再操作");
+              printCart.show();
+              window.create = true;
+            } catch (e) {
+              Ext.Msg.alert("添加", "请选中列表中的一项后再操作");
+            }
+          },
+          margin: "0 0 0 10"
+        },
+        {
+          xtype: "button",
+          text: "补寄",
+          handler: function () {
+            try {
+              var record = Ext.ComponentQuery.query("grid")[0]
+                .getSelectionModel()
+                .getSelection()[0].data;
+
+              bujiDetail.show();
+              bujiDetail.getComponent("bujiForm").getForm().findField("packageId").setValue(record.id);
+              Ext.data.StoreManager.lookup("bujiList").load({
+                params: {
+                  packageId: record.id
+                }
+              });
+            } catch (e) {
+              Ext.Msg.alert("补寄", "请选中列表中的一项后再操作");
+            }
+          },
+          margin: "0 0 0 10"
+        },
+        {
+          name: "jhd-print",
+          xtype: "button",
+          text: "打印设置",
+          margin: "0 0 0 10",
+          handler: function () {
+            window.printHandle.set("package");
           }
         },
-        margin: "0 0 0 10"
-      },
-      {
-        xtype: "button",
-        text: "补寄",
-        handler: function() {
-          try {
-            var record = Ext.ComponentQuery.query("grid")[0]
-            .getSelectionModel()
-            .getSelection()[0].data;
+        {
+          xtype: "button",
+          text: "<span class=\"key\">C</span> 预览",
+          disabled: true,
+          margin: "0 0 0 10"
+        },
+        {
+          xtype: "button",
+          text: "<span class=\"key\">B</span> 连续打印",
+          margin: "0 0 0 10",
+          handler: function () {
+            //var data = list.getComponent("grid").getSelectionModel().getSelection()[0].data
 
-            bujiDetail.show();
-            bujiDetail.getComponent("bujiForm").getForm().findField("packageId").setValue(record.id);
-            Ext.data.StoreManager.lookup("bujiList").load({
-              params: {
-                packageId: record.id
-              }
+            //printStore.loadData(data);
+            print.show();
+          }
+        },
+        {
+          xtype: "button",
+          text: "批量修改",
+          margin: "0 0 0 10",
+          handler: function () {
+            var packageList = list.getComponent("grid").getSelectionModel().getSelection();
+            ids = [];
+
+            Ext.Array.each(packageList, function (item, index) {
+              var record = item.data;
+              ids.push(record.id);
             });
-          } catch (e) {
-            Ext.Msg.alert("补寄", "请选中列表中的一项后再操作");
+            Ext.ComponentQuery.query("[name=package-ids]")[0].setValue(ids);
+            add.show();
           }
         },
-        margin: "0 0 0 10"
-      },
-      {
-        name: "jhd-print",
-        xtype: "button",
-        text: "打印设置",
-        margin: "0 0 0 10",
-        handler: function () {
-          window.printHandle.set("package");
-        }
-      },
-      {
-        xtype: "button",
-        text: "<span class=\"key\">C</span> 预览",
-        disabled: true,
-        margin: "0 0 0 10"
-      },
-      {
-        xtype: "button",
-        text: "<span class=\"key\">B</span> 连续打印",
-        margin: "0 0 0 10",
-        handler: function() {
-          //var data = list.getComponent("grid").getSelectionModel().getSelection()[0].data
-
-          //printStore.loadData(data);
-          print.show();
-        }
-      },
-      {
-        xtype: "button",
-        text: "批量修改",
-        margin: "0 0 0 10",
-        handler: function() {
-          var packageList = list.getComponent("grid").getSelectionModel().getSelection();
-              ids = [];
-
-          Ext.Array.each(packageList, function(item, index) {
-            var record = item.data;
-            ids.push(record.id);
-          });
-          Ext.ComponentQuery.query("[name=package-ids]")[0].setValue(ids);
-          add.show();
-        }
-      },
-      {
-        xtype: "button",
-        text: "扫描包裹单",
-        disabled: true,
-        margin: "0 0 0 10"
-      },
-      {
-        xtype: "button",
-        text: "导出",
-        margin: "0 0 0 10",
-        handler: function() {
-          var periodicalId = Ext.ComponentQuery.query("[name=periodicalId]")[0].value,
-              userCode=Ext.ComponentQuery.query("[name=userCode]")[0].rawValue,
+        {
+          xtype: "button",
+          text: "扫描包裹单",
+          disabled: true,
+          margin: "0 0 0 10"
+        },
+        {
+          xtype: "button",
+          text: "导出",
+          margin: "0 0 0 10",
+          handler: function () {
+            var periodicalId = Ext.ComponentQuery.query("[name=periodicalId]")[0].value,
+              userCode = Ext.ComponentQuery.query("[name=userCode]")[0].rawValue,
               userName = Ext.ComponentQuery.query("[name=userName]")[0].rawValue,
-              deliveryOrderCode =Ext.ComponentQuery.query("[name=deliveryOrderCode]")[0].rawValue,
-              mailingDate=Ext.ComponentQuery.query("[name=mailingDate]")[0].rawValue;
-          var params = "";
-          if(periodicalId>0)
-            params +='/periodicalId/'+periodicalId;
-          if(userCode!='')
-            params +='/userCode/'+userCode;
-          if(userName!='')
-            params +='/userName/'+userName;
-          if(deliveryOrderCode!='')
-            params +='/deliveryOrderCode/'+deliveryOrderCode;
-          if(mailingDate!='')
-            params +='/mailingDate/'+mailingDate;
-          window.open(env.services.web + env.api.package.export + params);
+              deliveryOrderCode = Ext.ComponentQuery.query("[name=deliveryOrderCode]")[0].rawValue,
+              mailingDate = Ext.ComponentQuery.query("[name=mailingDate]")[0].rawValue;
+            var params = "";
+            if (periodicalId > 0)
+              params += '/periodicalId/' + periodicalId;
+            if (userCode != '')
+              params += '/userCode/' + userCode;
+            if (userName != '')
+              params += '/userName/' + userName;
+            if (deliveryOrderCode != '')
+              params += '/deliveryOrderCode/' + deliveryOrderCode;
+            if (mailingDate != '')
+              params += '/mailingDate/' + mailingDate;
+            window.open(env.services.web + env.api.package.export + params);
 
+          }
         }
-      }
       ]
     });
 
@@ -348,26 +360,26 @@ Ext.application({
                 "background-color": "transparent"
               },
               items: [
-              {
-                xtype: "hidden",
-                name: "package-ids"
-              },
-              {
-                disabled: true,
-                fieldLabel: "出货单号",
-                labelWidth: 55,
-                margin: "5 0",
-                labelAlign: "right",
-                name:'deliveryOrderCode'
-              },
-              {
-                disabled: true,
-                fieldLabel: "会员编号",
-                labelWidth: 55,
-                margin: "5 0",
-                labelAlign: "right",
-                name:'userCode'
-              }
+                {
+                  xtype: "hidden",
+                  name: "package-ids"
+                },
+                {
+                  disabled: true,
+                  fieldLabel: "出货单号",
+                  labelWidth: 55,
+                  margin: "5 0",
+                  labelAlign: "right",
+                  name: 'deliveryOrderCode'
+                },
+                {
+                  disabled: true,
+                  fieldLabel: "会员编号",
+                  labelWidth: 55,
+                  margin: "5 0",
+                  labelAlign: "right",
+                  name: 'userCode'
+                }
               ]
             },
             {
@@ -384,14 +396,14 @@ Ext.application({
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
-                name:'userName'
+                name: 'userName'
               }, {
                 disabled: true,
                 fieldLabel: "重量",
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
-                name:'weight'
+                name: 'weight'
               }]
             },
             {
@@ -408,17 +420,17 @@ Ext.application({
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
-                name:'zipCode'
+                name: 'zipCode'
               },
-              {
-                disabled: true,
-                fieldLabel: "地址",
-                labelWidth: 55,
-                width: 250,
-                margin: "5 0",
-                labelAlign: "right",
-                name:'address'
-              }]
+                {
+                  disabled: true,
+                  fieldLabel: "地址",
+                  labelWidth: 55,
+                  width: 250,
+                  margin: "5 0",
+                  labelAlign: "right",
+                  name: 'address'
+                }]
             },
             {
               xtype: "panel",
@@ -430,17 +442,18 @@ Ext.application({
               },
               items: [{
                 xtype: "datefield",
+                format: 'Y-m-d',
                 fieldLabel: "邮寄日期",
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
-                name:'mailingDate'
+                name: 'mailingDate'
               }, {
                 fieldLabel: "包裹单号",
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
-                name:'packageCode'
+                name: 'packageCode'
               }]
             },
             {
@@ -456,13 +469,13 @@ Ext.application({
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
-                name:'weight'
+                name: 'weight'
               }, {
                 fieldLabel: "邮资",
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
-                name:'postage'
+                name: 'postage'
               }]
             },
             {
@@ -478,7 +491,7 @@ Ext.application({
                 labelWidth: 55,
                 margin: "5 0",
                 labelAlign: "right",
-                name:'packaging'
+                name: 'packaging'
               }]
             },
             {
@@ -505,9 +518,9 @@ Ext.application({
             text: "保存",
             margin: "5 0",
             labelAlign: "right",
-            handler: function() {
+            handler: function () {
               var form = add.getComponent("form").getForm(),
-                  api = env.services.web;
+                api = env.services.web;
 
               if (window.create) {
                 api += env.api.package.add;
@@ -519,10 +532,10 @@ Ext.application({
 
               if (form.isValid()) {
                 form.submit({
-                  success: function(form, action) {
+                  success: function (form, action) {
                     console.log(action)
                   },
-                  failure: function(form, action) {
+                  failure: function (form, action) {
                     Ext.Msg.alert("包裹详情", action.result.msg);
                   }
                 });
@@ -567,7 +580,7 @@ Ext.application({
               xtype: "button",
               text: "搜索",
               margin: "0 0 0 20",
-              handler: function() {
+              handler: function () {
                 var form = this.up("form").getForm();
                 form.submit({
                   success: function (form, action) {
@@ -581,7 +594,7 @@ Ext.application({
               xtype: "button",
               text: "重置",
               margin: "0 0 0 10",
-              handler: function() {
+              handler: function () {
                 var form = this.up("form").getForm();
                 form.reset();
               }
@@ -690,7 +703,7 @@ Ext.application({
         store: Ext.data.StoreManager.lookup('jhStore'),
         height: 155,
         margin: "10 0 0 0",
-        selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
+        selModel: Ext.create('Ext.selection.CheckboxModel', {mode: "SIMPLE"}),
         columns: [{
           text: '序号',
           dataIndex: 'id1',
@@ -730,7 +743,7 @@ Ext.application({
         }],
         bbar: Ext.create('Ext.PagingToolbar', {
           displayMsg: 'Displaying topics {0} - {1} of {2}',
-          items:['-', {
+          items: ['-', {
             pressed: false
           }]
         })
@@ -799,8 +812,9 @@ Ext.application({
               items: [
                 {
                   xtype: "datefield",
+                  format: 'Y-m-d',
                   fieldLabel: "补寄日期",
-                  name:'sendDate',
+                  name: 'sendDate',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
@@ -811,7 +825,7 @@ Ext.application({
                 }),
                 {
                   fieldLabel: "包裹单号",
-                  name:'packageCode',
+                  name: 'packageCode',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
@@ -826,21 +840,21 @@ Ext.application({
               items: [
                 {
                   fieldLabel: "邮资",
-                  name:'postage',
+                  name: 'postage',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "重量",
-                  name:'weight',
+                  name: 'weight',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
                 },
                 {
                   fieldLabel: "备注",
-                  name:'remark',
+                  name: 'remark',
                   labelWidth: 60,
                   width: 160,
                   labelAlign: "right"
@@ -851,12 +865,12 @@ Ext.application({
               xtype: "button",
               text: "新增",
               margin: "10 0 0 30",
-              handler: function() {
+              handler: function () {
                 var form = this.up("form").getForm();
                 form.url = env.services.web + env.api.package.sendadd;
 
                 form.submit({
-                  success: function(form, action) {
+                  success: function (form, action) {
                     form.reset();
                     Ext.data.StoreManager.lookup("bujiList").load({
                       params: {
@@ -864,7 +878,7 @@ Ext.application({
                       }
                     });
                   },
-                  failure: function(form, action) {
+                  failure: function (form, action) {
                     Ext.Msg.alert("新增", action.result.msg);
                   }
                 });
@@ -874,15 +888,15 @@ Ext.application({
               xtype: "button",
               text: "保存",
               margin: "10 0 0 10",
-              handler: function() {
+              handler: function () {
                 var form = this.up("form").getForm();
                 form.url = env.services.web + env.api.package.sendchange;
 
                 form.submit({
-                  success: function(form, action) {
+                  success: function (form, action) {
                     form.reset();
                   },
-                  failure: function(form, action) {
+                  failure: function (form, action) {
                     Ext.Msg.alert("保存", action.result.msg);
                   }
                 });
@@ -926,9 +940,9 @@ Ext.application({
             }
           ],
           listeners: {
-            itemdblclick: function( that, record, item, index, e, eOpts) {
+            itemdblclick: function (that, record, item, index, e, eOpts) {
               var form = bujiDetail.getComponent("bujiForm").getForm(),
-                  data = record.data;
+                data = record.data;
 
               updateForm(form, data);
             }

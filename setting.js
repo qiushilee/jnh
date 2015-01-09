@@ -10,7 +10,7 @@ Ext.application({
     // 期数管理
     var periodicalList = Ext.create('Ext.data.Store', {
       storeId: 'periodicalList',
-      fields: ['id', 'code', 'title', 'startDate', 'endDate','status','state'],
+      fields: ['id', 'code', 'title', 'startDate', 'endDate', 'status', 'state'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -26,7 +26,7 @@ Ext.application({
     //寄送方式
     var sendmethordList = Ext.create('Ext.data.Store', {
       storeId: 'sendmethordList',
-      fields: ['id', 'name', 'key', 'state','image'],
+      fields: ['id', 'name', 'key', 'state', 'image'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -58,7 +58,7 @@ Ext.application({
     //角色列表
     var roleList = Ext.create('Ext.data.Store', {
       storeId: 'roleList',
-      fields: ['id','roleId', 'key', 'rolename', 'remark', 'permissions', 'addDate'],
+      fields: ['id', 'roleId', 'key', 'rolename', 'remark', 'permissions', 'addDate'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -520,18 +520,20 @@ Ext.application({
           fieldLabel: '开始日期',
           name: "startDate",
           xtype: "datefield",
+          format: 'Y-m-d',
           labelAlign: "right"
         }, {
           fieldLabel: '结束日期',
           name: "endDate",
           xtype: "datefield",
+          format: 'Y-m-d',
           labelAlign: "right"
         }, {
-            xtype: 'checkbox',
-            checked: true,
-            fieldLabel: "状态",
-            name: "status",
-            labelAlign: "right"
+          xtype: 'checkbox',
+          checked: true,
+          fieldLabel: "状态",
+          name: "status",
+          labelAlign: "right"
         }, {
           xtype: "hiddenfield",
           name: "id",
