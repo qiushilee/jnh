@@ -125,7 +125,7 @@ Ext.application({
               flex: 1
             },
             {
-              text: '是否收到汇款',
+              text: '收到汇款',
               dataIndex: 'isRemittanceReceived',
               flex: 1
             },
@@ -135,7 +135,7 @@ Ext.application({
               flex: 1
             },
             {
-              text: '是否收到订单',
+              text: '收到订单',
               dataIndex: 'isOrderReceived',
               flex: 1
             },
