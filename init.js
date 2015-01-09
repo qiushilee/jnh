@@ -598,7 +598,7 @@
         valueField: "value",
         labelAlign: "right",
         name: "periodicalId",
-        width: 80,
+        width: 120,
         listeners: {
           render: function (combobox) {
             combobox.store.load(function(data) {
