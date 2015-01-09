@@ -192,7 +192,7 @@ Ext.onReady(function() {
               .getSelectionModel()
               .getSelection()[0].data;
 
-              location.href = location.origin + location.pathname + "?id=" + record.memberId + "#telorder";
+              location.href = location.origin + location.pathname + "?id=" + record.userCode + "#telorder";
             }
           },
           {
@@ -384,6 +384,7 @@ Ext.onReady(function() {
               }, Ext.create("deliveryMethod"),
               {
                 xtype: "datefield",
+              format: 'Y-m-d',
                 fieldLabel: "生日",
                 labelWidth: 60,
                 labelAlign: "right",
@@ -391,6 +392,7 @@ Ext.onReady(function() {
               },{
                 // TODO 缺少name，所以暂时禁用 xtype
                 xtype: "datefield",
+              format: 'Y-m-d',
                 fieldLabel: "毕业时间",
                 labelWidth: 60,
                 labelAlign: "right",
@@ -548,6 +550,7 @@ Ext.onReady(function() {
               },
               {
                 xtype: "datefield",
+              format: 'Y-m-d',
                 fieldLabel: "加入时间",
                 labelAlign: "right",
                 name: "addDate",
@@ -761,6 +764,7 @@ Ext.onReady(function() {
           },
           {
             xtype: "datefield",
+              format: 'Y-m-d',
             fieldLabel: '付款日期',
             labelAlign: "right",
             name: 'company'
@@ -775,6 +779,7 @@ Ext.onReady(function() {
           },
           {
             xtype: "datefield",
+              format: 'Y-m-d',
             fieldLabel: '收款日期',
             labelAlign: "right",
             name: 'email',
@@ -798,6 +803,7 @@ Ext.onReady(function() {
             labelAlign: "right"
           },{
             xtype: "datefield",
+              format: 'Y-m-d',
             fieldLabel: '收订单日期',
             labelAlign: "right",
             name: 'company'
@@ -1065,6 +1071,7 @@ Ext.onReady(function() {
             },
             {
               xtype: "datefield",
+              format: 'Y-m-d',
               fieldLabel: '汇款日期',
               labelAlign: "right",
               name: 'remittanceDate',
@@ -1080,6 +1087,7 @@ Ext.onReady(function() {
             },
             {
               xtype: "datefield",
+              format: 'Y-m-d',
               fieldLabel: '收款日期',
               labelAlign: "right",
               name: 'remittanceReceivedDate',
@@ -1100,6 +1108,7 @@ Ext.onReady(function() {
             }),
             {
               xtype: "datefield",
+              format: 'Y-m-d',
               fieldLabel: '收订单日期',
               labelAlign: "right",
               name: 'orderReceivedDate',
