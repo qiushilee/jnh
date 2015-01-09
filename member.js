@@ -127,16 +127,13 @@ Ext.onReady(function () {
         border: 0,
         layout: "column",
         defaultType: 'textfield',
-        fieldDefaults: {
-          labelAlign: 'top'
-        },
         items: [
-          Ext.create("periodical", {
-            labelWidth: 40
-          }),
+          Ext.create("periodical"),
           {
             fieldLabel: "会员编号",
             labelAlign: "right",
+            labelWidth: 60,
+            margin: '0 0 0 95',
             name: 'userCode'
           },
           {
@@ -168,6 +165,7 @@ Ext.onReady(function () {
           {
             fieldLabel: "邮编",
             labelAlign: "right",
+            labelWidth: 40,
             name: 'zipCode'
           },
           {
