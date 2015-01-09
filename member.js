@@ -241,7 +241,7 @@ Ext.onReady(function () {
               var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
                 .getSelectionModel()
                 .getSelection()[0].data;
-              location.href = location.origin + location.pathname + "?id=" + record.userCode + "#telorder";
+              location.href = location.origin + location.pathname + "?id=" + record.memberId + "#telorder";
             }
           },
           {
