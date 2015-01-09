@@ -162,14 +162,16 @@ Ext.onReady(function() {
           },
           {
             itemId: "hi",
-            xtype:"datefield",
+            xtype: "datefield",
+            format: 'Y-m-d',
             fieldLabel: "加入时间",
             name: "beginDate",
             width: 200,
             labelAlign: "right"
           },
           {
-            xtype:"datefield",
+            xtype: "datefield",
+            format: 'Y-m-d',
             fieldLabel: "到",
             name: "endDate",
             labelWidth: 20,
@@ -529,21 +531,21 @@ Ext.onReady(function() {
                 labelAlign: "right",
                 name: "preferentialTicket",
                 labelWidth: 50,
-         width: 120,
+         width: 120
               },
               {
                 fieldLabel: "不打折金额",
                 labelAlign: "right",
                 name: "unDiscountAmount",
                 labelWidth: 70,
-        width: 180,
+        width: 180
               },
               {
                 fieldLabel: "青春贴",
                 labelAlign: "right",
                 name: "youthStuck",
                 labelWidth: 50,
-         width: 150,
+         width: 150
               },
               {
                 xtype:"combobox",
