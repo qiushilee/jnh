@@ -4,7 +4,7 @@ Ext.application({
   launch: function() {
     window.telorderCurrent = {};
     if (location.search.replace(/.*=/, "")) {
-      telorderCurrent.memberId = location.search.replace(/.*=/, "");
+      telorderCurrent.userCode = location.search.replace(/.*=/, "");
     }
 
     //电话订购列表
@@ -24,7 +24,7 @@ Ext.application({
 
     Ext.data.StoreManager.lookup("orderList").load({
       params: {
-        memberId: location.search.replace(/.*=/, "")
+        userCode: location.search.replace(/.*=/, "")
       },
       callback: function(records) {
         var form = Ext.ComponentQuery.query("form[itemId=member]")[0].getForm();

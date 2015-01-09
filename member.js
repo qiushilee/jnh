@@ -4,7 +4,7 @@ Ext.onReady(function() {
     storeId: 'memberList',
     fields: ['addrList', 'userCode', 'realName', 'memberType', "address1", "address2", "memberId"],
     layout: "fit",
-    autoLoad: true,
+    autoLoad: false,
     proxy: {
       type: 'ajax',
       url: env.services.web + env.api.member.list,
@@ -18,7 +18,7 @@ Ext.onReady(function() {
   // 目录寄送
   Ext.create('Ext.data.Store', {
     storeId: 'directoryList',
-    fields: ['periodicalName', 'deliveryMethodName', 'number', 'source'],
+    fields: ['periodicalName', 'deliveryMethodName', 'number', 'state'],
     layout: "fit",
     proxy: {
       type: 'ajax',
@@ -33,7 +33,7 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "memberType", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "memberType"],
+    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "memberType", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "mailTimes","status","orderStatus"],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -121,6 +121,9 @@ Ext.onReady(function() {
           labelAlign: 'top'
         },
         items: [
+         Ext.create("periodical", {
+          labelWidth: 40
+        }),
           {
             fieldLabel: "会员编号",
             labelAlign: "right",
@@ -140,11 +143,6 @@ Ext.onReady(function() {
             fieldLabel: "电话",
             labelAlign: "right",
             name: 'mobile'
-          },
-          {
-            fieldLabel: "邮编",
-            labelAlign: "right",
-            name: 'zipCode'
           }
         ]
       }, {
@@ -157,6 +155,11 @@ Ext.onReady(function() {
         },
         margin: "10 0 0 0",
         items: [
+          {
+            fieldLabel: "邮编",
+            labelAlign: "right",
+            name: 'zipCode'
+          },
           {
             itemId: "hi",
             xtype:"datefield",
@@ -174,6 +177,7 @@ Ext.onReady(function() {
             labelAlign: "right"
           },
           Ext.create('memberType'),
+          Ext.create("addressType"),
           {
             xtype: 'button',
             margin: "0 5 0 50",
@@ -191,7 +195,6 @@ Ext.onReady(function() {
               var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
               .getSelectionModel()
               .getSelection()[0].data;
-
               location.href = location.origin + location.pathname + "?id=" + record.userCode + "#telorder";
             }
           },
@@ -293,7 +296,7 @@ Ext.onReady(function() {
                 dataIndex: "address2"
               },
               {
-                text: '来源',
+                text: '会员类型',
                 flex: 1,
                 dataIndex: 'memberType'
               }
@@ -351,9 +354,9 @@ Ext.onReady(function() {
                 dataIndex: 'number'
               },
               {
-                text: '来源',
+                text: '状态',
                 flex: 1,
-                dataIndex: 'source'
+                dataIndex: 'state'
               }
             ]
           },
@@ -635,11 +638,11 @@ Ext.onReady(function() {
           // 点击后跳转到补寄界面
           {
             text: '补寄',
-            dataIndex: ''
+            dataIndex: 'mailTimes'
           },
           {
-            text: '来源',
-            dataIndex: 'memberType'
+            text: '状态',
+            dataIndex: 'orderStatus'
           }
         ],
         listeners: {
@@ -1237,14 +1240,15 @@ Ext.onReady(function() {
               disabled:true,
               name: 'orderMoreAmount',
               width: 180
-            }
+            },
+            Ext.create("orderStatus"),
           ]
         }
       ]
     }, {
       xtype: 'panel',
       layout: "hbox",
-      width: 110,
+      width: 410,
       margin: "30 0 30 100",
       border: 0,
       bodyStyle: {
@@ -1257,7 +1261,7 @@ Ext.onReady(function() {
           text: "新增",
           handler: function() {
             var form = this.ownerCt.ownerCt.getForm();
-            form.url = env.services.web + env.api.order.add;
+            form.url = env.services.web + env.api.order.save;
             form.submit({
               success: function(form, action) {
                 var form = addOrder.getComponent("orderForm").getForm();
@@ -1289,16 +1293,38 @@ Ext.onReady(function() {
           text: "保存",
           handler: function() {
             var form = this.ownerCt.ownerCt.getForm();
-            form.url = env.services.web + env.api.order.change;
+            form.url = env.services.web + env.api.order.save;
             form.submit({
               success: function(form, action) {
                 addOrder.hide();
-                folwChartsList.load();
+                var form = addOrder.getComponent("orderForm").getForm();
+                form.reset();
+                orderModelHandler({
+                  success: function(data) {
+                    var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                      .getSelectionModel()
+                      .getSelection()[0].data;
+                    showFolwCharts(record.memberId);
+                  },
+                  fail: function() {
+                    Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
+                  }
+                });
               },
               failure: function(form, action) {
                 Ext.Msg.alert("修改汇款订购", action.result.msg);
               }
             });
+          }
+        },
+        {
+          xtype: 'button',
+          scale: "medium",
+          margin: "0 0 0 30",
+          text: "修改",
+          handler: function() {
+            //请求会员默认地址  env.api.member.getDefaultAddr 参数memberId get方式
+
           }
         },
         {

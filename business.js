@@ -531,13 +531,8 @@ Ext.application({
                               var data = Ext.JSON.decode(resp.responseText);
                               console.log(data);
                             },
-                            failure: function (resp) {
-                              try {
-                                var data = Ext.JSON.decode(resp.responseText);
-                                Ext.Msg.alert("添加到打印购物车", data.msg);
-                              } catch (e) {
-                                console.error(e.stack);
-                              }
+                            failure: function(form, action) {
+                              Ext.Msg.alert("增加", action.result.msg);
                             }
                           });
                         } catch (e) {
@@ -771,19 +766,18 @@ Ext.application({
                         },
                         success: function (resp) {
                           var data = Ext.JSON.decode(resp.responseText);
-                          console.log(data);
+                          Ext.Msg.alert("添加打印", data.msg);
                         },
                         failure: function (resp) {
                           try {
                             var data = Ext.JSON.decode(resp.responseText);
-                            Ext.Msg.alert("添加到打印购物车", data.msg);
+                            Ext.Msg.alert("添加打印", data.msg);
                           } catch (e) {
-                            console.error(e.stack);
+                             Ext.Msg.alert("添加打印", data.msg);
                           }
                         }
                       });
                     } catch (e) {
-                      console.log(e.stack)
                       Ext.Msg.alert("添加打印购物车", "请选中列表中的一项后再操作");
                     }
                   }

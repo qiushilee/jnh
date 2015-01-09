@@ -27,7 +27,8 @@
     folwCharts: "/member/orderremittance/memberId/",
     add: "/member/create",
     change: "/member/update",
-    counttelorder: "/member/counttelorder" //会员电话订购数量
+    counttelorder: "/member/counttelorder", //会员电话订购数量
+    getDefaultAddr: "/member/getdefaultaddr" //获取会员默认地址
   };
 
   env.api.paymentmethord = "/ajax/paymentmethord";//支付方式
@@ -38,14 +39,15 @@
   env.api.membertype = "/ajax/membertype";
   env.api.searchmembertype = "/ajax/searchmembertype";
   env.api.managerRoles = "/ajax/managerrole";
+  env.api.orderStatus = "/ajax/orderstatus";
+  env.api.periodicals = "/ajax/periodicals";
 
   //汇款订购
   env.api.order = {
     list: "/orderremittance/index",
     info: "/orderremittance/view/id/",
     del: "/orderremittance/delete/id/",
-    add: "/orderremittance/create",
-    change: "/orderremittance/update"
+    save: "/orderremittance/save",
   };
 
 
@@ -584,19 +586,19 @@
           autoLoad: true,
           proxy: {
             type: 'ajax',
-            url: env.services.web + env.api.periodical.list,
+            url: env.services.web + env.api.periodicals,
             reader: {
               type: 'json',
               root: 'list'
             }
           }
         }),
-        labelWidth: 60,
+        labelWidth: 40,
         displayField: "name",
         valueField: "value",
         labelAlign: "right",
         name: "periodicalId",
-        width: 150,
+        width: 80,
         listeners: {
           render: function (combobox) {
             combobox.store.load(function(data) {
@@ -610,7 +612,7 @@
       //学校类型
       Ext.define("addressType", {
         extend: "Ext.form.ComboBox",
-        fieldLabel: "类型",
+        fieldLabel: "类别",
         queryMode: "local",
         editable: false,
         store: Ext.create("Ext.data.Store", {
@@ -878,6 +880,8 @@
         }
       });
 
+
+      //管理员角色
       Ext.define("managerRoles", {
         extend: "Ext.form.ComboBox",
         fieldLabel: "角色",
@@ -910,6 +914,41 @@
         }
       });
 
+      //订单状态
+      Ext.define("orderStatus", {
+        extend: "Ext.form.ComboBox",
+        fieldLabel: "订单状态",
+        queryMode: "local",
+        editable: false,
+        store: Ext.create("Ext.data.Store", {
+          fields: ["name", "value"],
+          autoLoad: true,
+          proxy: {
+            type: 'ajax',
+            url: env.services.web + env.api.orderStatus,
+            reader: {
+              type: 'json',
+              root: 'list'
+            }
+          }
+        }),
+        labelWidth: 60,
+        displayField: "name",
+        valueField: "value",
+        labelAlign: "right",
+        name: "status",
+        width: 120,
+        listeners: {
+          render: function (combobox) {
+            combobox.store.load(function(data) {
+              combobox.setValue(data[0]);
+            });
+          },
+          setvalue: comboboxSetValue
+        }
+      });
+
+      //邮编
       Ext.define("zipCode", {
         extend: "Ext.form.field.Text",
         fieldLabel: "邮编",
