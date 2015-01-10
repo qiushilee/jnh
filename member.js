@@ -1404,7 +1404,25 @@ Ext.onReady(function () {
                 margin: "0 0 0 30",
                 text: "修改",
                 handler: function () {
-                  //请求会员默认地址  env.api.member.getDefaultAddr 参数memberId get方式
+                  var form = this.ownerCt.ownerCt.getForm(),
+                      record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                        .getSelectionModel()
+                        .getSelection()[0].data;
+
+                  Ext.Ajax.request({
+                    url: env.services.web + env.api.member.getDefaultAddr,
+                    params: {
+                      memberId: record.memberId
+                    },
+                    success: function (resp) {
+                      var data = Ext.JSON.decode(resp.responseText);
+                      if (data.success) {
+                        window.updateForm(form, data.info);
+                      } else {
+                        Ext.Msg.alert("填充地址", data.msg);
+                      }
+                    }
+                  });
 
                 }
               },
