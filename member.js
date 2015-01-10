@@ -595,7 +595,7 @@ Ext.onReady(function () {
                 width: 150
               },
                Ext.create("periodical", {
-                fieldLabel:"代理期数"
+                fieldLabel:"代理期数",
                 name: "agentPeriodicalId"
               }),
               {
