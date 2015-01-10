@@ -160,147 +160,150 @@ Ext.onReady(function () {
         xtype: "form",
         url: env.services.web + env.api.member.list,
         border: 0,
-        layout: "column",
-        defaultType: 'textfield',
-        items: [
-          Ext.create("periodical"),
-          {
-            fieldLabel: "会员编号",
-            labelAlign: "right",
-            labelWidth: 60,
-            margin: '0 0 0 95',
-            name: 'userCode'
-          },
-          {
-            fieldLabel: "姓名",
-            labelAlign: "right",
-            name: 'realName'
-          },
-          {
-            fieldLabel: "地址",
-            labelAlign: "right",
-            name: 'address'
-          },
-          {
-            fieldLabel: "电话",
-            labelAlign: "right",
-            name: 'mobile'
-          }
-        ]
-      },
-      {
-        xtype: "panel",
-        border: 0,
-        layout: "column",
-        defaultType: 'textfield',
-        fieldDefaults: {
-          labelAlign: 'top'
-        },
-        margin: "10 0 0 0",
         items: [
           {
-            fieldLabel: "邮编",
-            labelAlign: "right",
-            labelWidth: 40,
-            name: 'zipCode'
-          },
-          {
-            itemId: "hi",
-            xtype: "datefield",
-            format: 'Y-m-d',
-            fieldLabel: "加入时间",
-            name: "beginDate",
-            width: 200,
-            labelAlign: "right"
-          },
-          {
-            xtype: "datefield",
-            format: 'Y-m-d',
-            fieldLabel: "到",
-            name: "endDate",
-            labelWidth: 20,
-            width: 120,
-            labelAlign: "right"
-          },
-          Ext.create('memberType'),
-          Ext.create("addressType"),
-          {
-            xtype: 'button',
-            margin: "0 5 0 50",
-            text: "搜索",
-            handler: function () {
-              searchHandler.call(this.ownerCt.ownerCt.getComponent("searchBar"), "memberList");
-            }
-          },
-          {
-            itemId: "order-button",
-            xtype: 'button',
-            margin: "0 5",
-            text: "<span class=\"key\">E</span> 电话订购",
-            handler: function () {
-              var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
-                .getSelectionModel()
-                .getSelection()[0].data;
-              location.href = location.origin + location.pathname + "?id=" + record.memberId + "#telorder";
-            }
-          },
-          {
-            xtype: 'button',
-            margin: "0 5",
-            text: "<span class=\"key\">N</span> 保存",
-            handler: function () {
-              var form = panel.getComponent("memberInfo").getForm(),
-                member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
-              form.url = env.services.web + env.api.member.change;
-              if (form.isValid()) {
-                console.log(member.id)
-                form.submit({
-                  params: {
-                    id: member.id
-                  },
-                  success: function (form, action) {
-                    console.log(action)
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("修改会员", action.result.msg);
-                  }
-                });
+            xtype: "panel",
+            border: 0,
+            defaultType: 'textfield',
+            layout: 'hbox',
+            items: [
+              Ext.create("periodical"),
+              {
+                fieldLabel: "会员编号",
+                labelAlign: "right",
+                labelWidth: 60,
+                margin: '0 0 0 95',
+                name: 'userCode'
+              },
+              {
+                fieldLabel: "姓名",
+                labelAlign: "right",
+                name: 'realName'
+              },
+              {
+                fieldLabel: "地址",
+                labelAlign: "right",
+                name: 'address'
+              },
+              {
+                fieldLabel: "电话",
+                labelAlign: "right",
+                name: 'mobile'
               }
-            }
+            ]
           },
           {
-            xtype: 'button',
-            margin: "0 5",
-            text: "Q增加",
-            handler: function () {
-              var form = panel.getComponent("memberInfo").getForm();
-              form.url = env.services.web + env.api.member.add;
-              if (form.isValid()) {
-                form.submit({
-                  success: function (form, action) {
-                    Ext.data.StoreManager.lookup('memberList').loadData(action.result.list);
-                    form.reset();
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("添加会员", action.result.msg);
-                  }
-                });
-              }
-            }
-          },
-          {
-            xtype: 'button',
-            margin: "0 5",
-            text: "删除",
-            handler: function () {
-              window.removeGridRow({
-                grid: panel.getComponent("grid").getComponent("memberList"),
-                api: env.services.web + env.api.member.del,
-                success: function () {
-                  Ext.data.StoreManager.lookup("memberList").load();
+            xtype: "panel",
+            border: 0,
+            defaultType: 'textfield',
+            margin: "10 0 0 0",
+            layout: 'hbox',
+            items: [
+              {
+                fieldLabel: "邮编",
+                labelAlign: "right",
+                labelWidth: 40,
+                name: 'zipCode'
+              },
+              {
+                itemId: "hi",
+                xtype: "datefield",
+                format: 'Y-m-d',
+                fieldLabel: "加入时间",
+                name: "beginDate",
+                width: 200,
+                labelAlign: "right"
+              },
+              {
+                xtype: "datefield",
+                format: 'Y-m-d',
+                fieldLabel: "到",
+                name: "endDate",
+                labelWidth: 20,
+                width: 120,
+                labelAlign: "right"
+              },
+              Ext.create('memberType'),
+              Ext.create("addressType"),
+              {
+                xtype: 'button',
+                margin: "0 5 0 50",
+                text: "搜索",
+                handler: function () {
+                  searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
                 }
-              });
-            }
+              },
+              {
+                itemId: "order-button",
+                xtype: 'button',
+                margin: "0 5",
+                text: "<span class=\"key\">E</span> 电话订购",
+                handler: function () {
+                  var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                    .getSelectionModel()
+                    .getSelection()[0].data;
+                  location.href = location.origin + location.pathname + "?id=" + record.memberId + "#telorder";
+                }
+              },
+              {
+                xtype: 'button',
+                margin: "0 5",
+                text: "<span class=\"key\">N</span> 保存",
+                handler: function () {
+                  var form = panel.getComponent("memberInfo").getForm(),
+                    member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
+                  form.url = env.services.web + env.api.member.change;
+                  if (form.isValid()) {
+                    console.log(member.id)
+                    form.submit({
+                      params: {
+                        id: member.id
+                      },
+                      success: function (form, action) {
+                        console.log(action)
+                      },
+                      failure: function (form, action) {
+                        Ext.Msg.alert("修改会员", action.result.msg);
+                      }
+                    });
+                  }
+                }
+              },
+              {
+                xtype: 'button',
+                margin: "0 5",
+                text: "Q增加",
+                handler: function () {
+                  var form = panel.getComponent("memberInfo").getForm();
+                  form.url = env.services.web + env.api.member.add;
+                  if (form.isValid()) {
+                    form.submit({
+                      success: function (form, action) {
+                        Ext.data.StoreManager.lookup('memberList').loadData(action.result.list);
+                        form.reset();
+                      },
+                      failure: function (form, action) {
+                        Ext.Msg.alert("添加会员", action.result.msg);
+                      }
+                    });
+                  }
+                }
+              },
+              {
+                xtype: 'button',
+                margin: "0 5",
+                text: "删除",
+                handler: function () {
+                  window.removeGridRow({
+                    grid: panel.getComponent("grid").getComponent("memberList"),
+                    api: env.services.web + env.api.member.del,
+                    success: function () {
+                      Ext.data.StoreManager.lookup("memberList").load();
+                    }
+                  });
+                }
+              }
+            ]
           }
         ]
       },
