@@ -694,8 +694,8 @@ Ext.onReady(function () {
         listeners: {
           itemdblclick: function (that, record, item, index, e, eOpts) {
             var form = addOrder.getComponent("orderForm").getForm();
-            updateForm(form, record.data);
             addOrder.show();
+            updateForm(form, record.data);
             addOrder.setTitle("修改汇款订购");
           }
         }
