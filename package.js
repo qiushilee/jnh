@@ -105,18 +105,7 @@ Ext.application({
           text: "搜索",
           margin: "0 0 0 20",
           handler: function () {
-            var form = this.up("form").getForm();
-            if (form.isValid()) {
-              // TODO 接口需要加上 success: true
-              form.submit({
-                success: function (form, action) {
-                  console.log(action)
-                },
-                failure: function (form, action) {
-                  dataList.loadData(action.result.list);
-                }
-              });
-            }
+            searchHandler.call(this, "dataList");
           }
         },
         {
@@ -362,6 +351,10 @@ Ext.application({
               items: [
                 {
                   xtype: "hidden",
+                  "name": "id"
+                },
+                {
+                  xtype: "hidden",
                   name: "package-ids"
                 },
                 {
@@ -533,7 +526,8 @@ Ext.application({
               if (form.isValid()) {
                 form.submit({
                   success: function (form, action) {
-                    console.log(action)
+                    add.hide();
+                    searchHandler.call(search, "dataList");
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("包裹详情", action.result.msg);
