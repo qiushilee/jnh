@@ -28,7 +28,8 @@
     add: "/member/create",
     change: "/member/update",
     counttelorder: "/member/counttelorder", //会员电话订购数量
-    getDefaultAddr: "/member/getdefaultaddr" //获取会员默认地址
+    getDefaultAddr: "/member/getdefaultaddr", //获取会员默认地址
+    checkMobile:"/member/checkmobile"//检测电话是否存在
   };
 
   env.api.paymentmethord = "/ajax/paymentmethord";//支付方式

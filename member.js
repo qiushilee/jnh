@@ -591,12 +591,10 @@ Ext.onReady(function () {
                 labelWidth: 50,
                 width: 150
               },
-              {
-                xtype: "combobox",
-                fieldLabel: "代理期数",
-                labelAlign: "right",
-                labelWidth: 60
-              },
+               Ext.create("periodical", {
+                fieldLabel:"代理期数"
+                name: "agentPeriodicalId"
+              }),
               {
                 xtype: "datefield",
                 format: 'Y-m-d',
