@@ -169,13 +169,21 @@
     change: "/business/savemember",
     add: "/business/savemember",
     del: "/business/deletemember",
-    printcartlist: "/printcart/index",//打印购物车列表
-    addprintcart: "/printcart/create",//添加打印购物车
-    delprintcart: "/printcart/delete",//删除打印购物车
+  
     export: '/printcart/export',//导出
     printmember: "/business/printmember", //会员名单打印，参数 btId
     printcart: '/printcart/printcart',//打印购物车打印，参数 btId
   };
+
+  //打印购物车
+   env.api.printcart = {
+      businesslist: "/printcart/businessindex",//打印购物车列表
+      businessadd: "/printcart/businesscreate",//添加打印购物车
+      businessdel: "/printcart/businessdelete",//删除打印购物车
+      packagelist: "/printcart/packageindex",//打印购物车列表
+      packageadd: "/printcart/packagecreate",//添加打印购物车
+      packagedel: "/printcart/packagedelete",//删除打印购物车
+   }
 
   //电话订购
   env.api.telorder = {

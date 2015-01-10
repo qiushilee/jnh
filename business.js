@@ -54,7 +54,7 @@ Ext.application({
       layout: "fit",
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.business.printcartlist,
+        url: env.services.web + env.api.printcart.businesslist,
         reader: {
           type: 'json',
           root: 'list'
@@ -524,7 +524,7 @@ Ext.application({
                             .getSelection()[0].data;
 
                           Ext.Ajax.request({
-                            url: env.services.web + env.api.business.addprintcart,
+                            url: env.services.web + env.api.printcart.businessadd,
                             params: {
                               memberId: record.id
                             },
@@ -761,7 +761,7 @@ Ext.application({
                       });
 
                       Ext.Ajax.request({
-                        url: env.services.web + env.api.business.addprintcart,
+                        url: env.services.web + env.api.printcart.businessadd,
                         params: {
                           memberId: memberIds.join(",")
                         },
@@ -794,7 +794,7 @@ Ext.application({
             {
               itemId: "print-cart-searchbar",
               xtype: "form",
-              url: env.services.web + env.api.business.printcartlist,
+              url: env.services.web + env.api.printcart.businesslist,
               layout: "hbox",
               bodyPadding: 10,
               border: 0,
