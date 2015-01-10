@@ -379,7 +379,7 @@ Ext.application({
                   form.reset();
                   window.updateForm(form, record.data);
                   window.resetForm({
-                    list: ['number','id'],
+                    list: ['id', 'number'],
                     root: addJHD
                   });
                   Ext.ComponentQuery.query("[itemId=create-receipt-code]")[0].setDisabled(true);

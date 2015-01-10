@@ -1,4 +1,4 @@
-Ext.onReady(function() {
+Ext.onReady(function () {
   // 会员列表
   var memberList = Ext.create('Ext.data.Store', {
     storeId: 'memberList',
@@ -33,7 +33,42 @@ Ext.onReady(function() {
   // 流程表
   var folwChartsList = Ext.create('Ext.data.Store', {
     storeId: 'folwChartsList',
-    fields: ["preferentialTicket", "memberId", "realName", "key", 'id', 'periodicalName', 'userCode', 'userName', "billNumber", "receiptProceedsOffice", "remitter", "remittanceAmount", "remittanceDate", "paymentMethord","paymentMethordName", "youthStuck", "unDiscountAmount", "memberType", "postage", "packageCode", "mailingDate", "isRemittanceReceived", "remittanceReceivedDate", "isOrderReceived", "orderReceivedDate", "deliveryMethod","deliveryMethodName", "mailTimes","status","orderStatus"],
+    fields: [
+      "periodicalId",
+      "consignee",
+      "zipCode",
+      "address",
+      "preferentialTicket",
+      "memberId",
+      "realName",
+      "key",
+      'id',
+      'periodicalName',
+      'userCode',
+      'userName',
+      "billNumber",
+      "receiptProceedsOffice",
+      "remitter",
+      "remittanceAmount",
+      "remittanceDate",
+      "paymentMethord",
+      "paymentMethordName",
+      "youthStuck",
+      "unDiscountAmount",
+      "memberType",
+      "postage",
+      "packageCode",
+      "mailingDate",
+      "isRemittanceReceived",
+      "remittanceReceivedDate",
+      "isOrderReceived",
+      "orderReceivedDate",
+      "deliveryMethod",
+      "deliveryMethodName",
+      "mailTimes",
+      "status",
+      "orderStatus"
+    ],
     layout: "fit",
     autoLoad: true,
     proxy: {
@@ -52,19 +87,19 @@ Ext.onReady(function() {
   function getMemberInfo(memberId, callback) {
     Ext.Ajax.request({
       url: env.services.web + env.api.member.info + memberId,
-      success: function(response) {
+      success: function (response) {
         var data = Ext.JSON.decode(response.responseText);
 
         callback(data);
       },
-      failure: function(form, action) {
+      failure: function (form, action) {
         Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
       }
     });
   }
 
   function showMemberInfo(memberId) {
-    getMemberInfo(memberId, function(data) {
+    getMemberInfo(memberId, function (data) {
       var con = panel.getComponent("memberInfo").getForm();
 
       con.reset();
@@ -74,7 +109,17 @@ Ext.onReady(function() {
       if (data.addressList) {
         window.updateForm(con, data.addressList);
       } else {
-        window.updateForm(con, {"memberType":"","id":"","memberId":"","type":"","address":"","zipCode":"","mobile":"","consignee":"","isDefault":""});
+        window.updateForm(con, {
+          "memberType": "",
+          "id": "",
+          "memberId": "",
+          "type": "",
+          "address": "",
+          "zipCode": "",
+          "mobile": "",
+          "consignee": "",
+          "isDefault": ""
+        });
       }
     });
   }
@@ -82,10 +127,10 @@ Ext.onReady(function() {
   function showFolwCharts(memberId) {
     Ext.Ajax.request({
       url: env.services.web + env.api.member.folwCharts + memberId,
-      success: function(response) {
+      success: function (response) {
         folwChartsList.loadData(Ext.JSON.decode(response.responseText).list);
       },
-      failure: function(form, action) {
+      failure: function (form, action) {
         Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
       }
     });
@@ -95,7 +140,7 @@ Ext.onReady(function() {
     var currentMember = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0];
 
     if (currentMember) {
-      getMemberInfo(currentMember.data.id, function(resp) {
+      getMemberInfo(currentMember.data.id, function (resp) {
         var data = resp.info;
         data.memberId = data.id;
 
@@ -117,16 +162,13 @@ Ext.onReady(function() {
         border: 0,
         layout: "column",
         defaultType: 'textfield',
-        fieldDefaults: {
-          labelAlign: 'top'
-        },
         items: [
-         Ext.create("periodical", {
-          labelWidth: 40
-        }),
+          Ext.create("periodical"),
           {
             fieldLabel: "会员编号",
             labelAlign: "right",
+            labelWidth: 60,
+            margin: '0 0 0 95',
             name: 'userCode'
           },
           {
@@ -145,7 +187,8 @@ Ext.onReady(function() {
             name: 'mobile'
           }
         ]
-      }, {
+      },
+      {
         xtype: "panel",
         border: 0,
         layout: "column",
@@ -158,18 +201,21 @@ Ext.onReady(function() {
           {
             fieldLabel: "邮编",
             labelAlign: "right",
+            labelWidth: 40,
             name: 'zipCode'
           },
           {
             itemId: "hi",
-            xtype:"datefield",
+            xtype: "datefield",
+            format: 'Y-m-d',
             fieldLabel: "加入时间",
             name: "beginDate",
             width: 200,
             labelAlign: "right"
           },
           {
-            xtype:"datefield",
+            xtype: "datefield",
+            format: 'Y-m-d',
             fieldLabel: "到",
             name: "endDate",
             labelWidth: 20,
@@ -182,7 +228,7 @@ Ext.onReady(function() {
             xtype: 'button',
             margin: "0 5 0 50",
             text: "搜索",
-            handler: function() {
+            handler: function () {
               searchHandler.call(this.ownerCt.ownerCt.getComponent("searchBar"), "memberList");
             }
           },
@@ -191,21 +237,20 @@ Ext.onReady(function() {
             xtype: 'button',
             margin: "0 5",
             text: "<span class=\"key\">E</span> 电话订购",
-            handler: function() {
+            handler: function () {
               var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
-              .getSelectionModel()
-              .getSelection()[0].data;
-
-              location.href = location.origin + location.pathname + "?memberId=" + record.id + "#telorder";
+                .getSelectionModel()
+                .getSelection()[0].data;
+              location.href = location.origin + location.pathname + "?id=" + record.memberId + "#telorder";
             }
           },
           {
             xtype: 'button',
             margin: "0 5",
-            text: "<span class=\"key\">N</span> 保存" ,
-            handler: function() {
+            text: "<span class=\"key\">N</span> 保存",
+            handler: function () {
               var form = panel.getComponent("memberInfo").getForm(),
-              member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
+                member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
               form.url = env.services.web + env.api.member.change;
               if (form.isValid()) {
                 console.log(member.id)
@@ -213,10 +258,10 @@ Ext.onReady(function() {
                   params: {
                     id: member.id
                   },
-                  success: function(form, action) {
+                  success: function (form, action) {
                     console.log(action)
                   },
-                  failure: function(form, action) {
+                  failure: function (form, action) {
                     Ext.Msg.alert("修改会员", action.result.msg);
                   }
                 });
@@ -227,16 +272,16 @@ Ext.onReady(function() {
             xtype: 'button',
             margin: "0 5",
             text: "Q增加",
-            handler: function() {
+            handler: function () {
               var form = panel.getComponent("memberInfo").getForm();
               form.url = env.services.web + env.api.member.add;
               if (form.isValid()) {
                 form.submit({
-                  success: function(form, action) {
+                  success: function (form, action) {
                     Ext.data.StoreManager.lookup('memberList').loadData(action.result.list);
                     form.reset();
                   },
-                  failure: function(form, action) {
+                  failure: function (form, action) {
                     Ext.Msg.alert("添加会员", action.result.msg);
                   }
                 });
@@ -247,11 +292,11 @@ Ext.onReady(function() {
             xtype: 'button',
             margin: "0 5",
             text: "删除",
-            handler: function() {
+            handler: function () {
               window.removeGridRow({
                 grid: panel.getComponent("grid").getComponent("memberList"),
                 api: env.services.web + env.api.member.del,
-                success: function() {
+                success: function () {
                   Ext.data.StoreManager.lookup("memberList").load();
                 }
               });
@@ -303,25 +348,25 @@ Ext.onReady(function() {
               }
             ],
             listeners: {
-              itemclick: function(that, record) {
+              itemclick: function (that, record) {
                 Ext.Ajax.request({
                   url: env.services.web + env.api.member.counttelorder,
                   params: {
                     memberId: record.data.id
                   },
-                  success: function(resp) {
+                  success: function (resp) {
                     var data = Ext.JSON.decode(resp.responseText);
                     var button = Ext.ComponentQuery.query("button[itemId=order-button]")[0]
                     button.setText("<span class=\"key\">E</span> 电话订购（" + data + "）")
                   },
-                  failure: function(resp) {
+                  failure: function (resp) {
                     var data = Ext.JSON.decode(resp.responseText);
                     console.log(data);
                   }
                 });
               },
 
-              itemdblclick: function( that, record, item, index, e, eOpts) {
+              itemdblclick: function (that, record, item, index, e, eOpts) {
                 showMemberInfo(record.data.id);
                 showFolwCharts(record.data.id);
                 Ext.data.StoreManager.lookup('directoryList').load({
@@ -371,7 +416,7 @@ Ext.onReady(function() {
         items: [
           // 第三行
           {
-            xtype:'panel',
+            xtype: 'panel',
             layout: "hbox",
             border: 0,
             defaultType: 'textfield',
@@ -388,17 +433,19 @@ Ext.onReady(function() {
               }, Ext.create("deliveryMethod"),
               {
                 xtype: "datefield",
+                format: 'Y-m-d',
                 fieldLabel: "生日",
                 labelWidth: 60,
                 labelAlign: "right",
-                name:"birth"
-              },{
+                name: "birth"
+              }, {
                 // TODO 缺少name，所以暂时禁用 xtype
                 xtype: "datefield",
+                format: 'Y-m-d',
                 fieldLabel: "毕业时间",
                 labelWidth: 60,
                 labelAlign: "right",
-                name:"graduateDate"
+                name: "graduateDate"
               },
               Ext.create("periodical")
             ]
@@ -406,12 +453,12 @@ Ext.onReady(function() {
 
           // 第四行
           {
-            xtype:'panel',
+            xtype: 'panel',
             layout: "hbox",
             border: 0,
             defaultType: 'textfield',
             margin: "10 0 0 0",
-            items: [ {
+            items: [{
               xtype: "hiddenfield",
               name: "addressDefault0"
             },
@@ -426,7 +473,7 @@ Ext.onReady(function() {
                 xtype: 'textfield',
                 fieldLabel: "地址",
                 labelWidth: 60,
-                name: "address0" ,
+                name: "address0",
                 width: 300,
                 labelAlign: "right"
               },
@@ -448,24 +495,24 @@ Ext.onReady(function() {
               },
               {
                 xtype: 'radio',
-                id   : 'isDefault0',
+                id: 'isDefault0',
                 fieldLabel: '默认地址',
                 labelAlign: 'right',
                 labelWidth: 80,
                 name: 'isDefault',
-                inputValue:'0',
-                checked : true
+                inputValue: '0',
+                checked: true
               }
             ]
           },
           // 第五行
           {
-            xtype:'panel',
+            xtype: 'panel',
             layout: "hbox",
             border: 0,
             defaultType: 'textfield',
             margin: "10 0 0 0",
-            items: [ {
+            items: [{
               xtype: "hiddenfield",
               name: "addressDefault1"
             },
@@ -480,7 +527,7 @@ Ext.onReady(function() {
                 xtype: 'textfield',
                 fieldLabel: "地址",
                 labelWidth: 60,
-                name: "address1" ,
+                name: "address1",
                 width: 300,
                 labelAlign: "right"
               },
@@ -499,14 +546,14 @@ Ext.onReady(function() {
                 name: "consignee1",
                 width: 180,
                 labelAlign: "right"
-              },{
+              }, {
                 xtype: 'radio',
-                id   : 'isDefault1',
+                id: 'isDefault1',
                 labelAlign: 'right',
                 fieldLabel: '默认地址',
                 labelWidth: 80,
                 name: 'isDefault',
-                inputValue:'1'
+                inputValue: '1'
               }]
           },
           // 第六行
@@ -528,30 +575,31 @@ Ext.onReady(function() {
                 labelAlign: "right",
                 name: "preferentialTicket",
                 labelWidth: 50,
-         width: 120,
+                width: 120
               },
               {
                 fieldLabel: "不打折金额",
                 labelAlign: "right",
                 name: "unDiscountAmount",
                 labelWidth: 70,
-        width: 180,
+                width: 180
               },
               {
                 fieldLabel: "青春贴",
                 labelAlign: "right",
                 name: "youthStuck",
                 labelWidth: 50,
-         width: 150,
+                width: 150
               },
               {
-                xtype:"combobox",
+                xtype: "combobox",
                 fieldLabel: "代理期数",
                 labelAlign: "right",
                 labelWidth: 60
               },
               {
                 xtype: "datefield",
+                format: 'Y-m-d',
                 fieldLabel: "加入时间",
                 labelAlign: "right",
                 name: "addDate",
@@ -661,17 +709,17 @@ Ext.onReady(function() {
         items: [
           {
             text: "<span class=\"key\">A</span> 增加",
-            handler: function() {
+            handler: function () {
               var form = addOrder.getComponent("orderForm").getForm();
               form.reset();
               orderModelHandler({
-                success: function(data) {
+                success: function (data) {
                   updateForm(form, data);
                   form.findField("id").setValue("");
                   addOrder.show();
                   addOrder.setTitle("增加汇款订购");
                 },
-                fail: function() {
+                fail: function () {
                   Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
                 }
               });
@@ -680,11 +728,11 @@ Ext.onReady(function() {
           {
             text: "<span class=\"key\">D</span> 删除",
             margin: "0 0 0 10",
-            handler: function() {
+            handler: function () {
               window.removeGridRow({
                 grid: Ext.ComponentQuery.query("grid[itemId=orderlist]")[0],
                 api: env.services.web + env.api.orderremittance.del,
-                success: function() {
+                success: function () {
                   var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
                     .getSelectionModel()
                     .getSelection()[0].data;
@@ -696,10 +744,10 @@ Ext.onReady(function() {
           {
             text: "订单详情",
             margin: "0 0 0 10",
-            handler: function() {
+            handler: function () {
               var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
-              .getSelectionModel()
-              .getSelection()[0].data;
+                .getSelectionModel()
+                .getSelection()[0].data;
 
               location.href = location.origin + location.pathname + "?id=" + record.memberId + "#deliverorder";
             }
@@ -765,6 +813,7 @@ Ext.onReady(function() {
           },
           {
             xtype: "datefield",
+            format: 'Y-m-d',
             fieldLabel: '付款日期',
             labelAlign: "right",
             name: 'company'
@@ -779,6 +828,7 @@ Ext.onReady(function() {
           },
           {
             xtype: "datefield",
+            format: 'Y-m-d',
             fieldLabel: '收款日期',
             labelAlign: "right",
             name: 'email',
@@ -800,8 +850,9 @@ Ext.onReady(function() {
             valueField: 'abbr',
             fieldLabel: "寄送方式",
             labelAlign: "right"
-          },{
+          }, {
             xtype: "datefield",
+            format: 'Y-m-d',
             fieldLabel: '收订单日期',
             labelAlign: "right",
             name: 'company'
@@ -850,7 +901,7 @@ Ext.onReady(function() {
             fieldLabel: "姓名",
             labelAlign: "right",
             name: 'first'
-          },{
+          }, {
             fieldLabel: "会员编号",
             labelAlign: "right",
             name: 'first'
@@ -949,34 +1000,34 @@ Ext.onReady(function() {
         margin: "20 0 0 0",
         store: Ext.data.StoreManager.lookup('memberList'),
         columns: [
-        {
-          text: '序号',
-          dataIndex: 'id1'
-        },
-        {
-          text: '补寄日期',
-          dataIndex: 'iid1'
-        },
-        {
-          text: '寄送方式',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '包裹单号',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '邮资',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '重量',
-          dataIndex: 'bnum1'
-        },
-        {
-          text: '备注',
-          dataIndex: 'bnum1'
-        }
+          {
+            text: '序号',
+            dataIndex: 'id1'
+          },
+          {
+            text: '补寄日期',
+            dataIndex: 'iid1'
+          },
+          {
+            text: '寄送方式',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '包裹单号',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '邮资',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '重量',
+            dataIndex: 'bnum1'
+          },
+          {
+            text: '备注',
+            dataIndex: 'bnum1'
+          }
         ]
       },
       {
@@ -1011,325 +1062,340 @@ Ext.onReady(function() {
     bodyStyle: {
       background: "#fff"
     },
-    items: [{
-      itemId: "orderForm",
-      xtype: "form",
-      border: 0,
-      items: [{
+    items: [
+      {
+        itemId: "orderForm",
         xtype: "form",
         border: 0,
-        items: [{
-          xtype: 'panel',
-          margin: "20 0 0 0",
-          layout: "hbox",
-          border: 0,
-          defaultType: 'textfield',
-          items: [
-            Ext.create("periodical", {
-              labelWidth: 40
-            }),
-            Ext.create("paymentMethord", {
-              labelWidth: 145,
-              width: 260
-            }),
-            {
-              fieldLabel: '汇票号码',
-              name:"billNumber",
-              labelAlign: "right",
-              labelWidth: 90
-            },
-            {
-              fieldLabel: '收汇局',
-              labelAlign: "right",
-              name: 'receiptProceedsOffice',
-              labelWidth: 90
-            }
-          ]
-        },
-        {
-          xtype: 'panel',
-          layout: "hbox",
-          margin: "10 0 0 0",
-          border: 0,
-          defaultType: 'textfield',
-          items: [
-            {
-              xtype: "hiddenfield",
-              name: 'id'
-            },
-            {
-              xtype: "hiddenfield",
-              name: 'memberId'
-            },
-            {
-              fieldLabel: "汇款金额",
-              labelAlign: "right",
-              labelWidth: 60,
-              name: 'remittanceAmount'
-            },
-            {
-              xtype: "datefield",
-              fieldLabel: '汇款日期',
-              labelAlign: "right",
-              name: 'remittanceDate',
-              width: 220
-            },
-            {
-              xtype: "checkboxfield",
-              boxLabel: "收到货款",
-              margin: "0 0 0 37",
-              inputValue: 1,
-              labelAlign: "right",
-              name: 'isRemittanceReceived'
-            },
-            {
-              xtype: "datefield",
-              fieldLabel: '收款日期',
-              labelAlign: "right",
-              name: 'remittanceReceivedDate',
-              labelWidth: 220
-            }
-          ]
-        },
-        {
-          xtype: 'panel',
-          layout: "hbox",
-          margin: "30 0 0 0",
-          border: 0,
-          defaultType: 'textfield',
-          items: [
-            Ext.create('deliveryMethod', {
-              labelWidth: 60,
-              width: 160
-            }),
-            {
-              xtype: "datefield",
-              fieldLabel: '收订单日期',
-              labelAlign: "right",
-              name: 'orderReceivedDate',
-              labelWidth: 145,
-              width: 250
-            },
-            {
-              fieldLabel: "邮资",
-              labelAlign: "right",
-              name: 'postage',
-              labelWidth: 65,
-              width:180
-            }
-          ]
-        },
-        {
-          xtype: 'panel',
-          layout: "hbox",
-          margin: "10 0 0 0",
-          border: 0,
-          defaultType: 'textfield',
-          items: [
-            {
-              xtype: "checkboxfield",
-              boxLabel: "收到订单",
-              margin: "0 0 0 10",
-              inputValue: 1,
-              labelAlign: "right",
-              name: 'isOrderReceived'
-            }, {
-              fieldLabel: "不打折金额",
-              labelAlign: "right",
-              name: 'unDiscountAmount',
-              labelWidth: 230,
-              width: 330
-            },
-            {
-              fieldLabel: "抵价券",
-              labelAlign: "right",
-              name: 'preferentialTicket',
-              labelWidth: 80,
-              width:185
-            },
-            {
-              fieldLabel: "使用青春贴",
-              labelAlign: "right",
-              name: 'youthStuck',
-              labelWidth: 160
-            }
-          ]
-        },
-        {
-          xtype: 'panel',
-          layout: "hbox",
-          margin: "30 0 0 0",
-          border: 0,
-          defaultType: 'textfield',
-          items: [
-            {
-              labelWidth: 40,
-              fieldLabel: "姓名",
-              labelAlign: "right",
-              name: 'realName',
-              width:180
-            },{
-              labelWidth: 60,
-              fieldLabel: "会员编号",
-              labelAlign: "right",
-              name: 'userCode',
-              margin: "0 0 0 10",
-              width:220
-            },
-            {labelWidth: 60,
-              fieldLabel: "邮编",
-              labelAlign: "right",
-              name: 'zipCode',
-              width:180
-            },
-            {labelWidth: 60,
-              fieldLabel: "地址",
-              labelAlign: "right",
-              name: 'address'
-            },
-            {labelWidth: 60,
-              fieldLabel: "收件人",
-              labelAlign: "right",
-              width: 170,
-              name: 'consignee'
-            }
-          ]
-        },
-        {
-          xtype: 'panel',
-          layout: "hbox",
-          margin: "10 0 0 0",
-          border: 0,
-          defaultType: 'textfield',
-          items: [
-            {labelWidth: 80,
-              fieldLabel: "折扣",
-              labelAlign: "right",
-              disabled:true,
-              name:'orderDiscount',
-              readOnly:true,
-              labelWidth: 40
-            },
-            {labelWidth: 80,
-              fieldLabel: "邮寄",
-              labelAlign: "right",
-              disabled:true,
-              name: 'mailingCost',
-              width: 180
-            },
-            {
-              fieldLabel: "青春贴",
-              labelAlign: "right",
-              disabled:true,
-              name: 'orderYouthStuck',
-              margin: "0 0 0 30",
-              width: 180
-            },
-            {
-              fieldLabel: "多付款",
-              readOnly:true,
-              labelAlign: "right",
-              disabled:true,
-              name: 'orderMoreAmount',
-              width: 180
-            },
-            Ext.create("orderStatus"),
-          ]
-        }
-      ]
-    }, {
-      xtype: 'panel',
-      layout: "hbox",
-      width: 410,
-      margin: "30 0 30 100",
-      border: 0,
-      bodyStyle: {
-        background: 'transparent'
-      },
-      items: [
-        {
-          xtype: 'button',
-          scale: "medium",
-          text: "新增",
-          handler: function() {
-            var form = this.ownerCt.ownerCt.getForm();
-            form.url = env.services.web + env.api.order.save;
-            form.submit({
-              success: function(form, action) {
-                var form = addOrder.getComponent("orderForm").getForm();
-                form.reset();
-                orderModelHandler({
-                  success: function(data) {
-                    var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
-                      .getSelectionModel()
-                      .getSelection()[0].data;
-                    updateForm(form, data);
-                    form.findField("id").setValue("");
-                    showFolwCharts(record.memberId);
+        items: [
+          {
+            xtype: "form",
+            border: 0,
+            items: [
+              {
+                xtype: 'panel',
+                margin: "20 0 0 0",
+                layout: "hbox",
+                border: 0,
+                defaultType: 'textfield',
+                items: [
+                  Ext.create("periodical", {
+                    labelWidth: 40
+                  }),
+                  Ext.create("paymentMethord", {
+                    labelWidth: 145,
+                    width: 260
+                  }),
+                  {
+                    fieldLabel: '汇票号码',
+                    name: "billNumber",
+                    labelAlign: "right",
+                    labelWidth: 90
                   },
-                  fail: function() {
-                    Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
+                  {
+                    fieldLabel: '收汇局',
+                    labelAlign: "right",
+                    name: 'receiptProceedsOffice',
+                    labelWidth: 90
                   }
-                });
+                ]
               },
-              failure: function(form, action) {
-                Ext.Msg.alert("新增汇款订购", action.result.msg);
-              }
-            });
-          }
-        },
-        {
-          xtype: 'button',
-          scale: "medium",
-          margin: "0 0 0 30",
-          text: "保存",
-          handler: function() {
-            var form = this.ownerCt.ownerCt.getForm();
-            form.url = env.services.web + env.api.order.save;
-            form.submit({
-              success: function(form, action) {
-                addOrder.hide();
-                var form = addOrder.getComponent("orderForm").getForm();
-                form.reset();
-                orderModelHandler({
-                  success: function(data) {
-                    var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
-                      .getSelectionModel()
-                      .getSelection()[0].data;
-                    showFolwCharts(record.memberId);
+              {
+                xtype: 'panel',
+                layout: "hbox",
+                margin: "10 0 0 0",
+                border: 0,
+                defaultType: 'textfield',
+                items: [
+                  {
+                    xtype: "hiddenfield",
+                    name: 'id'
                   },
-                  fail: function() {
-                    Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
+                  {
+                    xtype: "hiddenfield",
+                    name: 'memberId'
+                  },
+                  {
+                    fieldLabel: "汇款金额",
+                    labelAlign: "right",
+                    labelWidth: 60,
+                    name: 'remittanceAmount'
+                  },
+                  {
+                    xtype: "datefield",
+                    format: 'Y-m-d',
+                    fieldLabel: '汇款日期',
+                    labelAlign: "right",
+                    name: 'remittanceDate',
+                    width: 220
+                  },
+                  {
+                    xtype: "checkboxfield",
+                    boxLabel: "收到货款",
+                    margin: "0 0 0 37",
+                    inputValue: 1,
+                    labelAlign: "right",
+                    name: 'isRemittanceReceived'
+                  },
+                  {
+                    xtype: "datefield",
+                    format: 'Y-m-d',
+                    fieldLabel: '收款日期',
+                    labelAlign: "right",
+                    name: 'remittanceReceivedDate',
+                    labelWidth: 220
                   }
-                });
+                ]
               },
-              failure: function(form, action) {
-                Ext.Msg.alert("修改汇款订购", action.result.msg);
+              {
+                xtype: 'panel',
+                layout: "hbox",
+                margin: "30 0 0 0",
+                border: 0,
+                defaultType: 'textfield',
+                items: [
+                  Ext.create('deliveryMethod', {
+                    labelWidth: 60,
+                    width: 160
+                  }),
+                  {
+                    xtype: "datefield",
+                    format: 'Y-m-d',
+                    fieldLabel: '收订单日期',
+                    labelAlign: "right",
+                    name: 'orderReceivedDate',
+                    labelWidth: 145,
+                    width: 250
+                  },
+                  {
+                    fieldLabel: "邮资",
+                    labelAlign: "right",
+                    name: 'postage',
+                    labelWidth: 65,
+                    width: 180
+                  }
+                ]
+              },
+              {
+                xtype: 'panel',
+                layout: "hbox",
+                margin: "10 0 0 0",
+                border: 0,
+                defaultType: 'textfield',
+                items: [
+                  {
+                    xtype: "checkboxfield",
+                    boxLabel: "收到订单",
+                    margin: "0 0 0 10",
+                    inputValue: 1,
+                    labelAlign: "right",
+                    name: 'isOrderReceived'
+                  }, {
+                    fieldLabel: "不打折金额",
+                    labelAlign: "right",
+                    name: 'unDiscountAmount',
+                    labelWidth: 230,
+                    width: 330
+                  },
+                  {
+                    fieldLabel: "抵价券",
+                    labelAlign: "right",
+                    name: 'preferentialTicket',
+                    labelWidth: 80,
+                    width: 185
+                  },
+                  {
+                    fieldLabel: "使用青春贴",
+                    labelAlign: "right",
+                    name: 'youthStuck',
+                    labelWidth: 160
+                  }
+                ]
+              },
+              {
+                xtype: 'panel',
+                layout: "hbox",
+                margin: "30 0 0 0",
+                border: 0,
+                defaultType: 'textfield',
+                items: [
+                  {
+                    labelWidth: 40,
+                    fieldLabel: "姓名",
+                    labelAlign: "right",
+                    name: 'realName',
+                    width: 180
+                  },
+                  {
+                    labelWidth: 60,
+                    fieldLabel: "会员编号",
+                    labelAlign: "right",
+                    name: 'userCode',
+                    margin: "0 0 0 10",
+                    width: 220
+                  },
+                  {
+                    labelWidth: 60,
+                    fieldLabel: "邮编",
+                    labelAlign: "right",
+                    name: 'zipCode',
+                    width: 180
+                  },
+                  {
+                    labelWidth: 60,
+                    fieldLabel: "地址",
+                    labelAlign: "right",
+                    name: 'address'
+                  },
+                  {
+                    labelWidth: 60,
+                    fieldLabel: "收件人",
+                    labelAlign: "right",
+                    width: 170,
+                    name: 'consignee'
+                  }
+                ]
+              },
+              {
+                xtype: 'panel',
+                layout: "hbox",
+                margin: "10 0 0 0",
+                border: 0,
+                defaultType: 'textfield',
+                items: [
+                  {
+                    labelWidth: 80,
+                    fieldLabel: "折扣",
+                    labelAlign: "right",
+                    disabled: true,
+                    name: 'orderDiscount',
+                    readOnly: true,
+                    labelWidth: 40
+                  },
+                  {
+                    labelWidth: 80,
+                    fieldLabel: "邮寄",
+                    labelAlign: "right",
+                    disabled: true,
+                    name: 'mailingCost',
+                    width: 180
+                  },
+                  {
+                    fieldLabel: "青春贴",
+                    labelAlign: "right",
+                    disabled: true,
+                    name: 'orderYouthStuck',
+                    margin: "0 0 0 30",
+                    width: 180
+                  },
+                  {
+                    fieldLabel: "多付款",
+                    readOnly: true,
+                    labelAlign: "right",
+                    disabled: true,
+                    name: 'orderMoreAmount',
+                    width: 180
+                  },
+                  Ext.create("orderStatus"),
+                ]
               }
-            });
-          }
-        },
-        {
-          xtype: 'button',
-          scale: "medium",
-          margin: "0 0 0 30",
-          text: "修改",
-          handler: function() {
-            //请求会员默认地址  env.api.member.getDefaultAddr 参数memberId get方式
+            ]
+          },
+          {
+            xtype: 'panel',
+            layout: "hbox",
+            width: 410,
+            margin: "30 0 30 100",
+            border: 0,
+            bodyStyle: {
+              background: 'transparent'
+            },
+            items: [
+              {
+                xtype: 'button',
+                scale: "medium",
+                text: "新增",
+                handler: function () {
+                  var form = this.ownerCt.ownerCt.getForm();
+                  form.url = env.services.web + env.api.order.save;
+                  form.submit({
+                    success: function (form, action) {
+                      var form = addOrder.getComponent("orderForm").getForm();
+                      form.reset();
+                      orderModelHandler({
+                        success: function (data) {
+                          var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                            .getSelectionModel()
+                            .getSelection()[0].data;
+                          updateForm(form, data);
+                          form.findField("id").setValue("");
+                          showFolwCharts(record.memberId);
+                        },
+                        fail: function () {
+                          Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
+                        }
+                      });
+                    },
+                    failure: function (form, action) {
+                      Ext.Msg.alert("新增汇款订购", action.result.msg);
+                    }
+                  });
+                }
+              },
+              {
+                xtype: 'button',
+                scale: "medium",
+                margin: "0 0 0 30",
+                text: "保存",
+                handler: function () {
+                  var form = this.ownerCt.ownerCt.getForm();
+                  form.url = env.services.web + env.api.order.save;
+                  form.submit({
+                    success: function (form, action) {
+                      addOrder.hide();
+                      var form = addOrder.getComponent("orderForm").getForm();
+                      form.reset();
+                      orderModelHandler({
+                        success: function (data) {
+                          var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
+                            .getSelectionModel()
+                            .getSelection()[0].data;
+                          showFolwCharts(record.memberId);
+                        },
+                        fail: function () {
+                          Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
+                        }
+                      });
+                    },
+                    failure: function (form, action) {
+                      Ext.Msg.alert("修改汇款订购", action.result.msg);
+                    }
+                  });
+                }
+              },
+              {
+                xtype: 'button',
+                scale: "medium",
+                margin: "0 0 0 30",
+                text: "修改",
+                handler: function () {
+                  //请求会员默认地址  env.api.member.getDefaultAddr 参数memberId get方式
 
+                }
+              },
+              {
+                xtype: 'button',
+                scale: "medium",
+                margin: "0 0 0 30",
+                text: "返回",
+                handler: function () {
+                  addOrder.hide();
+                }
+              }
+            ]
           }
-        },
-        {
-          xtype: 'button',
-          scale: "medium",
-          margin: "0 0 0 30",
-          text: "返回",
-          handler: function() {
-            addOrder.hide();
-          }
-        }
-      ]
-    }]
-    }]
+        ]
+      }
+    ]
   });
 });

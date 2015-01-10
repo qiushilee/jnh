@@ -335,7 +335,8 @@ Ext.application({
                   name:"allPeriodNumber"
                 },
                 {
-                  xtype:"datefield",
+                  xtype: "datefield",
+                  format: 'Y-m-d',
                   fieldLabel: "参考日期",
                   labelWidth: 60,
                   width: 160,
@@ -344,7 +345,8 @@ Ext.application({
                   name:'referenceStartDate'
                 },
                 {
-                  xtype:"datefield",
+                  xtype: "datefield",
+                  format: 'Y-m-d',
                   fieldLabel: "到",
                   labelWidth: 20,
                   width: 120,

@@ -20,7 +20,7 @@ Ext.application({
     // 名单管理-目录寄送
     Ext.create('Ext.data.Store', {
       storeId: 'directoryList',
-      fields: ['issueDate', 'periodicalName', 'deliveryMethodName', 'issueNum1','issueNum2', 'recyclingNum', 'source', 'issueCode', 'remark'],
+      fields: ['issueDate', 'periodicalName', 'deliveryMethodName', 'issueNum1', 'issueNum2', 'recyclingNum', 'source', 'issueCode', 'remark'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -121,7 +121,7 @@ Ext.application({
                 Ext.create('memberType', {
                   listeners: {
                     render: function (combobox) {
-                      combobox.store.load(function(data) {
+                      combobox.store.load(function (data) {
                         combobox.setValue(data[2]);
                       });
                     }
@@ -309,7 +309,7 @@ Ext.application({
                         Ext.create("memberType", {
                           listeners: {
                             render: function (combobox) {
-                              combobox.store.load(function(data) {
+                              combobox.store.load(function (data) {
                                 combobox.setValue(data[2]);
                               });
                             }
@@ -325,6 +325,7 @@ Ext.application({
                         Ext.create("deliveryMethod"),
                         {
                           xtype: "datefield",
+                          format: 'Y-m-d',
                           fieldLabel: "毕业时间",
                           labelWidth: 60,
                           labelAlign: "right",
@@ -531,7 +532,7 @@ Ext.application({
                               var data = Ext.JSON.decode(resp.responseText);
                               console.log(data);
                             },
-                            failure: function(form, action) {
+                            failure: function (form, action) {
                               Ext.Msg.alert("增加", action.result.msg);
                             }
                           });
@@ -773,7 +774,7 @@ Ext.application({
                             var data = Ext.JSON.decode(resp.responseText);
                             Ext.Msg.alert("添加打印", data.msg);
                           } catch (e) {
-                             Ext.Msg.alert("添加打印", data.msg);
+                            Ext.Msg.alert("添加打印", data.msg);
                           }
                         }
                       });

@@ -583,22 +583,14 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.periodicals,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.periodical)
         }),
         labelWidth: 40,
         displayField: "name",
         valueField: "value",
         labelAlign: "right",
         name: "periodicalId",
-        width: 80,
+        width: 120,
         listeners: {
           render: function (combobox) {
             combobox.store.load(function(data) {
@@ -617,15 +609,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.addresstype,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.addresstype)
         }),
         labelWidth: 60,
         displayField: "name",
@@ -651,15 +635,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.membertype,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.membertype)
         }),
         labelWidth: 60,
         displayField: "name",
@@ -685,15 +661,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.sendmethord.opetion,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.deliverymethod)
         }),
         displayField: "name",
         valueField: "value",
@@ -718,15 +686,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.paymentmethord,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.paymentmethord)
         }),
         labelWidth: 60,
         displayField: "name",
@@ -753,15 +713,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.companytype,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.companytype)
         }),
         labelWidth: 60,
         displayField: "name",
@@ -787,15 +739,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.ordersource,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.ordersource)
         }),
         labelWidth: 60,
         displayField: "name",
@@ -812,6 +756,7 @@
           setvalue: comboboxSetValue
         }
       });
+
       //进转损分类
       Ext.define("jzsType", {
         extend: "Ext.form.ComboBox",
@@ -820,15 +765,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.jzstype,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.jzstype)
         }),
         labelWidth: 60,
         displayField: "name",
@@ -854,15 +791,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.searchmembertype,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.searchmembertype)
         }),
         labelWidth: 60,
         displayField: "name",
@@ -889,15 +818,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.managerRoles,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.managerroles)
         }),
 
         displayField: "name",
@@ -922,15 +843,7 @@
         editable: false,
         store: Ext.create("Ext.data.Store", {
           fields: ["name", "value"],
-          autoLoad: true,
-          proxy: {
-            type: 'ajax',
-            url: env.services.web + env.api.orderStatus,
-            reader: {
-              type: 'json',
-              root: 'list'
-            }
-          }
+          data: JSON.parse(document.body.dataset.orderstatus)
         }),
         labelWidth: 60,
         displayField: "name",

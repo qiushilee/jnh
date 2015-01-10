@@ -4,7 +4,7 @@ Ext.application({
   launch: function() {
     window.telorderCurrent = {};
     if (location.search.replace(/.*=/, "")) {
-      telorderCurrent.userCode = location.search.replace(/.*=/, "");
+      telorderCurrent.memberId = location.search.replace(/.*=/, "");
     }
 
     //电话订购列表
@@ -22,13 +22,16 @@ Ext.application({
       }
     });
 
-    Ext.data.StoreManager.lookup("orderList").load({
-      params: {
-        userCode: location.search.replace(/.*=/, "")
+    Ext.Ajax.request({
+      url: env.services.web + env.api.member.info + telorderCurrent.memberId,
+      success: function (response) {
+        var data = Ext.JSON.decode(response.responseText),
+            form = Ext.ComponentQuery.query("form[itemId=member]")[0].getForm();
+        window.updateForm(form, data.info);
+        window.updateForm(form, data.addressList);
       },
-      callback: function(records) {
-        var form = Ext.ComponentQuery.query("form[itemId=member]")[0].getForm();
-        updateForm(form, records[0].data);
+      failure: function (form, action) {
+        Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
       }
     });
 
