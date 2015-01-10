@@ -824,14 +824,6 @@ Ext.application({
                               width: 80,
                               labelAlign: "right",
                               name:'periodicalId2'
-                            },
-                            Ext.create('searchMemberType'),
-                            {
-                              xtype: "radiofield",
-                              fieldLabel: "代理会员",
-                              labelWidth: 60,
-                              labelAlign: "right",
-                              name:'agent'
                             }
                           ]
                         },
@@ -850,13 +842,7 @@ Ext.application({
                               labelAlign: "right",
                               name:'deliveryMethod'
                             },
-                            {
-                              fieldLabel: "类型",
-                              labelWidth: 40,
-                              width: 120,
-                              labelAlign: "right",
-                              name:'memberType'
-                            }
+                            Ext.create("addressType")
                           ]
                         }
                       ]
