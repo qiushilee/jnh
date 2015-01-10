@@ -418,7 +418,7 @@ Ext.application({
                   grid: Ext.ComponentQuery.query("grid[title=进转损]")[0],
                   api: env.services.web + env.api.product.delTransitionLoss,
                   success: function() {
-                    Ext.data.StoreManager.lookup('transitionLoss').load();
+                    searchHandler.call(Ext.ComponentQuery.query("[itemId=form]")[0], "transitionLoss");
                   }
                 });
               }
