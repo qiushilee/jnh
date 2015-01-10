@@ -306,7 +306,7 @@ Ext.onReady(function () {
               {
                 xtype: 'button',
                 margin: "0 5",
-                text: "Q增加",
+                text: "<span class=\"key\">Q</span> 新增",
                 handler: function () {
                   var form = panel.getComponent("memberInfo").getForm();
                   form.reset();
