@@ -217,16 +217,24 @@ Ext.application({
           xtype: "button",
           text: "<span class=\"key\">W</span> 添加",
           handler: function () {
-            try {
-              var record = Ext.ComponentQuery.query("grid")[0]
-                .getSelectionModel()
-                .getSelection()[0].data;
+            var record = Ext.ComponentQuery.query("grid")[0]
+              .getSelectionModel()
+              .getSelection()[0].data;
 
-              printCart.show();
-              window.create = true;
-            } catch (e) {
-              Ext.Msg.alert("添加", "请选中列表中的一项后再操作");
-            }
+            Ext.Ajax.request({
+              url: env.services.web +  env.api.printcart.packageadd,
+              params: {
+                id: record.id
+              },
+              success: function (resp) {
+                var data = Ext.JSON.decode(resp.responseText);
+                if (data.success) {
+                  searchHandler.call(search, "dataList");
+                } else {
+                  Ext.Msg.alert("添加到打印购物车", data.msg);
+                }
+              }
+            });
           },
           margin: "0 0 0 10"
         },
