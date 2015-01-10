@@ -151,6 +151,29 @@ Ext.onReady(function () {
     }
   }
 
+  function updateMember(form) {
+    var member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0],
+        memberId = '';
+
+    if (member) {
+      memberId = member.data.id
+    }
+
+    if (form.isValid()) {
+      form.submit({
+        params: {
+          id: memberId
+        },
+        success: function (form, action) {
+          Ext.data.StoreManager.lookup('memberList').loadData(action.result.list);
+        },
+        failure: function (form, action) {
+          Ext.Msg.alert("添加或修改会员", action.result.msg);
+        }
+      });
+    }
+  }
+
   var panel = Ext.create("Ext.panel.Panel", {
     renderTo: window.$bd,
     border: 0,
@@ -251,22 +274,33 @@ Ext.onReady(function () {
                 text: "<span class=\"key\">N</span> 保存",
                 handler: function () {
                   var form = panel.getComponent("memberInfo").getForm(),
-                    member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0].data;
-                  form.url = env.services.web + env.api.member.change;
-                  if (form.isValid()) {
-                    console.log(member.id)
-                    form.submit({
-                      params: {
-                        id: member.id
-                      },
-                      success: function (form, action) {
-                        console.log(action)
-                      },
-                      failure: function (form, action) {
-                        Ext.Msg.alert("修改会员", action.result.msg);
-                      }
-                    });
+                      member = panel.getComponent("grid").getComponent("memberList").getSelectionModel().getSelection()[0],
+                      memberId = '';
+
+                  if (member) {
+                    memberId = member.data.id
                   }
+
+                  Ext.Ajax.request({
+                    url: env.services.web + env.api.member.checkMobile,
+                    params: {
+                      id: memberId,
+                      mobile0: form.findField('mobile0').getValue(),
+                      mobile1: form.findField('mobile1').getValue()
+                    },
+                    success: function (resp) {
+                      var data = Ext.JSON.decode(resp.responseText);
+                      if (data.success) {
+                        updateMember(form);
+                      } else {
+                        Ext.Msg.confirm("新增会员", data.msg, function (type) {
+                          if (type === 'yes') {
+                            updateMember(form);
+                          }
+                        });
+                      }
+                    }
+                  });
                 }
               },
               {
@@ -275,18 +309,7 @@ Ext.onReady(function () {
                 text: "Q增加",
                 handler: function () {
                   var form = panel.getComponent("memberInfo").getForm();
-                  form.url = env.services.web + env.api.member.add;
-                  if (form.isValid()) {
-                    form.submit({
-                      success: function (form, action) {
-                        Ext.data.StoreManager.lookup('memberList').loadData(action.result.list);
-                        form.reset();
-                      },
-                      failure: function (form, action) {
-                        Ext.Msg.alert("添加会员", action.result.msg);
-                      }
-                    });
-                  }
+                  form.reset();
                 }
               },
               {
@@ -415,6 +438,7 @@ Ext.onReady(function () {
       {
         itemId: "memberInfo",
         xtype: "form",
+        url: env.services.web + env.api.member.add,
         border: 0,
         items: [
           // 第三行
