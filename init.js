@@ -561,349 +561,351 @@
     window.location.href = window.location.origin + window.location.pathname + "#" + opt.view;
   };
 
-  Ext.application({
-    name: "JNH",
-    launch: function () {
+  if (document.body.dataset.login === 'false') {
+    Ext.application({
+      name: "JNH",
+      launch: function () {
 
 
-      function comboboxSetValue(combobox, value) {
-        combobox.store.data.each(function (item, i) {
-          if (item.data.value == value) {
-            combobox.setValue(item.data.value);
+        function comboboxSetValue(combobox, value) {
+          combobox.store.data.each(function (item, i) {
+            if (item.data.value == value) {
+              combobox.setValue(item.data.value);
+            }
+          });
+        }
+
+        //期数
+        Ext.define("periodical", {
+          itemId: "periodical",
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "期数",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.periodical)
+          }),
+          labelWidth: 40,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "periodicalId",
+          width: 120,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
           }
         });
-      }
 
-      //期数
-      Ext.define("periodical", {
-        itemId: "periodical",
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "期数",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.periodical)
-        }),
-        labelWidth: 40,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "periodicalId",
-        width: 120,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //学校类型
-      Ext.define("addressType", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "类别",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.addresstype)
-        }),
-        labelWidth: 60,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "type",
-        width: 120,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //会员类型
-      Ext.define("memberType", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "会员类型",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.membertype)
-        }),
-        labelWidth: 60,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "memberType",
-        width: 120,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //寄送方式
-      Ext.define("deliveryMethod", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "寄送方式",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.deliverymethod)
-        }),
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "deliveryMethod",
-        width: 185,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //支付方式
-      Ext.define("paymentMethord", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "支付方式",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.paymentmethord)
-        }),
-        labelWidth: 60,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "paymentMethord",
-        width: 155,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-
-      //供货商分类
-      Ext.define("companyType", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "支付方式",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.companytype)
-        }),
-        labelWidth: 60,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "companyType",
-        width: 185,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //订单来源分类
-      Ext.define("orderSource", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "支付方式",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.ordersource)
-        }),
-        labelWidth: 60,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "orderSource",
-        width: 185,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //进转损分类
-      Ext.define("jzsType", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "类型",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.jzstype)
-        }),
-        labelWidth: 60,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "type",
-        width: 150,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //搜索模块会员类型
-      Ext.define("searchMemberType", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "会员类型",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.searchmembertype)
-        }),
-        labelWidth: 60,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "memberType",
-        width: 150,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-
-      //管理员角色
-      Ext.define("managerRoles", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "角色",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.managerroles)
-        }),
-
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "roleId",
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //订单状态
-      Ext.define("orderStatus", {
-        extend: "Ext.form.ComboBox",
-        fieldLabel: "订单状态",
-        queryMode: "local",
-        editable: false,
-        store: Ext.create("Ext.data.Store", {
-          fields: ["name", "value"],
-          data: JSON.parse(document.body.dataset.orderstatus)
-        }),
-        labelWidth: 60,
-        displayField: "name",
-        valueField: "value",
-        labelAlign: "right",
-        name: "status",
-        width: 120,
-        listeners: {
-          render: function (combobox) {
-            combobox.store.load(function(data) {
-              combobox.setValue(data[0]);
-            });
-          },
-          setvalue: comboboxSetValue
-        }
-      });
-
-      //邮编
-      Ext.define("zipCode", {
-        extend: "Ext.form.field.Text",
-        fieldLabel: "邮编",
-        name: "zipCode",
-        labelWidth: 40,
-        width: 100,
-        labelAlign: "right",
-        value: "",
-        beforeVal: "",
-        listeners: {
-          blur: function(that) {
-            var val = that.value;
-
-            if (val === that.beforeVal) {
-              return;
-            }
-
-            that.beforeVal = val;
-
-            Ext.Ajax.request({
-              url: env.services.web + env.api.areaList.get,
-              params: {
-                code: val
-              },
-              success: function (resp) {
-                var data = Ext.JSON.decode(resp.responseText);
-                if (data.success) {
-                  Ext.ComponentQuery.query("[name=" + that.input + "]")[0].setValue(data.area);
-                }
-              }
-            });
+        //学校类型
+        Ext.define("addressType", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "类别",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.addresstype)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "type",
+          width: 120,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
           }
+        });
+
+        //会员类型
+        Ext.define("memberType", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "会员类型",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.membertype)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "memberType",
+          width: 120,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+        //寄送方式
+        Ext.define("deliveryMethod", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "寄送方式",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.deliverymethod)
+          }),
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "deliveryMethod",
+          width: 185,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+        //支付方式
+        Ext.define("paymentMethord", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "支付方式",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.paymentmethord)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "paymentMethord",
+          width: 155,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+
+        //供货商分类
+        Ext.define("companyType", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "支付方式",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.companytype)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "companyType",
+          width: 185,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+        //订单来源分类
+        Ext.define("orderSource", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "支付方式",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.ordersource)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "orderSource",
+          width: 185,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+        //进转损分类
+        Ext.define("jzsType", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "类型",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.jzstype)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "type",
+          width: 150,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+        //搜索模块会员类型
+        Ext.define("searchMemberType", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "会员类型",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.searchmembertype)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "memberType",
+          width: 150,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+
+        //管理员角色
+        Ext.define("managerRoles", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "角色",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.managerroles)
+          }),
+
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "roleId",
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+        //订单状态
+        Ext.define("orderStatus", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "订单状态",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.orderstatus)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "status",
+          width: 120,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+        //邮编
+        Ext.define("zipCode", {
+          extend: "Ext.form.field.Text",
+          fieldLabel: "邮编",
+          name: "zipCode",
+          labelWidth: 40,
+          width: 100,
+          labelAlign: "right",
+          value: "",
+          beforeVal: "",
+          listeners: {
+            blur: function (that) {
+              var val = that.value;
+
+              if (val === that.beforeVal) {
+                return;
+              }
+
+              that.beforeVal = val;
+
+              Ext.Ajax.request({
+                url: env.services.web + env.api.areaList.get,
+                params: {
+                  code: val
+                },
+                success: function (resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  if (data.success) {
+                    Ext.ComponentQuery.query("[name=" + that.input + "]")[0].setValue(data.area);
+                  }
+                }
+              });
+            }
+          }
+        });
+
+        /**
+         * 获取文件后缀
+         */
+        window.getExt = function (file) {
+          return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
         }
-      });
 
-      /**
-       * 获取文件后缀
-       */
-      window.getExt = function (file) {
-        return (/[.]/.exec(file)) ? /[^.]+$/.exec(file.toLowerCase()) : '';
       }
-
-    }
-  });
+    });
+  }
 })();
