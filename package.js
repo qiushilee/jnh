@@ -60,6 +60,21 @@ Ext.application({
       }
     });
 
+
+    Ext.create('Ext.data.Store', {
+      storeId: 'printCart',
+      fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.printcart.packagelist,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
       url: env.services.web + env.api.package.list,
@@ -239,12 +254,12 @@ Ext.application({
           margin: "0 0 0 10"
         },
         {
-          // 添加到打印购物车
           xtype: "button",
           text: "查看打印购物车",
           margin: "0 0 0 10",
           handler: function () {
             printCart.show();
+            searchHandler.call(printCart.getComponent("print-cart-form"), "printCart");
           }
         },
         {
@@ -564,6 +579,7 @@ Ext.application({
       closeAction: 'hide',
       items: [
         {
+          itemId: "print-form",
           xtype: "form",
           url: env.services.web + env.api.package.list,
           layout: "hbox",
@@ -592,13 +608,7 @@ Ext.application({
               text: "搜索",
               margin: "0 0 0 20",
               handler: function () {
-                var form = this.up("form").getForm();
-                form.submit({
-                  success: function (form, action) {
-                    Ext.data.StoreManager.lookup('printStore').loadData(action.list);
-                    form.reset();
-                  }
-                });
+                searchHandler.call(print.getComponent("print-form"), "printStore");
               }
             },
             {
@@ -680,7 +690,10 @@ Ext.application({
       width: 1000,
       bodyPadding: 10,
       closeAction: 'hide',
+      url: env.services.web + env.api.printcart .packagechange,
       items: [{
+        itemId: "print-cart-form",
+        xtype: "form",
         layout: "hbox",
         bodyPadding: 10,
         border: 0,
@@ -700,18 +713,22 @@ Ext.application({
         }, {
           xtype: "button",
           text: "搜索",
-          disabled: true,
-          margin: "0 0 0 20"
+          margin: "0 0 0 20",
+          handler: function() {
+            searchHandler.call(this.up("form"), "printCart");
+          }
         }, {
           xtype: "button",
           text: "重置",
-          disabled: true,
-          margin: "0 0 0 10"
+          margin: "0 0 0 10",
+          handler: function() {
+            this.up("form").getForm().reset();
+          }
         }]
       }, {
         xtype: "grid",
         height: 155,
-        store: Ext.data.StoreManager.lookup('jhStore'),
+        store: Ext.data.StoreManager.lookup('printCart'),
         height: 155,
         margin: "10 0 0 0",
         columns: [{
@@ -750,7 +767,10 @@ Ext.application({
           text: '包装员',
           dataIndex: 'id1',
           flex: 1
-        }]
+        }],
+        listeners: function(that) {
+          window.updateForm(printCart.getComponent("print-cart-form"), that.record.data);
+        }
       }, {
         layout: "hbox",
         bodyPadding: 10,
@@ -763,22 +783,27 @@ Ext.application({
         bodyStyle: {
           "background-color": "transparent"
         },
-        items: [{
-          xtype: "button",
-          text: "<span class=\"key\">M</span> 修改",
-          disabled: true,
-          margin: "0 0 0 10"
-        }, {
-          xtype: "button",
-          text: "<span class=\"key\">S</span> 保存",
-          disabled: true,
-          margin: "0 0 0 10"
-        }, {
-          xtype: "button",
-          text: "<span class=\"key\">D</span> 打印",
-          disabled: true,
-          margin: "0 0 0 10"
-        }]
+        items: [
+          {
+            xtype: "button",
+            text: "<span class=\"key\">S</span> 保存",
+            margin: "0 0 0 10",
+            handler: function() {
+              var form = printCart.getComponent("print-cart-form");
+              form.getForm.submit({
+                success: function(f, action) {
+                  searchHandler.call(form, "printCart");
+                }
+              })
+            }
+          },
+          {
+            xtype: "button",
+            text: "<span class=\"key\">D</span> 打印",
+            disabled: true,
+            margin: "0 0 0 10"
+          }
+        ]
       }]
     });
 
