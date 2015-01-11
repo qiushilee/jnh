@@ -239,6 +239,15 @@ Ext.application({
           margin: "0 0 0 10"
         },
         {
+          // 添加到打印购物车
+          xtype: "button",
+          text: "查看打印购物车",
+          margin: "0 0 0 10",
+          handler: function () {
+            printCart.show();
+          }
+        },
+        {
           xtype: "button",
           text: "补寄",
           handler: function () {
@@ -705,7 +714,6 @@ Ext.application({
         store: Ext.data.StoreManager.lookup('jhStore'),
         height: 155,
         margin: "10 0 0 0",
-        selModel: Ext.create('Ext.selection.CheckboxModel', {mode: "SIMPLE"}),
         columns: [{
           text: '序号',
           dataIndex: 'id1',
@@ -742,13 +750,7 @@ Ext.application({
           text: '包装员',
           dataIndex: 'id1',
           flex: 1
-        }],
-        bbar: Ext.create('Ext.PagingToolbar', {
-          displayMsg: 'Displaying topics {0} - {1} of {2}',
-          items: ['-', {
-            pressed: false
-          }]
-        })
+        }]
       }, {
         layout: "hbox",
         bodyPadding: 10,
