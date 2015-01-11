@@ -5,7 +5,7 @@ Ext.application({
     //汇款订购管理列表
     Ext.create('Ext.data.Store', {
       storeId: 'orderList',
-      fields: ["key", 'id', 'billNumber', 'receiptProceedsOffice', 'remittanceDate', 'remitter', 'remittanceAmount', 'isRemittanceReceived', "remittanceReceivedDate", "isOrderReceived", 'orderReceivedDate', 'youthStuck', 'preferentialTicket', 'unDiscountAmount', 'remark'],
+      fields: ["key", 'id', 'billNumber', 'receiptProceedsOffice', 'remittanceDate', 'remitter', 'remittanceAmount', 'isRemittanceReceived',"remittanceReceived", "remittanceReceivedDate", "isOrderReceived","orderReceived", 'orderReceivedDate', 'youthStuck', 'preferentialTicket', 'unDiscountAmount', 'remark'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -126,7 +126,7 @@ Ext.application({
             },
             {
               text: '收到汇款',
-              dataIndex: 'isRemittanceReceived',
+              dataIndex: 'remittanceReceived',
               flex: 1
             },
             {
@@ -136,7 +136,7 @@ Ext.application({
             },
             {
               text: '收到订单',
-              dataIndex: 'isOrderReceived',
+              dataIndex: 'orderReceived',
               flex: 1
             },
             {
