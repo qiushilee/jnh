@@ -183,7 +183,7 @@
       packagelist: "/printcart/packageindex",
       packageadd: "/printcart/packagecreate",
       packagedel: "/printcart/packagedelete",
-      packagechange: "/printcart/packagechange",/
+      packagechange: "/printcart/packageupdate",
    }
 
   //电话订购
