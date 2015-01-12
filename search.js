@@ -623,7 +623,7 @@ Ext.application({
                           defaultType: 'textfield',
                           items: [
                             Ext.create('periodical', {
-                              name: "periodicalId_1"
+                                  name: "periodicalId_1"
                             }),
                             {
                               fieldLabel: "姓名",
@@ -827,6 +827,7 @@ Ext.application({
                             }
                           ]
                         },
+                         Ext.create("memberType"),
                         // +TODO: 位置排序调整
                         {
                           xtype: "panel",
