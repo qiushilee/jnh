@@ -251,8 +251,18 @@ Ext.onReady(function () {
                 width: 120,
                 labelAlign: "right"
               },
-              Ext.create('memberType'),
-              Ext.create("addressType"),
+              Ext.create('memberType',{
+                store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.membertypeall)
+                })
+              }),
+              Ext.create("addressType",{
+                store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.addresstypeall)
+                })
+              }),
               {
                 xtype: 'button',
                 margin: "0 5 0 50",
@@ -325,10 +335,10 @@ Ext.onReady(function () {
                   window.removeGridRow({
                     grid: panel.getComponent("grid").getComponent("memberList"),
                     api: env.services.web + env.api.member.del,
-                    success: function () {
+                  success: function (form, action) {
                        var form = panel.getComponent("memberInfo").getForm();
-                      form.reset();
-                      Ext.data.StoreManager.lookup("memberList").load();
+                       form.reset();
+                       Ext.data.StoreManager.lookup("memberList").loadData();
                     }
                   });
                 }
