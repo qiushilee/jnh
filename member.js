@@ -190,7 +190,12 @@ Ext.onReady(function () {
             defaultType: 'textfield',
             layout: 'hbox',
             items: [
-              Ext.create("periodical"),
+              Ext.create("periodical",{
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.periodicalall)
+                  })
+              }),
               {
                 fieldLabel: "会员编号",
                 labelAlign: "right",
