@@ -616,6 +616,8 @@ Ext.application({
                           success: function(form, action) {
                             Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
                             form.reset();
+                            form.findField("deliveryOrderId").setValue(window.deliveryOrderId);
+                            form.findField("orderRemittanceId").setValue(window.orderRemittanceId);
                           },
                           failure: function(form, action) {
                             Ext.Msg.alert("修改订单产品", action.result.msg);
