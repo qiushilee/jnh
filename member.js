@@ -326,6 +326,8 @@ Ext.onReady(function () {
                     grid: panel.getComponent("grid").getComponent("memberList"),
                     api: env.services.web + env.api.member.del,
                     success: function () {
+                       var form = panel.getComponent("memberInfo").getForm();
+                      form.reset();
                       Ext.data.StoreManager.lookup("memberList").load();
                     }
                   });
