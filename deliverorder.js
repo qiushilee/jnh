@@ -6,7 +6,6 @@ Ext.application({
       storeId: 'list',
       fields: ["memberId", "deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.deliverorder.list,
@@ -82,32 +81,7 @@ Ext.application({
       renderTo: window.$bd,
       url: env.services.web + env.api.deliverorder.list,
       items: [
-        Ext.create("periodical", {
-          listeners: {
-            change: function(that, val) {
-              Ext.Ajax.request({
-                url: search.url,
-                method: 'POST',
-                params: {
-                  type: 1,
-                  periodicalId: val
-                },
-                success: function (resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  if (data.list.length > 0) {
-                    Ext.data.StoreManager.lookup('list').loadData(data.list);
-                  } else {
-                    Ext.Msg.alert("搜索", data.msg);
-                  }
-                },
-                failure: function (resp) {
-                  var data = Ext.JSON.decode(resp.responseText);
-                  Ext.Msg.alert("搜索", data.msg);
-                }
-              });
-            }
-          }
-        }),
+        Ext.create("periodical"),
         {
           xtype: "hiddenfield",
           name: "type",
@@ -160,6 +134,29 @@ Ext.application({
           }
         }
       });
+
+    Ext.ComponentQuery.query("[name=periodicalId]")[0].on('change', function(that, val) {
+      Ext.Ajax.request({
+        url: search.url,
+        method: 'POST',
+        params: {
+          type: 1,
+          periodicalId: val
+        },
+        success: function (resp) {
+          var data = Ext.JSON.decode(resp.responseText);
+          if (data.list.length > 0) {
+            Ext.data.StoreManager.lookup('list').loadData(data.list);
+          } else {
+            Ext.Msg.alert("搜索", data.msg);
+          }
+        },
+        failure: function (resp) {
+          var data = Ext.JSON.decode(resp.responseText);
+          Ext.Msg.alert("搜索", data.msg);
+        }
+      });
+    });
 
     function createCode(code, orderId) {
       list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm().findField("deliveryOrderId").setValue(orderId);
