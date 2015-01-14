@@ -89,6 +89,7 @@ Ext.application({
                 url: search.url,
                 method: 'POST',
                 params: {
+                  type: 1,
                   periodicalId: val
                 },
                 success: function (resp) {
@@ -107,6 +108,11 @@ Ext.application({
             }
           }
         }),
+        {
+          xtype: "hiddenfield",
+          name: "type",
+          value: 2
+        },
         {
           fieldLabel: "会员姓名",
           labelWidth: 60,
@@ -200,7 +206,11 @@ Ext.application({
                         var data = Ext.JSON.decode(resp.responseText);
                         if (data.success) {
                           createCode(data.code, data.deliveryOrderId);
-                          Ext.data.StoreManager.lookup("list").load();
+                          Ext.data.StoreManager.lookup("list").load({
+                            params: {
+                              type: 3
+                            }
+                          });
                         } else {
                           Ext.Msg.alert("生成出货单编号失败", data.msg);
                         }
