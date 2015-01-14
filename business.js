@@ -568,13 +568,7 @@ Ext.application({
                     Ext.create("memberType", {
                       fieldLabel: "来源"
                     }),
-                    {
-                      xtype: "combobox",
-                      fieldLabel: "类型",
-                      labelWidth: 40,
-                      width: 100,
-                      labelAlign: "right"
-                    },
+                    Ext.create("addressType"),
                     {
                       xtype: "datefield",
                       fieldLabel: "毕业时间",
