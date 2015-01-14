@@ -52,6 +52,7 @@ Ext.application({
       storeId: "printcart",
       fields: ["key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", 'sendNumber1', 'sendNumber2', "mailingDate", "weight", "postage", "amount", "remark"],
       layout: "fit",
+      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.printcart.businesslist,
