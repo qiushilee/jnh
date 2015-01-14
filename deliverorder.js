@@ -657,8 +657,7 @@ Ext.application({
                         window.removeGridRow({
                           grid: Ext.ComponentQuery.query("grid[itemId=orderproductlist]")[0],
                           api: env.services.web + env.api.deliverorder.deleteorderproduct,
-                          success: function(resp) {
-                            var data = Ext.JSON.decode(resp.responseText);
+                          success: function(data) {
                             if (data.success) {
                               Ext.data.StoreManager.lookup("productData").load({
                                 params: {
