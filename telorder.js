@@ -229,6 +229,10 @@ Ext.application({
               text: '序号',
               dataIndex: 'key',
               flex: 1
+            },{
+              text:'姓名',
+              dataIndex:'userName',
+              fiex:1
             },
             {
               text: '出货单号',
