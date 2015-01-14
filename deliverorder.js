@@ -6,6 +6,7 @@ Ext.application({
       storeId: 'list',
       fields: ["memberId", "deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
       layout: "fit",
+      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.deliverorder.list,
