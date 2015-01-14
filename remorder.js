@@ -96,7 +96,12 @@ Ext.application({
           labelWidth: 60,
           labelAlign: "right"
         },
-        Ext.create("paymentMethord"),
+        Ext.create("paymentMethord",{
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.paymentmethordall)
+                  })
+              }),
         {
           xtype: "button",
           text: "搜索",

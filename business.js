@@ -128,6 +128,7 @@ Ext.application({
                     }
                   }
                 }),
+                Ext.create("addressType"),
                 {
                   xtype: "button",
                   text: "搜索",
