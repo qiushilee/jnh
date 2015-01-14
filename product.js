@@ -612,7 +612,7 @@ Ext.application({
             name: "cardinalNumber",
             labelAlign: "right"
           }, {
-            fieldLabel: '安全库存量',
+            fieldLabel: '缺货提示',
             labelWidth: 70,
             width: 300,
             name: 'safetyStock',
