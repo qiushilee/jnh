@@ -307,6 +307,7 @@ Ext.onReady(function () {
                       var data = Ext.JSON.decode(resp.responseText);
                       if (data.success) {
                         updateMember(form);
+                        searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
                       } else {
                         Ext.Msg.confirm("新增会员", data.msg, function (type) {
                           if (type === 'yes') {
@@ -335,10 +336,10 @@ Ext.onReady(function () {
                   window.removeGridRow({
                     grid: panel.getComponent("grid").getComponent("memberList"),
                     api: env.services.web + env.api.member.del,
-                  success: function (form, action) {
-                       var form = panel.getComponent("memberInfo").getForm();
-                       form.reset();
-                       Ext.data.StoreManager.lookup("memberList").loadData();
+                    success: function (form, action) {
+                      var form = panel.getComponent("memberInfo").getForm();
+                      form.reset();
+                      Ext.data.StoreManager.lookup("memberList").loadData();
                     }
                   });
                 }
