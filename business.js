@@ -52,6 +52,7 @@ Ext.application({
       storeId: "printcart",
       fields: ["key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", 'sendNumber1', 'sendNumber2', "mailingDate", "weight", "postage", "amount", "remark"],
       layout: "fit",
+      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.printcart.businesslist,
@@ -463,49 +464,22 @@ Ext.application({
                   items: [
                     {
                       xtype: "button",
-                      text: "<span class=\"key\">A</span> 增加",
+                      text: "<span class=\"key\">A</span> 新增",
                       handler: function () {
                         var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-                        form.url = env.services.web + env.api.business.add;
-                        form.submit({
-                          success: function (form, action) {
-                            Ext.data.StoreManager.lookup("memberList").load();
-                            form.reset();
-                          },
-                          failure: function (form, action) {
-                            Ext.Msg.alert("增加名单", action.result.msg);
-                          }
-                        });
+                        form.reset();
                       }
                     },
                     {
                       xtype: "button",
-                      text: "<span class=\"key\">N</span> 修改",
+                      text: "<span class=\"key\">S</span> 保存",
                       handler: function () {
                         var form = this.ownerCt.ownerCt.getComponent("member").getForm();
                         form.url = env.services.web + env.api.business.change;
-                        form.submit({
-                          success: function () {
-                            searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0].getForm(), "memberList");
-                          },
-                          failure: function (form, action) {
-                            Ext.Msg.alert("修改名单", action.result.msg);
-                          }
-                        });
-                      },
-                      margin: "0 0 0 20"
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">S</span> 保存",
-                      disabled: true,
-                      handler: function () {
-                        var form = this.ownerCt.ownerCt.getComponent("member").getForm();
-                        form.url = env.services.web + env.api.business.save;
                         if (form.isValid()) {
                           form.submit({
                             success: function (form, action) {
-                              console.log(action)
+                              searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0].getForm(), "memberList");
                             },
                             failure: function (form, action) {
                               Ext.Msg.alert("保存名单", action.result.msg);

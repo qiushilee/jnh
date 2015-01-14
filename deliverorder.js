@@ -82,7 +82,31 @@ Ext.application({
       renderTo: window.$bd,
       url: env.services.web + env.api.deliverorder.list,
       items: [
-        Ext.create("periodical"),
+        Ext.create("periodical", {
+          listeners: {
+            change: function(that, val) {
+              Ext.Ajax.request({
+                url: search.url,
+                method: 'POST',
+                params: {
+                  periodicalId: val
+                },
+                success: function (resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  if (data.list.length > 0) {
+                    Ext.data.StoreManager.lookup('list').loadData(data.list);
+                  } else {
+                    Ext.Msg.alert("搜索", data.msg);
+                  }
+                },
+                failure: function (resp) {
+                  var data = Ext.JSON.decode(resp.responseText);
+                  Ext.Msg.alert("搜索", data.msg);
+                }
+              });
+            }
+          }
+        }),
         {
           fieldLabel: "会员姓名",
           labelWidth: 60,
@@ -616,6 +640,8 @@ Ext.application({
                           success: function(form, action) {
                             Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
                             form.reset();
+                            form.findField("deliveryOrderId").setValue(window.deliveryOrderId);
+                            form.findField("orderRemittanceId").setValue(window.orderRemittanceId);
                           },
                           failure: function(form, action) {
                             Ext.Msg.alert("修改订单产品", action.result.msg);

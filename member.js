@@ -251,8 +251,18 @@ Ext.onReady(function () {
                 width: 120,
                 labelAlign: "right"
               },
-              Ext.create('memberType'),
-              Ext.create("addressType"),
+              Ext.create('memberType',{
+                store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.membertypeall)
+                })
+              }),
+              Ext.create("addressType",{
+                store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.addresstypeall)
+                })
+              }),
               {
                 xtype: 'button',
                 margin: "0 5 0 50",
@@ -297,6 +307,7 @@ Ext.onReady(function () {
                       var data = Ext.JSON.decode(resp.responseText);
                       if (data.success) {
                         updateMember(form);
+                        searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
                       } else {
                         Ext.Msg.confirm("新增会员", data.msg, function (type) {
                           if (type === 'yes') {
@@ -325,8 +336,10 @@ Ext.onReady(function () {
                   window.removeGridRow({
                     grid: panel.getComponent("grid").getComponent("memberList"),
                     api: env.services.web + env.api.member.del,
-                    success: function () {
-                      Ext.data.StoreManager.lookup("memberList").load();
+                    success: function (form, action) {
+                      var form = panel.getComponent("memberInfo").getForm();
+                      form.reset();
+                      Ext.data.StoreManager.lookup("memberList").loadData({});
                     }
                   });
                 }
