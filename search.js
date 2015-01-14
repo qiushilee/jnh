@@ -94,7 +94,11 @@ Ext.application({
               defaultType: 'datefield',
               items: [
                 Ext.create("periodical", {
-                  itemId: "purchase-periodical"
+                  itemId: "purchase-periodical",
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.periodicalall)
+                  })
                 }),
                 {
                   itemId: "purchase-start-date",
@@ -193,7 +197,11 @@ Ext.application({
               defaultType: 'datefield',
               items: [
                 Ext.create("periodical", {
-                  itemId: "shipment-periodical"
+                  itemId: "shipment-periodical",
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.periodicalall)
+                  })
                 }),
                 {
                   itemId: "shipment-start-date",
@@ -292,7 +300,11 @@ Ext.application({
                 items: [
                 Ext.create("periodical", {
                   itemId: "estimatepurchase-periodical",
-                  labelWidth: 40
+                  labelWidth: 40,
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.periodicalall)
+                  })
                 }),
                 {
                   fieldLabel: "厂商编号",
@@ -623,7 +635,11 @@ Ext.application({
                           defaultType: 'textfield',
                           items: [
                             Ext.create('periodical', {
-                                  name: "periodicalId_1"
+                                  name: "periodicalId_1",
+                                  store: Ext.create("Ext.data.Store", {
+                                    fields: ["name", "value"],
+                                    data: JSON.parse(document.body.dataset.periodicalall)
+                                  })
                             }),
                             {
                               fieldLabel: "姓名",

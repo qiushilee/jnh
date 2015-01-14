@@ -190,7 +190,12 @@ Ext.onReady(function () {
             defaultType: 'textfield',
             layout: 'hbox',
             items: [
-              Ext.create("periodical"),
+              Ext.create("periodical",{
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.periodicalall)
+                  })
+              }),
               {
                 fieldLabel: "会员编号",
                 labelAlign: "right",
@@ -246,8 +251,18 @@ Ext.onReady(function () {
                 width: 120,
                 labelAlign: "right"
               },
-              Ext.create('memberType'),
-              Ext.create("addressType"),
+              Ext.create('memberType',{
+                store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.membertypeall)
+                })
+              }),
+              Ext.create("addressType",{
+                store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.addresstypeall)
+                })
+              }),
               {
                 xtype: 'button',
                 margin: "0 5 0 50",
@@ -320,8 +335,10 @@ Ext.onReady(function () {
                   window.removeGridRow({
                     grid: panel.getComponent("grid").getComponent("memberList"),
                     api: env.services.web + env.api.member.del,
-                    success: function () {
-                      Ext.data.StoreManager.lookup("memberList").load();
+                  success: function (form, action) {
+                       var form = panel.getComponent("memberInfo").getForm();
+                       form.reset();
+                       Ext.data.StoreManager.lookup("memberList").loadData();
                     }
                   });
                 }
