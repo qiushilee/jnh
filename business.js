@@ -597,7 +597,8 @@ Ext.application({
                       width: 90,
                       labelAlign: "right",
                       name: 'endPeriodical'
-                    }
+                    },
+                    Ext.create("deliveryMethod")
                   ]
                 },
                 {
