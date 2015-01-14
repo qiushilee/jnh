@@ -602,13 +602,16 @@
           labelAlign: "right",
           name: "periodicalId",
           width: 120,
-          listeners: {
-            render: function (combobox) {
-              combobox.store.load(function (data) {
-                combobox.setValue(data[0]);
-              });
-            },
-            setvalue: comboboxSetValue
+          initComponent: function() {
+            this.callParent();
+            this.on({
+              render: function (combobox) {
+                combobox.store.load(function (data) {
+                  combobox.setValue(data[0]);
+                });
+              },
+              setvalue: comboboxSetValue
+            });
           }
         });
 
