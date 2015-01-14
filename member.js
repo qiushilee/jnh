@@ -339,7 +339,7 @@ Ext.onReady(function () {
                     success: function (form, action) {
                       var form = panel.getComponent("memberInfo").getForm();
                       form.reset();
-                      Ext.data.StoreManager.lookup("memberList").loadData();
+                      Ext.data.StoreManager.lookup("memberList").loadData({});
                     }
                   });
                 }
