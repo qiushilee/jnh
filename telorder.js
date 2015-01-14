@@ -22,18 +22,20 @@ Ext.application({
       }
     });
 
-    Ext.Ajax.request({
-      url: env.services.web + env.api.member.info + telorderCurrent.memberId,
-      success: function (response) {
-        var data = Ext.JSON.decode(response.responseText),
-            form = Ext.ComponentQuery.query("form[itemId=member]")[0].getForm();
-        window.updateForm(form, data.info);
-        window.updateForm(form, data.addressList);
-      },
-      failure: function (form, action) {
-        Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
-      }
-    });
+    if (telorderCurrent.memberId) {
+      Ext.Ajax.request({
+        url: env.services.web + env.api.member.info + telorderCurrent.memberId,
+        success: function (response) {
+          var data = Ext.JSON.decode(response.responseText),
+              form = Ext.ComponentQuery.query("form[itemId=member]")[0].getForm();
+          window.updateForm(form, data.info);
+          window.updateForm(form, data.addressList);
+        },
+        failure: function (form, action) {
+          Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
+        }
+      });
+    }
 
     //电话订购右侧列表
     var orderproduct = Ext.create('Ext.data.Store', {
