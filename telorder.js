@@ -353,8 +353,8 @@ Ext.application({
                   success: function(resp) {
                     var data = Ext.JSON.decode(resp.responseText);
                     if (data.success) {
-                      form.findField("deliveryOrderId").setValue(data.id);
-                      detailForm.findField("deliveryOrderId").setValue(data.id);
+                      form.findField("deliveryOrderId").setValue(data.deliveryOrderId);
+                      detailForm.findField("deliveryOrderId").setValue(data.deliveryOrderId);
                       Ext.ComponentQuery.query("label[name=deliveryOrderCode]")[0].setText(data.code);
                       self.setDisabled(true);
                     } else {
