@@ -130,6 +130,10 @@ Ext.application({
               margin: "20 0 0 0",
               store: Ext.data.StoreManager.lookup('periodicalList'),
               columns: [{
+                text: 'ID',
+                dataIndex: 'id',
+                flex: 1,
+              },{
                 text: '编号',
                 dataIndex: 'code',
                 flex: 1

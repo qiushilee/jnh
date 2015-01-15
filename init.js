@@ -601,7 +601,7 @@
           valueField: "value",
           labelAlign: "right",
           name: "periodicalId",
-          width: 120,
+          width: 130,
           initComponent: function() {
             this.callParent();
             this.on({

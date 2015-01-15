@@ -45,9 +45,7 @@ Ext.application({
       renderTo: window.$bd,
       border: 0,
       items: [
-        Ext.create("periodical", {
-          labelWidth: 60
-        }),
+        Ext.create("periodical"),
       {
         fieldLabel: "厂商编号",
         name:'companyCode1',
