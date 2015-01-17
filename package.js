@@ -891,29 +891,6 @@ Ext.application({
             },
             {
               xtype: "button",
-              text: "新增",
-              margin: "10 0 0 30",
-              handler: function () {
-                var form = this.up("form").getForm();
-                form.url = env.services.web + env.api.package.sendadd;
-
-                form.submit({
-                  success: function (form, action) {
-                    form.reset();
-                    Ext.data.StoreManager.lookup("bujiList").load({
-                      params: {
-                        packageId: form.findField("packageId").value
-                      }
-                    });
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("新增", action.result.msg);
-                  }
-                });
-              }
-            },
-            {
-              xtype: "button",
               text: "保存",
               margin: "10 0 0 10",
               handler: function () {
@@ -926,6 +903,29 @@ Ext.application({
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("保存", action.result.msg);
+                  }
+                });
+              }
+            },
+            {
+              xtype: "button",
+              text: "删除",
+              margin: "10 0 0 30",
+              handler: function () {
+                var form = this.up("form").getForm();
+                form.url = env.services.web + env.api.package.del;
+
+                form.submit({
+                  success: function (form, action) {
+                    form.reset();
+                    Ext.data.StoreManager.lookup("bujiList").load({
+                      params: {
+                        packageId: form.findField("packageId").value
+                      }
+                    });
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("新增", action.result.msg);
                   }
                 });
               }
