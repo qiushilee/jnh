@@ -62,7 +62,7 @@ Ext.application({
 
 
     Ext.create('Ext.data.Store', {
-      storeId: 'printCart',
+      storeId: 'printCartList',
       fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
       proxy: {
@@ -690,7 +690,6 @@ Ext.application({
       width: 1000,
       bodyPadding: 10,
       closeAction: 'hide',
-      url: env.services.web + env.api.printcart .packagechange,
       items: [{
         itemId: "print-cart-form",
         xtype: "form",
@@ -715,7 +714,7 @@ Ext.application({
           text: "搜索",
           margin: "0 0 0 20",
           handler: function() {
-            searchHandler.call(this.up("form"), "printCart");
+            searchHandler.call(this.up("form"), "printCartList");
           }
         }, {
           xtype: "button",
