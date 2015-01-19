@@ -840,10 +840,11 @@ Ext.application({
                               width: 80,
                               labelAlign: "right",
                               name:'periodicalId2'
-                            }
+                            },
+                            Ext.create("memberType")
                           ]
                         },
-                         Ext.create("memberType"),
+                         
                         // +TODO: 位置排序调整
                         {
                           xtype: "panel",

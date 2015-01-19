@@ -260,6 +260,7 @@ Ext.application({
           width: 300,
           labelAlign: "right"
         }, {
+          xtype: "hiddenfield",
           fieldLabel: '厂商名称',
           name: "title",
           labelWidth: 60,
@@ -284,6 +285,7 @@ Ext.application({
           width: 300,
           labelAlign: "right"
         }, {
+          xtype: "hiddenfield",
           fieldLabel: '邮编',
           name: "zipCode",
           labelWidth: 60,
@@ -302,6 +304,7 @@ Ext.application({
           width: 300,
           labelAlign: "right"
         }, {
+          xtype: "hiddenfield",
           fieldLabel: "邮箱",
           name: "email",
           labelWidth: 60,
