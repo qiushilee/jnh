@@ -23,8 +23,12 @@
       padding-top: 30px;
       background-repeat: no-repeat;
     }
-    .bg input[type=radio] {
+    .bg label {
+      display: block;
       position: absolute;
+      border: 1px dashed red;
+      font-weight: bold;
+      color: red;
     }
   </style>
 </head>
@@ -32,57 +36,96 @@
 
 <form action="">
   <div class="setting">
-    <label for="x">X：<input type="text" id="x" data-margin="0" value="0"></label>
-    <label for="y">Y：<input type="text" id="y" data-margin="30" value="0"></label>
-    <button>设置</button>
+    <label for="x">X：<input type="text" id="x" data-margin="0"></label>
+    <label for="y">Y：<input type="text" id="y" data-margin="30"></label>
+    <span class="btn">设置</span>
+    <button>保存</button>
   </div>
 
   <div class="bg" data-bg="images/express.jpg">
-    <label for="name">
-      收件人：<input type="radio" name="name">
+    <label for="name" style="top: 378px; left: 417px;">
+      寄件人：<input type="radio" name="name">
+    </label>
+    <label for="company" style="top: 495px; left: 385px;">
+      单位名称：<input type="radio" name="company">
+    </label>
+    <label for="company" style="top: 598px; left: 379px;">
+      省：<input type="radio" name="company">
+    </label>
+    <label for="company" style="top: 598px; left: 619px;">
+      市：<input type="radio" name="company">
+    </label>
+    <label for="company" style="top: 598px; left: 916px;">
+      区：<input type="radio" name="company">
+    </label>
+    <label for="company" style="top: 755px; left: 219px;">
+      地址：<input type="radio" name="company">
+    </label>
+    <label for="company" style="top: 810px; left: 487px;">
+      联系电话：<input type="radio" name="company">
     </label>
   </div>
 </form>
 
+<script src="jquery-1.9.1.min.js"></script>
 <script>
-  var $form = document.querySelector('.bg'),
-      $x = document.querySelector('#x'),
-      $y = document.querySelector('#y'),
-      $button = document.querySelector('button'),
+  var $body = $('body'),
+      $form = $body.find('.bg'),
+      $x = $body.find('#x'),
+      $y = $body.find('#y'),
+      $button = $body.find('.btn'),
       $img = document.createElement('img');
 
   function getPosition() {
     return {
-      x: parseInt($x.value) + parseInt($x.dataset.margin),
-      y: parseInt($y.value) + parseInt($y.dataset.margin)
+      x: parseInt($x.val()) + parseInt($x.data('margin')),
+      y: parseInt($y.val()) + parseInt($y.data('margin'))
     }
   }
 
-  $img.src = $form.dataset.bg;
+  function getRadio() {
+    var input;
+    $('input[type=radio]').each(function() {
+      if (this.checked) {
+        input = $(this);
+      }
+    });
+    return input;
+  }
+
+  $img.src = $form.data('bg');
   $img.addEventListener('load', function() {
-    $form.style.backgroundImage = 'url(' + $img.src + ')';
-    $form.style.width = $img.width + 'px';
-    $form.style.height = $img.height + 'px';
+    $form.css({
+      'background-image': 'url(' + $img.src + ')',
+      width: $img.width + 'px',
+      height: $img.height + 'px'
+    });
   }, false);
 
-  $x.addEventListener('focus', function() {
-    this.select();
-  }, false);
+  $body.find('input[type=radio]').on('focus', function() {
+    $body.find('input[type=radio]').each(function() {
+      this.checked = false;
+    });
+    this.checked = true;
+    $x.val(parseFloat($(this).parent().css('top')));
+    $y.val(parseFloat($(this).parent().css('left')));
+  });
 
-  $y.addEventListener('focus', function() {
-    this.select();
-  }, false);
+  $body.find('input[type=radio]').each(function() {
+    var $that = $(this);
+    $that.val(parseFloat($(this).parent().css('top')) + ';' + parseFloat($(this).parent().css('left')));
+  });
 
-  $button.addEventListener('click', function() {
-    var $input = $form.querySelector('input'),
+  $button.on('click', function() {
+    var $input = getRadio().parent(),
         pos = getPosition();
 
-    if ($form.querySelector('input').checked) {
-      $input.value = pos.x + ';' + pos.y;
-      $input.style.top = pos.y + 'px';
-      $input.style.left = pos.x + 'px';
-    }
-  }, false);
+    $input.css({
+      top: pos.y + 'px',
+      left: pos.x + 'px'
+    })
+    .val(pos.x + ';' + pos.y);
+  });
 </script>
 </body>
 </html>
