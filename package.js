@@ -62,7 +62,7 @@ Ext.application({
 
 
     Ext.create('Ext.data.Store', {
-      storeId: 'printCart',
+      storeId: 'printCartList',
       fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
       proxy: {
@@ -690,7 +690,6 @@ Ext.application({
       width: 1000,
       bodyPadding: 10,
       closeAction: 'hide',
-      url: env.services.web + env.api.printcart .packagechange,
       items: [{
         itemId: "print-cart-form",
         xtype: "form",
@@ -715,7 +714,7 @@ Ext.application({
           text: "搜索",
           margin: "0 0 0 20",
           handler: function() {
-            searchHandler.call(this.up("form"), "printCart");
+            searchHandler.call(this.up("form"), "printCartList");
           }
         }, {
           xtype: "button",
@@ -892,29 +891,6 @@ Ext.application({
             },
             {
               xtype: "button",
-              text: "新增",
-              margin: "10 0 0 30",
-              handler: function () {
-                var form = this.up("form").getForm();
-                form.url = env.services.web + env.api.package.sendadd;
-
-                form.submit({
-                  success: function (form, action) {
-                    form.reset();
-                    Ext.data.StoreManager.lookup("bujiList").load({
-                      params: {
-                        packageId: form.findField("packageId").value
-                      }
-                    });
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("新增", action.result.msg);
-                  }
-                });
-              }
-            },
-            {
-              xtype: "button",
               text: "保存",
               margin: "10 0 0 10",
               handler: function () {
@@ -927,6 +903,29 @@ Ext.application({
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("保存", action.result.msg);
+                  }
+                });
+              }
+            },
+            {
+              xtype: "button",
+              text: "删除",
+              margin: "10 0 0 30",
+              handler: function () {
+                var form = this.up("form").getForm();
+                form.url = env.services.web + env.api.package.del;
+
+                form.submit({
+                  success: function (form, action) {
+                    form.reset();
+                    Ext.data.StoreManager.lookup("bujiList").load({
+                      params: {
+                        packageId: form.findField("packageId").value
+                      }
+                    });
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("新增", action.result.msg);
                   }
                 });
               }
