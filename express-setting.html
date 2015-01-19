@@ -9,10 +9,15 @@
       padding: 0;
     }
     .setting {
+      position: absolute;
+      width: 100%;
       height: 30px;
       padding-left: 30px;
       background-color: #a9cbf5;
       line-height: 28px;
+    }
+    .setting form {
+      display: inline;
     }
     .setting button {
       margin-left: 10px;
@@ -26,43 +31,54 @@
     .bg label {
       display: block;
       position: absolute;
-      border: 1px dashed red;
+      padding: 3px 5px;
+      background-color: red;
       font-weight: bold;
-      color: red;
+      color: #ffffff;
     }
   </style>
 </head>
 <body>
 
-<form action="">
-  <div class="setting">
-    <label for="x">X：<input type="text" id="x" data-margin="0"></label>
-    <label for="y">Y：<input type="text" id="y" data-margin="30"></label>
-    <span class="btn">设置</span>
-    <button>保存</button>
-  </div>
+<div class="setting">
+  <label for="x">X：<input type="text" id="x" data-margin="0"></label>
+  <label for="y">Y：<input type="text" id="y" data-margin="30"></label>
+  <button class="btn">设置</button>
 
+  <form action="">
+    <button>保存</button>
+  </form>
+</div>
+
+<form action="">
   <div class="bg" data-bg="images/express.jpg">
-    <label for="name" style="top: 378px; left: 417px;">
-      寄件人：<input type="radio" name="name">
+    <label for="name" style="top: 348px; left: 417px;">
+      寄件人：<input type="radio" name="name" id="name">
+      <input name="name" type="hidden"/>
     </label>
-    <label for="company" style="top: 495px; left: 385px;">
-      单位名称：<input type="radio" name="company">
+    <label for="company" style="top: 465px; left: 385px;">
+      单位名称：<input type="radio" name="company" id="company">
+      <input name="company" type="hidden"/>
     </label>
-    <label for="company" style="top: 598px; left: 379px;">
-      省：<input type="radio" name="company">
+    <label for="company1" style="top: 568px; left: 379px;">
+      省：<input type="radio" name="company" id="company1">
+      <input name="company1" type="hidden"/>
     </label>
-    <label for="company" style="top: 598px; left: 619px;">
-      市：<input type="radio" name="company">
+    <label for="company2" style="top: 568px; left: 619px;">
+      市：<input type="radio" name="company" id="company2">
+      <input name="company2" type="hidden"/>
     </label>
-    <label for="company" style="top: 598px; left: 916px;">
-      区：<input type="radio" name="company">
+    <label for="company3" style="top: 568px; left: 916px;">
+      区：<input type="radio" name="company" id="company3">
+      <input name="company3" type="hidden"/>
     </label>
-    <label for="company" style="top: 755px; left: 219px;">
-      地址：<input type="radio" name="company">
+    <label for="company4" style="top: 725px; left: 219px;">
+      地址：<input type="radio" name="company" id="company4">
+      <input name="company4" type="hidden"/>
     </label>
-    <label for="company" style="top: 810px; left: 487px;">
-      联系电话：<input type="radio" name="company">
+    <label for="company5" style="top: 780px; left: 487px;">
+      联系电话：<input type="radio" name="company" id="company5">
+      <input name="company5" type="hidden"/>
     </label>
   </div>
 </form>
@@ -70,7 +86,8 @@
 <script src="jquery-1.9.1.min.js"></script>
 <script>
   var $body = $('body'),
-      $form = $body.find('.bg'),
+      $input = $body.find('input[type=radio]'),
+      $bg = $body.find('.bg'),
       $x = $body.find('#x'),
       $y = $body.find('#y'),
       $button = $body.find('.btn'),
@@ -83,9 +100,9 @@
     }
   }
 
-  function getRadio() {
+  function getCurrent() {
     var input;
-    $('input[type=radio]').each(function() {
+    $input.each(function() {
       if (this.checked) {
         input = $(this);
       }
@@ -93,38 +110,47 @@
     return input;
   }
 
-  $img.src = $form.data('bg');
+  $img.src = $bg.data('bg');
   $img.addEventListener('load', function() {
-    $form.css({
+    $bg.css({
       'background-image': 'url(' + $img.src + ')',
       width: $img.width + 'px',
       height: $img.height + 'px'
     });
   }, false);
 
-  $body.find('input[type=radio]').on('focus', function() {
-    $body.find('input[type=radio]').each(function() {
+  $input.on('focus', function() {
+    var $that = $(this);
+
+    $input.each(function() {
       this.checked = false;
     });
     this.checked = true;
-    $x.val(parseFloat($(this).parent().css('top')));
-    $y.val(parseFloat($(this).parent().css('left')));
+
+    $y.val(parseFloat($that.parent().css('top')));
+    $x.val(parseFloat($that.parent().css('left'))).focus();
   });
 
-  $body.find('input[type=radio]').each(function() {
+  $bg.find('label').each(function() {
     var $that = $(this);
-    $that.val(parseFloat($(this).parent().css('top')) + ';' + parseFloat($(this).parent().css('left')));
+    $that.find('input[type=hidden]').val(parseFloat($that.css('top')) + ';' + parseFloat($that.css('left')));
   });
 
   $button.on('click', function() {
-    var $input = getRadio().parent(),
-        pos = getPosition();
+    var $input = getCurrent().parent();
 
     $input.css({
-      top: pos.y + 'px',
-      left: pos.x + 'px'
+      top: $y.val() + 'px',
+      left: $x.val() + 'px'
     })
-    .val(pos.x + ';' + pos.y);
+    .val($x.val() + ';' + $y.val());
+  });
+
+  $body.find('form').on('submit', function() {
+    $.post('api', JSON.stringify($('form').serializeArray()), function(resp) {
+      console.log(resp);
+    });
+    return false;
   });
 </script>
 </body>
