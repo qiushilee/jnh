@@ -95,11 +95,7 @@ Ext.application({
         text: '厂商编号',
         dataIndex: 'companyCode'
       }, {
-        text: '厂商名称',
-        dataIndex: 'title',
-        flex: 1
-      }, {
-        text: '地址',
+        text: '厂商地址',
         dataIndex: 'address',
         flex: 1
       }, {
@@ -248,7 +244,7 @@ Ext.application({
             labelAlign: "right"
           },
          {
-          fieldLabel: '地址',
+          fieldLabel: '厂商地址',
           name: "address",
           labelWidth: 60,
           width: 300,
@@ -259,14 +255,7 @@ Ext.application({
           labelWidth: 60,
           width: 300,
           labelAlign: "right"
-        }, {
-          xtype: "hiddenfield",
-          fieldLabel: '厂商名称',
-          name: "title",
-          labelWidth: 60,
-          width: 300,
-          labelAlign: "right"
-        }, {
+        },{
           fieldLabel: '电话1',
           name: "mobile1",
           labelWidth: 60,
