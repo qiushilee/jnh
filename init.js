@@ -571,6 +571,53 @@
     window.location.href = window.location.origin + window.location.pathname + "#" + opt.view;
   };
 
+  /**
+   * 提交批量修改的数据
+   * @param store grid.store
+   * @param api 保存数据接口
+   */
+  window.batchEditHandle = function(store, api) {
+    var records = store.getUpdatedRecords();// 获取修改的行的数据，无法获取幻影数据
+    var phantoms = store.getNewRecords();//获得幻影行
+    records = records.concat(phantoms);//将幻影数据与真实数据合并
+    if (records.length > 0) {
+      Ext.Msg.confirm("请确认", "是否真的要修改数据？", function (button, text) {
+        if (button == "yes") {
+          var data = [];
+          Ext.Array.each(records, function (record) {
+            data.push(record.data);
+          });
+
+          Ext.Ajax.request({
+            url: api,
+            params: {
+              batchEdit: Ext.encode(data)
+            },
+            method: 'POST',
+            timeout: 2000,
+
+            success: function (response, opts) {
+              var success = Ext.decode(response.responseText).success;
+              // 当后台数据同步成功时
+              if (success) {
+                Ext.Array.each(records, function (record) {
+                  // data.push(record.data);
+                  record.commit();// 向store提交修改数据，页面效果
+                });
+              } else {
+                Ext.MessageBox.show({
+                  title: "提示",
+                  msg: "数据修改失败!"
+                  // icon: Ext.MessageBox.INFO
+                });
+              }
+            }
+          });
+        }
+      });
+    }
+  };
+
   if (document.body.dataset.login === 'false') {
     Ext.application({
       name: "JNH",
