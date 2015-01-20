@@ -852,51 +852,91 @@ Ext.application({
                 {
                   text: '地址',
                   dataIndex: 'address',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 2
                 },
                 {
                   text: '索取数',
                   dataIndex: 'askNumber',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
                   text: '寄出数量1',
                   dataIndex: 'sendNumber1',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
                   text: '寄出数量2',
                   dataIndex: 'sendNumber2',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
                   text: '期数',
                   dataIndex: 'periodicalName',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
                   text: '寄出日',
                   dataIndex: 'mailingDate',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
                   text: '重量',
                   dataIndex: 'weight',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
                   text: '邮资',
                   dataIndex: 'postage',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
                   text: '包裹单号',
                   dataIndex: 'printcartCode',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
                   text: '备注',
                   dataIndex: 'remark',
+                  editor: {
+                    xtype:'textfield',
+                    allowBlank:false
+                  },
                   flex: 1
                 },
                 {
@@ -922,8 +962,10 @@ Ext.application({
                 {
                   xtype: "button",
                   text: "批量修改",
-                  disabled: true,
-                  margin: "0 0 0 20"
+                  margin: "0 0 0 20",
+                  handler: function () {
+                    window.batchEditHandle(Ext.data.StoreManager.lookup('printcart'), env.services.web + env.api.package.change);
+                  }
                 },
                 {
                   xtype: "button",
