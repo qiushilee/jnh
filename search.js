@@ -635,14 +635,15 @@ Ext.application({
                           defaultType: 'textfield',
                           items: [
                             Ext.create('periodical', {
-                                  name: "periodicalId_1",
-                                  store: Ext.create("Ext.data.Store", {
-                                    fields: ["name", "value"],
-                                    data: JSON.parse(document.body.dataset.periodicalall)
-                                  })
+                              name: "periodicalId_1",
+                              store: Ext.create("Ext.data.Store", {
+                                fields: ["name", "value"],
+                                data: JSON.parse(document.body.dataset.periodicalall)
+                              })
                             }),
                             {
                               fieldLabel: "姓名",
+                              width: 120,
                               labelWidth: 40,
                               labelAlign: "right",
                               name:'realName'
