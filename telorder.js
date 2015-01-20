@@ -114,7 +114,7 @@ Ext.application({
                 form.submit({
                   success: function(form, action) {
                     telorderCurrent.memberId = action.result.id;
-                    form.reset();
+                    //form.reset();
                   },
                   failure: function(form, action) {
                     Ext.Msg.alert("增加", action.result.msg);

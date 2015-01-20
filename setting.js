@@ -26,7 +26,7 @@ Ext.application({
     //寄送方式
     var sendmethordList = Ext.create('Ext.data.Store', {
       storeId: 'sendmethordList',
-      fields: ['id', 'name', 'key', 'state', 'image'],
+      fields: ['id', 'name', 'key', 'state', 'image','setting'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -201,6 +201,11 @@ Ext.application({
                   text: '状态',
                   dataIndex: 'state',
                   flex: 1
+                },
+                {
+                  text:'面单设置',
+                  dataIndex:'setting',
+                  flex:1
                 }
               ],
               listeners: {

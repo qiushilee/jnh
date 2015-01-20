@@ -39,7 +39,6 @@ Ext.application({
       }
     });
 
-
     var printStore = Ext.create('Ext.data.Store', {
       storeId: 'printStore',
       fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
@@ -59,7 +58,6 @@ Ext.application({
         "packageRemark": null
       }
     });
-
 
     Ext.create('Ext.data.Store', {
       storeId: 'printCartList',
@@ -158,6 +156,10 @@ Ext.application({
             {
               text: '包裹单号',
               dataIndex: 'packageCode',
+              editor: {
+                xtype:'textfield',
+                allowBlank:false
+              },
               flex: 1
             },
             {
@@ -168,16 +170,28 @@ Ext.application({
             {
               text: '邮寄日期',
               dataIndex: 'mailingDate',
+              editor: {
+                xtype:'textfield',
+                allowBlank:false
+              },
               flex: 1
             },
             {
               text: '重量',
               dataIndex: 'weight',
+              editor: {
+                xtype:'textfield',
+                allowBlank:false
+              },
               flex: 1
             },
             {
               text: '邮资',
               dataIndex: 'postage',
+              editor: {
+                xtype:'textfield',
+                allowBlank:false
+              },
               flex: 1
             },
             {
@@ -188,6 +202,10 @@ Ext.application({
             {
               text: '包装员',
               dataIndex: 'packaging',
+              editor: {
+                xtype:'textfield',
+                allowBlank:false
+              },
               flex: 1
             },
             {
@@ -203,6 +221,10 @@ Ext.application({
             {
               text: '备注',
               dataIndex: 'packageRemark',
+              editor: {
+                xtype:'textfield',
+                allowBlank:false
+              },
               flex: 1
             }
           ],
@@ -216,10 +238,17 @@ Ext.application({
 
               updateForm(form, data);
             }
-          }
+          },
+          selType: 'cellmodel',
+          plugins: [
+            Ext.create('Ext.grid.plugin.CellEditing', {
+              clicksToEdit: 1
+            })
+          ]
         }
       ]
     });
+    window.list = list;
 
     var button = Ext.create("Ext.panel.Panel", {
       renderTo: window.$bd,
@@ -315,15 +344,7 @@ Ext.application({
           text: "批量修改",
           margin: "0 0 0 10",
           handler: function () {
-            var packageList = list.getComponent("grid").getSelectionModel().getSelection();
-            ids = [];
-
-            Ext.Array.each(packageList, function (item, index) {
-              var record = item.data;
-              ids.push(record.id);
-            });
-            Ext.ComponentQuery.query("[name=package-ids]")[0].setValue(ids);
-            add.show();
+            window.batchEditHandle(Ext.data.StoreManager.lookup('dataList'), env.services.web + env.api.package.change);
           }
         },
         {
@@ -568,7 +589,7 @@ Ext.application({
               }
             }
           }]
-        },
+        }
       ]
     });
 
