@@ -6,7 +6,6 @@ Ext.require([
 Ext.application({
   name: "setting",
   launch: function () {
-
     // 期数管理
     var periodicalList = Ext.create('Ext.data.Store', {
       storeId: 'periodicalList',
@@ -114,6 +113,7 @@ Ext.application({
         }
       }
     });
+
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
       layout: "fit",
@@ -172,6 +172,21 @@ Ext.application({
                 form.reset();
                 form.url = env.services.web + env.api.periodical.save;
                 periodicalEdit.show();
+              }
+            },
+            {
+              xtype: "button",
+              text: "删除",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function () {
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("[itemId=purchase-grid]")[0],
+                  api: env.services.web + env.api.periodical.del,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('periodicalList').load();
+                  }
+                })
               }
             }
           ]
@@ -499,7 +514,6 @@ Ext.application({
         }
       ]
     });
-
 
     //期数
     var periodicalEdit = new Ext.create("Ext.window.Window", {
