@@ -25,7 +25,7 @@ Ext.application({
     //寄送方式
     var sendmethordList = Ext.create('Ext.data.Store', {
       storeId: 'sendmethordList',
-      fields: ['id', 'name', 'key', 'state', 'image','setting'],
+      fields: ['id', 'name', 'key', 'state', 'image','setting', 'sort'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -215,6 +215,11 @@ Ext.application({
                 {
                   text: '状态',
                   dataIndex: 'state',
+                  flex: 1
+                },
+                {
+                  text: '排序',
+                  dataIndex: 'sort',
                   flex: 1
                 },
                 {
@@ -710,11 +715,17 @@ Ext.application({
             labelAlign: "right"
           },
           {
+            fieldLabel: "排序",
+            name: "sort",
+            labelAlign: "right"
+          },
+          {
             xtype: "hiddenfield",
-            name: "id",
-          }, {
+            name: "id"
+          },
+          {
             xtype: "hiddenfield",
-            name: "image",
+            name: "image"
           },
           {
             xtype: 'panel',
