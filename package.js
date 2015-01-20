@@ -324,12 +324,6 @@ Ext.application({
         },
         {
           xtype: "button",
-          text: "<span class=\"key\">C</span> 预览",
-          disabled: true,
-          margin: "0 0 0 10"
-        },
-        {
-          xtype: "button",
           text: "<span class=\"key\">B</span> 连续打印",
           margin: "0 0 0 10",
           handler: function () {
