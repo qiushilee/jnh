@@ -12,7 +12,7 @@ Ext.application({
       "时间定位": 3,
       "金额定位": 4,
       "其它定位": 5
-    }
+    };
 
     // 进货清单数据
     var purchaseList = Ext.create('Ext.data.Store', {
@@ -614,7 +614,7 @@ Ext.application({
                   xtype: "tabpanel",
                   width: 500,
                   listeners: {
-                    beforetabchange: function(tabs, newTab, oldTab) {
+                    beforetabchange: function(tabs, newTab) {
                       var $type = this.ownerCt.getForm().findField("type");
 
                       if (memberType[newTab.title]) {
@@ -866,7 +866,7 @@ Ext.application({
                       ]
                     }
                   ]
-                },
+                }
                 ]
               },
                 {
