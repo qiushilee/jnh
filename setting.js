@@ -132,7 +132,7 @@ Ext.application({
               columns: [{
                 text: 'ID',
                 dataIndex: 'id',
-                flex: 1,
+                flex: 1
               },{
                 text: '编号',
                 dataIndex: 'code',
@@ -242,6 +242,21 @@ Ext.application({
                 form.url = env.services.web + env.api.sendmethord.save;
                 sendmethordEdit.show();
               }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">D</span> 删除",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function () {
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("[itemId=shipment-grid]")[0],
+                  api: env.services.web + env.api.sendmethord.del,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('sendmethordList').load();
+                  }
+                })
+              }
             }
           ]
         },
@@ -312,6 +327,21 @@ Ext.application({
                 form.url = env.services.web + env.api.manager.save;
                 managerEdit.show();
               }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">D</span> 删除",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function () {
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("[itemId=estimatepurchase-grid]")[0],
+                  api: env.services.web + env.api.manager.del,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('managerList').load();
+                  }
+                })
+              }
             }
           ]
         },
@@ -320,6 +350,7 @@ Ext.application({
           padding: 15,
           items: [
             {
+              itemId: "role-list-grid",
               xtype: "grid",
               height: 355,
               margin: "20 0 0 0",
@@ -365,6 +396,21 @@ Ext.application({
                 form.url = env.services.web + env.api.managerrole.save;
                 roleEdit.show();
               }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">D</span> 删除",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function () {
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("[itemId=role-list-grid]")[0],
+                  api: env.services.web + env.api.managerrole.del,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('roleList').load();
+                  }
+                })
+              }
             }
           ]
         },
@@ -401,12 +447,13 @@ Ext.application({
                           flex: 2
                         }, {
                           xtype: "hiddenfield",
-                          name: "id",
+                          name: "id"
                         }
                       ],
                       listeners: {
-                        itemclick: function (that, record, item, index, e, eOpts) {
-                          showAreas(record.data.id, 2, cityList);
+                        itemclick: function (that, record) {
+                          Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(true);
+                          showAreas(record.data.id, 2, 'cityList');
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
                         }
                       }
@@ -438,27 +485,17 @@ Ext.application({
                           flex: 2
                         }, {
                           xtype: "hiddenfield",
-                          name: "id",
+                          name: "id"
                         }
                       ],
                       listeners: {
-                        itemclick: function (that, record, item, index, e, eOpts) {
-                          showAreas(record.data.id, 3, districtList);
+                        itemclick: function (that, record) {
+                          Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(true);
+                          showAreas(record.data.id, 3, 'districtList');
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[name=name2]")[0].setValue(record.data.name);
                           Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
                         }
-                      }
-                    },
-                    {
-                      itemId: "setting-post",
-                      xtype: "button",
-                      text: "<span class=\"key\">A</span> 设置邮费",
-                      margin: "20 0 0 0",
-                      disabled: true,
-                      scale: "medium",
-                      handler: function () {
-                        costSetting.show();
                       }
                     }
                   ]
@@ -496,19 +533,50 @@ Ext.application({
                           flex: 1
                         }, {
                           xtype: "hiddenfield",
-                          name: "id",
+                          name: "id"
                         }
                       ],
                       listeners: {
-                        itemdblclick: function (that, record, item, index, e, eOpts) {
+                        itemclick: function () {
+                          Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(false);
+                        },
+                        itemdblclick: function (that, record) {
                           areaEdit.show();
                           window.updateForm(areaEdit.getComponent("form").getForm(), record.data);
                         }
                       }
                     }
                   ]
-                },
+                }
               ]
+            },
+            {
+              itemId: "setting-post",
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 设置邮费",
+              margin: "20 0 0 0",
+              disabled: true,
+              scale: "medium",
+              handler: function () {
+                costSetting.show();
+              }
+            },
+            {
+              itemId: "districtList-del",
+              xtype: "button",
+              text: "<span class=\"key\">D</span> 删除",
+              margin: "20 0 0 20",
+              disabled: true,
+              scale: "medium",
+              handler: function () {
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("[itemId=role-list-grid]")[0],
+                  api: env.services.web + env.api.managerrole.del,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('roleList').load();
+                  }
+                })
+              }
             }
           ]
         }
@@ -559,7 +627,7 @@ Ext.application({
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
-          name: "id",
+          name: "id"
         }, {
           xtype: 'panel',
           layout: "hbox",
@@ -597,7 +665,7 @@ Ext.application({
         }]
       }
       ],
-      closeAction: 'hide',
+      closeAction: 'hide'
     });
 
     //配送方式
@@ -1054,7 +1122,7 @@ Ext.application({
     });
 
 
-    function showAreas(id, type, domList) {
+    function showAreas(id, type, storeId) {
       var _url = env.services.web + env.api.areaList.city + '/parentId/' + id;
       if (type == 3) {
         _url = env.services.web + env.api.areaList.district + '/parentId/' + id;
@@ -1062,7 +1130,7 @@ Ext.application({
       Ext.Ajax.request({
         url: _url,
         success: function (response) {
-          domList.loadData(Ext.JSON.decode(response.responseText).list);
+          Ext.data.StoreManager.lookup(storeId).loadData(Ext.JSON.decode(response.responseText).list);
         },
         failure: function (form, action) {
           Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
