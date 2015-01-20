@@ -10,7 +10,7 @@ Ext.application({
     // 库存表
     Ext.create('Ext.data.Store', {
       storeId: 'product',
-      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content", "companyCode", "address", "companyId"],
+      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -207,6 +207,10 @@ Ext.application({
                 {
                   text: '厂商地址',
                   dataIndex: 'address',
+                },
+                {
+                  text:"缺货提示",
+                  dataIndex:'safetyStock'
                 }
               ],
               listeners: {
