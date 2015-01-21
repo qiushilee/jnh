@@ -978,6 +978,12 @@ Ext.application({
                   dataIndex: 'amount',
                   flex: 1
                 }
+              ],
+              selType: 'cellmodel',
+              plugins: [
+                Ext.create('Ext.grid.plugin.CellEditing', {
+                  clicksToEdit: 1
+                })
               ]
             },
             {
