@@ -48,7 +48,7 @@
     list: "/orderremittance/index",
     info: "/orderremittance/view/id/",
     del: "/orderremittance/delete/id/",
-    save: "/orderremittance/save",
+    save: "/orderremittance/save"
   };
 
 
@@ -135,7 +135,7 @@
     addticket: "/deliverorder/createticket",//加入抵价券
     generateticket: "/deliverorder/generateticket",//生成抵价券
     changenumber: "/deliverorder/changenumber",//修改抵价券中商品数量
-    delticket: "/deliverorder/delticket",//删除抵价券
+    delticket: "/deliverorder/delticket"//删除抵价券
   };
 
   //包裹管理
@@ -172,7 +172,7 @@
   
     export: '/printcart/export',//导出
     printmember: "/business/printmember", //会员名单打印，参数 btId
-    printcart: '/printcart/printcart',//打印购物车打印，参数 btId
+    printcart: '/printcart/printcart'//打印购物车打印，参数 btId
   };
 
   //打印购物车
@@ -185,7 +185,7 @@
       packageadd: "/printcart/packagecreate",
       packagedel: "/printcart/packagedelete",
       packagechange: "/printcart/packageupdate",
-      checkpackage:"/printcart/checkpackage",
+      checkpackage:"/printcart/checkpackage"
    }
 
   //电话订购
@@ -193,15 +193,15 @@
     list: {
       member: "/telorder/memberlist",
       order: "/telorder/orderlist",//出货单
-      orderproduct: "/deliverorder/vieworderdetail",//出货单产品搜索
+      orderproduct: "/deliverorder/vieworderdetail"//出货单产品搜索
     },
     change: {
       member: "/telorder/savemember",
-      order: "/deliverorder/saveorderproduct",
+      order: "/deliverorder/saveorderproduct"
     },
     add: {
       member: "/telorder/savemember",
-      order: "/deliverorder/saveorderproduct",
+      order: "/deliverorder/saveorderproduct"
     },
     del: {
       //左侧顶部删除订单
@@ -211,7 +211,7 @@
       //左侧底部删除
       member: "/telorder/deletemember",
       //右侧删除出货单产品
-      order: "/telorder/deleteorderproduct",
+      order: "/telorder/deleteorderproduct"
     },
     print: '/telorder/print',
     exportToDeliverorder: "/telorder/exporttodeliverorder"

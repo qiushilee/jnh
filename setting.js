@@ -711,10 +711,10 @@ Ext.application({
           },
           {
             xtype: "hiddenfield",
-            name: "id",
+            name: "id"
           }, {
             xtype: "hiddenfield",
-            name: "image",
+            name: "image"
           },
           {
             xtype: 'panel',
@@ -798,7 +798,7 @@ Ext.application({
             labelAlign: "right"
           }, {
             xtype: "hiddenfield",
-            name: "id",
+            name: "id"
           }, {
             xtype: 'panel',
             layout: "hbox",
@@ -1013,7 +1013,7 @@ Ext.application({
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
-          name: "id",
+          name: "id"
         }, {
           xtype: 'panel',
           layout: "hbox",
@@ -1079,7 +1079,7 @@ Ext.application({
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
-          name: "cityId",
+          name: "cityId"
         }, {
           xtype: 'panel',
           layout: "hbox",
