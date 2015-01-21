@@ -970,6 +970,7 @@ Ext.application({
             items: [
               {
                 itemId: "create-ticket-list",
+                title: "抵价券",
                 xtype: "grid",
                 height: 155,
                 store: Ext.data.StoreManager.lookup("create-ticket"),
@@ -1021,6 +1022,7 @@ Ext.application({
             items: [
               {
                 itemId: "ticket-list",
+                title: "抵价券商品列表",
                 xtype: "grid",
                 height: 155,
                 store: Ext.data.StoreManager.lookup('ticket'),
