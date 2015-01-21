@@ -180,10 +180,12 @@
       businesslist: "/printcart/businessindex",//打印购物车列表
       businessadd: "/printcart/businesscreate",//添加打印购物车
       businessdel: "/printcart/businessdelete",//删除打印购物车
+      checkbusiness:"/printcart/checkbusiness",
       packagelist: "/printcart/packageindex",
       packageadd: "/printcart/packagecreate",
       packagedel: "/printcart/packagedelete",
       packagechange: "/printcart/packageupdate",
+      checkpackage:"/printcart/checkpackage",
    }
 
   //电话订购
@@ -911,6 +913,59 @@
           valueField: "value",
           labelAlign: "right",
           name: "status",
+          width: 120,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+
+        //包裹状态
+        Ext.define("packageStatus", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "包裹状态",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.packagestatus)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "packageStatus",
+          width: 120,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+         //出货单状态
+        Ext.define("deliverorderStatus", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "出货单状态",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.deliverorderstatus)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "deliverorderStatus",
           width: 120,
           listeners: {
             render: function (combobox) {

@@ -25,7 +25,7 @@ Ext.application({
     //寄送方式
     var sendmethordList = Ext.create('Ext.data.Store', {
       storeId: 'sendmethordList',
-      fields: ['id', 'name', 'key', 'state', 'image','setting', 'sort'],
+      fields: ['id', 'name', 'key', 'state', 'image','setting'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -155,7 +155,7 @@ Ext.application({
                 flex: 1
               }],
               listeners: {
-                itemdblclick: function (that, record) {
+                itemdblclick: function (that, record, item, index, e, eOpts) {
                   periodicalEdit.show();
                   window.updateForm(periodicalEdit.getComponent("form").getForm(), record.data);
                 }
@@ -218,18 +218,13 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '排序',
-                  dataIndex: 'sort',
-                  flex: 1
-                },
-                {
                   text:'面单设置',
                   dataIndex:'setting',
                   flex:1
                 }
               ],
               listeners: {
-                itemdblclick: function (that, record) {
+                itemdblclick: function (that, record, item, index, e, eOpts) {
                   sendmethordEdit.show();
                   window.updateForm(sendmethordEdit.getComponent("form").getForm(), record.data);
                 }
@@ -313,7 +308,7 @@ Ext.application({
                 }
               ],
               listeners: {
-                itemdblclick: function (that, record) {
+                itemdblclick: function (that, record, item, index, e, eOpts) {
                   managerEdit.show();
                   console.log(record.data);
                   window.updateForm(managerEdit.getComponent("form").getForm(), record.data);
@@ -383,7 +378,7 @@ Ext.application({
                 }
               ],
               listeners: {
-                itemdblclick: function (that, record) {
+                itemdblclick: function (that, record, item, index, e, eOpts) {
                   showRoleEdit(record.data.id);
                   window.updateForm(roleEdit.getComponent("form").getForm(), record.data);
                 }
@@ -589,7 +584,7 @@ Ext.application({
     });
 
     //期数
-    var periodicalEdit = Ext.create("Ext.window.Window", {
+    var periodicalEdit = new Ext.create("Ext.window.Window", {
       title: "编辑期数",
       layout: "column",
 
@@ -674,7 +669,7 @@ Ext.application({
     });
 
     //配送方式
-    var sendmethordEdit = Ext.create("Ext.window.Window", {
+    var sendmethordEdit = new Ext.create("Ext.window.Window", {
       title: "编辑配送方式",
       layout: "column",
 
@@ -715,17 +710,11 @@ Ext.application({
             labelAlign: "right"
           },
           {
-            fieldLabel: "排序",
-            name: "sort",
-            labelAlign: "right"
-          },
-          {
             xtype: "hiddenfield",
-            name: "id"
-          },
-          {
+            name: "id",
+          }, {
             xtype: "hiddenfield",
-            name: "image"
+            name: "image",
           },
           {
             xtype: 'panel',
@@ -770,7 +759,7 @@ Ext.application({
     });
 
     //管理员编辑
-    var managerEdit = Ext.create("Ext.window.Window", {
+    var managerEdit = new Ext.create("Ext.window.Window", {
       title: "编辑管理员",
       layout: "column",
 
@@ -809,7 +798,7 @@ Ext.application({
             labelAlign: "right"
           }, {
             xtype: "hiddenfield",
-            name: "id"
+            name: "id",
           }, {
             xtype: 'panel',
             layout: "hbox",
@@ -928,7 +917,7 @@ Ext.application({
     }
 
     //管理角色编辑
-    var roleEdit = Ext.create("Ext.window.Window", {
+    var roleEdit = new Ext.create("Ext.window.Window", {
       title: "编辑管理角色",
       width: 600,
       height: 550,
@@ -998,7 +987,7 @@ Ext.application({
 
 
     //编辑地区
-    var areaEdit = Ext.create("Ext.window.Window", {
+    var areaEdit = new Ext.create("Ext.window.Window", {
       title: "编辑地区",
       layout: "column",
       items: [{
@@ -1024,7 +1013,7 @@ Ext.application({
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
-          name: "id"
+          name: "id",
         }, {
           xtype: 'panel',
           layout: "hbox",
@@ -1067,7 +1056,7 @@ Ext.application({
     });
 
     //批量设置邮资
-    var costSetting = Ext.create("Ext.window.Window", {
+    var costSetting = new Ext.create("Ext.window.Window", {
       title: "批量设置邮资",
       layout: "column",
       items: [{
@@ -1090,7 +1079,7 @@ Ext.application({
           labelAlign: "right"
         }, {
           xtype: "hiddenfield",
-          name: "cityId"
+          name: "cityId",
         }, {
           xtype: 'panel',
           layout: "hbox",
@@ -1143,7 +1132,7 @@ Ext.application({
         success: function (response) {
           Ext.data.StoreManager.lookup(storeId).loadData(Ext.JSON.decode(response.responseText).list);
         },
-        failure: function () {
+        failure: function (form, action) {
           Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
         }
       });

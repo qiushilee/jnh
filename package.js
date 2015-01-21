@@ -14,7 +14,7 @@ Ext.application({
       storeId: 'dataList',
       fields: ["id", 'key', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'bjtimes', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
-      autoLoad: true,
+      autoLoad: false,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.package.list,
@@ -82,18 +82,24 @@ Ext.application({
       renderTo: window.$bd,
       items: [
         Ext.create('periodical'),
+        Ext.create("packageStatus",{
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.packagestatusall)
+                  })
+         }),
         {
           fieldLabel: "出货单号",
           name: 'deliveryOrderCode',
           labelWidth: 60,
-          width: 150,
+          width: 200,
           labelAlign: "right"
         },
         {
           fieldLabel: "会员编号",
           name: 'userCode',
           labelWidth: 60,
-          width: 150,
+          width: 200,
           labelAlign: "right"
         },
         {
@@ -321,6 +327,12 @@ Ext.application({
           handler: function () {
             window.printHandle.set("package");
           }
+        },
+        {
+          xtype: "button",
+          text: "<span class=\"key\">C</span> 预览",
+          disabled: true,
+          margin: "0 0 0 10"
         },
         {
           xtype: "button",
