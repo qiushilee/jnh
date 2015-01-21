@@ -233,7 +233,8 @@
     estimatepurchase: "/search/estimatepurchase",
     member: "/search/member",
     export: '/search/export',//导出
-    print: '/search/print'
+    print: '/search/print',
+    printExpress: '/search/printexpress'
   };
 
 //管理员

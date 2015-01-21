@@ -907,8 +907,16 @@ Ext.application({
                         },
                         {
                           text: "面单打印",
-                          disabled: true,
-                          margin: "0 0 0 20"
+                          margin: "0 0 0 20",
+                          handler: function() {
+                            var serial = '',
+                            vals = Ext.ComponentQuery.query('[itemId=searchForm]')[0].getForm().getValues()
+                            Ext.Object.each(vals, function(key, val) {
+                              serial += '&' + key + '=' + val;
+                            });
+                            serial = serial.replace('&', '?');
+                            window.open(env.services.web + env.api.search.printExpress + serial);
+                          }
                         },
                         {
                           name: "jhd-print",
