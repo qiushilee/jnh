@@ -888,7 +888,6 @@ Ext.application({
       ]
     });
     
-    // TODO 左侧增加一个列表
     var addDjq = new Ext.create("Ext.window.Window", {
       title: "抵价券",
       width: 830,
@@ -958,6 +957,22 @@ Ext.application({
               } catch (e) {
                 Ext.Msg.alert("修改", "请选中列表中的一项后再操作");
               }
+            }
+          },
+          {
+            xtype: "button",
+            text: "删除",
+            margin: "0 0 10 10",
+            handler: function() {
+              var ticketList = Ext.ComponentQuery.query("grid[itemId=ticket-list]")[0];
+
+              window.removeGridRow({
+                grid: ticketList,
+                api: env.services.web + env.api.deliverorder.delticketproduct,
+                success: function() {
+                  ticketList.getStore().remove(ticketList.getSelectionModel().getSelection()[0]);
+                }
+              });
             }
           }
           ]
