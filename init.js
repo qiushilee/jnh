@@ -136,6 +136,7 @@
     generateticket: "/deliverorder/generateticket",//生成抵价券
     changenumber: "/deliverorder/changenumber",//修改抵价券中商品数量
     delticket: "/deliverorder/delticket"//删除抵价券
+    delticketproduct: "/deliverorder/delticketproduct"//删除抵价券商品
   };
 
   //包裹管理
