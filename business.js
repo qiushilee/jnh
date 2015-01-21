@@ -814,20 +814,19 @@ Ext.application({
                   labelAlign: "right",
                   name: 'code'
                 },
-                {
+                Ext.create("periodical", {
                   fieldLabel: "参考期数",
                   labelWidth: 60,
-                  width: 110,
-                  labelAlign: "right",
+                  width: 160,
+                  itemId: 'periodicalId1',
                   name: 'periodicalId1'
-                },
-                {
+                }),
+                Ext.create("periodical", {
                   fieldLabel: "~",
                   labelWidth: 20,
-                  width: 70,
-                  labelAlign: "right",
+                  itemId: 'periodicalId2',
                   name: 'periodicalId2'
-                },
+                }),
                 {
                   xtype: "datefield",
                   fieldLabel: "参考时间",
