@@ -272,14 +272,6 @@ Ext.application({
             }
           ],
           listeners: {
-            itemclick: function( that, record, item, index, e, eOpts) {
-              var $btn = Ext.ComponentQuery.query("[itemId=export]")[0];
-              if (record.data.id === "") {
-                $btn.setDisabled(true);
-              } else if (localStorage.getItem("deliveryOrderId")) {
-                $btn.setDisabled(false);
-              }
-            },
             itemdblclick: function( that, record, item, index, e, eOpts) {
               var $container = this.ownerCt,
                   $sidebar = $container.ownerCt.getComponent("sidebar"),
