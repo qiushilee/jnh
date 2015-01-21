@@ -180,10 +180,12 @@
       businesslist: "/printcart/businessindex",//打印购物车列表
       businessadd: "/printcart/businesscreate",//添加打印购物车
       businessdel: "/printcart/businessdelete",//删除打印购物车
+      checkbusiness:"/printcart/checkbusiness",
       packagelist: "/printcart/packageindex",
       packageadd: "/printcart/packagecreate",
       packagedel: "/printcart/packagedelete",
       packagechange: "/printcart/packageupdate",
+      checkpackage:"/printcart/checkpackage",
    }
 
   //电话订购
