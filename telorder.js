@@ -57,7 +57,7 @@ Ext.application({
           fieldLabel: "会员编号",
           name: 'userCode',
           labelWidth: 60,
-          width: 150,
+          width: 200,
           labelAlign: "right"
         }, {
           fieldLabel: "姓名",
@@ -69,7 +69,7 @@ Ext.application({
           fieldLabel: "单号",
           name: 'orderCode',
           labelWidth: 60,
-          width: 150,
+          width: 200,
           labelAlign: "right"
         }, {
           xtype: "button",
