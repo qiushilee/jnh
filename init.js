@@ -922,6 +922,59 @@
           }
         });
 
+
+        //包裹状态
+        Ext.define("packageStatus", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "包裹状态",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.packagestatus)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "packageStatus",
+          width: 120,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
+         //出货单状态
+        Ext.define("deliverorderStatus", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: "出货单状态",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.deliverorderstatus)
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "deliverorderStatus",
+          width: 120,
+          listeners: {
+            render: function (combobox) {
+              combobox.store.load(function (data) {
+                combobox.setValue(data[0]);
+              });
+            },
+            setvalue: comboboxSetValue
+          }
+        });
+
         //邮编
         Ext.define("zipCode", {
           extend: "Ext.form.field.Text",

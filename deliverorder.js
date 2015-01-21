@@ -83,6 +83,12 @@ Ext.application({
       url: env.services.web + env.api.deliverorder.list,
       items: [
         Ext.create("periodical"),
+        Ext.create("deliverorderStatus",{
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.deliverorderstatusall)
+                  })
+         }),
         {
           xtype: "hiddenfield",
           name: "type",

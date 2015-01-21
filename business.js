@@ -84,7 +84,12 @@ Ext.application({
               defaultType: 'textfield',
               margin: "10 0 0 0",
               items: [
-                Ext.create('periodical'),
+                 Ext.create("periodical",{
+                  store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.periodicalall)
+                  })
+                }),
                 {
                   fieldLabel: "会员编号",
                   labelWidth: 60,
@@ -120,6 +125,10 @@ Ext.application({
                   name: 'zipCode'
                 },
                 Ext.create('memberType', {
+                   store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.membertypeall)
+                  }),
                   listeners: {
                     render: function (combobox) {
                       combobox.store.load(function (data) {
@@ -128,7 +137,12 @@ Ext.application({
                     }
                   }
                 }),
-                Ext.create("addressType"),
+                Ext.create("addressType", {
+                   store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.addresstypeall)
+                  })
+                 }),
                 {
                   xtype: "button",
                   text: "搜索",
@@ -319,8 +333,8 @@ Ext.application({
                         }),
                         {
                           fieldLabel: "姓名",
-                          labelWidth: 60,
-                          width: 120,
+                          labelWidth: 40,
+                          width: 150,
                           labelAlign: "right",
                           name: "realName"
                         },
@@ -361,7 +375,7 @@ Ext.application({
                           fieldLabel: "地址",
                           labelWidth: 60,
                           name: "address0",
-                          width: 300,
+                          width: 455,
                           labelAlign: "right"
                         },
                         {
@@ -415,7 +429,7 @@ Ext.application({
                           fieldLabel: "地址",
                           labelWidth: 60,
                           name: "address1",
-                          width: 300,
+                          width: 455,
                           labelAlign: "right"
                         },
                         {
@@ -445,9 +459,10 @@ Ext.application({
                       ]
                     },
                     {
-                      xtype: "textfield",
+                      xtype: "textarea",
                       margin: "20 0 0 0",
                       width: 1000,
+                      height:40,
                       fieldLabel: "备注",
                       labelAlign: "right",
                       name: "remark",
@@ -576,22 +591,17 @@ Ext.application({
                       width: 180,
                       format: "Y-m-d",
                       labelAlign: "right",
-                      name: 'startDate'
+                      name: 'graduateDate'
                     },
-                    {
-                      fieldLabel: "期数",
-                      labelWidth: 40,
-                      width: 110,
-                      labelAlign: "right",
-                      name: 'startPeriodical'
-                    },
-                    {
-                      fieldLabel: "到",
-                      labelWidth: 20,
-                      width: 90,
-                      labelAlign: "right",
-                      name: 'endPeriodical'
-                    },
+                    Ext.create('periodical',{
+                      itemId: "periodical1",
+                      name:'periodical1'
+                    }),
+                     Ext.create('periodical',{
+                      fieldLabel: "~",
+                      itemId: "periodical2",
+                      name:'periodical2'
+                    }),
                     Ext.create("deliveryMethod")
                   ]
                 },
