@@ -67,6 +67,25 @@ Ext.application({
       checkOnly: true
     });
 
+    function addPrintCart(id) {
+      Ext.Ajax.request({
+        url: env.services.web + env.api.printcart.businessadd,
+        params: {
+          memberId: id
+        },
+        success: function (resp) {
+          var data = Ext.JSON.decode(resp.responseText);
+
+          if (data.success === false) {
+            Ext.Msg.alert("增加", action.result.msg);
+          }
+        },
+        failure: function (form, action) {
+          Ext.Msg.alert("增加", action.result.msg);
+        }
+      });
+    }
+
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
       layout: "fit",
@@ -514,16 +533,21 @@ Ext.application({
                             .getSelection()[0].data;
 
                           Ext.Ajax.request({
-                            url: env.services.web + env.api.printcart.businessadd,
+                            url: env.services.web + env.api.printcart.checkbusiness,
                             params: {
                               memberId: record.id
                             },
                             success: function (resp) {
                               var data = Ext.JSON.decode(resp.responseText);
-                              console.log(data);
-                            },
-                            failure: function (form, action) {
-                              Ext.Msg.alert("增加", action.result.msg);
+                              if (data.success) {
+                                addPrintCart(record.id);
+                              } else {
+                                Ext.Msg.confirm("添加到打印购物车", data.msg, function (type) {
+                                  if (type === 'yes') {
+                                    addPrintCart(record.id);
+                                  }
+                                });
+                              }
                             }
                           });
                         } catch (e) {
@@ -741,20 +765,20 @@ Ext.application({
                       });
 
                       Ext.Ajax.request({
-                        url: env.services.web + env.api.printcart.businessadd,
+                        url: env.services.web + env.api.printcart.checkbusiness,
                         params: {
                           memberId: memberIds.join(",")
                         },
                         success: function (resp) {
                           var data = Ext.JSON.decode(resp.responseText);
-                          Ext.Msg.alert("添加打印", data.msg);
-                        },
-                        failure: function (resp) {
-                          try {
-                            var data = Ext.JSON.decode(resp.responseText);
-                            Ext.Msg.alert("添加打印", data.msg);
-                          } catch (e) {
-                            Ext.Msg.alert("添加打印", data.msg);
+                          if (data.success) {
+                            addPrintCart(memberIds.join(","));
+                          } else {
+                            Ext.Msg.confirm("添加到打印购物车", data.msg, function (type) {
+                              if (type === 'yes') {
+                                addPrintCart(memberIds.join(","));
+                              }
+                            });
                           }
                         }
                       });

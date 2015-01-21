@@ -715,6 +715,11 @@ Ext.application({
             labelAlign: "right"
           },
           {
+            fieldLabel: "排序",
+            name: "sort",
+            labelAlign: "right"
+          },
+          {
             xtype: "hiddenfield",
             name: "id"
           }, {
