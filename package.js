@@ -256,6 +256,23 @@ Ext.application({
     });
     window.list = list;
 
+    function addPrintCart(id) {
+      Ext.Ajax.request({
+        url: env.services.web +  env.api.printcart.packageadd,
+        params: {
+          id: id
+        },
+        success: function (resp) {
+          var data = Ext.JSON.decode(resp.responseText);
+          if (data.success) {
+            searchHandler.call(search, "dataList");
+          } else {
+            Ext.Msg.alert("添加到打印购物车", data.msg);
+          }
+        }
+      });
+    }
+
     var button = Ext.create("Ext.panel.Panel", {
       renderTo: window.$bd,
       margin: "10 0 0 0",
@@ -272,16 +289,20 @@ Ext.application({
               .getSelection()[0].data;
 
             Ext.Ajax.request({
-              url: env.services.web +  env.api.printcart.packageadd,
+              url: env.services.web + env.api.printcart.checkpackage,
               params: {
                 id: record.id
               },
               success: function (resp) {
                 var data = Ext.JSON.decode(resp.responseText);
                 if (data.success) {
-                  searchHandler.call(search, "dataList");
+                  addPrintCart(record.id);
                 } else {
-                  Ext.Msg.alert("添加到打印购物车", data.msg);
+                  Ext.Msg.confirm("添加到打印购物车", data.msg, function (type) {
+                    if (type === 'yes') {
+                      addPrintCart(record.id);
+                    }
+                  });
                 }
               }
             });
