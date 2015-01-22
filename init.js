@@ -450,7 +450,6 @@
      * @param {String} type: 类型，必选
      * @param {String} margin: 按钮边距，可选
      * @param {ExtComponent} form: 某些页面有搜索框，在获取打印数据时需要带上form中的搜索项，可选
-     * @param {String} title： 打印页标题，必选
      */
     get: function (opt) {
       var that = this;
