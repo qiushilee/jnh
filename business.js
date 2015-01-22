@@ -1021,8 +1021,16 @@ Ext.application({
                 {
                   xtype: "button",
                   text: "面单打印",
-                  disabled: true,
-                  margin: "0 0 0 10"
+                  margin: "0 0 0 10",
+                  handler: function() {
+                    var serial = '',
+                        vals = Ext.ComponentQuery.query("[itemId=print-cart-searchbar]")[0].getForm().getValues();
+                    Ext.Object.each(vals, function(key, val) {
+                      serial += '&' + key + '=' + val;
+                    });
+                    serial = serial.replace('&', '?');
+                    window.open(env.services.web + env.api.printcart.printExpress + serial);
+                  }
                 },
                 {
                   xtype: "button",

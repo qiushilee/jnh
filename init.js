@@ -186,7 +186,8 @@
       packageadd: "/printcart/packagecreate",
       packagedel: "/printcart/packagedelete",
       packagechange: "/printcart/packageupdate",
-      checkpackage:"/printcart/checkpackage"
+      checkpackage:"/printcart/checkpackage",
+      printExpress:"/printcart/printexpress"
    }
 
   //电话订购
