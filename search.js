@@ -910,7 +910,7 @@ Ext.application({
                           margin: "0 0 0 20",
                           handler: function() {
                             var serial = '',
-                            vals = Ext.ComponentQuery.query('[itemId=searchForm]')[0].getForm().getValues()
+                                vals = Ext.ComponentQuery.query('[itemId=searchForm]')[0].getForm().getValues();
                             Ext.Object.each(vals, function(key, val) {
                               serial += '&' + key + '=' + val;
                             });
