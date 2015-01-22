@@ -130,8 +130,10 @@ Ext.application({
         {
           xtype: "button",
           text: "重置",
-          disabled: true,
-          margin: "0 0 0 20"
+          margin: "0 0 0 20",
+          handler: function () {
+            this.up('form').getForm().reset();
+          }
         }
       ]
     });
@@ -348,12 +350,6 @@ Ext.application({
           handler: function () {
             window.printHandle.set("package");
           }
-        },
-        {
-          xtype: "button",
-          text: "<span class=\"key\">C</span> 预览",
-          disabled: true,
-          margin: "0 0 0 10"
         },
         {
           xtype: "button",
