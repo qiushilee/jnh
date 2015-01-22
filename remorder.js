@@ -1,6 +1,34 @@
 Ext.application({
   name: "JNH",
   launch: function () {
+    function getMemberInfo(memberId, callback) {
+      Ext.Ajax.request({
+        url: env.services.web + env.api.member.info + memberId,
+        success: function (response) {
+          var data = Ext.JSON.decode(response.responseText);
+
+          callback(data);
+        },
+        failure: function (form, action) {
+          Ext.Msg.alert("查询失败", "服务器无响应，请稍后再试");
+        }
+      });
+    }
+
+    function orderModelHandler(opt) {
+      var currentMember = Ext.ComponentQuery.query("[itemId=order-grid]")[0].getSelectionModel().getSelection()[0];
+
+      if (currentMember) {
+        getMemberInfo(currentMember.data.id, function (resp) {
+          var data = resp.info;
+          data.memberId = data.id;
+
+          opt.success(data);
+        });
+      } else {
+        opt.fail();
+      }
+    }
 
     //汇款订购管理列表
     Ext.create('Ext.data.Store', {
@@ -549,10 +577,7 @@ Ext.application({
                         form.reset();
                         orderModelHandler({
                           success: function (data) {
-                            var record = Ext.ComponentQuery.query("grid[itemId=memberList]")[0]
-                              .getSelectionModel()
-                              .getSelection()[0].data;
-                            showFolwCharts(record.memberId);
+                            Ext.ComponentQuery.query("[itemId=order-grid]")[0].store.load();
                           },
                           fail: function () {
                             Ext.Msg.alert("增加汇款定购", "错误：必须选选择一个会员才可以添加哦！");
