@@ -655,7 +655,7 @@ Ext.application({
     });
 
     var print = new Ext.create("Ext.window.Window", {
-      title: "打印",
+      title: "连续打印",
       width: 600,
       bodyPadding: 10,
       items: [{
@@ -712,12 +712,8 @@ Ext.application({
         bodyStyle: {
           "background-color": "transparent"
         },
-        items: [{
-          xtype: "button",
-          text: "查询",
-          disabled: true,
-          margin: "0 0 0 20"
-        }, {
+        items: [
+        {
           xtype: "button",
           text: "名单打印",
           disabled: true,
