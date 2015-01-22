@@ -50,7 +50,7 @@ Ext.application({
     // 打印购物车
     Ext.create("Ext.data.Store", {
       storeId: "printcart",
-      fields: ["key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", 'sendNumber1', 'sendNumber2', "mailingDate", "weight", "postage", "amount", "remark"],
+      fields: ["id", "key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", 'sendNumber1', 'sendNumber2', "mailingDate", "weight", "postage", "amount", "remark"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -862,6 +862,7 @@ Ext.application({
               ]
             },
             {
+              itemId: "print-cart-list",
               xtype: "grid",
               height: 205,
               store: Ext.data.StoreManager.lookup("printcart"),
@@ -1016,8 +1017,14 @@ Ext.application({
                 {
                   xtype: "button",
                   text: "<span class=\"key\">N</span> 修改",
-                  disabled: true,
-                  margin: "0 0 0 10"
+                  margin: "0 0 0 10",
+                  handler: function () {
+                    var form = Ext.ComponentQuery.query("[itemId=print-cart-window-form]")[0].getForm(),
+                        data = Ext.ComponentQuery.query("[itemId=print-cart-list]")[0].getSelectionModel().getSelection()[0].data;
+
+                    printCart.show();
+                    window.updateForm(form, data);
+                  }
                 },
                 {
                   xtype: "button",
@@ -1077,6 +1084,115 @@ Ext.application({
                   }
                 }
               ]
+            }
+          ]
+        }
+      ]
+    });
+
+    var printCart = new Ext.create("Ext.window.Window", {
+      title: "修改打印购物车",
+      width: 400,
+      bodyPadding: 10,
+      closeAction: 'hide',
+      items: [
+        {
+          itemId: "print-cart-window-form",
+          xtype: "form",
+          url: env.services.web + env.services.web + env.api.package.change,
+          bodyPadding: "20 50",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              xtype: "hiddenfield",
+              name: "id"
+            },
+            {
+              fieldLabel: "流水号",
+              name: "serialNumber",
+              labelWidth: 60,
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '寄出数量1',
+              name: 'sendNumber1',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '寄出数量2',
+              name: 'sendNumber2',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            Ext.create("periodical", {
+              name: 'periodicalName',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              width: 160
+            }),
+            {
+              xtype: "datefield",
+              fieldLabel: '寄出日',
+              name: 'mailingDate',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '重量',
+              name: 'weight',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '邮资',
+              name: 'postage',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '包裹单号',
+              name: 'printcartCode',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              xtype: "textareafield",
+              fieldLabel: '备注',
+              name: 'remark',
+              labelWidth: 60,
+              width: 260,
+              margin: "10 0 20 0",
+              labelAlign: "right"
+            },
+            {
+              xtype: "button",
+              text: "保存",
+              scale: "medium",
+              width: 150,
+              handler: function () {
+                var form = Ext.ComponentQuery.query("[itemId=print-cart-window-form]")[0].getForm();
+                if (form.isValid()) {
+                  form.submit({
+                    success: function (form, action) {
+                      if (action.result.success) {
+                        printCart.hide();
+                      }
+                    },
+                    failure: function (form, action) {
+                      Ext.Msg.alert("修改打印购物车", action.result.msg);
+                    }
+                  });
+                }
+              },
+              margin: "0 0 0 20"
             }
           ]
         }
