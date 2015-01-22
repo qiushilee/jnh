@@ -303,9 +303,20 @@ Ext.application({
             xtype: "button",
             text: "<span class=\"key\">W</span>删除记录",
             handler: function() {
+              var $grid = Ext.ComponentQuery.query("grid[itemId=orderList]")[0];
               removeGridRow({
-                grid: Ext.ComponentQuery.query("grid[itemId=orderList]")[0],
-                api: env.services.web + env.api.telorder.del.record
+                grid: $grid,
+                api: env.services.web + env.api.telorder.del.record,
+                success: function() {
+                  var $searchbar = Ext.ComponentQuery.query("[itemId=searchbar]")[0];
+                  searchHandler.call(search.getForm(), "orderList");
+
+                  Ext.ComponentQuery.query("[itemId=deliveryOrderCode]")[0].setDisabled(false);
+                  Ext.ComponentQuery.query("[name=deliveryOrderCode]", $searchbar)[0].setText("");
+                  $searchbar.getForm().reset();
+
+                  Ext.data.StoreManager.lookup('orderproduct').loadData({});
+                }
               });
             },
             margin: "0 0 0 20"
