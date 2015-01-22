@@ -986,6 +986,7 @@ Ext.application({
               ]
             },
             {
+              itemId: "print-cart-btn",
               layout: "hbox",
               bodyPadding: 10,
               border: 0,
@@ -1039,12 +1040,6 @@ Ext.application({
                   margin: "0 0 0 10"
                 },
                 {
-                  xtype: "button",
-                  text: "条状打印",
-                  disabled: true,
-                  margin: "0 0 0 10"
-                },
-                {
                   name: "jhd-print",
                   xtype: "button",
                   text: "打印设置",
@@ -1092,8 +1087,14 @@ Ext.application({
       $el: Ext.ComponentQuery.query("[itemId=list-btn-panel]")[0],
       form: Ext.ComponentQuery.query("[itemId=member]")[0].getForm(),
       type: "businessmember",
-      margin: "0 0 0 10",
-      title: panel.items.items[0].title
+      margin: "0 0 0 10"
+    });
+
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=print-cart-btn]")[0],
+      form: Ext.ComponentQuery.query("[itemId=print-cart-searchbar]")[0].getForm(),
+      type: "printcart",
+      margin: "0 0 0 10"
     });
   }
 });
