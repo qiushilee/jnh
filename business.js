@@ -1104,7 +1104,7 @@ Ext.application({
         {
           itemId: "print-cart-window-form",
           xtype: "form",
-          url: env.services.web + env.services.web + env.api.package.change,
+          url: env.services.web + env.api.package.change,
           bodyPadding: "20 50",
           border: 0,
           defaultType: 'textfield',
