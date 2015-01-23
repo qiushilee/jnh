@@ -86,6 +86,19 @@ Ext.application({
       });
     }
 
+    function updateMember() {
+      var form = Ext.ComponentQuery.query("[itemId=member]")[0].getForm()
+      form.url = env.services.web + env.api.business.change;
+      form.submit({
+        success: function (form, action) {
+          searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0].getForm(), "memberList");
+        },
+        failure: function (form, action) {
+          Ext.Msg.alert("保存名单", action.result.msg);
+        }
+      });
+    }
+
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
       layout: "fit",
@@ -515,16 +528,27 @@ Ext.application({
                       handler: function () {
                         var form = this.ownerCt.ownerCt.getComponent("member").getForm();
                         form.url = env.services.web + env.api.business.change;
-                        if (form.isValid()) {
-                          form.submit({
-                            success: function (form, action) {
-                              searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0].getForm(), "memberList");
-                            },
-                            failure: function (form, action) {
-                              Ext.Msg.alert("保存名单", action.result.msg);
+
+                        Ext.Ajax.request({
+                          url: env.services.web + env.api.member.checkMobile,
+                          params: {
+                            id: form.findField('id').value,
+                            mobile0: form.findField('mobile0').getValue(),
+                            mobile1: form.findField('mobile1').getValue()
+                          },
+                          success: function (resp) {
+                            var data = Ext.JSON.decode(resp.responseText);
+                            if (data.success) {
+                              updateMember();
+                            } else {
+                              Ext.Msg.confirm("保存会员数据", data.msg, function (type) {
+                                if (type === 'yes') {
+                                  updateMember();
+                                }
+                              });
                             }
-                          });
-                        }
+                          }
+                        });
                       },
                       margin: "0 0 0 20"
                     },
