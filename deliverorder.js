@@ -512,6 +512,7 @@ Ext.application({
                 float: "right",
                 handler: function() {
                   var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data,
+                      $totalAmount = Ext.ComponentQuery.query("[name=totalAmount]", addDjq)[0],
                       $overpaidAmount = Ext.ComponentQuery.query("[name=overpaidAmount]", addDjq)[0];
 
                   Ext.data.StoreManager.lookup('ticket').loadData({});
@@ -523,12 +524,14 @@ Ext.application({
                     },
                     callback: function (data) {
                       if (data === null) {
+                        $totalAmount.setValue("");
                         return;
                       }
                       var overpaidAmount = parseFloat($overpaidAmount.value),
-                          ticketAmout = parseFloat(data[data.length - 1].data.amount);
+                          ticketAmout = parseFloat(data[data.length - 1].data.amount),
+                          total = overpaidAmount + ticketAmout;
 
-                      Ext.ComponentQuery.query("[name=totalAmount]", addDjq)[0].setValue(overpaidAmount + ticketAmout);
+                      $totalAmount.setValue(total.toFixed(2));
                     }
                   });
                   Ext.data.StoreManager.lookup("create-ticket").load({
@@ -537,7 +540,8 @@ Ext.application({
                       memberId: record.memberId
                     }
                   });
-                  $overpaidAmount.setValue(Ext.ComponentQuery.query("[name=overpaidAmount]")[0].value);
+
+                  $overpaidAmount.setValue(parseFloat(Ext.ComponentQuery.query("[name=overpaidAmount]")[0].value).toFixed(2));
                   addDjq.show();
                 }
               }
