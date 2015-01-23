@@ -526,17 +526,17 @@ Ext.application({
               margin: "0 0 0 10"
             }, {
               xtype: "button",
-              text: "打印设置",
-              margin: "0 0 0 10",
-              handler: function () {
-                window.printHandle.set("telorder");
-              }
-            }, {
-              xtype: "button",
               text: "<span class=\"key\">R</span> 连续打印",
               margin: "0 0 0 10",
               handler: function() {
                 print.show();
+              }
+            }, {
+              xtype: "button",
+              text: "打印设置",
+              margin: "0 0 0 10",
+              handler: function () {
+                window.printHandle.set("telorder");
               }
             }]
           }]
@@ -674,6 +674,7 @@ Ext.application({
       closeAction: 'hide',
       items: [
         {
+          itemId: "print-searchbar",
           xtype: "form",
           url: env.services.web + env.api.telorder.list.order,
           layout: "hbox",
@@ -757,8 +758,15 @@ Ext.application({
         });
 
     window.printHandle.get({
-      $el: Ext.ComponentQuery.query("[itemId=print-container]")[0],
+      $el: Ext.ComponentQuery.query("[itemId=right-print-container]")[0],
       form: Ext.ComponentQuery.query("[itemId=searchbar]")[0].getForm(),
+      type: "telorderreprint",
+      margin: "0 0 0 10"
+    });
+
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=print-container]")[0],
+      form: Ext.ComponentQuery.query("[itemId=print-searchbar]")[0].getForm(),
       type: "telorder",
       margin: "0 0 0 10"
     });
