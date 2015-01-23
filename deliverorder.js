@@ -84,10 +84,12 @@ Ext.application({
       items: [
         Ext.create("periodical"),
         Ext.create("deliverorderStatus",{
-                  store: Ext.create("Ext.data.Store", {
-                    fields: ["name", "value"],
-                    data: JSON.parse(document.body.dataset.deliverorderstatusall)
-                  })
+              labelWidth: 70,
+              width: 130,
+              store: Ext.create("Ext.data.Store", {
+                fields: ["name", "value"],
+                data: JSON.parse(document.body.dataset.deliverorderstatusall)
+              }),
          }),
         {
           xtype: "hiddenfield",

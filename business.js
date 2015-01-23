@@ -151,7 +151,7 @@ Ext.application({
                   listeners: {
                     render: function (combobox) {
                       combobox.store.load(function (data) {
-                        combobox.setValue(data[2]);
+                        combobox.setValue(data[0]);
                       });
                     }
                   }
