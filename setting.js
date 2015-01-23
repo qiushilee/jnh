@@ -500,6 +500,7 @@ Ext.application({
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[name=name2]")[0].setValue(record.data.name);
                           Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('id').setValue(record.data.id);
                         }
                       }
                     }
@@ -564,6 +565,15 @@ Ext.application({
               scale: "medium",
               handler: function () {
                 costSetting.show();
+              }
+            },
+            {
+              xtype: "button",
+              text: "新增",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function () {
+                addAddres.show();
               }
             },
             {
@@ -1147,6 +1157,72 @@ Ext.application({
         }
       });
     }
+
+    var addAddres = new Ext.create("Ext.window.Window", {
+      title: "新增地址",
+      width: 400,
+      bodyPadding: 10,
+      closeAction: 'hide',
+      items: [
+        {
+          itemId: "add-address-window-form",
+          xtype: "form",
+          url: env.services.web + env.api.areaList.save,
+          bodyPadding: "20 50",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              xtype: "hiddenfield",
+              name: "id"
+            },
+            {
+              fieldLabel: "区域名称",
+              name: "name",
+              labelWidth: 60,
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '邮编',
+              name: 'zipCode',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '邮费',
+              name: 'cost',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              xtype: "button",
+              text: "保存",
+              scale: "medium",
+              width: 150,
+              handler: function () {
+                var form = this.up('form').getForm();
+                if (form.isValid()) {
+                  form.submit({
+                    success: function (form, action) {
+                      if (action.result.success) {
+                        addAddres.hide();
+                        showAreas(form.findField('id').value, 3, 'districtList');
+                      }
+                    },
+                    failure: function (form, action) {
+                      Ext.Msg.alert(addAddres.title, action.result.msg);
+                    }
+                  });
+                }
+              },
+              margin: "0 0 0 20"
+            }
+          ]
+        }
+      ]
+    });
 
   }
 });
