@@ -648,12 +648,20 @@ Ext.application({
                       text: "<span class=\"key\">A</span> 增加",
                       margin: "0 0 0 10",
                       handler: function() {
-                        var form =  list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product").getForm();
+                        var $form = list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product"),
+                            form =  $form.getForm();
                         form.url = env.services.web + env.api.deliverorder.saveorderproduct;
                         form.submit({
                           success: function(form, action) {
                             Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
-                            form.reset();
+                            window.resetForm({
+                              root: $form,
+                              list: [
+                                'productCode',
+                                'number',
+                                'remark'
+                              ]
+                            });
                             form.findField("deliveryOrderId").setValue(window.deliveryOrderId);
                             form.findField("orderRemittanceId").setValue(window.orderRemittanceId);
                           },
