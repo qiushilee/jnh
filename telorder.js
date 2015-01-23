@@ -22,6 +22,21 @@ Ext.application({
       }
     });
 
+    //连续打印列表
+    Ext.create('Ext.data.Store', {
+      storeId: 'printCartOrderList',
+      fields: ["memberId","key", "id", "periodicalId", "orderRemittanceId", "deliveryOrderCode", "packageCode", "userCode", "serialNumber", "userName", "realName", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "youthStuck", "discount", "overpaidAmount", "receivableAmount", "postage", "consignee", "mobile", "zipCode", "address", "packaging", "remark", "deliveryMethod", "deliveryMethodName"],
+      layout: "fit",
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.telorder.list.order,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     if (telorderCurrent.memberId) {
       Ext.Ajax.request({
         url: env.services.web + env.api.member.info + telorderCurrent.memberId,
@@ -712,7 +727,7 @@ Ext.application({
           {
             xtype: "grid",
             height: 155,
-            store: Ext.data.StoreManager.lookup('orderList'),
+            store: Ext.data.StoreManager.lookup('printCartOrderList'),
             margin: "10 0 0 0",
             columns: [
               {
