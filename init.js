@@ -709,7 +709,7 @@
           valueField: "value",
           labelAlign: "right",
           name: "memberType",
-          width: 120,
+          width: 150,
           listeners: {
             render: function (combobox) {
               combobox.store.load(function (data) {
