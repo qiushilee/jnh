@@ -303,9 +303,20 @@ Ext.application({
             xtype: "button",
             text: "<span class=\"key\">W</span>删除记录",
             handler: function() {
+              var $grid = Ext.ComponentQuery.query("grid[itemId=orderList]")[0];
               removeGridRow({
-                grid: Ext.ComponentQuery.query("grid[itemId=orderList]")[0],
-                api: env.services.web + env.api.telorder.del.record
+                grid: $grid,
+                api: env.services.web + env.api.telorder.del.record,
+                success: function() {
+                  var $searchbar = Ext.ComponentQuery.query("[itemId=searchbar]")[0];
+                  searchHandler.call(search.getForm(), "orderList");
+
+                  Ext.ComponentQuery.query("[itemId=deliveryOrderCode]")[0].setDisabled(false);
+                  Ext.ComponentQuery.query("[name=deliveryOrderCode]", $searchbar)[0].setText("");
+                  $searchbar.getForm().reset();
+
+                  Ext.data.StoreManager.lookup('orderproduct').loadData({});
+                }
               });
             },
             margin: "0 0 0 20"
@@ -459,6 +470,7 @@ Ext.application({
               }
             }
           }, {
+            itemId: "right-print-container",
             xtype:'panel',
             layout: "hbox",
             border: 0,
@@ -513,11 +525,12 @@ Ext.application({
               },
               margin: "0 0 0 10"
             }, {
-              //TODO 打印预览功能
               xtype: "button",
-              text: "<span class=\"key\">H</span> 预览",
-              disabled: true,
-              margin: "0 0 0 10"
+              text: "打印设置",
+              margin: "0 0 0 10",
+              handler: function () {
+                window.printHandle.set("telorder");
+              }
             }, {
               xtype: "button",
               text: "<span class=\"key\">R</span> 连续打印",
@@ -658,83 +671,96 @@ Ext.application({
       title: "连续打印",
       width: 600,
       bodyPadding: 10,
-      items: [{
-        layout: "hbox",
-        bodyPadding: 10,
-        border: 0,
-        defaultType: 'textfield',
-        bodyStyle: {
-          "background-color": "transparent"
-        },
-        items: [{
-          fieldLabel: "出货单号",
-          labelAlign: "right",
-          labelWidth: 62
-        }, {
-          fieldLabel: ""
-        }, {
-          xtype: "button",
-          text: "搜索",
-          disabled: true,
-          margin: "0 0 0 20"
-        }, {
-          xtype: "button",
-          text: "重置",
-          disabled: true,
-          margin: "0 0 0 10"
-        }]
-      }, {
-        xtype: "grid",
-        height: 155,
-        store: Ext.data.StoreManager.lookup('simpsonsStore'),
-        margin: "10 0 0 0",
-        selModel:Ext.create('Ext.selection.CheckboxModel',{mode:"SIMPLE"}),
-        columns: [{
-          text: '出货单号',
-          dataIndex: 'id1'
-        }, {
-          text: '姓名',
-          dataIndex: 'adder1'
-        }, {
-          text: '地址',
-          dataIndex: 'man1',
-          flex: 1
-        }]
-      }, {
-        layout: "hbox",
-        bodyPadding: 10,
-        border: 0,
-        defaultType: 'textfield',
-        width: 270,
-        style: {
-          float: "right"
-        },
-        bodyStyle: {
-          "background-color": "transparent"
-        },
-        items: [
+      closeAction: 'hide',
+      items: [
         {
-          xtype: "button",
-          text: "名单打印",
-          disabled: true,
-          margin: "0 0 0 10"
-        }, {
-          xtype: "button",
-          text: "明细打印",
-          disabled: true,
-          margin: "0 0 0 10"
-        }, {
-          xtype: "button",
-          text: "重打",
-          disabled: true,
-          margin: "0 0 0 10"
-        }]
-      }]
-    });
+          xtype: "form",
+          url: env.services.web + env.api.telorder.list.order,
+          layout: "hbox",
+          bodyPadding: 10,
+          border: 0,
+          defaultType: 'textfield',
+          bodyStyle: {
+            "background-color": "transparent"
+          },
+          items: [{
+            fieldLabel: "出货单号",
+            name: 'deliveryOrderCode1',
+            labelAlign: "right",
+            labelWidth: 62
+          }, {
+            fieldLabel: "",
+            name: 'deliveryOrderCode2'
+          }, {
+            xtype: "button",
+            text: "搜索",
+            margin: "0 0 0 20",
+            handler: function() {
+              searchHandler.call(this, "orderList");
+            }
+          }, {
+            xtype: "button",
+            text: "重置",
+            margin: "0 0 0 10",
+            handler: function() {
+              var form = this.ownerCt.getForm();
+              form.reset();
+            }
+          }]
+          },
+          {
+            xtype: "grid",
+            height: 155,
+            store: Ext.data.StoreManager.lookup('orderList'),
+            margin: "10 0 0 0",
+            columns: [
+              {
+                text: '出货单号',
+                dataIndex: 'deliveryOrderCode'
+              },
+              {
+                text: '姓名',
+                dataIndex: 'userName'
+              },
+              {
+                text: '地址',
+                dataIndex: 'address',
+                flex: 1
+              }
+            ]
+            },
+            {
+              itemId: "print-container",
+              layout: "hbox",
+              bodyPadding: 10,
+              border: 0,
+              defaultType: 'textfield',
+              width: 270,
+              style: {
+                float: "right"
+              },
+              bodyStyle: {
+                "background-color": "transparent"
+              },
+              items: [
+                {
+                  xtype: "button",
+                  text: "打印设置",
+                  margin: "0 0 0 10",
+                  handler: function () {
+                    window.printHandle.set("telorder");
+                  }
+                }
+              ]
+            }
+          ]
+        });
 
-    // search.hide();
-    // list.hide();
-    // add1.show();
-    //print.show();
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=print-container]")[0],
+      form: Ext.ComponentQuery.query("[itemId=searchbar]")[0].getForm(),
+      type: "telorder",
+      margin: "0 0 0 10"
+    });
   }
 });

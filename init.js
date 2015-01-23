@@ -398,7 +398,9 @@
               if (resp.success === false) {
                 Ext.Msg.alert(title, resp.msg);
               } else {
-                opt.success(resp);
+                if (Ext.isFunction(opt.success)) {
+                  opt.success(resp);
+                }
               }
             },
             failure: function (resp) {
