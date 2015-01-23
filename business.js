@@ -112,7 +112,7 @@ Ext.application({
                 {
                   fieldLabel: "会员编号",
                   labelWidth: 60,
-                  width: 140,
+                  width: 200,
                   labelAlign: "right",
                   name: 'userCode'
                 },
@@ -125,7 +125,7 @@ Ext.application({
                 }, {
                   fieldLabel: "地址",
                   labelWidth: 40,
-                  width: 120,
+                  width: 200,
                   labelAlign: "right",
                   name: 'address'
                 },
@@ -144,6 +144,7 @@ Ext.application({
                   name: 'zipCode'
                 },
                 Ext.create('memberType', {
+                   width:150,
                    store: Ext.create("Ext.data.Store", {
                     fields: ["name", "value"],
                     data: JSON.parse(document.body.dataset.membertypeall)
@@ -360,18 +361,22 @@ Ext.application({
                         Ext.create("deliveryMethod"),
                         {
                           xtype: "datefield",
-                          format: 'Y-m-d',
+                          format: 'Y',
                           fieldLabel: "毕业时间",
                           labelWidth: 60,
                           labelAlign: "right",
                           name: "graduateDate"
                         },
-                        Ext.create("periodical"),
+                        Ext.create("periodical",{
+                          labelWidth:52,
+                          width:150
+                        }),
                         {
                           fieldLabel: "索取数",
-                          labelWidth: 50,
+                          labelWidth: 67,
                           labelAlign: "right",
-                          name: "askNumber1"
+                          name: "askNumber1",
+                          width: 180,
                         }
                       ]
                     },
