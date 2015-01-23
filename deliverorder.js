@@ -17,6 +17,22 @@ Ext.application({
       }
     });
 
+    // 连续打印列表
+    Ext.create('Ext.data.Store', {
+      storeId: 'printList',
+      fields: ["address1", "realName", "memberId", "deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.deliverorder.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     // 右侧商品列表
     Ext.create('Ext.data.Store', {
       storeId: 'productData',
@@ -212,11 +228,6 @@ Ext.application({
                         var data = Ext.JSON.decode(resp.responseText);
                         if (data.success) {
                           createCode(data.code, data.deliveryOrderId);
-                          Ext.data.StoreManager.lookup("list").load({
-                            params: {
-                              type: 3
-                            }
-                          });
                         } else {
                           Ext.Msg.alert("生成出货单编号失败", data.msg);
                         }
@@ -429,6 +440,7 @@ Ext.application({
           },
           items: [
             {
+              itemId: "right-searchbar",
               xtype: 'form',
               layout: "hbox",
               border: 0,
@@ -623,6 +635,7 @@ Ext.application({
                   ]
                 },
                 {
+                  itemId: "right-print-container",
                   xtype: 'panel',
                   layout: "hbox",
                   border: 0,
@@ -642,7 +655,7 @@ Ext.application({
                       text: "打印设置",
                       margin: "0 0 0 10",
                       handler: function () {
-                        window.printHandle.set("deliverorder");
+                        window.printHandle.set("deliverorderreprint");
                       }
                     },
                     {
@@ -664,8 +677,14 @@ Ext.application({
                                 'remark'
                               ]
                             });
-                            form.findField("deliveryOrderId").setValue(window.deliveryOrderId);
-                            form.findField("orderRemittanceId").setValue(window.orderRemittanceId);
+
+                            if (window.deliveryOrderId) {
+                              form.findField("deliveryOrderId").setValue(window.deliveryOrderId);
+                            }
+
+                            if (window.orderRemittanceId) {
+                              form.findField("orderRemittanceId").setValue(window.orderRemittanceId);
+                            }
                           },
                           failure: function(form, action) {
                             Ext.Msg.alert("修改订单产品", action.result.msg);
@@ -712,17 +731,6 @@ Ext.application({
                           }
                         });
                       }
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">H</span> 预览",
-                      margin: "0 0 0 10"
-                    },
-                    {
-                      xtype: "button",
-                      text: "<span class=\"key\">R</span> 重打",
-                      disabled: true,
-                      margin: "0 0 0 10"
                     },
                     {
                       xtype: "button",
@@ -838,12 +846,15 @@ Ext.application({
     });
 
     var print = new Ext.create("Ext.window.Window", {
-      title: "打印",
+      title: "连续打印",
       width: 600,
       bodyPadding: 10,
       closeAction: "hide",
       items: [
         {
+          itemId: "print-container",
+          xtype: "form",
+          url: env.services.web + env.api.deliverorder.list,
           layout: "hbox",
           bodyPadding: 10,
           border: 0,
@@ -855,42 +866,48 @@ Ext.application({
             {
               fieldLabel: "出货单号",
               labelAlign: "right",
+              name: 'deliveryOrderCode1',
               labelWidth: 62
             },
             {
-              fieldLabel: ""
+              fieldLabel: "",
+              name: 'deliveryOrderCode2'
             },
             {
               xtype: "button",
               text: "搜索",
-              disabled: true,
-              margin: "0 0 0 20"
+              margin: "0 0 0 20",
+              handler: function() {
+                searchHandler.call(this, "printList");
+              }
             },
             {
               xtype: "button",
-              text: "打印",
-              disabled: true,
-              margin: "0 0 0 10"
+              text: "打印设置",
+              margin: "0 0 0 10",
+              handler: function () {
+                window.printHandle.set("deliverorder");
+              }
             }
           ]
         },
         {
           xtype: "grid",
           height: 155,
-          store: Ext.data.StoreManager.lookup('simpsonsStore'),
+          store: Ext.data.StoreManager.lookup('printList'),
           margin: "10 0 0 0",
           columns: [
             {
               text: '出货单号',
-              dataIndex: 'id1'
+              dataIndex: 'deliveryOrderCode'
             },
             {
               text: '姓名',
-              dataIndex: 'adder1'
+              dataIndex: 'realName'
             },
             {
               text: '地址',
-              dataIndex: 'man1',
+              dataIndex: "address1",
               flex: 1
             }
           ]
@@ -1412,8 +1429,18 @@ Ext.application({
       closeAction: "hide"
     });
 
-    // search.hide();
-    //list.hide();
-    //add.show();
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=right-print-container]")[0],
+      form: Ext.ComponentQuery.query("[itemId=right-searchbar]")[0].getForm(),
+      type: "deliverorderreprint",
+      margin: "0 0 0 10"
+    });
+
+    window.printHandle.get({
+      $el: Ext.ComponentQuery.query("[itemId=print-container]")[0],
+      form: Ext.ComponentQuery.query("[itemId=print-container]")[0].getForm(),
+      type: "deliverorder",
+      margin: "0 0 0 10"
+    });
   }
 });
