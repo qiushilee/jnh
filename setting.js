@@ -1202,7 +1202,28 @@ Ext.application({
               labelAlign: "right"
             },
             {
-              fieldLabel: '邮费',
+              fieldLabel: '首重',
+              name: 'cost',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '首重邮费',
+              name: 'cost',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '续重',
+              name: 'cost',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '续重邮费',
               name: 'cost',
               labelWidth: 60,
               margin: "10 0 0 0",
