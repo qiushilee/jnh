@@ -616,7 +616,6 @@ Ext.application({
             name: "cardinalNumber",
             labelAlign: "right"
           }, {
-            disabled: true,
             fieldLabel: '缺货提示',
             labelWidth: 70,
             width: 300,
