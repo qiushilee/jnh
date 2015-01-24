@@ -486,7 +486,7 @@ Ext.onReady(function () {
               }, {
                 // TODO 缺少name，所以暂时禁用 xtype
                 xtype: "datefield",
-                format: 'Y-m-d',
+                format: 'Y',
                 fieldLabel: "毕业时间",
                 labelWidth: 60,
                 labelAlign: "right",

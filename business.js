@@ -636,13 +636,18 @@ Ext.application({
                     Ext.create("memberType", {
                       fieldLabel: "来源"
                     }),
-                    Ext.create("addressType"),
+                    Ext.create("addressType",{
+                       store: Ext.create("Ext.data.Store", {
+                          fields: ["name", "value"],
+                          data: JSON.parse(document.body.dataset.addresstypeall)
+                        })
+                    }),
                     {
                       xtype: "datefield",
                       fieldLabel: "毕业时间",
                       labelWidth: 60,
                       width: 180,
-                      format: "Y-m-d",
+                      format: "Y",
                       labelAlign: "right",
                       name: 'graduateDate'
                     },
@@ -655,7 +660,12 @@ Ext.application({
                       itemId: "periodical2",
                       name:'periodical2'
                     }),
-                    Ext.create("deliveryMethod")
+                    Ext.create("deliveryMethod",{
+                       store: Ext.create("Ext.data.Store", {
+                          fields: ["name", "value"],
+                          data: JSON.parse(document.body.dataset.deliverymethodall)
+                        })
+                    })
                   ]
                 },
                 {
@@ -669,15 +679,15 @@ Ext.application({
                   items: [
                     {
                       fieldLabel: "姓名",
-                      labelWidth: 40,
-                      width: 120,
+                      labelWidth: 60,
+                      width: 180,
                       labelAlign: "right",
                       name: 'realName'
                     },
                     {
                       fieldLabel: "会员编号",
                       labelWidth: 60,
-                      width: 140,
+                      width: 200,
                       labelAlign: "right",
                       name: 'userCode'
                     },
@@ -685,8 +695,8 @@ Ext.application({
                       xtype: "datefield",
                       fieldLabel: "加入时间",
                       labelWidth: 60,
-                      width: 180,
-                      format: "Y-m-d H",
+                      width: 190,
+                      format: "Y-m-d H:m",
                       labelAlign: "right",
                       name: 'startDate'
                     },
@@ -694,23 +704,11 @@ Ext.application({
                       xtype: "datefield",
                       fieldLabel: "~",
                       labelWidth: 20,
-                      width: 140,
-                      format: "Y-m-d H",
+                      width: 150,
+                      format: "Y-m-d H:m",
                       labelAlign: "right",
                       name: 'endDate'
-                    }
-                  ]
-                },
-                {
-                  layout: "hbox",
-                  bodyPadding: 10,
-                  border: 0,
-                  defaultType: 'textfield',
-                  bodyStyle: {
-                    "background-color": "transparent"
-                  },
-                  items: [
-                    {
+                    }, {
                       xtype: "button",
                       text: "搜索",
                       margin: "0 0 0 20",
@@ -836,7 +834,12 @@ Ext.application({
                 "background-color": "transparent"
               },
               items: [
-                Ext.create("deliveryMethod"),
+                Ext.create("deliveryMethod",{
+                   store: Ext.create("Ext.data.Store", {
+                      fields: ["name", "value"],
+                      data: JSON.parse(document.body.dataset.deliverymethodall)
+                    })
+                }),
                 {
                   fieldLabel: "编号",
                   labelWidth: 40,
@@ -1037,22 +1040,15 @@ Ext.application({
                     window.batchEditHandle(Ext.data.StoreManager.lookup('printcart'), env.services.web + env.api.package.change);
                   }
                 },
+               
                 {
                   xtype: "button",
-                  text: "包裹单号扫描",
-                  disabled: true,
-                  margin: "0 0 0 10"
-                },
-                {
-                  xtype: "button",
-                  text: "<span class=\"key\">N</span> 修改",
+                  text: "删除",
                   margin: "0 0 0 10",
                   handler: function () {
                     var form = Ext.ComponentQuery.query("[itemId=print-cart-window-form]")[0].getForm(),
                         data = Ext.ComponentQuery.query("[itemId=print-cart-list]")[0].getSelectionModel().getSelection()[0].data;
-
-                    printCart.show();
-                    window.updateForm(form, data);
+                    //TODO 删除操作
                   }
                 },
                 {
