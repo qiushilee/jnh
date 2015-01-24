@@ -73,7 +73,7 @@ Ext.application({
     //地区列表
     var provinceList = Ext.create('Ext.data.Store', {
       storeId: 'provinceList',
-      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'addDate'],
+      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'addDate', 'cost','firstWeight','renewalWeight','fee'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -87,7 +87,7 @@ Ext.application({
     });
     var cityList = Ext.create('Ext.data.Store', {
       storeId: 'cityList',
-      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'addDate'],
+      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'addDate', 'cost','firstWeight','renewalWeight','fee'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -1027,22 +1027,6 @@ Ext.application({
           fieldLabel: "邮编",
           name: "zipCode",
           labelAlign: "right"
-        }, {
-          fieldLabel: "首重",
-          name: "firstWeight",
-          labelAlign: "right"
-        }, {
-          fieldLabel: "邮费",
-          name: "cost",
-          labelAlign: "right"
-        },{
-          fieldLabel: "续重",
-          name: "renewalWeight",
-          labelAlign: "right"
-        },{
-          fieldLabel: "价格",
-          name: "fee",
-          labelAlign: "right"
         },{
           xtype: "hiddenfield",
           name: "id"
@@ -1106,10 +1090,22 @@ Ext.application({
           labelAlign: "right",
           readOnly: true
         }, {
+          fieldLabel: "首重",
+          name: "firstWeight",
+          labelAlign: "right"
+        },  {
           fieldLabel: "邮费",
           name: "cost",
           labelAlign: "right"
         }, {
+          fieldLabel: "续重",
+          name: "renewalWeight",
+          labelAlign: "right"
+        }, {
+          fieldLabel: "价格",
+          name: "fee",
+          labelAlign: "right"
+        },{
           xtype: "hiddenfield",
           name: "cityId"
         }, {
@@ -1200,36 +1196,23 @@ Ext.application({
               labelWidth: 60,
               margin: "10 0 0 0",
               labelAlign: "right"
-            },
-            {
-              fieldLabel: '首重',
-              name: 'cost',
-              labelWidth: 60,
-              margin: "10 0 0 0",
+            }, {
+              fieldLabel: "首重",
+              name: "firstWeight",
               labelAlign: "right"
-            },
-            {
-              fieldLabel: '首重邮费',
-              name: 'cost',
-              labelWidth: 60,
-              margin: "10 0 0 0",
+            }, {
+              fieldLabel: "邮费",
+              name: "cost",
               labelAlign: "right"
-            },
-            {
-              fieldLabel: '续重',
-              name: 'cost',
-              labelWidth: 60,
-              margin: "10 0 0 0",
+            },{
+              fieldLabel: "续重",
+              name: "renewalWeight",
               labelAlign: "right"
-            },
-            {
-              fieldLabel: '续重邮费',
-              name: 'cost',
-              labelWidth: 60,
-              margin: "10 0 0 0",
+            },{
+              fieldLabel: "价格",
+              name: "fee",
               labelAlign: "right"
-            },
-            {
+            }, {
               xtype: "button",
               text: "保存",
               scale: "medium",
