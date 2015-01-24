@@ -101,7 +101,7 @@ Ext.application({
     });
     var districtList = Ext.create('Ext.data.Store', {
       storeId: 'districtList',
-      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'cost'],
+      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'cost','firstWeight','renewalWeight','fee'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -1028,10 +1028,22 @@ Ext.application({
           name: "zipCode",
           labelAlign: "right"
         }, {
+          fieldLabel: "首重",
+          name: "firstWeight",
+          labelAlign: "right"
+        }, {
           fieldLabel: "邮费",
           name: "cost",
           labelAlign: "right"
-        }, {
+        },{
+          fieldLabel: "续重",
+          name: "renewalWeight",
+          labelAlign: "right"
+        },{
+          fieldLabel: "价格",
+          name: "fee",
+          labelAlign: "right"
+        },{
           xtype: "hiddenfield",
           name: "id"
         }, {
