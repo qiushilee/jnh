@@ -90,6 +90,32 @@ Ext.application({
       }
     });
 
+    function getTicketData() {
+      var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data,
+          $totalAmount = Ext.ComponentQuery.query("[name=totalAmount]", addDjq)[0],
+          $overpaidAmount = Ext.ComponentQuery.query("[name=overpaidAmount]", addDjq)[0];
+
+      Ext.data.StoreManager.lookup('ticket').loadData({});
+      Ext.data.StoreManager.lookup('ticket').load({
+        params: {
+          deliveryOrderId: window.deliveryOrderId,
+          memberId: record.memberId,
+          ticketId: 0
+        },
+        callback: function (data) {
+          if (data === null) {
+            $totalAmount.setValue("");
+            return;
+          }
+        var overpaidAmount = parseFloat($overpaidAmount.value),
+        ticketAmout = parseFloat(data[data.length - 1].data.amount),
+        total = overpaidAmount + ticketAmout;
+
+        $totalAmount.setValue(total.toFixed(2));
+      }
+    });
+  }
+
     var search = Ext.create("Ext.form.Panel", {
       layout: "hbox",
       bodyPadding: 10,
@@ -512,28 +538,9 @@ Ext.application({
                 float: "right",
                 handler: function() {
                   var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data,
-                      $totalAmount = Ext.ComponentQuery.query("[name=totalAmount]", addDjq)[0],
                       $overpaidAmount = Ext.ComponentQuery.query("[name=overpaidAmount]", addDjq)[0];
 
-                  Ext.data.StoreManager.lookup('ticket').loadData({});
-                  Ext.data.StoreManager.lookup('ticket').load({
-                    params: {
-                      deliveryOrderId: window.deliveryOrderId,
-                      memberId: record.memberId,
-                      ticketId: 0
-                    },
-                    callback: function (data) {
-                      if (data === null) {
-                        $totalAmount.setValue("");
-                        return;
-                      }
-                      var overpaidAmount = parseFloat($overpaidAmount.value),
-                          ticketAmout = parseFloat(data[data.length - 1].data.amount),
-                          total = overpaidAmount + ticketAmout;
-
-                      $totalAmount.setValue(total.toFixed(2));
-                    }
-                  });
+                  getTicketData();
                   Ext.data.StoreManager.lookup("create-ticket").load({
                     params: {
                       deliveryOrderId: window.deliveryOrderId,
@@ -1001,7 +1008,7 @@ Ext.application({
                 grid: ticketList,
                 api: env.services.web + env.api.deliverorder.delticketproduct,
                 success: function() {
-                  ticketList.getStore().remove(ticketList.getSelectionModel().getSelection()[0]);
+                  getTicketData();
                 }
               });
             }
