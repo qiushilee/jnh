@@ -293,11 +293,11 @@
   };
 
   //折扣设置
-  env.api.discountsetting={
-    list:"/discountsetting/index",
-    save:"/discountsetting/save",
-    products:"/discountsetting/products",
-    del:"/discountsetting/delate"
+  env.api.discount = {
+    list: "/discountsetting/index",
+    save: "/discountsetting/save",
+    product: "/discountsetting/products",
+    del: "/discountsetting/delate"
   }
 
 
@@ -1029,6 +1029,56 @@
                 }
               });
             }
+          }
+        });
+
+        //折扣类型
+        Ext.define("discountType", {
+          extend: "Ext.form.ComboBox",
+          fieldLabel: " 折扣类型",
+          queryMode: "local",
+          editable: false,
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: [
+              {
+                name: "折扣A类",
+                value: 1
+              },
+              {
+                name: "折扣B类",
+                value: 2
+              },
+              {
+                name: "折扣C类",
+                value: 3
+              },
+              {
+                name: "折扣D类",
+                value: 4
+              },
+              {
+                name: "折扣E类",
+                value: 5
+              }
+            ]
+          }),
+          labelWidth: 60,
+          displayField: "name",
+          valueField: "value",
+          labelAlign: "right",
+          name: "discountType",
+          width: 160,
+          initComponent: function() {
+            this.callParent();
+            this.on({
+              render: function (combobox) {
+                combobox.store.load(function (data) {
+                  combobox.setValue(data[0]);
+                });
+              },
+              setvalue: comboboxSetValue
+            });
           }
         });
 
