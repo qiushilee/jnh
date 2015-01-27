@@ -6,6 +6,10 @@ Ext.require([
 Ext.application({
   name: "setting",
   launch: function () {
+    var sm = Ext.create('Ext.selection.CheckboxModel', {
+      checkOnly: true
+    });
+
     // 期数管理
     var periodicalList = Ext.create('Ext.data.Store', {
       storeId: 'periodicalList',
@@ -107,6 +111,22 @@ Ext.application({
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.areaList.district,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 库存表
+    Ext.create('Ext.data.Store', {
+      storeId: 'product',
+      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.product.list,
         reader: {
           type: 'json',
           root: 'list'
@@ -641,6 +661,85 @@ Ext.application({
                   }
                 }
               ]
+            }
+          ]
+        },
+        {
+          title: '折扣设置',
+          padding: 15,
+          border: 0,
+          items: [
+            {
+              xtype: "grid",
+              title: "折扣列表",
+              height: 255,
+              margin: "20 0 20 0",
+              store: Ext.data.StoreManager.lookup('discountList'),
+              columns: [
+                {
+                  text: '商品范围',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '金额1',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '折扣1',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '金额2',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '折扣2',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '金额3',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '折扣3',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '金额4',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '折扣4',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '金额5',
+                  dataIndex: 'id'
+                },
+                {
+                  text: '折扣5',
+                  dataIndex: 'id'
+                }
+              ],
+              listeners: {
+                itemdblclick: function (that, record) {
+                  district.show();
+                  window.updateForm(Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm(), record.data);
+                }
+              }
+            },
+            {
+              xtype: "button",
+              text: "增加",
+              handler: function () {
+                district.show();
+                Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm().reset();
+              }
+            },
+            {
+              xtype: "button",
+              text: "删除",
+              margin: "0 0 0 10"
             }
           ]
         }
@@ -1284,6 +1383,191 @@ Ext.application({
               },
               margin: "0 0 0 20"
             }
+          ]
+        }
+      ]
+    });
+
+    var district = new Ext.create("Ext.window.Window", {
+      title: "折扣设置",
+      width: 800,
+      bodyPadding: 10,
+      closeAction: 'hide',
+      items: [
+        {
+          itemId: "district-form",
+          xtype: "form",
+          //url: env.services.web + env.api.district.change,
+          bodyPadding: "20 50",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              xtype: "hiddenfield",
+              name: "id"
+            },
+            {
+              xtype:'fieldset',
+              title: '折扣设置',
+              collapsible: true,
+              defaultType: 'textfield',
+              defaults: {anchor: '100%'},
+              padding: "0 0 10 0",
+              layout: 'anchor',
+              items :[
+                {
+                  xtype:'panel',
+                  layout: "column",
+                  border: 0,
+                  bodyStyle: {
+                    background:'transparent'
+                  },
+                  items: [
+                    {
+                      xtype: "panel",
+                      border: 0,
+                      columnWidth: 0.3,
+                      margin: "0 0 0 0",
+                      defaultType: 'textfield',
+                      items: [
+                        {
+                          fieldLabel: '金额1',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "10 0 0 0",
+                          labelAlign: "right"
+                        },
+                        {
+                          fieldLabel: '折扣1',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "10 0 0 0",
+                          labelAlign: "right"
+                        },
+                        {
+                          fieldLabel: '金额2',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "20 0 0 0",
+                          labelAlign: "right"
+                        },
+                        {
+                          fieldLabel: '折扣2',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "10 0 0 0",
+                          labelAlign: "right"
+                        }
+                      ]
+                    },
+                    {
+                      xtype: "panel",
+                      border: 0,
+                      columnWidth: 0.3,
+                      margin: "0 0 0 10",
+                      defaultType: 'textfield',
+                      items: [
+                        {
+                          fieldLabel: '金额3',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "10 0 0 0",
+                          labelAlign: "right"
+                        },
+                        {
+                          fieldLabel: '折扣3',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "10 0 0 0",
+                          labelAlign: "right"
+                        },
+                        {
+                          fieldLabel: '金额4',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "20 0 0 0",
+                          labelAlign: "right"
+                        },
+                        {
+                          fieldLabel: '折扣4',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "10 0 0 0",
+                          labelAlign: "right"
+                        },
+                      ]
+                    },
+                    {
+                      xtype: "panel",
+                      border: 0,
+                      columnWidth: 0.3,
+                      margin: "0 0 0 10",
+                      defaultType: 'textfield',
+                      items: [
+                        {
+                          fieldLabel: '金额5',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "10 0 0 0",
+                          labelAlign: "right"
+                        },
+                        {
+                          fieldLabel: '折扣5',
+                          name: 'sendNumber1',
+                          labelWidth: 40,
+                          margin: "10 0 0 0",
+                          labelAlign: "right"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              itemId: "productList",
+              xtype: "grid",
+              height: 155,
+              title: '库存表',
+              store: Ext.data.StoreManager.lookup('product'),
+              margin: "20 0 15 0",
+              selModel: sm,
+              columns: [
+                {
+                  text: '序号',
+                  dataIndex: 'key',
+                  flex: 1
+                },
+                {
+                  text: '货号',
+                  dataIndex: 'productCode',
+                  flex: 1
+                },
+                {
+                  text: '品名',
+                  dataIndex: 'name'
+                },
+                {
+                  text: '进价',
+                  dataIndex: 'purchasePrice',
+                  flex: 1
+                },
+                {
+                  text: '售价',
+                  dataIndex: 'price',
+                  flex: 1
+                }
+              ]
+            },
+            {
+              xtype: "button",
+              text: "保存"
+            },
+            {
+              xtype: "button",
+              text: "设置范围",
+              margin: "0 0 0 10"
+            },
           ]
         }
       ]
