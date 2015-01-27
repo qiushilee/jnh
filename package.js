@@ -6,10 +6,6 @@ Ext.require([
 Ext.application({
   name: "JNH",
   launch: function () {
-    var sm = Ext.create('Ext.selection.CheckboxModel', {
-      checkOnly: true
-    });
-
     var dataList = Ext.create('Ext.data.Store', {
       storeId: 'dataList',
       fields: ["id", 'key', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'bjtimes', 'packaging', 'userName', 'address', 'packageRemark'],
@@ -149,7 +145,6 @@ Ext.application({
           store: Ext.data.StoreManager.lookup('dataList'),
           border: 0,
           columnWidth: 0.5,
-          selModel: sm,
           columns: [
             {
               text: '序号',
