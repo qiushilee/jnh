@@ -627,7 +627,12 @@ Ext.application({
               defaultType: 'textfield',
               url: env.services.web + env.api.weight.set,
               items: [
-                {
+                  {
+                    xtype: "hiddenfield",
+                    name: "id",
+                    value:"1"
+                  },
+                  {
                   fieldLabel: "单个目录重量",
                   name: "catalogWeight",
                   labelAlign: "right",
