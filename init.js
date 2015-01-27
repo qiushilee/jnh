@@ -286,6 +286,11 @@
     list: "/printsetting/getprintbutton/module"
   };
 
+  env.api.weight = {
+    get: "/setting/index",
+    set: "/setting/save"
+  };
+
   window.env = env;
 
   /**
@@ -333,7 +338,7 @@
    */
   window.resetForm = function(opt) {
     Ext.Array.each(opt.list, function (item) {
-      Ext.ComponentQuery.query("[name=" + item + "]", opt.root)[0].setValue();
+      opt.root.findField(item).setValue();
     });
   };
 

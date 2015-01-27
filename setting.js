@@ -594,6 +594,55 @@ Ext.application({
               }
             }
           ]
+        },
+        {
+          title: '目录重量设置',
+          padding: 15,
+          border: 0,
+          items: [
+            {
+              xtype: "form",
+              layout: 'vbox',
+              border: 0,
+              defaultType: 'textfield',
+              url: env.services.web + env.api.weight.set,
+              items: [
+                {
+                  fieldLabel: "单个目录重量",
+                  name: "catalogWeight",
+                  labelAlign: "right",
+                  labelWidth: 80,
+                  listeners: {
+                    render: function(that) {
+                      Ext.Ajax.request({
+                        url: env.services.web + env.api.weight.get,
+                        success: function (resp) {
+                          var data = Ext.JSON.decode(resp.responseText);
+                          Ext.Array.each(data.list, function (item) {
+                            if (item.name === "catalogWeight") {
+                              that.setValue(item.value);
+                            }
+                          });
+                        }
+                      });
+                    }
+                  }
+                },
+                {
+                  xtype: "button",
+                  text: "保存",
+                  handler: function () {
+                    var form = this.up('form').getForm();
+                    form.submit({
+                      failure: function (form, action) {
+                        Ext.Msg.alert("保存目录重量", action.result.msg);
+                      }
+                    });
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     });
