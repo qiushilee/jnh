@@ -293,11 +293,11 @@
   };
 
   //折扣设置
-  env.api.discountsetting={
-    list:"/discountsetting/index",
-    save:"/discountsetting/save",
-    products:"/discountsetting/products",
-    del:"/discountsetting/delate"
+  env.api.discount = {
+    list: "/discountsetting/index",
+    save: "/discountsetting/save",
+    product: "/discountsetting/products",
+    del: "/discountsetting/delate"
   }
 
 
