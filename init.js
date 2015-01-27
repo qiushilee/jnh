@@ -286,10 +286,20 @@
     list: "/printsetting/getprintbutton/module"
   };
 
+  //目录重量
   env.api.weight = {
     get: "/setting/index",
     set: "/setting/save"
   };
+
+  //折扣设置
+  env.api.discountsetting={
+    list:"/discountsetting/index",
+    save:"/discountsetting/save",
+    products:"/discountsetting/products",
+    del:"/discountsetting/delate"
+  }
+
 
   window.env = env;
 
