@@ -1417,108 +1417,28 @@ Ext.application({
               items :[
                 {
                   xtype:'panel',
-                  layout: "column",
+                  layout: "vbox",
+                  width: 300,
                   border: 0,
+                  defaultType: 'textfield',
                   bodyStyle: {
                     background:'transparent'
                   },
                   items: [
+                    Ext.create("discountType"),
                     {
-                      xtype: "panel",
-                      border: 0,
-                      columnWidth: 0.3,
-                      margin: "0 0 0 0",
-                      defaultType: 'textfield',
-                      items: [
-                        {
-                          fieldLabel: '金额1',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣1',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '金额2',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "20 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣2',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        }
-                      ]
+                      fieldLabel: '金额',
+                      name: 'sendNumber1',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
                     },
                     {
-                      xtype: "panel",
-                      border: 0,
-                      columnWidth: 0.3,
-                      margin: "0 0 0 10",
-                      defaultType: 'textfield',
-                      items: [
-                        {
-                          fieldLabel: '金额3',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣3',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '金额4',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "20 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣4',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                      ]
-                    },
-                    {
-                      xtype: "panel",
-                      border: 0,
-                      columnWidth: 0.3,
-                      margin: "0 0 0 10",
-                      defaultType: 'textfield',
-                      items: [
-                        {
-                          fieldLabel: '金额5',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣5',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        }
-                      ]
+                      fieldLabel: '折扣',
+                      name: 'sendNumber1',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
                     }
                   ]
                 }
