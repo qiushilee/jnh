@@ -118,7 +118,23 @@ Ext.application({
       }
     });
 
-    // 库存表
+    // 折扣列表
+    Ext.create('Ext.data.Store', {
+      storeId: 'discountList',
+      fields: ["id", 'type', "typeName", 'amount', 'discount', 'addDate'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.discount.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 商品列表
     Ext.create('Ext.data.Store', {
       storeId: 'product',
       fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
@@ -126,7 +142,7 @@ Ext.application({
       autoLoad: true,
       proxy: {
         type: 'ajax',
-        url: env.services.web + env.api.product.list,
+        url: env.services.web + env.api.discount.product,
         reader: {
           type: 'json',
           root: 'list'
@@ -682,48 +698,16 @@ Ext.application({
               store: Ext.data.StoreManager.lookup('discountList'),
               columns: [
                 {
-                  text: '商品范围',
-                  dataIndex: 'id'
+                  text: '折扣分类',
+                  dataIndex: 'typeName'
                 },
                 {
-                  text: '金额1',
-                  dataIndex: 'id'
+                  text: '金额',
+                  dataIndex: 'amount'
                 },
                 {
-                  text: '折扣1',
-                  dataIndex: 'id'
-                },
-                {
-                  text: '金额2',
-                  dataIndex: 'id'
-                },
-                {
-                  text: '折扣2',
-                  dataIndex: 'id'
-                },
-                {
-                  text: '金额3',
-                  dataIndex: 'id'
-                },
-                {
-                  text: '折扣3',
-                  dataIndex: 'id'
-                },
-                {
-                  text: '金额4',
-                  dataIndex: 'id'
-                },
-                {
-                  text: '折扣4',
-                  dataIndex: 'id'
-                },
-                {
-                  text: '金额5',
-                  dataIndex: 'id'
-                },
-                {
-                  text: '折扣5',
-                  dataIndex: 'id'
+                  text: '折扣',
+                  dataIndex: 'discount'
                 }
               ],
               listeners: {
@@ -1402,7 +1386,7 @@ Ext.application({
         {
           itemId: "district-form",
           xtype: "form",
-          //url: env.services.web + env.api.district.change,
+          url: env.services.web + env.api.discount.save,
           bodyPadding: "20 50",
           border: 0,
           defaultType: 'textfield',
@@ -1422,108 +1406,28 @@ Ext.application({
               items :[
                 {
                   xtype:'panel',
-                  layout: "column",
+                  layout: "vbox",
+                  width: 300,
                   border: 0,
+                  defaultType: 'textfield',
                   bodyStyle: {
                     background:'transparent'
                   },
                   items: [
+                    Ext.create("discountType"),
                     {
-                      xtype: "panel",
-                      border: 0,
-                      columnWidth: 0.3,
-                      margin: "0 0 0 0",
-                      defaultType: 'textfield',
-                      items: [
-                        {
-                          fieldLabel: '金额1',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣1',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '金额2',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "20 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣2',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        }
-                      ]
+                      fieldLabel: '金额',
+                      name: 'amount',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
                     },
                     {
-                      xtype: "panel",
-                      border: 0,
-                      columnWidth: 0.3,
-                      margin: "0 0 0 10",
-                      defaultType: 'textfield',
-                      items: [
-                        {
-                          fieldLabel: '金额3',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣3',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '金额4',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "20 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣4',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                      ]
-                    },
-                    {
-                      xtype: "panel",
-                      border: 0,
-                      columnWidth: 0.3,
-                      margin: "0 0 0 10",
-                      defaultType: 'textfield',
-                      items: [
-                        {
-                          fieldLabel: '金额5',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        },
-                        {
-                          fieldLabel: '折扣5',
-                          name: 'sendNumber1',
-                          labelWidth: 40,
-                          margin: "10 0 0 0",
-                          labelAlign: "right"
-                        }
-                      ]
+                      fieldLabel: '折扣',
+                      name: 'discount',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
                     }
                   ]
                 }
@@ -1566,13 +1470,20 @@ Ext.application({
             },
             {
               xtype: "button",
-              text: "保存"
-            },
-            {
-              xtype: "button",
-              text: "设置范围",
-              margin: "0 0 0 10"
-            },
+              text: "保存",
+              handler: function () {
+                var form = this.up('form').getForm();
+
+                form.submit({
+                  success: function (form, action) {
+                    Ext.data.StoreManager.lookup('discountList').load();
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("保存折扣", action.result.msg);
+                  }
+                });
+              }
+            }
           ]
         }
       ]
