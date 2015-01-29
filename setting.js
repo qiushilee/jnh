@@ -657,6 +657,9 @@ Ext.application({
                     render: function(that) {
                       Ext.Ajax.request({
                         url: env.services.web + env.api.weight.get,
+                        params: {
+                          type: 1
+                        },
                         success: function (resp) {
                           var data = Ext.JSON.decode(resp.responseText);
                           Ext.Array.each(data.list, function (item) {
