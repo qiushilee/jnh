@@ -1416,8 +1416,15 @@ Ext.application({
                   items: [
                     Ext.create("discountType"),
                     {
-                      fieldLabel: '金额',
-                      name: 'amount',
+                      fieldLabel: '最小金额',
+                      name: 'minAmount',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '最大金额',
+                      name: 'maxAmount',
                       labelWidth: 40,
                       margin: "10 0 0 0",
                       labelAlign: "right"
