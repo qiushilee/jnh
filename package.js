@@ -39,6 +39,7 @@ Ext.application({
       storeId: 'printStore',
       fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
+      autoLoad: false,
       data: {
         "id": "8",
         "key": 5,
@@ -622,7 +623,6 @@ Ext.application({
           xtype: "form",
           url: env.services.web + env.api.package.list,
           layout: "hbox",
-          autoLoad: false,
           bodyPadding: 10,
           border: 0,
           defaultType: 'textfield',
