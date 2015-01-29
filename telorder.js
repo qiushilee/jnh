@@ -500,6 +500,15 @@ Ext.application({
                 form.url = env.services.web + env.api.telorder.add.order;
                 form.submit({
                   success: function(form, action) {
+                    window.resetForm({
+                      root: form,
+                      list: [
+                        'id',
+                        'productCode',
+                        'number',
+                        'remark'
+                      ]
+                    });
                     searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
                   },
                   failure: function(form, action) {
@@ -530,6 +539,15 @@ Ext.application({
                 form.url = env.services.web + env.api.telorder.change.order;
                 form.submit({
                   success: function(form, action) {
+                    window.resetForm({
+                      root: form,
+                      list: [
+                        'id',
+                        'productCode',
+                        'number',
+                        'remark'
+                      ]
+                    });
                     searchHandler.call($container.getComponent("searchbar").getForm(), "orderproduct");
                   },
                   failure: function(form, action) {
