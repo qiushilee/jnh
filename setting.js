@@ -716,6 +716,7 @@ Ext.application({
               listeners: {
                 itemdblclick: function (that, record) {
                   district.show();
+                  Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
                   window.updateForm(Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm(), record.data);
                 }
               }
@@ -725,6 +726,7 @@ Ext.application({
               text: "增加",
               handler: function () {
                 district.show();
+                Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
                 Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm().reset();
               }
             },
@@ -1487,6 +1489,7 @@ Ext.application({
                     productIds: proIds.join(',')
                   },
                   success: function (form, action) {
+                    district.hide();
                     Ext.data.StoreManager.lookup('discountList').load();
                   },
                   failure: function (form, action) {
