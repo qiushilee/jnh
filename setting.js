@@ -1417,22 +1417,14 @@ Ext.application({
                     Ext.create("discountType"),
                     {
                       fieldLabel: '金额',
-<<<<<<< HEAD
                       name: 'amount',
-=======
-                      name: 'sendNumber1',
->>>>>>> 2adbf012991317fe982b83dd0de140b3dde84ed2
                       labelWidth: 40,
                       margin: "10 0 0 0",
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: '折扣',
-<<<<<<< HEAD
                       name: 'discount',
-=======
-                      name: 'sendNumber1',
->>>>>>> 2adbf012991317fe982b83dd0de140b3dde84ed2
                       labelWidth: 40,
                       margin: "10 0 0 0",
                       labelAlign: "right"
