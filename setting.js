@@ -1472,9 +1472,17 @@ Ext.application({
               xtype: "button",
               text: "保存",
               handler: function () {
-                var form = this.up('form').getForm();
+                var form = this.up('form').getForm(),
+                    proIds = [];
+
+                Ext.Array.each(Ext.ComponentQuery.query("[itemId=productList]")[0].getSelectionModel().getSelection(), function (item) {
+                  proIds.push(item.raw.id);
+                });
 
                 form.submit({
+                  params: {
+                    productIds: proIds.join(',')
+                  },
                   success: function (form, action) {
                     Ext.data.StoreManager.lookup('discountList').load();
                   },
