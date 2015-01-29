@@ -121,7 +121,7 @@ Ext.application({
     // 折扣列表
     Ext.create('Ext.data.Store', {
       storeId: 'discountList',
-      fields: ["id", 'type', "typeName", 'amount', 'discount', 'addDate'],
+      fields: ["id", 'type', "typeName", 'minAmount','maxAmount', 'discount', 'addDate'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -472,6 +472,7 @@ Ext.application({
                   height: 290,
                   items: [
                     {
+                      itemId: "province-list",
                       xtype: "grid",
                       height: 300,
                       margin: "20 0 0 0",
@@ -495,7 +496,9 @@ Ext.application({
                         itemclick: function (that, record) {
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(true);
                           showAreas(record.data.id, 2, 'cityList');
-                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
+                          Ext.ComponentQuery.query("[name=provinceId]")[0].setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
                         }
                       }
                     }
@@ -536,7 +539,9 @@ Ext.application({
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[name=name2]")[0].setValue(record.data.name);
                           Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
+                          Ext.ComponentQuery.query("[name=provinceId]")[0].setValue('');
                           Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('id').setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
                         }
                       }
                     }
@@ -549,6 +554,7 @@ Ext.application({
                   height: 290,
                   items: [
                     {
+                      itemId: "county-list",
                       xtype: "grid",
                       height: 300,
                       margin: "20 0 0 0",
@@ -580,6 +586,8 @@ Ext.application({
                       ],
                       listeners: {
                         itemclick: function () {
+                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(false);
                         },
                         itemdblclick: function (that, record) {
@@ -604,7 +612,9 @@ Ext.application({
               }
             },
             {
+              itemId: "create-post",
               xtype: "button",
+              disabled: true,
               text: "新增",
               margin: "20 0 0 20",
               scale: "medium",
@@ -621,7 +631,7 @@ Ext.application({
               scale: "medium",
               handler: function () {
                 window.removeGridRow({
-                  grid: Ext.ComponentQuery.query("[itemId=role-list-grid]")[0],
+                  grid: Ext.ComponentQuery.query("[itemId=county-list]")[0],
                   api: env.services.web + env.api.managerrole.del,
                   success: function() {
                     Ext.data.StoreManager.lookup('roleList').load();
@@ -657,6 +667,9 @@ Ext.application({
                     render: function(that) {
                       Ext.Ajax.request({
                         url: env.services.web + env.api.weight.get,
+                        params: {
+                          type: 1
+                        },
                         success: function (resp) {
                           var data = Ext.JSON.decode(resp.responseText);
                           Ext.Array.each(data.list, function (item) {
@@ -702,8 +715,12 @@ Ext.application({
                   dataIndex: 'typeName'
                 },
                 {
-                  text: '金额',
-                  dataIndex: 'amount'
+                  text: '最小金额',
+                  dataIndex: 'minAmount'
+                },
+                {
+                  text: '最大金额',
+                  dataIndex: 'maxAmount'
                 },
                 {
                   text: '折扣',
@@ -713,6 +730,7 @@ Ext.application({
               listeners: {
                 itemdblclick: function (that, record) {
                   district.show();
+                  Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
                   window.updateForm(Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm(), record.data);
                 }
               }
@@ -722,6 +740,7 @@ Ext.application({
               text: "增加",
               handler: function () {
                 district.show();
+                Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
                 Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm().reset();
               }
             },
@@ -1242,10 +1261,16 @@ Ext.application({
           fieldLabel: "价格",
           name: "fee",
           labelAlign: "right"
-        },{
+        },
+        {
           xtype: "hiddenfield",
           name: "cityId"
-        }, {
+        },
+        {
+          xtype: "hiddenfield",
+          name: "provinceId"
+        },
+        {
           xtype: 'panel',
           layout: "hbox",
           border: 0,
@@ -1255,15 +1280,23 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">A</span> 保存",
             handler: function () {
-              var form = costSetting.getComponent("form").getForm();
-              var record = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0].data;
+              var form = costSetting.getComponent("form").getForm(),
+                  $province = Ext.ComponentQuery.query("grid[itemId=province-list]")[0].getSelectionModel(),
+                  $city = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel();
               form.url = env.services.web + env.api.areaList.setting;
               if (form.isValid()) {
                 form.submit({
                   success: function (form, action) {
                     Ext.Msg.alert("修改", action.result.msg, function () {
                       costSetting.hide();
-                      showAreas(record.id, 3, districtList);
+
+                      if ($province.getSelection()[0].data) {
+                        showAreas($province.getSelection()[0].data.id, 2, cityList);
+                      }
+
+                      if ($city.getSelection()[0].data) {
+                        showAreas($city.getSelection()[0].data.id, 3, districtList);
+                      }
                     });
                   },
                   failure: function (form, action) {
@@ -1491,6 +1524,7 @@ Ext.application({
                     productIds: proIds.join(',')
                   },
                   success: function (form, action) {
+                    district.hide();
                     Ext.data.StoreManager.lookup('discountList').load();
                   },
                   failure: function (form, action) {
