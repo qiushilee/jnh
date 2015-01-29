@@ -39,6 +39,7 @@ Ext.application({
       storeId: 'printStore',
       fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
+      autoLoad: false,
       data: {
         "id": "8",
         "key": 5,
@@ -641,7 +642,12 @@ Ext.application({
               width: 90,
               name: "deliveryOrderCode2"
             },
-            Ext.create("deliveryMethod"),
+            Ext.create("deliveryMethod",{
+               store: Ext.create("Ext.data.Store", {
+                  fields: ["name", "value"],
+                  data: JSON.parse(document.body.dataset.deliverymethodall)
+                })
+            }),
             {
               xtype: "button",
               text: "搜索",
