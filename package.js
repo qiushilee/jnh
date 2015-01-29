@@ -622,6 +622,7 @@ Ext.application({
           xtype: "form",
           url: env.services.web + env.api.package.list,
           layout: "hbox",
+          autoLoad: false,
           bodyPadding: 10,
           border: 0,
           defaultType: 'textfield',
@@ -641,7 +642,12 @@ Ext.application({
               width: 90,
               name: "deliveryOrderCode2"
             },
-            Ext.create("deliveryMethod"),
+            Ext.create("deliveryMethod",{
+               store: Ext.create("Ext.data.Store", {
+                  fields: ["name", "value"],
+                  data: JSON.parse(document.body.dataset.deliverymethodall)
+                })
+            }),
             {
               xtype: "button",
               text: "搜索",
