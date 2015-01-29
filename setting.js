@@ -472,6 +472,7 @@ Ext.application({
                   height: 290,
                   items: [
                     {
+                      itemId: "province-list",
                       xtype: "grid",
                       height: 300,
                       margin: "20 0 0 0",
@@ -495,7 +496,8 @@ Ext.application({
                         itemclick: function (that, record) {
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(true);
                           showAreas(record.data.id, 2, 'cityList');
-                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
+                          Ext.ComponentQuery.query("[name=provinceId]")[0].setValue(record.data.id);
                         }
                       }
                     }
@@ -536,6 +538,7 @@ Ext.application({
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[name=name2]")[0].setValue(record.data.name);
                           Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
+                          Ext.ComponentQuery.query("[name=provinceId]")[0].setValue('');
                           Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('id').setValue(record.data.id);
                         }
                       }
@@ -549,6 +552,7 @@ Ext.application({
                   height: 290,
                   items: [
                     {
+                      itemId: "county-list",
                       xtype: "grid",
                       height: 300,
                       margin: "20 0 0 0",
@@ -580,6 +584,7 @@ Ext.application({
                       ],
                       listeners: {
                         itemclick: function () {
+                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(false);
                         },
                         itemdblclick: function (that, record) {
@@ -621,7 +626,7 @@ Ext.application({
               scale: "medium",
               handler: function () {
                 window.removeGridRow({
-                  grid: Ext.ComponentQuery.query("[itemId=role-list-grid]")[0],
+                  grid: Ext.ComponentQuery.query("[itemId=county-list]")[0],
                   api: env.services.web + env.api.managerrole.del,
                   success: function() {
                     Ext.data.StoreManager.lookup('roleList').load();
@@ -1247,10 +1252,16 @@ Ext.application({
           fieldLabel: "价格",
           name: "fee",
           labelAlign: "right"
-        },{
+        },
+        {
           xtype: "hiddenfield",
           name: "cityId"
-        }, {
+        },
+        {
+          xtype: "hiddenfield",
+          name: "provinceId"
+        },
+        {
           xtype: 'panel',
           layout: "hbox",
           border: 0,
@@ -1260,15 +1271,23 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">A</span> 保存",
             handler: function () {
-              var form = costSetting.getComponent("form").getForm();
-              var record = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0].data;
+              var form = costSetting.getComponent("form").getForm(),
+                  $province = Ext.ComponentQuery.query("grid[itemId=province-list]")[0].getSelectionModel(),
+                  $city = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel();
               form.url = env.services.web + env.api.areaList.setting;
               if (form.isValid()) {
                 form.submit({
                   success: function (form, action) {
                     Ext.Msg.alert("修改", action.result.msg, function () {
                       costSetting.hide();
-                      showAreas(record.id, 3, districtList);
+
+                      if ($province.getSelection()[0].data) {
+                        showAreas($province.getSelection()[0].data.id, 2, cityList);
+                      }
+
+                      if ($city.getSelection()[0].data) {
+                        showAreas($city.getSelection()[0].data.id, 3, districtList);
+                      }
                     });
                   },
                   failure: function (form, action) {
