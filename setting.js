@@ -498,6 +498,7 @@ Ext.application({
                           showAreas(record.data.id, 2, 'cityList');
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[name=provinceId]")[0].setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
                         }
                       }
                     }
@@ -540,6 +541,7 @@ Ext.application({
                           Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
                           Ext.ComponentQuery.query("[name=provinceId]")[0].setValue('');
                           Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('id').setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
                         }
                       }
                     }
@@ -585,6 +587,7 @@ Ext.application({
                       listeners: {
                         itemclick: function () {
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(false);
                         },
                         itemdblclick: function (that, record) {
@@ -609,7 +612,9 @@ Ext.application({
               }
             },
             {
+              itemId: "create-post",
               xtype: "button",
+              disabled: true,
               text: "新增",
               margin: "20 0 0 20",
               scale: "medium",
