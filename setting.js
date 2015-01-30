@@ -232,72 +232,190 @@ Ext.application({
           padding: 15,
           items: [
             {
-              itemId: "shipment-grid",
-              xtype: "grid",
-              height: 455,
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup("sendmethordList"),
-              columns: [
+              xtype:'panel',
+              layout: "column",
+              border: 0,
+              bodyStyle: {
+                background:'transparent'
+              },
+              items: [
                 {
-                  text: '名称',
-                  dataIndex: 'name',
-                  flex: 1
+                  xtype:'panel',
+                  title: '面单设置',
+                  columnWidth: 0.55,
+                  items: [
+                    {
+                      itemId: "shipment-grid",
+                      xtype: "grid",
+                      height: 255,
+                      margin: "20 20 0 20",
+                      store: Ext.data.StoreManager.lookup("sendmethordList"),
+                      columns: [
+                        {
+                          text: '名称',
+                          dataIndex: 'name',
+                          flex: 1
+                        },
+                        {
+                          text: 'KEY',
+                          dataIndex: 'key',
+                          flex: 1
+                        },
+                        {
+                          text: '状态',
+                          dataIndex: 'state',
+                          flex: 1
+                        },
+                        {
+                          text: '排序',
+                          dataIndex: 'sort',
+                          flex: 1
+                        },
+                        {
+                          text:'面单设置',
+                          dataIndex:'setting',
+                          flex:1
+                        }
+                        ],
+                        listeners: {
+                          itemdblclick: function (that, record, item, index, e, eOpts) {
+                            sendmethordEdit.show();
+                            window.updateForm(sendmethordEdit.getComponent("form").getForm(), record.data);
+                          }
+                        }
+                      },
+                      {
+                        xtype: "button",
+                        text: "<span class=\"key\">A</span> 增加",
+                        margin: "20 0 20 20",
+                        scale: "medium",
+                        handler: function () {
+                          var form = sendmethordEdit.getComponent("form").getForm();
+                          sendmethordEdit.setTitle("新增配送方式");
+                          form.reset();
+                          form.url = env.services.web + env.api.sendmethord.save;
+                          sendmethordEdit.show();
+                        }
+                      },
+                      {
+                        xtype: "button",
+                        text: "<span class=\"key\">D</span> 删除",
+                        margin: "20 0 20 20",
+                        scale: "medium",
+                        handler: function () {
+                          window.removeGridRow({
+                            grid: Ext.ComponentQuery.query("[itemId=shipment-grid]")[0],
+                            api: env.services.web + env.api.sendmethord.del,
+                            success: function() {
+                              Ext.data.StoreManager.lookup('sendmethordList').load();
+                            }
+                          })
+                        }
+                      }
+                  ]
                 },
                 {
-                  text: 'KEY',
-                  dataIndex: 'key',
-                  flex: 1
-                },
-                {
-                  text: '状态',
-                  dataIndex: 'state',
-                  flex: 1
-                },
-                {
-                  text: '排序',
-                  dataIndex: 'sort',
-                  flex: 1
-                },
-                {
-                  text:'面单设置',
-                  dataIndex:'setting',
-                  flex:1
+                  xtype:'panel',
+                  title: '通用设置',
+                  columnWidth: 0.3,
+                  margin: "0 0 0 10",
+                  items: [
+                    {
+                      xtype: "form",
+                      url: env.services.web + env.api.telorder.list.order,
+                      margin: "20 0 0 0",
+                      bodyPadding: 10,
+                      border: 0,
+                      defaultType: 'textfield',
+                      bodyStyle: {
+                        "background-color": "transparent"
+                      },
+                      listeners: {
+                        render: function(that) {
+                          Ext.Ajax.request({
+                            url: env.services.web + env.api.weight.get,
+                            params: {
+                              type: 2
+                            },
+                            success: function (resp) {
+                              var data = Ext.JSON.decode(resp.responseText);
+                              Ext.Array.each(data.list, function (item) {
+                                that.getForm().findField(item.name).setValue(item.value);
+                              });
+                            }
+                          });
+                        }
+                      },
+                      items: [
+                        {
+                          fieldLabel: "公司名称",
+                          name: 'companyTitle',
+                          labelAlign: "right",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "公司地址",
+                          name: 'companyAddress',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "公司电话",
+                          name: 'companyTel',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "备注1",
+                          name: 'note1',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "备注2",
+                          name: 'note2',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "备注3",
+                          name: 'note3',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "备注4",
+                          name: 'note4',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          xtype: "button",
+                          text: "保存",
+                          margin: "20 0 40 0",
+                          scale: "medium",
+                          handler: function () {
+                            var form = sendmethordEdit.getComponent("form").getForm();
+                            form.submit({
+                              success: function (form, action) {
+                              },
+                              failure: function (form, action) {
+                                Ext.Msg.alert("保存通用设置", action.result.msg);
+                              }
+                            });
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
-              ],
-              listeners: {
-                itemdblclick: function (that, record, item, index, e, eOpts) {
-                  sendmethordEdit.show();
-                  window.updateForm(sendmethordEdit.getComponent("form").getForm(), record.data);
-                }
-              }
-            },
-            {
-              xtype: "button",
-              text: "<span class=\"key\">A</span> 增加",
-              margin: "20 0 0 0",
-              scale: "medium",
-              handler: function () {
-                var form = sendmethordEdit.getComponent("form").getForm();
-                sendmethordEdit.setTitle("新增配送方式");
-                form.reset();
-                form.url = env.services.web + env.api.sendmethord.save;
-                sendmethordEdit.show();
-              }
-            },
-            {
-              xtype: "button",
-              text: "<span class=\"key\">D</span> 删除",
-              margin: "20 0 0 20",
-              scale: "medium",
-              handler: function () {
-                window.removeGridRow({
-                  grid: Ext.ComponentQuery.query("[itemId=shipment-grid]")[0],
-                  api: env.services.web + env.api.sendmethord.del,
-                  success: function() {
-                    Ext.data.StoreManager.lookup('sendmethordList').load();
-                  }
-                })
-              }
+              ]
             }
           ]
         },
