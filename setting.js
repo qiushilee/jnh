@@ -322,7 +322,7 @@ Ext.application({
                   items: [
                     {
                       xtype: "form",
-                      url: env.services.web + env.api.telorder.list.order,
+                      url: env.services.web + env.api.weight.setcompany,
                       margin: "20 0 0 0",
                       bodyPadding: 10,
                       border: 0,
