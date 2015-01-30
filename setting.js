@@ -121,7 +121,7 @@ Ext.application({
     // 折扣列表
     Ext.create('Ext.data.Store', {
       storeId: 'discountList',
-      fields: ["id", 'type', "typeName", 'amount', 'discount', 'addDate'],
+      fields: ["id", 'type', "typeName", 'minAmount','maxAmount', 'discount', 'addDate'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -715,8 +715,12 @@ Ext.application({
                   dataIndex: 'typeName'
                 },
                 {
-                  text: '金额',
-                  dataIndex: 'amount'
+                  text: '最小金额',
+                  dataIndex: 'minAmount'
+                },
+                {
+                  text: '最大金额',
+                  dataIndex: 'maxAmount'
                 },
                 {
                   text: '折扣',
@@ -1445,8 +1449,15 @@ Ext.application({
                   items: [
                     Ext.create("discountType"),
                     {
-                      fieldLabel: '金额',
-                      name: 'amount',
+                      fieldLabel: '最小金额',
+                      name: 'minAmount',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '最大金额',
+                      name: 'maxAmount',
                       labelWidth: 40,
                       margin: "10 0 0 0",
                       labelAlign: "right"
