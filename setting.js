@@ -6,6 +6,10 @@ Ext.require([
 Ext.application({
   name: "setting",
   launch: function () {
+    var sm = Ext.create('Ext.selection.CheckboxModel', {
+      checkOnly: true
+    });
+
     // 期数管理
     var periodicalList = Ext.create('Ext.data.Store', {
       storeId: 'periodicalList',
@@ -73,7 +77,7 @@ Ext.application({
     //地区列表
     var provinceList = Ext.create('Ext.data.Store', {
       storeId: 'provinceList',
-      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'addDate'],
+      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'addDate', 'cost','firstWeight','renewalWeight','fee'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -87,7 +91,7 @@ Ext.application({
     });
     var cityList = Ext.create('Ext.data.Store', {
       storeId: 'cityList',
-      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'addDate'],
+      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'addDate', 'cost','firstWeight','renewalWeight','fee'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -101,7 +105,7 @@ Ext.application({
     });
     var districtList = Ext.create('Ext.data.Store', {
       storeId: 'districtList',
-      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'cost'],
+      fields: ['id', 'key', 'name', 'parentId', 'type', 'zipCode', 'cost','firstWeight','renewalWeight','fee'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -114,16 +118,43 @@ Ext.application({
       }
     });
 
+<<<<<<< HEAD
 
     //折扣设置
     var discountSettingList = Ext.create('Ext.data.Store', {
       storeId: 'discountSettingList',
       fields: ['id', 'name', 'key', 'state', 'discount','amount'],
+=======
+    // 折扣列表
+    Ext.create('Ext.data.Store', {
+      storeId: 'discountList',
+      fields: ["id", 'type', "typeName", 'minAmount','maxAmount', 'discount', 'addDate'],
       layout: "fit",
       autoLoad: true,
       proxy: {
         type: 'ajax',
+        url: env.services.web + env.api.discount.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
+    // 商品列表
+    Ext.create('Ext.data.Store', {
+      storeId: 'product',
+      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
+>>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+<<<<<<< HEAD
         url: env.services.web + env.api.discountsetting.list,
+=======
+        url: env.services.web + env.api.discount.product,
+>>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
         reader: {
           type: 'json',
           root: 'list'
@@ -213,72 +244,190 @@ Ext.application({
           padding: 15,
           items: [
             {
-              itemId: "shipment-grid",
-              xtype: "grid",
-              height: 455,
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup("sendmethordList"),
-              columns: [
+              xtype:'panel',
+              layout: "column",
+              border: 0,
+              bodyStyle: {
+                background:'transparent'
+              },
+              items: [
                 {
-                  text: '名称',
-                  dataIndex: 'name',
-                  flex: 1
+                  xtype:'panel',
+                  title: '面单设置',
+                  columnWidth: 0.55,
+                  items: [
+                    {
+                      itemId: "shipment-grid",
+                      xtype: "grid",
+                      height: 255,
+                      margin: "20 20 0 20",
+                      store: Ext.data.StoreManager.lookup("sendmethordList"),
+                      columns: [
+                        {
+                          text: '名称',
+                          dataIndex: 'name',
+                          flex: 1
+                        },
+                        {
+                          text: 'KEY',
+                          dataIndex: 'key',
+                          flex: 1
+                        },
+                        {
+                          text: '状态',
+                          dataIndex: 'state',
+                          flex: 1
+                        },
+                        {
+                          text: '排序',
+                          dataIndex: 'sort',
+                          flex: 1
+                        },
+                        {
+                          text:'面单设置',
+                          dataIndex:'setting',
+                          flex:1
+                        }
+                        ],
+                        listeners: {
+                          itemdblclick: function (that, record, item, index, e, eOpts) {
+                            sendmethordEdit.show();
+                            window.updateForm(sendmethordEdit.getComponent("form").getForm(), record.data);
+                          }
+                        }
+                      },
+                      {
+                        xtype: "button",
+                        text: "<span class=\"key\">A</span> 增加",
+                        margin: "20 0 20 20",
+                        scale: "medium",
+                        handler: function () {
+                          var form = sendmethordEdit.getComponent("form").getForm();
+                          sendmethordEdit.setTitle("新增配送方式");
+                          form.reset();
+                          form.url = env.services.web + env.api.sendmethord.save;
+                          sendmethordEdit.show();
+                        }
+                      },
+                      {
+                        xtype: "button",
+                        text: "<span class=\"key\">D</span> 删除",
+                        margin: "20 0 20 20",
+                        scale: "medium",
+                        handler: function () {
+                          window.removeGridRow({
+                            grid: Ext.ComponentQuery.query("[itemId=shipment-grid]")[0],
+                            api: env.services.web + env.api.sendmethord.del,
+                            success: function() {
+                              Ext.data.StoreManager.lookup('sendmethordList').load();
+                            }
+                          })
+                        }
+                      }
+                  ]
                 },
                 {
-                  text: 'KEY',
-                  dataIndex: 'key',
-                  flex: 1
-                },
-                {
-                  text: '状态',
-                  dataIndex: 'state',
-                  flex: 1
-                },
-                {
-                  text: '排序',
-                  dataIndex: 'sort',
-                  flex: 1
-                },
-                {
-                  text:'面单设置',
-                  dataIndex:'setting',
-                  flex:1
+                  xtype:'panel',
+                  title: '通用设置',
+                  columnWidth: 0.3,
+                  margin: "0 0 0 10",
+                  items: [
+                    {
+                      xtype: "form",
+                      url: env.services.web + env.api.weight.setcompany,
+                      margin: "20 0 0 0",
+                      bodyPadding: 10,
+                      border: 0,
+                      defaultType: 'textfield',
+                      bodyStyle: {
+                        "background-color": "transparent"
+                      },
+                      listeners: {
+                        render: function(that) {
+                          Ext.Ajax.request({
+                            url: env.services.web + env.api.weight.get,
+                            params: {
+                              type: 2
+                            },
+                            success: function (resp) {
+                              var data = Ext.JSON.decode(resp.responseText);
+                              Ext.Array.each(data.list, function (item) {
+                                that.getForm().findField(item.name).setValue(item.value);
+                              });
+                            }
+                          });
+                        }
+                      },
+                      items: [
+                        {
+                          fieldLabel: "公司名称",
+                          name: 'companyTitle',
+                          labelAlign: "right",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "公司地址",
+                          name: 'companyAddress',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "公司电话",
+                          name: 'companyTel',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "备注1",
+                          name: 'note1',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "备注2",
+                          name: 'note2',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "备注3",
+                          name: 'note3',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          fieldLabel: "备注4",
+                          name: 'note4',
+                          labelAlign: "right",
+                          margin: "10 0 0 0",
+                          labelWidth: 60
+                        },
+                        {
+                          xtype: "button",
+                          text: "保存",
+                          margin: "20 0 40 0",
+                          scale: "medium",
+                          handler: function () {
+                            var form = sendmethordEdit.getComponent("form").getForm();
+                            form.submit({
+                              success: function (form, action) {
+                              },
+                              failure: function (form, action) {
+                                Ext.Msg.alert("保存通用设置", action.result.msg);
+                              }
+                            });
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 }
-              ],
-              listeners: {
-                itemdblclick: function (that, record, item, index, e, eOpts) {
-                  sendmethordEdit.show();
-                  window.updateForm(sendmethordEdit.getComponent("form").getForm(), record.data);
-                }
-              }
-            },
-            {
-              xtype: "button",
-              text: "<span class=\"key\">A</span> 增加",
-              margin: "20 0 0 0",
-              scale: "medium",
-              handler: function () {
-                var form = sendmethordEdit.getComponent("form").getForm();
-                sendmethordEdit.setTitle("新增配送方式");
-                form.reset();
-                form.url = env.services.web + env.api.sendmethord.save;
-                sendmethordEdit.show();
-              }
-            },
-            {
-              xtype: "button",
-              text: "<span class=\"key\">D</span> 删除",
-              margin: "20 0 0 20",
-              scale: "medium",
-              handler: function () {
-                window.removeGridRow({
-                  grid: Ext.ComponentQuery.query("[itemId=shipment-grid]")[0],
-                  api: env.services.web + env.api.sendmethord.del,
-                  success: function() {
-                    Ext.data.StoreManager.lookup('sendmethordList').load();
-                  }
-                })
-              }
+              ]
             }
           ]
         },
@@ -453,6 +602,7 @@ Ext.application({
                   height: 290,
                   items: [
                     {
+                      itemId: "province-list",
                       xtype: "grid",
                       height: 300,
                       margin: "20 0 0 0",
@@ -476,7 +626,9 @@ Ext.application({
                         itemclick: function (that, record) {
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(true);
                           showAreas(record.data.id, 2, 'cityList');
-                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
+                          Ext.ComponentQuery.query("[name=provinceId]")[0].setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
                         }
                       }
                     }
@@ -517,6 +669,9 @@ Ext.application({
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[name=name2]")[0].setValue(record.data.name);
                           Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
+                          Ext.ComponentQuery.query("[name=provinceId]")[0].setValue('');
+                          Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('id').setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
                         }
                       }
                     }
@@ -529,6 +684,7 @@ Ext.application({
                   height: 290,
                   items: [
                     {
+                      itemId: "county-list",
                       xtype: "grid",
                       height: 300,
                       margin: "20 0 0 0",
@@ -560,6 +716,8 @@ Ext.application({
                       ],
                       listeners: {
                         itemclick: function () {
+                          Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(false);
                         },
                         itemdblclick: function (that, record) {
@@ -584,6 +742,17 @@ Ext.application({
               }
             },
             {
+              itemId: "create-post",
+              xtype: "button",
+              disabled: true,
+              text: "新增",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function () {
+                addAddres.show();
+              }
+            },
+            {
               itemId: "districtList-del",
               xtype: "button",
               text: "<span class=\"key\">D</span> 删除",
@@ -592,7 +761,7 @@ Ext.application({
               scale: "medium",
               handler: function () {
                 window.removeGridRow({
-                  grid: Ext.ComponentQuery.query("[itemId=role-list-grid]")[0],
+                  grid: Ext.ComponentQuery.query("[itemId=county-list]")[0],
                   api: env.services.web + env.api.managerrole.del,
                   success: function() {
                     Ext.data.StoreManager.lookup('roleList').load();
@@ -603,6 +772,7 @@ Ext.application({
           ]
         },
         {
+<<<<<<< HEAD
           title: '折扣设置',
           padding: 15,
           items: [
@@ -638,11 +808,104 @@ Ext.application({
                 itemdblclick: function (that, record, item, index, e, eOpts) {
                   discountSettingEdit.show();
                   window.updateForm(discountSettingEdit.getComponent("form").getForm(), record.data);
+=======
+          title: '目录重量设置',
+          padding: 15,
+          border: 0,
+          items: [
+            {
+              xtype: "form",
+              layout: 'vbox',
+              border: 0,
+              defaultType: 'textfield',
+              url: env.services.web + env.api.weight.set,
+              items: [
+                  {
+                    xtype: "hiddenfield",
+                    name: "id",
+                    value:"1"
+                  },
+                  {
+                  fieldLabel: "单个目录重量",
+                  name: "catalogWeight",
+                  labelAlign: "right",
+                  labelWidth: 80,
+                  listeners: {
+                    render: function(that) {
+                      Ext.Ajax.request({
+                        url: env.services.web + env.api.weight.get,
+                        params: {
+                          type: 1
+                        },
+                        success: function (resp) {
+                          var data = Ext.JSON.decode(resp.responseText);
+                          Ext.Array.each(data.list, function (item) {
+                            if (item.name === "catalogWeight") {
+                              that.setValue(item.value);
+                            }
+                          });
+                        }
+                      });
+                    }
+                  }
+                },
+                {
+                  xtype: "button",
+                  text: "保存",
+                  handler: function () {
+                    var form = this.up('form').getForm();
+                    form.submit({
+                      failure: function (form, action) {
+                        Ext.Msg.alert("保存目录重量", action.result.msg);
+                      }
+                    });
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          title: '折扣设置',
+          padding: 15,
+          border: 0,
+          items: [
+            {
+              xtype: "grid",
+              title: "折扣列表",
+              height: 255,
+              margin: "20 0 20 0",
+              store: Ext.data.StoreManager.lookup('discountList'),
+              columns: [
+                {
+                  text: '折扣分类',
+                  dataIndex: 'typeName'
+                },
+                {
+                  text: '最小金额',
+                  dataIndex: 'minAmount'
+                },
+                {
+                  text: '最大金额',
+                  dataIndex: 'maxAmount'
+                },
+                {
+                  text: '折扣',
+                  dataIndex: 'discount'
+                }
+              ],
+              listeners: {
+                itemdblclick: function (that, record) {
+                  district.show();
+                  Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
+                  window.updateForm(Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm(), record.data);
+>>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
                 }
               }
             },
             {
               xtype: "button",
+<<<<<<< HEAD
               text: "<span class=\"key\">A</span> 增加",
               margin: "20 0 0 0",
               scale: "medium",
@@ -652,10 +915,18 @@ Ext.application({
                 form.reset();
                 form.url = env.services.web + env.api.discountsetting.save;
                 discountSettingEdit.show();
+=======
+              text: "增加",
+              handler: function () {
+                district.show();
+                Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
+                Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm().reset();
+>>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
               }
             },
             {
               xtype: "button",
+<<<<<<< HEAD
               text: "<span class=\"key\">D</span> 删除",
               margin: "20 0 0 20",
               scale: "medium",
@@ -668,6 +939,10 @@ Ext.application({
                   }
                 })
               }
+=======
+              text: "删除",
+              margin: "0 0 0 10"
+>>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
             }
           ]
         }
@@ -1103,11 +1378,7 @@ Ext.application({
           fieldLabel: "邮编",
           name: "zipCode",
           labelAlign: "right"
-        }, {
-          fieldLabel: "邮费",
-          name: "cost",
-          labelAlign: "right"
-        }, {
+        },{
           xtype: "hiddenfield",
           name: "id"
         }, {
@@ -1170,13 +1441,31 @@ Ext.application({
           labelAlign: "right",
           readOnly: true
         }, {
+          fieldLabel: "首重",
+          name: "firstWeight",
+          labelAlign: "right"
+        },  {
           fieldLabel: "邮费",
           name: "cost",
           labelAlign: "right"
         }, {
+          fieldLabel: "续重",
+          name: "renewalWeight",
+          labelAlign: "right"
+        }, {
+          fieldLabel: "价格",
+          name: "fee",
+          labelAlign: "right"
+        },
+        {
           xtype: "hiddenfield",
           name: "cityId"
-        }, {
+        },
+        {
+          xtype: "hiddenfield",
+          name: "provinceId"
+        },
+        {
           xtype: 'panel',
           layout: "hbox",
           border: 0,
@@ -1186,15 +1475,23 @@ Ext.application({
             margin: "0 0 0 10",
             text: "<span class=\"key\">A</span> 保存",
             handler: function () {
-              var form = costSetting.getComponent("form").getForm();
-              var record = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0].data;
+              var form = costSetting.getComponent("form").getForm(),
+                  $province = Ext.ComponentQuery.query("grid[itemId=province-list]")[0].getSelectionModel(),
+                  $city = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel();
               form.url = env.services.web + env.api.areaList.setting;
               if (form.isValid()) {
                 form.submit({
                   success: function (form, action) {
                     Ext.Msg.alert("修改", action.result.msg, function () {
                       costSetting.hide();
-                      showAreas(record.id, 3, districtList);
+
+                      if ($province.getSelection()[0].data) {
+                        showAreas($province.getSelection()[0].data.id, 2, cityList);
+                      }
+
+                      if ($city.getSelection()[0].data) {
+                        showAreas($city.getSelection()[0].data.id, 3, districtList);
+                      }
                     });
                   },
                   failure: function (form, action) {
@@ -1233,6 +1530,208 @@ Ext.application({
         }
       });
     }
+
+    var addAddres = new Ext.create("Ext.window.Window", {
+      title: "新增地址",
+      width: 400,
+      bodyPadding: 10,
+      closeAction: 'hide',
+      items: [
+        {
+          itemId: "add-address-window-form",
+          xtype: "form",
+          url: env.services.web + env.api.areaList.save,
+          bodyPadding: "20 50",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              xtype: "hiddenfield",
+              name: "id"
+            },
+            {
+              fieldLabel: "区域名称",
+              name: "name",
+              labelWidth: 60,
+              labelAlign: "right"
+            },
+            {
+              fieldLabel: '邮编',
+              name: 'zipCode',
+              labelWidth: 60,
+              margin: "10 0 0 0",
+              labelAlign: "right"
+            }, {
+              fieldLabel: "首重",
+              name: "firstWeight",
+              labelAlign: "right"
+            }, {
+              fieldLabel: "邮费",
+              name: "cost",
+              labelAlign: "right"
+            },{
+              fieldLabel: "续重",
+              name: "renewalWeight",
+              labelAlign: "right"
+            },{
+              fieldLabel: "价格",
+              name: "fee",
+              labelAlign: "right"
+            }, {
+              xtype: "button",
+              text: "保存",
+              scale: "medium",
+              width: 150,
+              handler: function () {
+                var form = this.up('form').getForm();
+                if (form.isValid()) {
+                  form.submit({
+                    success: function (form, action) {
+                      if (action.result.success) {
+                        addAddres.hide();
+                        showAreas(form.findField('id').value, 3, 'districtList');
+                      }
+                    },
+                    failure: function (form, action) {
+                      Ext.Msg.alert(addAddres.title, action.result.msg);
+                    }
+                  });
+                }
+              },
+              margin: "0 0 0 20"
+            }
+          ]
+        }
+      ]
+    });
+
+    var district = new Ext.create("Ext.window.Window", {
+      title: "折扣设置",
+      width: 800,
+      bodyPadding: 10,
+      closeAction: 'hide',
+      items: [
+        {
+          itemId: "district-form",
+          xtype: "form",
+          url: env.services.web + env.api.discount.save,
+          bodyPadding: "20 50",
+          border: 0,
+          defaultType: 'textfield',
+          items: [
+            {
+              xtype: "hiddenfield",
+              name: "id"
+            },
+            {
+              xtype:'fieldset',
+              title: '折扣设置',
+              collapsible: true,
+              defaultType: 'textfield',
+              defaults: {anchor: '100%'},
+              padding: "0 0 10 0",
+              layout: 'anchor',
+              items :[
+                {
+                  xtype:'panel',
+                  layout: "vbox",
+                  width: 300,
+                  border: 0,
+                  defaultType: 'textfield',
+                  bodyStyle: {
+                    background:'transparent'
+                  },
+                  items: [
+                    Ext.create("discountType"),
+                    {
+                      fieldLabel: '最小金额',
+                      name: 'minAmount',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '最大金额',
+                      name: 'maxAmount',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '折扣',
+                      name: 'discount',
+                      labelWidth: 40,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              itemId: "productList",
+              xtype: "grid",
+              height: 155,
+              title: '库存表',
+              store: Ext.data.StoreManager.lookup('product'),
+              margin: "20 0 15 0",
+              selModel: sm,
+              columns: [
+                {
+                  text: '序号',
+                  dataIndex: 'key',
+                  flex: 1
+                },
+                {
+                  text: '货号',
+                  dataIndex: 'productCode',
+                  flex: 1
+                },
+                {
+                  text: '品名',
+                  dataIndex: 'name'
+                },
+                {
+                  text: '进价',
+                  dataIndex: 'purchasePrice',
+                  flex: 1
+                },
+                {
+                  text: '售价',
+                  dataIndex: 'price',
+                  flex: 1
+                }
+              ]
+            },
+            {
+              xtype: "button",
+              text: "保存",
+              handler: function () {
+                var form = this.up('form').getForm(),
+                    proIds = [];
+
+                Ext.Array.each(Ext.ComponentQuery.query("[itemId=productList]")[0].getSelectionModel().getSelection(), function (item) {
+                  proIds.push(item.raw.id);
+                });
+
+                form.submit({
+                  params: {
+                    productIds: proIds.join(',')
+                  },
+                  success: function (form, action) {
+                    district.hide();
+                    Ext.data.StoreManager.lookup('discountList').load();
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("保存折扣", action.result.msg);
+                  }
+                });
+              }
+            }
+          ]
+        }
+      ]
+    });
 
   }
 });

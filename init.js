@@ -289,7 +289,12 @@
   //目录重量
   env.api.weight = {
     get: "/setting/index",
+<<<<<<< HEAD
     set: "/setting/save"
+=======
+    set: "/setting/save",
+    setcompany:"/setting/company"
+>>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
   };
 
   //折扣设置

@@ -6,10 +6,6 @@ Ext.require([
 Ext.application({
   name: "JNH",
   launch: function () {
-    var sm = Ext.create('Ext.selection.CheckboxModel', {
-      checkOnly: true
-    });
-
     var dataList = Ext.create('Ext.data.Store', {
       storeId: 'dataList',
       fields: ["id", 'key', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'bjtimes', 'packaging', 'userName', 'address', 'packageRemark'],
@@ -43,6 +39,7 @@ Ext.application({
       storeId: 'printStore',
       fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
+      autoLoad: false,
       data: {
         "id": "8",
         "key": 5,
@@ -149,7 +146,6 @@ Ext.application({
           store: Ext.data.StoreManager.lookup('dataList'),
           border: 0,
           columnWidth: 0.5,
-          selModel: sm,
           columns: [
             {
               text: '序号',
@@ -646,7 +642,12 @@ Ext.application({
               width: 90,
               name: "deliveryOrderCode2"
             },
-            Ext.create("deliveryMethod"),
+            Ext.create("deliveryMethod",{
+               store: Ext.create("Ext.data.Store", {
+                  fields: ["name", "value"],
+                  data: JSON.parse(document.body.dataset.deliverymethodall)
+                })
+            }),
             {
               xtype: "button",
               text: "搜索",
