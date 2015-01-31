@@ -118,13 +118,6 @@ Ext.application({
       }
     });
 
-<<<<<<< HEAD
-
-    //折扣设置
-    var discountSettingList = Ext.create('Ext.data.Store', {
-      storeId: 'discountSettingList',
-      fields: ['id', 'name', 'key', 'state', 'discount','amount'],
-=======
     // 折扣列表
     Ext.create('Ext.data.Store', {
       storeId: 'discountList',
@@ -145,16 +138,12 @@ Ext.application({
     Ext.create('Ext.data.Store', {
       storeId: 'product',
       fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
->>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
+
       layout: "fit",
       autoLoad: true,
       proxy: {
         type: 'ajax',
-<<<<<<< HEAD
-        url: env.services.web + env.api.discountsetting.list,
-=======
         url: env.services.web + env.api.discount.product,
->>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
         reader: {
           type: 'json',
           root: 'list'
@@ -772,43 +761,7 @@ Ext.application({
           ]
         },
         {
-<<<<<<< HEAD
-          title: '折扣设置',
-          padding: 15,
-          items: [
-            {
-              itemId: "discountsetting-grid",
-              xtype: "grid",
-              height: 455,
-              margin: "20 0 0 0",
-              store: Ext.data.StoreManager.lookup("discountSettingList"),
-              columns: [
-                {
-                  text: '序号',
-                  dataIndex: 'key',
-                  flex: 1
-                },
-                {
-                  text: '名称',
-                  dataIndex: 'name',
-                  flex: 1
-                },
-                {
-                  text: '金额',
-                  dataIndex: 'amount',
-                  flex: 1
-                },
-                {
-                  text: '折扣',
-                  dataIndex: 'discount',
-                  flex: 1
-                }
-              ],
-              listeners: {
-                itemdblclick: function (that, record, item, index, e, eOpts) {
-                  discountSettingEdit.show();
-                  window.updateForm(discountSettingEdit.getComponent("form").getForm(), record.data);
-=======
+
           title: '目录重量设置',
           padding: 15,
           border: 0,
@@ -899,50 +852,22 @@ Ext.application({
                   district.show();
                   Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
                   window.updateForm(Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm(), record.data);
->>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
                 }
               }
             },
             {
               xtype: "button",
-<<<<<<< HEAD
-              text: "<span class=\"key\">A</span> 增加",
-              margin: "20 0 0 0",
-              scale: "medium",
-              handler: function () {
-                var form = discountSettingEdit.getComponent("form").getForm();
-                discountSettingEdit.setTitle("新增折扣设置");
-                form.reset();
-                form.url = env.services.web + env.api.discountsetting.save;
-                discountSettingEdit.show();
-=======
               text: "增加",
               handler: function () {
                 district.show();
                 Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
                 Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm().reset();
->>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
               }
             },
             {
               xtype: "button",
-<<<<<<< HEAD
-              text: "<span class=\"key\">D</span> 删除",
-              margin: "20 0 0 20",
-              scale: "medium",
-              handler: function () {
-                window.removeGridRow({
-                  grid: Ext.ComponentQuery.query("[itemId=discountsetting-grid]")[0],
-                  api: env.services.web + env.api.discountsetting.del,
-                  success: function() {
-                    Ext.data.StoreManager.lookup('discountSettingList').load();
-                  }
-                })
-              }
-=======
               text: "删除",
               margin: "0 0 0 10"
->>>>>>> 9263096d2b8932700d8c3ccdf4ad744d3eff706c
             }
           ]
         }
