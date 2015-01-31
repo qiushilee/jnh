@@ -318,11 +318,13 @@ Ext.application({
                 {
                   xtype:'panel',
                   title: '通用设置',
+                  
                   columnWidth: 0.3,
                   margin: "0 0 0 10",
                   items: [
                     {
                       xtype: "form",
+                      itemId: "companySetting-form",
                       url: env.services.web + env.api.weight.setcompany,
                       margin: "20 0 0 0",
                       bodyPadding: 10,
@@ -402,7 +404,8 @@ Ext.application({
                           margin: "20 0 40 0",
                           scale: "medium",
                           handler: function () {
-                            var form = sendmethordEdit.getComponent("form").getForm();
+                            //var form = sendmethordEdit.getComponent("form").getForm();
+                            var form = Ext.ComponentQuery.query("[itemId=companySetting-form]")[0].getForm();
                             form.submit({
                               success: function (form, action) {
                               },
