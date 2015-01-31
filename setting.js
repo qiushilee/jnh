@@ -114,6 +114,23 @@ Ext.application({
       }
     });
 
+
+    //折扣设置
+    var discountSettingList = Ext.create('Ext.data.Store', {
+      storeId: 'discountSettingList',
+      fields: ['id', 'name', 'key', 'state', 'discount','amount'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.discountsetting.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     var panel = Ext.create('Ext.tab.Panel', {
       renderTo: window.$bd,
       layout: "fit",
@@ -579,6 +596,75 @@ Ext.application({
                   api: env.services.web + env.api.managerrole.del,
                   success: function() {
                     Ext.data.StoreManager.lookup('roleList').load();
+                  }
+                })
+              }
+            }
+          ]
+        },
+        {
+          title: '折扣设置',
+          padding: 15,
+          items: [
+            {
+              itemId: "discountsetting-grid",
+              xtype: "grid",
+              height: 455,
+              margin: "20 0 0 0",
+              store: Ext.data.StoreManager.lookup("discountSettingList"),
+              columns: [
+                {
+                  text: '序号',
+                  dataIndex: 'key',
+                  flex: 1
+                },
+                {
+                  text: '名称',
+                  dataIndex: 'name',
+                  flex: 1
+                },
+                {
+                  text: '金额',
+                  dataIndex: 'amount',
+                  flex: 1
+                },
+                {
+                  text: '折扣',
+                  dataIndex: 'discount',
+                  flex: 1
+                }
+              ],
+              listeners: {
+                itemdblclick: function (that, record, item, index, e, eOpts) {
+                  discountSettingEdit.show();
+                  window.updateForm(discountSettingEdit.getComponent("form").getForm(), record.data);
+                }
+              }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 增加",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function () {
+                var form = discountSettingEdit.getComponent("form").getForm();
+                discountSettingEdit.setTitle("新增折扣设置");
+                form.reset();
+                form.url = env.services.web + env.api.discountsetting.save;
+                discountSettingEdit.show();
+              }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">D</span> 删除",
+              margin: "20 0 0 20",
+              scale: "medium",
+              handler: function () {
+                window.removeGridRow({
+                  grid: Ext.ComponentQuery.query("[itemId=discountsetting-grid]")[0],
+                  api: env.services.web + env.api.discountsetting.del,
+                  success: function() {
+                    Ext.data.StoreManager.lookup('discountSettingList').load();
                   }
                 })
               }

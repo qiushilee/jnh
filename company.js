@@ -220,7 +220,6 @@ Ext.application({
       title: "厂商详情",
       layout: "column",
       width: 800,
-      height: 570,
       items: [{
         itemId: "form",
         xtype: "form",
@@ -376,6 +375,10 @@ Ext.application({
           // +TODO: 类型可下拉选择
           items: [
             Ext.create("jzsType", {
+                store: Ext.create("Ext.data.Store", {
+                    fields: ["name", "value"],
+                    data: JSON.parse(document.body.dataset.jzstypeall)
+                }),
               listeners: {
                 change: function(that) {
                   var record = cs.getSelectionModel().getSelection()[0];
