@@ -1225,14 +1225,7 @@ Ext.application({
                     });
                     //加载右侧
                     getTicketData();
-                     Ext.data.StoreManager.lookup("ticket").reload({
-                      params: {
-                        memberId: record.memberId,
-                        deliveryOrderId: record.deliveryOrderId,
-                        ticketId: 0
-                      }
-
-                    });
+                   
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("生成抵价券", action.result.msg);
