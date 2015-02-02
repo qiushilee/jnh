@@ -655,8 +655,8 @@ Ext.application({
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
                           Ext.ComponentQuery.query("[name=provinceId]")[0].setValue('');
-                          Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('id').setValue(record.data.id);
-                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('parentId').setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(false);
                         }
                       }
                     }
@@ -700,7 +700,6 @@ Ext.application({
                       listeners: {
                         itemclick: function () {
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
-                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(false);
                         },
                         itemdblclick: function (that, record) {
@@ -752,9 +751,10 @@ Ext.application({
               handler: function () {
                 window.removeGridRow({
                   grid: Ext.ComponentQuery.query("[itemId=county-list]")[0],
-                  api: env.services.web + env.api.managerrole.del,
+                  api: env.services.web + env.api.areaList.del,
                   success: function() {
-                    Ext.data.StoreManager.lookup('roleList').load();
+                    var record = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0].data;
+                    showAreas(record.id, 3, 'districtList');
                   }
                 })
               }
@@ -1472,6 +1472,10 @@ Ext.application({
           items: [
             {
               xtype: "hiddenfield",
+              name: "parentId"
+            },
+            {
+              xtype: "hiddenfield",
               name: "id"
             },
             {
@@ -1523,7 +1527,7 @@ Ext.application({
                     success: function (form, action) {
                       if (action.result.success) {
                         addAddres.hide();
-                        showAreas(form.findField('id').value, 3, 'districtList');
+                        showAreas(form.findField('parentId').value, 3, 'districtList');
                       }
                     },
                     failure: function (form, action) {
