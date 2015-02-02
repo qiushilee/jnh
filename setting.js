@@ -322,7 +322,7 @@ Ext.application({
                   items: [
                     {
                       xtype: "form",
-                      url: env.services.web + env.api.telorder.list.order,
+                      url: env.services.web + env.api.weight.set,
                       margin: "20 0 0 0",
                       bodyPadding: 10,
                       border: 0,
@@ -401,7 +401,7 @@ Ext.application({
                           margin: "20 0 40 0",
                           scale: "medium",
                           handler: function () {
-                            var form = sendmethordEdit.getComponent("form").getForm();
+                            var form = this.up('form').getForm();
                             form.submit({
                               success: function (form, action) {
                               },
