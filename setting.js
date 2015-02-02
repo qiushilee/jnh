@@ -138,6 +138,7 @@ Ext.application({
     Ext.create('Ext.data.Store', {
       storeId: 'product',
       fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
+
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -317,12 +318,13 @@ Ext.application({
                 {
                   xtype:'panel',
                   title: '通用设置',
+                  
                   columnWidth: 0.3,
                   margin: "0 0 0 10",
                   items: [
                     {
                       xtype: "form",
-                      url: env.services.web + env.api.weight.set,
+                      url: env.services.web + env.api.weight.setcompany,
                       margin: "20 0 0 0",
                       bodyPadding: 10,
                       border: 0,
@@ -760,6 +762,7 @@ Ext.application({
           ]
         },
         {
+
           title: '目录重量设置',
           padding: 15,
           border: 0,
