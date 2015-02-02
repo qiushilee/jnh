@@ -681,7 +681,7 @@ Ext.application({
                           success: function(form, action) {
                             Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
                             window.resetForm({
-                              root: $form,
+                              root: form,
                               list: [
                                 'productCode',
                                 'number',
