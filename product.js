@@ -492,21 +492,6 @@ Ext.application({
                   flex: 1
                 }
               ]
-            },
-            {
-              xtype: "button",
-              text: "删除",
-              margin: "20 0 0 0",
-              scale: "medium",
-              handler: function() {
-                window.removeGridRow({
-                  grid: Ext.ComponentQuery.query("grid[title=出货明细]")[0],
-                  api: env.services.web + env.api.product.delShipmentDetails,
-                  success: function() {
-                    Ext.data.StoreManager.lookup('shipmentDetails').load();
-                  }
-                });
-              }
             }
           ]
         }
