@@ -550,6 +550,16 @@ Ext.application({
 
                   $overpaidAmount.setValue(parseFloat(Ext.ComponentQuery.query("[name=overpaidAmount]")[0].value).toFixed(2));
                   addDjq.show();
+
+                  window.printHandle.get({
+                    $el: Ext.ComponentQuery.query("[itemId=djq-btn-container]")[0],
+                    formParam: {
+                      memberId: record.memberId,
+                      deliveryOrderId: record.deliveryOrderId
+                    },
+                    type: "ticket",
+                    margin: "0 0 0 10"
+                  });
                 }
               }
             ]
@@ -1163,12 +1173,14 @@ Ext.application({
               fieldLabel: "抵价券总金额",
               labelAlign: "right",
               labelWidth: 80,
+              width: 180,
               name:"totalAmount"
             },
             {
               fieldLabel: "多付款",
               labelAlign: "right",
               labelWidth: 50,
+              width: 130,
               name:"overpaidAmount",
               listeners: {
                 blur: function() {
@@ -1183,12 +1195,13 @@ Ext.application({
             ]
           },
           {
+            itemId: "djq-btn-container",
             xtype: "panel",
             layout: "hbox",
             bodyPadding: 10,
             border: 0,
             defaultType: 'textfield',
-            width: 230,
+            width: 300,
             style: {
               float: "right"
             },
@@ -1202,25 +1215,39 @@ Ext.application({
               text: "<span class=\"key\">X</span> 生成抵价券",
               margin: "0 0 0 10",
               disabled: true,
-              handler: function() {
-                var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data;
-                Ext.ComponentQuery.query("[itemId=ticket-form]")[0].getForm().submit({
+              handler: function(that) {
+                var record = Ext.ComponentQuery.query("grid[itemId=orderList]")[0].getSelectionModel().getSelection()[0].data,
+                    form = Ext.ComponentQuery.query("[itemId=ticket-form]")[0].getForm();
+
+                form.submit({
                   params: {
                     memberId: record.memberId,
                     deliveryOrderId: record.deliveryOrderId
                   },
                   success: function (form, action) {
+                    form.reset();
+                    that.setDisabled(true);
+
                     Ext.data.StoreManager.lookup("create-ticket").load({
                       params: {
                         memberId: record.memberId,
                         deliveryOrderId: record.deliveryOrderId
                       }
                     });
+                    Ext.data.StoreManager.lookup("ticket").load();
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("生成抵价券", action.result.msg);
                   }
                 });
+              }
+            },
+            {
+              xtype: "button",
+              text: "打印设置",
+              margin: "0 0 0 10",
+              handler: function () {
+                window.printHandle.set("ticket");
               }
             },
             {
@@ -1236,12 +1263,6 @@ Ext.application({
                   }
                 });
               }
-            },
-            {
-              xtype: "button",
-              text: "<span class=\"key\">Z</span> 打印",
-              disabled: true,
-              margin: "0 0 0 10"
             }
             ]
           }
