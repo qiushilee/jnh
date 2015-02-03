@@ -468,6 +468,7 @@
      * @param {String} type: 类型，必选
      * @param {String} margin: 按钮边距，可选
      * @param {ExtComponent} form: 某些页面有搜索框，在获取打印数据时需要带上form中的搜索项，可选
+     * @param {Object} formParam: 某些页面有搜索框，在获取打印数据时需要带上form中的搜索项，可选
      */
     get: function (opt) {
       var that = this;
@@ -506,6 +507,8 @@
             var val = {};
             if (opt.form) {
               val = opt.form.getValues();
+            } else if (opt.formParam) {
+              val = opt.formParam;
             }
             val["btId"] = opt.id;
             Ext.Ajax.request({
