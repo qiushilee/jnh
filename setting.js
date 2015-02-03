@@ -1380,7 +1380,9 @@ Ext.application({
           name: "name",
           labelAlign: "right",
           readOnly: true
-        }, {
+        },
+        Ext.create("deliveryMethod"),
+        {
           fieldLabel: "首重",
           name: "firstWeight",
           labelAlign: "right"
