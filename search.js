@@ -94,21 +94,19 @@ Ext.application({
               defaultType: 'datefield',
               items: [
                 Ext.create("periodical", {
-                  itemId: "purchase-periodical",
-                  store: Ext.create("Ext.data.Store", {
-                    fields: ["name", "value"],
-                    data: JSON.parse(document.body.dataset.periodicalall)
-                  })
+                  itemId: "purchase-periodical"
                 }),
                 {
                   itemId: "purchase-start-date",
                   fieldLabel: "起始日期",
+                  format: 'Y-m-d',
                   labelAlign: "right",
                   name:'startDate'
                 },
                 {
                   itemId: "purchase-end-date",
                   fieldLabel: "终止日期",
+                  format: 'Y-m-d',
                   labelAlign: "right",
                   name:'endDate'
                 },

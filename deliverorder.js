@@ -4,7 +4,7 @@ Ext.application({
     // 出货单列表
     Ext.create('Ext.data.Store', {
       storeId: 'list',
-      fields: ["memberId", "deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
+      fields: ["memberId","key","deliveryOrderId", "orderCode", "deliveryOrderCode", "id", "remittanceAmount",'billNumber', "remitter", "userName", "userCode", "receivableAmount", "totalSales", "receivedRemittance", "unDiscountAmount", "preferentialTicket", "discount", "overpaidAmount", "postage", "orderRemittanceId"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -133,6 +133,7 @@ Ext.application({
                 data: JSON.parse(document.body.dataset.deliverorderstatusall)
               }),
          }),
+        
         {
           xtype: "hiddenfield",
           name: "type",
@@ -390,6 +391,11 @@ Ext.application({
               store: Ext.data.StoreManager.lookup('list'),
               margin: "20 0 0 0",
               columns: [
+                {
+                  text: "序号",
+                  dataIndex: "key",
+                  flex: 1
+                },
                 {
                   text: '出货单号',
                   dataIndex: 'deliveryOrderCode',
@@ -1228,13 +1234,15 @@ Ext.application({
                     form.reset();
                     that.setDisabled(true);
 
+                    //加载抵价券列表
                     Ext.data.StoreManager.lookup("create-ticket").load({
                       params: {
                         memberId: record.memberId,
                         deliveryOrderId: record.deliveryOrderId
                       }
                     });
-                    Ext.data.StoreManager.lookup("ticket").load();
+                    //加载右侧
+                    getTicketData();
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("生成抵价券", action.result.msg);

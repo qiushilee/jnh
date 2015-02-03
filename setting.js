@@ -743,7 +743,7 @@ Ext.application({
               itemId: "create-post",
               xtype: "button",
               disabled: true,
-              text: "新增",
+              text: "<span class=\"key\">A</span> 增加",
               margin: "20 0 0 20",
               scale: "medium",
               handler: function () {
