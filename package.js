@@ -252,7 +252,6 @@ Ext.application({
         }
       ]
     });
-    window.list = list;
 
     function addPrintCart(id) {
       Ext.Ajax.request({
@@ -369,8 +368,83 @@ Ext.application({
         {
           xtype: "button",
           text: "扫描包裹单",
-          disabled: true,
-          margin: "0 0 0 10"
+          margin: "0 0 0 10",
+          handler: function () {
+            var panel = Ext.ComponentQuery.query("[itemId=scan-code-panel]")[0],
+                record = Ext.ComponentQuery.query("grid")[0].store.data,
+                button = Ext.create('Ext.button.Button', {
+                  text: "保存",
+                  scale: "medium",
+                  width: 150,
+                  margin: "10 0 0 190",
+                  handler: function () {
+                  }
+                });
+
+            panel.removeAll();
+            scanCode.show();
+
+            record.each(function(item, index) {
+              var itemForm = Ext.create('Ext.form.Panel', {
+                url: env.services.web + env.api.package.scanningparcel,
+                layout: "hbox",
+                border: 0,
+                margin: "0 0 10 0",
+                defaultType: 'textfield',
+                items: [
+                  {
+                    xtype: "hiddenfield",
+                    name: "id",
+                    value: item.data.id,
+                  },
+                  {
+                    fieldLabel: "出货单号",
+                    name: "deliveryOrderCode",
+                    labelWidth: 60,
+                    width: 155,
+                    readOnly: true,
+                    value: item.data.deliveryOrderCode,
+                    labelAlign: "right"
+                  },
+                  {
+                    fieldLabel: '姓名',
+                    name: 'userName',
+                    labelWidth: 60,
+                    width: 130,
+                    readOnly: true,
+                    value: item.data.userName,
+                    labelAlign: "right"
+                  },
+                  {
+                    itemId: index,
+                    fieldLabel: "包裹单号",
+                    name: "packageCode",
+                    labelWidth: 60,
+                    value: item.data.packageCode,
+                    labelAlign: "right",
+                    listeners: {
+                      change: function(that) {
+                        var index = parseInt(that.itemId),
+                            form = this.up('form').getForm();
+
+                        Ext.ComponentQuery.query("[itemId=" + (index + 1) + "]")[0].focusInput();
+
+                        if (form.isValid()) {
+                          form.submit({
+                            failure: function (form, action) {
+                              Ext.Msg.alert("扫描包裹单号：" + that.getValue(), action.result.msg);
+                            }
+                          });
+                        }
+                      }
+                    }
+                  }
+                ]
+              });
+
+              panel.add(itemForm);
+            });
+          }
         },
         {
           xtype: "button",
@@ -1020,6 +1094,21 @@ Ext.application({
               updateForm(form, data);
             }
           }
+        }
+      ]
+    });
+
+    var scanCode = new Ext.create("Ext.window.Window", {
+      title: "扫描包裹单",
+      width: 530,
+      bodyPadding: 10,
+      closeAction: 'hide',
+      items: [
+        {
+          itemId: "scan-code-panel",
+          xtype: "panel",
+          bodyPadding: "20 0",
+          border: 0
         }
       ]
     });
