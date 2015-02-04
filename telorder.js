@@ -205,27 +205,30 @@ Ext.application({
                 name:'consignee'
               }]
             }, {
+              xtype:'panel',
+              layout: "hbox",
+              border: 0,
+              defaultType: 'textfield',
+              margin: "10 0 0 0",
+              items: [
+              Ext.create("zipCode", {
+                name: "zipCode",
+                input: "address",
+                labelWidth: 100,
+                width: 200,
+              }),
+               {
+                fieldLabel: "电话",
+                labelAlign: "right",
+                name:'mobile'
+              }]
+            }, {
               xtype: 'textfield',
               fieldLabel: "地址",
               width: 470,
               margin: "10 0 0 0",
               labelAlign: "right",
               name:'address'
-            }, {
-              xtype:'panel',
-              layout: "hbox",
-              border: 0,
-              defaultType: 'textfield',
-              margin: "10 0 0 0",
-              items: [{
-                fieldLabel: "邮编",
-                labelAlign: "right",
-                name:'zipCode'
-              }, {
-                fieldLabel: "电话",
-                labelAlign: "right",
-                name:'mobile'
-              }]
             }, {
               xtype: 'textfield',
               fieldLabel: "备注",
