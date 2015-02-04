@@ -152,7 +152,8 @@
     export: "/package/export",
     print: '/package/print',
     batchprint: '/package/batchprint',//批量打印
-    scanningparcel:'/package/scanningparcel'//扫描单号
+    scanningparcel:'/package/scanningparcel',//扫描单号
+    batchUpate:"/package/batchupate"//批量修改
   };
 
   env.api.productrecord = {
@@ -614,9 +615,9 @@
           });
 
           Ext.Ajax.request({
-            url: api,
+            url: env.services.web + env.api.package.batchUpate,
             params: {
-              batchEdit: Ext.encode(data)
+              data: Ext.encode(data)
             },
             method: 'POST',
             timeout: 2000,

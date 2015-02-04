@@ -55,7 +55,7 @@ Ext.application({
     //电话订购右侧列表
     var orderproduct = Ext.create('Ext.data.Store', {
       storeId: 'orderproduct',
-      fields: ['id','productCode', 'name', 'number', 'price','amount', 'remark'],
+      fields: ['id','key','productCode', 'name', 'number', 'price','amount', 'remark'],
       layout: "fit"
     });
 
@@ -452,7 +452,7 @@ Ext.application({
             margin: "10 0 0 0",
             columns: [{
               text: '序号',
-              dataIndex: 'id'
+              dataIndex: 'key'
             }, {
               text: '货号',
               dataIndex: 'productCode',
