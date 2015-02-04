@@ -48,7 +48,7 @@ Ext.application({
     // 预估采购数据
     Ext.create('Ext.data.Store', {
       storeId: 'estimatepurchase',
-      fields: ["periodicalCount", "splitCount", "companyName", "mobile1", "linkMan", 'id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
+      fields: ["periodicalCount", "splitCount", "companyName", "mobile1", "linkMan", 'id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','tzqSupplyNumber','tzhSupplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -471,8 +471,13 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '供应单数',
-                  dataIndex: 'supplyNumber',
+                  text: '调整前供应单数',
+                  dataIndex: 'tzqSupplyNumber',
+                  flex: 1
+                },
+                {
+                  text: '调整后供应单数',
+                  dataIndex: 'tzhSupplyNumber',
                   flex: 1
                 },
                 {
