@@ -324,7 +324,6 @@ Ext.application({
                   items: [
                     {
                       xtype: "form",
-                      itemId: "companySetting-form",
                       url: env.services.web + env.api.weight.setcompany,
                       margin: "20 0 0 0",
                       bodyPadding: 10,
@@ -404,8 +403,7 @@ Ext.application({
                           margin: "20 0 40 0",
                           scale: "medium",
                           handler: function () {
-                            //var form = sendmethordEdit.getComponent("form").getForm();
-                            var form = Ext.ComponentQuery.query("[itemId=companySetting-form]")[0].getForm();
+                            var form = this.up('form').getForm();
                             form.submit({
                               success: function (form, action) {
                               },
@@ -594,6 +592,7 @@ Ext.application({
                   height: 290,
                   items: [
                     {
+                      title: "省",
                       itemId: "province-list",
                       xtype: "grid",
                       height: 300,
@@ -609,9 +608,6 @@ Ext.application({
                           text: '省份名称',
                           dataIndex: 'name',
                           flex: 2
-                        }, {
-                          xtype: "hiddenfield",
-                          name: "id"
                         }
                       ],
                       listeners: {
@@ -634,6 +630,7 @@ Ext.application({
                   margin: "0 10",
                   items: [
                     {
+                      title: "市",
                       itemId: "city-list",
                       xtype: "grid",
                       height: 215,
@@ -649,9 +646,6 @@ Ext.application({
                           text: '城市名称',
                           dataIndex: 'name',
                           flex: 2
-                        }, {
-                          xtype: "hiddenfield",
-                          name: "id"
                         }
                       ],
                       listeners: {
@@ -659,11 +653,10 @@ Ext.application({
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(true);
                           showAreas(record.data.id, 3, 'districtList');
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
-                          Ext.ComponentQuery.query("[name=name2]")[0].setValue(record.data.name);
                           Ext.ComponentQuery.query("[name=cityId]")[0].setValue(record.data.id);
                           Ext.ComponentQuery.query("[name=provinceId]")[0].setValue('');
-                          Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('id').setValue(record.data.id);
-                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[itemId=add-address-window-form]")[0].getForm().findField('parentId').setValue(record.data.id);
+                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(false);
                         }
                       }
                     }
@@ -676,6 +669,7 @@ Ext.application({
                   height: 290,
                   items: [
                     {
+                      title: "区",
                       itemId: "county-list",
                       xtype: "grid",
                       height: 300,
@@ -701,15 +695,11 @@ Ext.application({
                           text: '邮费',
                           dataIndex: 'cost',
                           flex: 1
-                        }, {
-                          xtype: "hiddenfield",
-                          name: "id"
                         }
                       ],
                       listeners: {
                         itemclick: function () {
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(true);
-                          Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[itemId=districtList-del]")[0].setDisabled(false);
                         },
                         itemdblclick: function (that, record) {
@@ -730,6 +720,13 @@ Ext.application({
               disabled: true,
               scale: "medium",
               handler: function () {
+                var record;
+                if (Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0]) {
+                  record = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0].data;
+                } else if (Ext.ComponentQuery.query("grid[itemId=province-list]")[0].getSelectionModel().getSelection()[0]) {
+                  record = Ext.ComponentQuery.query("grid[itemId=province-list]")[0].getSelectionModel().getSelection()[0].data;
+                }
+                window.updateForm(costSetting.getComponent("form").getForm(), record);
                 costSetting.show();
               }
             },
@@ -737,7 +734,7 @@ Ext.application({
               itemId: "create-post",
               xtype: "button",
               disabled: true,
-              text: "新增",
+              text: "<span class=\"key\">A</span> 增加",
               margin: "20 0 0 20",
               scale: "medium",
               handler: function () {
@@ -754,9 +751,10 @@ Ext.application({
               handler: function () {
                 window.removeGridRow({
                   grid: Ext.ComponentQuery.query("[itemId=county-list]")[0],
-                  api: env.services.web + env.api.managerrole.del,
+                  api: env.services.web + env.api.areaList.del,
                   success: function() {
-                    Ext.data.StoreManager.lookup('roleList').load();
+                    var record = Ext.ComponentQuery.query("grid[itemId=city-list]")[0].getSelectionModel().getSelection()[0].data;
+                    showAreas(record.id, 3, 'districtList');
                   }
                 })
               }
@@ -1365,7 +1363,7 @@ Ext.application({
         url: env.services.web + env.api.areaList.setting,
         items: [{
           fieldLabel: "地区名称",
-          name: "name2",
+          name: "name",
           labelAlign: "right",
           readOnly: true
         }, {
@@ -1410,17 +1408,16 @@ Ext.application({
               if (form.isValid()) {
                 form.submit({
                   success: function (form, action) {
-                    Ext.Msg.alert("修改", action.result.msg, function () {
-                      costSetting.hide();
+                    costSetting.hide();
 
-                      if ($province.getSelection()[0].data) {
-                        showAreas($province.getSelection()[0].data.id, 2, cityList);
-                      }
+                    if ($province.getSelection()[0]) {
+                      $province.store.load();
+                      //showAreas($province.getSelection()[0].data.id, 2, cityList);
+                    }
 
-                      if ($city.getSelection()[0].data) {
-                        showAreas($city.getSelection()[0].data.id, 3, districtList);
-                      }
-                    });
+                    if ($city.getSelection()[0]) {
+                      showAreas($city.getSelection()[0].data.id, 3, districtList);
+                    }
                   },
                   failure: function (form, action) {
                     Ext.Msg.alert("修改", action.result.msg);
@@ -1475,6 +1472,10 @@ Ext.application({
           items: [
             {
               xtype: "hiddenfield",
+              name: "parentId"
+            },
+            {
+              xtype: "hiddenfield",
               name: "id"
             },
             {
@@ -1492,24 +1493,33 @@ Ext.application({
             }, {
               fieldLabel: "首重",
               name: "firstWeight",
+              labelWidth: 60,
+              margin: "10 0 0 0",
               labelAlign: "right"
             }, {
               fieldLabel: "邮费",
               name: "cost",
+              labelWidth: 60,
+              margin: "10 0 0 0",
               labelAlign: "right"
             },{
               fieldLabel: "续重",
               name: "renewalWeight",
+              labelWidth: 60,
+              margin: "10 0 0 0",
               labelAlign: "right"
             },{
               fieldLabel: "价格",
               name: "fee",
+              labelWidth: 60,
+              margin: "10 0 0 0",
               labelAlign: "right"
             }, {
               xtype: "button",
               text: "保存",
               scale: "medium",
               width: 150,
+              margin: "10 0 0 0",
               handler: function () {
                 var form = this.up('form').getForm();
                 if (form.isValid()) {
@@ -1517,7 +1527,7 @@ Ext.application({
                     success: function (form, action) {
                       if (action.result.success) {
                         addAddres.hide();
-                        showAreas(form.findField('id').value, 3, 'districtList');
+                        showAreas(form.findField('parentId').value, 3, 'districtList');
                       }
                     },
                     failure: function (form, action) {
