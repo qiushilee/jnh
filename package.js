@@ -401,7 +401,7 @@ Ext.application({
                     fieldLabel: "出货单号",
                     name: "deliveryOrderCode",
                     labelWidth: 60,
-                    width: 155,
+                    width: 165,
                     readOnly: true,
                     value: item.data.deliveryOrderCode,
                     labelAlign: "right"
@@ -409,8 +409,8 @@ Ext.application({
                   {
                     fieldLabel: '姓名',
                     name: 'userName',
-                    labelWidth: 60,
-                    width: 130,
+                    labelWidth: 50,
+                    width: 125,
                     readOnly: true,
                     value: item.data.userName,
                     labelAlign: "right"
