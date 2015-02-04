@@ -153,7 +153,7 @@
     print: '/package/print',
     batchprint: '/package/batchprint',//批量打印
     scanningparcel:'/package/scanningparcel',//扫描单号
-    batchUpate:"/package/batchupate"//批量修改
+    batchUpate:"/package/batchupdate"//批量修改
   };
 
   env.api.productrecord = {
