@@ -404,7 +404,7 @@ Ext.application({
 
                 window.resetForm({
                   list: ['productCode', 'number', 'remark', 'receiptCode'],
-                  root: addJHD
+                  root: form
                 });
                 Ext.data.StoreManager.lookup('jhdProduct').loadData({list: []});
                 Ext.ComponentQuery.query("[itemId=create-receipt-code]")[0].setDisabled(false);
