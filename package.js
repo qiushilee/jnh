@@ -410,7 +410,7 @@ Ext.application({
                     fieldLabel: '姓名',
                     name: 'userName',
                     labelWidth: 50,
-                    width: 125,
+                    width: 120,
                     readOnly: true,
                     value: item.data.userName,
                     labelAlign: "right"
