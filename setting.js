@@ -137,16 +137,25 @@ Ext.application({
     // 商品列表
     Ext.create('Ext.data.Store', {
       storeId: 'product',
-      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
-
+      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId", "checked"],
       layout: "fit",
-      autoLoad: true,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.discount.product,
         reader: {
           type: 'json',
           root: 'list'
+        }
+      },
+      listeners : {
+        load : function(store) {
+          var records = [];
+          store.each(function(record) {
+            if (record.data.checked === 'y') {
+              records.push(record);
+            }
+          });
+          sm.select(records, true);// 以后每次load数据时，都会默认选中
         }
       }
     });
@@ -851,7 +860,12 @@ Ext.application({
               listeners: {
                 itemdblclick: function (that, record) {
                   district.show();
-                  Ext.ComponentQuery.query("[itemId=productList]")[0].store.load();
+                  window.data = record.data;
+                  Ext.ComponentQuery.query("[itemId=productList]")[0].store.load({
+                    params: {
+                      id: record.data.id
+                    }
+                  });
                   window.updateForm(Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm(), record.data);
                 }
               }
@@ -1366,7 +1380,9 @@ Ext.application({
           name: "name",
           labelAlign: "right",
           readOnly: true
-        }, {
+        },
+        Ext.create("deliveryMethod"),
+        {
           fieldLabel: "首重",
           name: "firstWeight",
           labelAlign: "right"
@@ -1560,6 +1576,10 @@ Ext.application({
             {
               xtype: "hiddenfield",
               name: "id"
+            },
+            {
+              xtype: "hiddenfield",
+              name: "checked"
             },
             {
               xtype:'fieldset',
