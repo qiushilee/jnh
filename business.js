@@ -5,7 +5,7 @@ Ext.application({
     // 名单管理-会员列表
     var memberList = Ext.create('Ext.data.Store', {
       storeId: 'memberList',
-      fields: ["askNumber1", "zipCode", "deliveryMethodName", "mobile", "key", "id", 'addrList', 'userCode', 'realName', 'memberType', 'memberTypeName', "address1", "address2"],
+      fields: ["askNumber1", "zipCode", "deliveryMethodName", "mobile", "key", "id", 'addrList', 'userCode', 'realName', 'memberType', 'memberTypeName', "address1", "address2","receivablesDate"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -233,6 +233,10 @@ Ext.application({
                           text: '来源',
                           flex: 1,
                           dataIndex: 'memberTypeName'
+                        },{
+                          text:'收款日期',
+                          flex:1,
+                          dataIndex:'receivablesDate'
                         }
                       ],
                       listeners: {
@@ -367,9 +371,16 @@ Ext.application({
                         {
                           fieldLabel: "姓名",
                           labelWidth: 40,
-                          width: 150,
+                          width: 100,
                           labelAlign: "right",
                           name: "realName"
+                        },
+                         {
+                          fieldLabel: "会员编号",
+                          labelWidth: 60,
+                          width: 180,
+                          labelAlign: "right",
+                          name: "userCode"
                         },
                         Ext.create("deliveryMethod"),
                         {

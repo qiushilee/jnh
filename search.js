@@ -304,7 +304,7 @@ Ext.application({
                   labelWidth: 40,
                   store: Ext.create("Ext.data.Store", {
                     fields: ["name", "value"],
-                    data: JSON.parse(document.body.dataset.periodicalall)
+                    data: JSON.parse(document.body.dataset.periodical)
                   })
                 }),
                 {
