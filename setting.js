@@ -13,7 +13,7 @@ Ext.application({
     // 期数管理
     var periodicalList = Ext.create('Ext.data.Store', {
       storeId: 'periodicalList',
-      fields: ['id', 'code', 'title', 'startDate', 'endDate', 'status', 'state'],
+      fields: ['id', 'code', 'title', 'startDate', 'endDate','addDate', 'status', 'state'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -179,17 +179,13 @@ Ext.application({
                 text: 'ID',
                 dataIndex: 'id',
                 flex: 1
-              },{
-                text: '编号',
-                dataIndex: 'code',
-                flex: 1
               }, {
                 text: '名称',
                 dataIndex: 'title',
                 flex: 1
               }, {
-                text: '开始日期',
-                dataIndex: 'startDate',
+                text: '创建日期',
+                dataIndex: 'addDate',
                 flex: 1
               }, {
                 text: '结束日期',
