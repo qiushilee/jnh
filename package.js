@@ -60,6 +60,7 @@ Ext.application({
       storeId: 'printCartList',
       fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'deliveryMethod','deliveryMethodName','packageRemark'],
       layout: "fit",
+      autoLoad: false,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.printcart.packagelist,
@@ -326,7 +327,7 @@ Ext.application({
           margin: "0 0 0 10",
           handler: function () {
             printCart.show();
-            searchHandler.call(printCart.getComponent("print-cart-form"), "printCartList");
+           // searchHandler.call(printCart.getComponent("print-cart-form"), "printCartList");
           }
         },
         {
