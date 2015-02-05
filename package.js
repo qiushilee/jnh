@@ -110,12 +110,26 @@ Ext.application({
           xtype: "datefield",
           format: 'Y-m-d',
           fieldLabel: "邮寄日期",
-          name: 'mailingDate',
+          name: 'mailingDate1',
           labelWidth: 60,
           width: 160,
           labelAlign: "right"
         },
-
+        {
+          xtype: "datefield",
+          format: 'Y-m-d',
+          fieldLabel: "到",
+          labelWidth: 20,
+          width: 120,
+          labelAlign: "right",
+          name:'mailingDate2'
+        },
+        Ext.create("deliveryMethod",{
+           store: Ext.create("Ext.data.Store", {
+              fields: ["name", "value"],
+              data: JSON.parse(document.body.dataset.deliverymethodall)
+            })
+        }),
         {
           xtype: "button",
           text: "搜索",

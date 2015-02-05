@@ -48,7 +48,7 @@ Ext.application({
     // 预估采购数据
     Ext.create('Ext.data.Store', {
       storeId: 'estimatepurchase',
-      fields: ["periodicalCount", "splitCount", "companyName", "mobile1", "linkMan", 'id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','supplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
+      fields: ["periodicalCount", "splitCount", "companyName", "mobile1", "linkMan", 'id','key','productCode','name','price','number','purchasePrice','tzqProgressiveNumber','tzhProgressiveNumber','tzqShipmentNumber','tzhShipmentNumber','corruptedNumber','tzqSupplyNumber','tzhSupplyNumber','tzqExpectedShipmentNumber','tzhExpectedShipmentNumber','tzqReplenishmentNumber','tzhReplenishmentNumber','replenishmentAmount','allPeriodPrediction','allReplenishmentNumber'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -170,6 +170,7 @@ Ext.application({
                 {
                   text: '进货日期',
                   dataIndex: 'receiptDate',
+                  format: 'Y-m-d',
                   flex: 1
                 },
                 {
@@ -204,12 +205,14 @@ Ext.application({
                 {
                   itemId: "shipment-start-date",
                   fieldLabel: "起始日期",
+                  format: 'Y-m-d',
                   labelAlign: "right",
                   name:'startDate'
                 },
                 {
                   itemId: "shipment-end-date",
                   fieldLabel: "终止日期",
+                  format: 'Y-m-d',
                   labelAlign: "right",
                   name:'endDate'
                 },
@@ -468,8 +471,13 @@ Ext.application({
                   flex: 1
                 },
                 {
-                  text: '供应单数',
-                  dataIndex: 'supplyNumber',
+                  text: '调整前供应单数',
+                  dataIndex: 'tzqSupplyNumber',
+                  flex: 1
+                },
+                {
+                  text: '调整后供应单数',
+                  dataIndex: 'tzhSupplyNumber',
                   flex: 1
                 },
                 {
@@ -704,6 +712,7 @@ Ext.application({
                           items: [
                             {
                               fieldLabel: "加入时间",
+                              format: 'Y-m-d',
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
@@ -711,6 +720,7 @@ Ext.application({
                             },
                             {
                               fieldLabel: "到",
+                              format: 'Y-m-d',
                               labelWidth: 20,
                               width: 120,
                               labelAlign: "right",
@@ -726,6 +736,7 @@ Ext.application({
                           items: [
                             {
                               fieldLabel: "购买时间",
+                              format: 'Y-m-d',
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
@@ -733,6 +744,7 @@ Ext.application({
                             },
                             {
                               fieldLabel: "到",
+                              format: 'Y-m-d',
                               labelWidth: 20,
                               width: 120,
                               labelAlign: "right",
@@ -748,6 +760,7 @@ Ext.application({
                           items: [
                             {
                               fieldLabel: "毕业时间",
+                              format: 'Y',
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
@@ -777,6 +790,7 @@ Ext.application({
                           items: [
                             {
                               fieldLabel: "参考时间",
+                              format: 'Y-m-d',
                               labelWidth: 60,
                               width: 160,
                               labelAlign: "right",
@@ -784,6 +798,7 @@ Ext.application({
                             },
                             {
                               fieldLabel: "到",
+                              format: 'Y-m-d',
                               labelWidth: 20,
                               width: 120,
                               labelAlign: "right",

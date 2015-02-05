@@ -55,7 +55,7 @@ Ext.application({
     //电话订购右侧列表
     var orderproduct = Ext.create('Ext.data.Store', {
       storeId: 'orderproduct',
-      fields: ['id','productCode', 'name', 'number', 'price','amount', 'remark'],
+      fields: ['id','key','productCode', 'name', 'number', 'price','amount', 'remark'],
       layout: "fit"
     });
 
@@ -205,27 +205,30 @@ Ext.application({
                 name:'consignee'
               }]
             }, {
+              xtype:'panel',
+              layout: "hbox",
+              border: 0,
+              defaultType: 'textfield',
+              margin: "10 0 0 0",
+              items: [
+              Ext.create("zipCode", {
+                name: "zipCode",
+                input: "address",
+                labelWidth: 100,
+                width: 200,
+              }),
+               {
+                fieldLabel: "电话",
+                labelAlign: "right",
+                name:'mobile'
+              }]
+            }, {
               xtype: 'textfield',
               fieldLabel: "地址",
               width: 470,
               margin: "10 0 0 0",
               labelAlign: "right",
               name:'address'
-            }, {
-              xtype:'panel',
-              layout: "hbox",
-              border: 0,
-              defaultType: 'textfield',
-              margin: "10 0 0 0",
-              items: [{
-                fieldLabel: "邮编",
-                labelAlign: "right",
-                name:'zipCode'
-              }, {
-                fieldLabel: "电话",
-                labelAlign: "right",
-                name:'mobile'
-              }]
             }, {
               xtype: 'textfield',
               fieldLabel: "备注",
@@ -452,7 +455,7 @@ Ext.application({
             margin: "10 0 0 0",
             columns: [{
               text: '序号',
-              dataIndex: 'id'
+              dataIndex: 'key'
             }, {
               text: '货号',
               dataIndex: 'productCode',
