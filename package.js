@@ -8,7 +8,7 @@ Ext.application({
   launch: function () {
     var dataList = Ext.create('Ext.data.Store', {
       storeId: 'dataList',
-      fields: ["id", 'key', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'bjtimes', 'packaging', 'userName', 'address', 'packageRemark'],
+      fields: ['zipCode', 'userCode', "id", 'key', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'bjtimes', 'packaging', 'userName', 'address', 'packageRemark'],
       layout: "fit",
       autoLoad: false,
       proxy: {
