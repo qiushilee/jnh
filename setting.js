@@ -622,6 +622,7 @@ Ext.application({
                           Ext.ComponentQuery.query("[itemId=setting-post]")[0].setDisabled(false);
                           Ext.ComponentQuery.query("[name=provinceId]")[0].setValue(record.data.id);
                           Ext.ComponentQuery.query("[itemId=create-post]")[0].setDisabled(true);
+                          Ext.ComponentQuery.query("[name=cityId]")[0].setValue();
                         }
                       }
                     }
