@@ -400,6 +400,10 @@ Ext.application({
             scanCode.show();
 
             record.each(function(item, index) {
+              if (item.data.deliveryOrderCode === '') {
+                return;
+              }
+
               var itemForm = Ext.create('Ext.form.Panel', {
                 url: env.services.web + env.api.package.scanningparcel,
                 layout: "hbox",
