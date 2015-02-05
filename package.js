@@ -58,8 +58,9 @@ Ext.application({
 
     Ext.create('Ext.data.Store', {
       storeId: 'printCartList',
-      fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'packageRemark'],
+      fields: ['key', 'id', 'deliveryOrderCode', 'packageCode', 'serialNumber', 'mailingDate', 'weight', 'postage', 'packaging', 'userName', 'address', 'deliveryMethod','deliveryMethodName','packageRemark'],
       layout: "fit",
+      autoLoad: false,
       proxy: {
         type: 'ajax',
         url: env.services.web + env.api.printcart.packagelist,
@@ -326,7 +327,7 @@ Ext.application({
           margin: "0 0 0 10",
           handler: function () {
             printCart.show();
-            searchHandler.call(printCart.getComponent("print-cart-form"), "printCartList");
+           // searchHandler.call(printCart.getComponent("print-cart-form"), "printCartList");
           }
         },
         {
@@ -866,39 +867,39 @@ Ext.application({
         margin: "10 0 0 0",
         columns: [{
           text: '序号',
-          dataIndex: 'id1',
+          dataIndex: 'key',
           flex: 1
         }, {
           text: '出货单号',
-          dataIndex: 'id1',
+          dataIndex: 'deliveryOrderCode',
           flex: 1
         }, {
           text: '会员姓名',
-          dataIndex: 'id1',
+          dataIndex: 'userName',
           flex: 1
         }, {
           text: '寄送方式',
-          dataIndex: 'id1',
+          dataIndex: 'deliveryMethodName',
           flex: 2
         }, {
           text: '流水号',
-          dataIndex: 'id1',
+          dataIndex: 'serialNumber',
           flex: 1
         }, {
           text: '寄送日期',
-          dataIndex: 'id1',
+          dataIndex: 'mailingDate',
           flex: 1
         }, {
-          text: '单号重量',
-          dataIndex: 'id1',
+          text: '重量',
+          dataIndex: 'weight',
           flex: 1
         }, {
           text: '邮资',
-          dataIndex: 'id1',
+          dataIndex: 'postage',
           flex: 1
         }, {
           text: '包装员',
-          dataIndex: 'id1',
+          dataIndex: 'packaging',
           flex: 1
         }],
         listeners: function(that) {
