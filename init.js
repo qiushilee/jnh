@@ -188,7 +188,8 @@
       packagedel: "/printcart/packagedelete",
       packagechange: "/printcart/packageupdate",
       checkpackage:"/printcart/checkpackage",
-      printExpress:"/printcart/printexpress"
+      printExpress:"/printcart/printexpress",
+      batchupdatebusiness:"/printcart/batchupdatebusiness",//业务管理打印购物车批量修改
    }
 
   //电话订购
