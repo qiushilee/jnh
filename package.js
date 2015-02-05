@@ -326,7 +326,7 @@ Ext.application({
           margin: "0 0 0 10",
           handler: function () {
             printCart.show();
-            searchHandler.call(printCart.getComponent("print-cart-form"), "printCart");
+            searchHandler.call(printCart.getComponent("print-cart-form"), "printCartList");
           }
         },
         {
@@ -826,6 +826,7 @@ Ext.application({
       items: [{
         itemId: "print-cart-form",
         xtype: "form",
+        url: env.services.web + env.api.package.list,
         layout: "hbox",
         bodyPadding: 10,
         border: 0,
@@ -860,7 +861,7 @@ Ext.application({
       }, {
         xtype: "grid",
         height: 155,
-        store: Ext.data.StoreManager.lookup('printCart'),
+        store: Ext.data.StoreManager.lookup('printCartList'),
         height: 155,
         margin: "10 0 0 0",
         columns: [{
