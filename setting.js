@@ -1604,28 +1604,28 @@ Ext.application({
                     {
                       fieldLabel: '折扣名称',
                       name: 'title',
-                      labelWidth: 40,
+                      labelWidth: 60,
                       margin: "10 0 0 0",
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: '最小金额',
                       name: 'minAmount',
-                      labelWidth: 40,
+                      labelWidth: 60,
                       margin: "10 0 0 0",
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: '最大金额',
                       name: 'maxAmount',
-                      labelWidth: 40,
+                      labelWidth: 60,
                       margin: "10 0 0 0",
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: '折扣',
                       name: 'discount',
-                      labelWidth: 40,
+                      labelWidth: 60,
                       margin: "10 0 0 0",
                       labelAlign: "right"
                     }
