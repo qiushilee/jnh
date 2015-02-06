@@ -1593,7 +1593,7 @@ Ext.application({
               items :[
                 {
                   xtype:'panel',
-                  layout: "vbox",
+                  layout: "hbox",
                   width: 300,
                   border: 0,
                   defaultType: 'textfield',
@@ -1605,27 +1605,155 @@ Ext.application({
                       fieldLabel: '折扣名称',
                       name: 'title',
                       labelWidth: 60,
+                      width: 215,
                       margin: "10 0 0 0",
                       labelAlign: "right"
-                    },
+                    }
+                  ]
+                },
+                {
+                  xtype:'panel',
+                  layout: "hbox",
+                  width: 300,
+                  margin: '5 0 0 0',
+                  border: 0,
+                  defaultType: 'textfield',
+                  bodyStyle: {
+                    background:'transparent'
+                  },
+                  items: [
                     {
                       fieldLabel: '最小金额',
-                      name: 'minAmount',
+                      name: 'minAmount0',
                       labelWidth: 60,
+                      width: 150,
                       margin: "10 0 0 0",
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: '最大金额',
-                      name: 'maxAmount',
+                      name: 'maxAmount0',
                       labelWidth: 60,
+                      width: 150,
                       margin: "10 0 0 0",
                       labelAlign: "right"
                     },
                     {
                       fieldLabel: '折扣',
-                      name: 'discount',
+                      name: 'discount0',
                       labelWidth: 60,
+                      width: 130,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    }
+                  ]
+                },
+                {
+                  xtype:'panel',
+                  layout: "hbox",
+                  width: 300,
+                  margin: "5 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  bodyStyle: {
+                    background:'transparent'
+                  },
+                  items: [
+                    {
+                      fieldLabel: '最小金额',
+                      name: 'minAmount1',
+                      labelWidth: 60,
+                      width: 150,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '最大金额',
+                      name: 'maxAmount1',
+                      labelWidth: 60,
+                      width: 150,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '折扣',
+                      name: 'discount1',
+                      labelWidth: 60,
+                      width: 130,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    }
+                  ]
+                },
+                {
+                  xtype:'panel',
+                  layout: "hbox",
+                  width: 300,
+                  margin: "5 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  bodyStyle: {
+                    background:'transparent'
+                  },
+                  items: [
+                    {
+                      fieldLabel: '最小金额',
+                      name: 'minAmount2',
+                      labelWidth: 60,
+                      width: 150,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '最大金额',
+                      name: 'maxAmount2',
+                      labelWidth: 60,
+                      width: 150,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '折扣',
+                      name: 'discount2',
+                      labelWidth: 60,
+                      width: 130,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    }
+                  ]
+                },
+                {
+                  xtype:'panel',
+                  layout: "hbox",
+                  width: 300,
+                  margin: "5 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  bodyStyle: {
+                    background:'transparent'
+                  },
+                  items: [
+                    {
+                      fieldLabel: '最小金额',
+                      name: 'minAmount3',
+                      labelWidth: 60,
+                      width: 150,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '最大金额',
+                      name: 'maxAmount3',
+                      labelWidth: 60,
+                      width: 150,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '折扣',
+                      name: 'discount3',
+                      labelWidth: 60,
+                      width: 130,
                       margin: "10 0 0 0",
                       labelAlign: "right"
                     }
