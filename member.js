@@ -309,11 +309,12 @@ Ext.onReady(function () {
                         updateMember(form);
                         searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
                       
-                        if(memberId>0){
+                        /*if(memberId>0){
                           showFolwCharts(memberId);
                         }else{
                           showFolwCharts(0);
-                        }
+                        }*/
+                         showFolwCharts(0);
 
                       } else {
                         Ext.Msg.confirm("新增会员", data.msg, function (type) {

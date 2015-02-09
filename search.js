@@ -17,7 +17,7 @@ Ext.application({
     // 进货清单数据
     var purchaseList = Ext.create('Ext.data.Store', {
       storeId: 'purchaseList',
-      fields: ["id",'key',"productCode", "name", 'number', 'receiptCode','companyName','receiptDate','addDate','remark'],
+      fields: ["id",'key',"productCode", "name", 'number', 'receiptCode','companyCode','receiptDate','addDate','remark'],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -163,8 +163,8 @@ Ext.application({
                   flex: 2
                 },
                 {
-                  text: '厂商',
-                  dataIndex: 'companyName',
+                  text: '厂商编号',
+                  dataIndex: 'companyCode',
                   flex: 1
                 },
                 {
