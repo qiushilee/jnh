@@ -308,6 +308,13 @@ Ext.onReady(function () {
                       if (data.success) {
                         updateMember(form);
                         searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
+                      
+                        if(memberId>0){
+                          showFolwCharts(memberId);
+                        }else{
+                          showFolwCharts(0);
+                        }
+
                       } else {
                         Ext.Msg.confirm("新增会员", data.msg, function (type) {
                           if (type === 'yes') {
@@ -326,6 +333,8 @@ Ext.onReady(function () {
                 handler: function () {
                   var form = panel.getComponent("memberInfo").getForm();
                   form.reset();
+
+                  showFolwCharts(0);
                 }
               },
               {

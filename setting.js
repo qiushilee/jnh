@@ -121,7 +121,7 @@ Ext.application({
     // 折扣列表
     Ext.create('Ext.data.Store', {
       storeId: 'discountList',
-      fields: ["id", 'title','scopes','type', "typeName", 'minAmount','maxAmount', 'discount', 'addDate'],
+      fields: ["id", 'title','discountScope', 'addDate','minAmount0','maxAmount0','discount0','minAmount1','maxAmount1','discount1','minAmount2','maxAmount2','discount2','minAmount3','maxAmount3','discount3','minAmount4','maxAmount4','discount4'],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -844,12 +844,7 @@ Ext.application({
                 },
                 {
                   text: '折扣范围',
-                  dataIndex: 'scopes',
-                  flex:1
-                },
-                {
-                  text: '折扣',
-                  dataIndex: 'discount',
+                  dataIndex: 'discountScope',
                   flex:1
                 },
                 {
@@ -862,12 +857,15 @@ Ext.application({
                 itemdblclick: function (that, record) {
                   district.show();
                   window.data = record.data;
+                  var con = Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm();
                   Ext.ComponentQuery.query("[itemId=productList]")[0].store.load({
                     params: {
                       id: record.data.id
                     }
                   });
-                  window.updateForm(Ext.ComponentQuery.query("[itemId=district-form]")[0].getForm(), record.data);
+                  window.updateForm(con, record.data);
+                 
+
                 }
               }
             },
@@ -1627,7 +1625,7 @@ Ext.application({
                       name: 'minAmount0',
                       labelWidth: 60,
                       width: 150,
-                      margin: "10 0 0 0",
+                      margin: "5 0 0 0",
                       labelAlign: "right"
                     },
                     {
@@ -1635,7 +1633,7 @@ Ext.application({
                       name: 'maxAmount0',
                       labelWidth: 60,
                       width: 150,
-                      margin: "10 0 0 0",
+                      margin: "5 0 0 0",
                       labelAlign: "right"
                     },
                     {
@@ -1643,7 +1641,7 @@ Ext.application({
                       name: 'discount0',
                       labelWidth: 60,
                       width: 130,
-                      margin: "10 0 0 0",
+                      margin: "5 0 0 0",
                       labelAlign: "right"
                     }
                   ]
@@ -1664,7 +1662,7 @@ Ext.application({
                       name: 'minAmount1',
                       labelWidth: 60,
                       width: 150,
-                      margin: "10 0 0 0",
+                      margin: "5 0 0 0",
                       labelAlign: "right"
                     },
                     {
@@ -1672,7 +1670,7 @@ Ext.application({
                       name: 'maxAmount1',
                       labelWidth: 60,
                       width: 150,
-                      margin: "10 0 0 0",
+                      margin: "5 0 0 0",
                       labelAlign: "right"
                     },
                     {
@@ -1680,7 +1678,7 @@ Ext.application({
                       name: 'discount1',
                       labelWidth: 60,
                       width: 130,
-                      margin: "10 0 0 0",
+                      margin: "5 0 0 0",
                       labelAlign: "right"
                     }
                   ]
@@ -1752,6 +1750,43 @@ Ext.application({
                     {
                       fieldLabel: '折扣',
                       name: 'discount3',
+                      labelWidth: 60,
+                      width: 130,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    }
+                  ]
+                },
+                {
+                  xtype:'panel',
+                  layout: "hbox",
+                  width: 300,
+                  margin: "5 0 0 0",
+                  border: 0,
+                  defaultType: 'textfield',
+                  bodyStyle: {
+                    background:'transparent'
+                  },
+                  items: [
+                    {
+                      fieldLabel: '最小金额',
+                      name: 'minAmount4',
+                      labelWidth: 60,
+                      width: 150,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '最大金额',
+                      name: 'maxAmount4',
+                      labelWidth: 60,
+                      width: 150,
+                      margin: "10 0 0 0",
+                      labelAlign: "right"
+                    },
+                    {
+                      fieldLabel: '折扣',
+                      name: 'discount4',
                       labelWidth: 60,
                       width: 130,
                       margin: "10 0 0 0",
