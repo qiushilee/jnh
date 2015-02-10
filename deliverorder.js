@@ -610,6 +610,9 @@ Ext.application({
                     }, {
                       xtype: "hiddenfield",
                       name: "deliveryOrderId"
+                    }, {
+                      xtype: "hiddenfield",
+                      name: "id"
                     }
                   ]
                 },
@@ -659,7 +662,13 @@ Ext.application({
                       dataIndex: 'weight',
                       flex: 1
                     }
-                  ]
+                  ],
+                   listeners: {
+                      itemdblclick: function( that, record, item, index, e, eOpts) {
+                        var product = this.ownerCt.getComponent("product");
+                        window.updateForm(product.getForm(), record.data);
+                      }
+                    }
                 },
                 {
                   itemId: "right-print-container",
@@ -747,11 +756,28 @@ Ext.application({
                       margin: "0 0 0 10",
                       handler: function() {
                         //需要传递id参数
-                        var form = this.up("form").getForm();
+                        var $form = list.getComponent("orderproductform").getComponent("orderproduct").getComponent("product"),
+                            form =  $form.getForm();
                         form.url = env.services.web + env.api.deliverorder.saveorderproduct;
                         form.submit({
                           success: function(form, action) {
-                            product.hide();
+                            Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
+                            window.resetForm({
+                              root: form,
+                              list: [
+                                'productCode',
+                                'number',
+                                'remark'
+                              ]
+                            });
+
+                            if (window.deliveryOrderId) {
+                              form.findField("deliveryOrderId").setValue(window.deliveryOrderId);
+                            }
+
+                            if (window.orderRemittanceId) {
+                              form.findField("orderRemittanceId").setValue(window.orderRemittanceId);
+                            }
                           },
                           failure: function(form, action) {
                             Ext.Msg.alert("修改订单产品", action.result.msg);

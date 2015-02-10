@@ -770,10 +770,16 @@ Ext.application({
                               }
                             });
 
-                            window.resetForm({
-                              list: ['productCode', 'number', 'remark'],
-                              root: addJHD
-                            });
+                             window.resetForm({
+                                root: form,
+                                list: [
+                                  'id',
+                                  'productCode',
+                                  'number',
+                                  'remark'
+                                ]
+                              });
+                            
                           },
                           failure: function (form, action) {
                             Ext.Msg.alert("保存", action.result.msg);
@@ -866,6 +872,14 @@ Ext.application({
                   grid: addJHD.getComponent("list"),
                   api: env.services.web + env.api.productrecord.del,
                   success: function() {
+                    //加载进转损列表
+                     Ext.data.StoreManager.lookup('transitionLoss').load({
+                      params: {
+                        periodicalId: Ext.ComponentQuery.query("[name=periodicalId]", addJHD)[0].value
+                      }
+                    });
+
+
                     Ext.data.StoreManager.lookup('jhdProduct').load({
                       params: {
                         receiptId: Ext.ComponentQuery.query("[name=receiptId]", addJHD)[0].value
