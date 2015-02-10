@@ -307,7 +307,8 @@ Ext.onReady(function () {
                       var data = Ext.JSON.decode(resp.responseText);
                       if (data.success) {
                         updateMember(form);
-                        searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
+                        
+                       // searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "memberList");
                       
                         /*if(memberId>0){
                           showFolwCharts(memberId);
