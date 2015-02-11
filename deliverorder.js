@@ -122,6 +122,8 @@ Ext.application({
       defaultType: 'textfield',
       margin: "10 0",
       renderTo: window.$bd,
+      itemId: "searchBar",
+      xtype: "form",
       url: env.services.web + env.api.deliverorder.list,
       items: [
         Ext.create("periodical"),
@@ -761,6 +763,11 @@ Ext.application({
                         form.url = env.services.web + env.api.deliverorder.saveorderproduct;
                         form.submit({
                           success: function(form, action) {
+                            //更新订单列表
+                           searchHandler.call(Ext.ComponentQuery.query("[itemId=searchBar]")[0], "list");
+                            
+
+                            //加载产品列表
                             Ext.data.StoreManager.lookup('productData').loadData(action.result.list);
                             window.resetForm({
                               root: form,
