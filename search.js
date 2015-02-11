@@ -482,7 +482,7 @@ Ext.application({
                 },
                 {
                   text: '进价',
-                  dataIndex: 'price',
+                  dataIndex: 'purchasePrice',
                   flex: 1
                 },
                 {
