@@ -10,7 +10,7 @@ Ext.application({
     // 库存表
     Ext.create('Ext.data.Store', {
       storeId: 'product',
-      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
+      fields: ["key", 'addDate', "averageCost", 'bagShape', 'foreignCurrency', 'id', 'isBelowInventory', 'name', 'number', 'price', 'productCode', "purchasePrice","tzqProgressiveNumber","tzhProgressiveNumber","tzqShipmentNumber","tzhShipmentNumber", "receiptId", "safetyStock", "specification", "status", "weight", "cardinalNumber", "content","safetyStock", "companyCode", "address", "companyId"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -158,22 +158,22 @@ Ext.application({
                 },
                 {
                   text: '调整前累进量',
-                  dataIndex: '',
+                  dataIndex: 'tzqProgressiveNumber',
                   flex: 2
                 },
                 {
                   text: '调整后累进量',
-                  dataIndex: '',
+                  dataIndex: 'tzhProgressiveNumber',
                   flex: 2
                 },
                 {
                   text: '调整前出货数',
-                  dataIndex: '',
+                  dataIndex: 'tzqShipmentNumber',
                   flex: 2
                 },
                 {
                   text: '调整后出货数',
-                  dataIndex: '',
+                  dataIndex: 'tzhShipmentNumber',
                   flex: 2
                 },
                 {
