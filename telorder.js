@@ -178,11 +178,20 @@ Ext.application({
               items: [{
                 xtype: "hiddenfield",
                 name: "id"
+              },{
+                xtype: "hiddenfield",
+                name: "memberId"
               },
               Ext.create('deliveryMethod'),
               {
+                fieldLabel:'邮资',
+                 width:200,
+                labelAlign: "right",
+                name:'postage'
+              },
+              {
                 fieldLabel: "青春贴",
-                width:220,
+                width:200,
                 labelAlign: "right",
                 name:'youthStuck'
               }, {
