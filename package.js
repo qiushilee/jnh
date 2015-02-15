@@ -839,15 +839,17 @@ Ext.application({
         bodyStyle: {
           "background-color": "transparent"
         },
-        items: [{
-          xtype: "combobox",
-          fieldLabel: "寄送方式",
-          labelWidth: 60,
-          labelAlign: "right"
-        }, {
-          fieldLabel: "编号",
-          labelWidth: 40,
-          labelAlign: "right"
+        items: [ 
+         Ext.create("deliveryMethod"),
+         {
+          fieldLabel: "出货单号",
+          labelWidth: 80,
+          labelAlign: "right",
+          name:"deliveryOrderCode",
+          store: Ext.create("Ext.data.Store", {
+            fields: ["name", "value"],
+            data: JSON.parse(document.body.dataset.deliverymethodall)
+          }),
         }, {
           xtype: "button",
           text: "搜索",
