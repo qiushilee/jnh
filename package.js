@@ -840,16 +840,17 @@ Ext.application({
           "background-color": "transparent"
         },
         items: [ 
-         Ext.create("deliveryMethod"),
+         Ext.create("deliveryMethod",{
+            store: Ext.create("Ext.data.Store", {
+              fields: ["name", "value"],
+              data: JSON.parse(document.body.dataset.deliverymethodall)
+            })
+         }),
          {
           fieldLabel: "出货单号",
           labelWidth: 80,
           labelAlign: "right",
-          name:"deliveryOrderCode",
-          store: Ext.create("Ext.data.Store", {
-            fields: ["name", "value"],
-            data: JSON.parse(document.body.dataset.deliverymethodall)
-          }),
+          name:"deliveryOrderCode"
         }, {
           xtype: "button",
           text: "搜索",
