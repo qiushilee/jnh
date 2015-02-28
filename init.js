@@ -616,7 +616,7 @@
           });
 
           Ext.Ajax.request({
-            url: env.services.web + env.api.package.batchUpate,
+            url: api,
             params: {
               data: Ext.encode(data)
             },

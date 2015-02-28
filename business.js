@@ -1048,7 +1048,7 @@ Ext.application({
                   text: "批量修改",
                   margin: "0 0 0 20",
                   handler: function () {
-                    window.batchEditHandle(Ext.data.StoreManager.lookup('printcart'), env.services.web + env.api.package.change);
+                    window.batchEditHandle(Ext.data.StoreManager.lookup('printcart'), env.services.web + env.api.printcart.batchupdatebusiness);
                   }
                 },
                

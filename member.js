@@ -1287,7 +1287,6 @@ Ext.onReady(function () {
                     name: 'userCode',
                     margin: "0 0 0 10",
                     width: 220,
-                    readOnly:true
                   },
                   {
                     labelWidth: 60,

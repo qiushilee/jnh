@@ -812,20 +812,16 @@ Ext.application({
                           border: 0,
                           defaultType: 'textfield',
                           items: [
-                            {
-                              fieldLabel: "参考期数",
-                              labelWidth: 60,
-                              width: 160,
-                              labelAlign: "right",
+                            Ext.create('periodical',{
+                              fieldLabel:'参考期数',
+                              itemId: "periodical1",
                               name:'referencePeriodicalId1'
-                            },
-                            {
-                              fieldLabel: "到",
-                              labelWidth: 20,
-                              width: 120,
-                              labelAlign: "right",
+                            }),
+                             Ext.create('periodical',{
+                              fieldLabel: "~",
+                              itemId: "periodical2",
                               name:'referencePeriodicalId2'
-                            }
+                            })
                           ]
                         }
                       ]
