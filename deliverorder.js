@@ -36,7 +36,7 @@ Ext.application({
     // 右侧商品列表
     Ext.create('Ext.data.Store', {
       storeId: 'productData',
-      fields: ["productId", "deliveryorderId", "memberId", "key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight"],
+      fields: ["productId", "deliveryorderId", "memberId", "key", "id", "productCode", "name", "number", "price", "amount", "remark", "weight","safetyStock"],
       layout: "fit",
       proxy: {
         type: 'ajax',
@@ -663,6 +663,11 @@ Ext.application({
                       text: '重量',
                       dataIndex: 'weight',
                       flex: 1
+                    },
+                    {
+                      text:"缺货提示",
+                      dataIndex:"safetyStock",
+                      flex:1
                     }
                   ],
                    listeners: {
