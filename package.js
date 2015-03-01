@@ -727,11 +727,13 @@ Ext.application({
               fieldLabel: "出货单号",
               labelAlign: "right",
               labelWidth: 60,
+              width:180,
               name: "deliveryOrderCode"
             },
             {
               fieldLabel: "~",
               labelWidth: 20,
+              width:140,
               labelAlign: "right",
               name: "deliveryOrderCode2"
             },
