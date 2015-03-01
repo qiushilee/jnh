@@ -196,11 +196,7 @@ Ext.application({
               defaultType: 'datefield',
               items: [
                 Ext.create("periodical", {
-                  itemId: "shipment-periodical",
-                  store: Ext.create("Ext.data.Store", {
-                    fields: ["name", "value"],
-                    data: JSON.parse(document.body.dataset.periodicalall)
-                  })
+                  itemId: "shipment-periodical"
                 }),
                 {
                   itemId: "shipment-start-date",
