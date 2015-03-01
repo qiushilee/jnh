@@ -42,6 +42,22 @@ Ext.application({
       }
     });
 
+    //支付方式
+    var paymentmethordList = Ext.create('Ext.data.Store', {
+      storeId: 'paymentmethordList',
+      fields: ['id', 'name',  'state',  'sort','addDate'],
+      layout: "fit",
+      autoLoad: true,
+      proxy: {
+        type: 'ajax',
+        url: env.services.web + env.api.paymentmethord.list,
+        reader: {
+          type: 'json',
+          root: 'list'
+        }
+      }
+    });
+
     //管理员列表
     var managerList = Ext.create('Ext.data.Store', {
       storeId: 'managerList',
@@ -424,6 +440,59 @@ Ext.application({
                 }
               ]
             }
+          ]
+        },
+        {
+          title: '支付方式列表',
+          padding: 15,
+          items: [
+            {
+              itemId: "paymentmethord-grid",
+              xtype: "grid",
+              height: 455,
+              margin: "20 0 0 0",
+              store: Ext.data.StoreManager.lookup('paymentmethordList'),
+              columns: [{
+                text: 'ID',
+                dataIndex: 'id',
+                flex: 1
+              }, {
+                text: '名称',
+                dataIndex: 'name',
+                flex: 1
+              }, {
+                text: '排序',
+                dataIndex: 'sort',
+                flex: 1
+              },  {
+                text: '创建日期',
+                dataIndex: 'addDate',
+                flex: 1
+              },  {
+                text: '状态',
+                dataIndex: 'state',
+                flex: 1
+              }],
+              listeners: {
+                itemdblclick: function (that, record, item, index, e, eOpts) {
+                  paymentmethordEdit.show();
+                  window.updateForm(paymentmethordEdit.getComponent("form").getForm(), record.data);
+                }
+              }
+            },
+            {
+              xtype: "button",
+              text: "<span class=\"key\">A</span> 增加",
+              margin: "20 0 0 0",
+              scale: "medium",
+              handler: function () {
+                var form = paymentmethordEdit.getComponent("form").getForm();
+                paymentmethordEdit.setTitle("新增支付方式");
+                form.reset();
+                form.url = env.services.web + env.api.paymentmethord.save;
+                paymentmethordEdit.show();
+              }
+            } 
           ]
         },
         {
@@ -1072,6 +1141,79 @@ Ext.application({
       ],
       closeAction: 'hide'
     });
+
+  //支付方式
+    var paymentmethordEdit = new Ext.create("Ext.window.Window", {
+      title: "编辑支付方式",
+      layout: "column",
+
+      items: [{
+        itemId: "form",
+        xtype: "form",
+        columnWidth: 0.41,
+        layout: 'vbox',
+        width: 500,
+        bodyPadding: 5,
+        defaultType: 'textfield',
+        url: env.services.web + env.api.paymentmethord.save,
+        items: [  {
+          fieldLabel: "名称",
+          name: "name",
+
+          labelAlign: "right"
+        }, {
+          fieldLabel: "排序",
+          name: "sort",
+          labelAlign: "right"
+        }, {
+          xtype: 'checkbox',
+          checked: true,
+          fieldLabel: "状态",
+          name: "status",
+          labelAlign: "right"
+        }, {
+          xtype: "hiddenfield",
+          name: "id"
+        }, {
+          xtype: 'panel',
+          layout: "hbox",
+          border: 0,
+          margin: "0 0 0 53",
+          items: [{
+            xtype: 'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">A</span> 保存",
+            handler: function () {
+              var form = paymentmethordEdit.getComponent("form").getForm();
+              form.url = env.services.web + env.api.paymentmethord.save;
+              if (form.isValid()) {
+                form.submit({
+                  success: function (form, action) {
+                    Ext.Msg.alert("修改支付方式", action.result.msg, function () {
+                      paymentmethordEdit.hide();
+                      paymentmethordList.load();
+                    });
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("修改支付方式", action.result.msg);
+                  }
+                });
+              }
+            }
+          }, {
+            xtype: 'button',
+            margin: "0 0 0 10",
+            text: "<span class=\"key\">E</span> 返回",
+            handler: function () {
+              paymentmethordEdit.hide();
+            }
+          }]
+        }]
+      }
+      ],
+      closeAction: 'hide'
+    });
+
 
     //管理员编辑
     var managerEdit = new Ext.create("Ext.window.Window", {

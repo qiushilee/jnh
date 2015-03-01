@@ -118,6 +118,14 @@
     del: "/sendmethord/delete"
   }
 
+
+  //支付方式
+  env.api.paymentmethord = {
+    list: "/paymentmethord/index",
+    save: "/paymentmethord/save",
+    del: "/paymentmethord/delete"
+  }
+
   //出货单
   env.api.deliverorder = {
     list: "/deliverorder/index",
