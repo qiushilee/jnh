@@ -50,7 +50,7 @@ Ext.application({
     // 打印购物车
     Ext.create("Ext.data.Store", {
       storeId: "printcart",
-      fields: ["id", "key", "printcartCode", "serialNumber", "userCode", "userName", "address", "askNumber", 'sendNumber1', 'sendNumber2', "mailingDate", "weight", "postage", "amount", "remark"],
+      fields: ["id", "key", "printcartCode", "serialNumber", "userCode", "userName","periodicalName" ,"address", "askNumber", 'sendNumber1', 'sendNumber2', "mailingDate", "weight", "postage", "amount", "remark"],
       layout: "fit",
       autoLoad: true,
       proxy: {
@@ -965,17 +965,14 @@ Ext.application({
                 {
                   text: '期数',
                   dataIndex: 'periodicalName',
-                  editor: {
-                    xtype:'textfield',
-                    allowBlank:false
-                  },
                   flex: 1
                 },
                 {
                   text: '寄出日',
                   dataIndex: 'mailingDate',
                   editor: {
-                    xtype:'textfield',
+                    xtype: "datefield",
+                    format: 'Y-m-d',
                     allowBlank:false
                   },
                   flex: 1
