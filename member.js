@@ -664,9 +664,10 @@ Ext.onReady(function () {
 
           // 第七行
           {
-            xtype: "textfield",
+            xtype: "textarea",
             margin: "20 0 0 0",
             width: 1000,
+            height:40,
             fieldLabel: "备注",
             labelAlign: "right",
             name: "remark",
